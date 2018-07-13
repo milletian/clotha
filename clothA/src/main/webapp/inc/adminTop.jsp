@@ -145,7 +145,7 @@ footer{
 	background-color: #596d82;
 	text-decoration: none;
 	display: block;
-	padding: 18px 0 18px 25px;
+	padding: 0;
 	font-size: 12px;
 
 }
@@ -217,8 +217,8 @@ footer{
 	</script>
 
 	<aside class="sidebar" >
-		<div id="logo">
-			로고만들어서 넣자 !
+		<div id="logo" >
+			<a href="#" style="text-align: left;"><img alt="" src="<c:url value='/images/logo5.png'/>" style="width: 240px; height: 57px; "></a>
 		</div>
 		<div id="leftside-navigation" class="nano">
 			<ul class="nano-content">
