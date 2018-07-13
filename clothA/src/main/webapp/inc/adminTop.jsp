@@ -138,6 +138,13 @@ footer{
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#leftside-navigation ul li a").click(function(){
+			var $(this).location.href()
+		});
+	});
+</script>
 
 </head>
 
@@ -205,11 +212,11 @@ footer{
 					</a>
 					<ul>
 						<li>
-							<a href="ui-alerts-notifications.html">재고 조회
+							<a href="<c:url value='/admin/account/accountList.do' />" target="if">재고 조회
 							</a>
 						</li>
-						<li><a href="ui-panels.html">재고조정</a></li>
-						<li><a href="ui-buttons.html">기초재고등록</a></li>
+						<li><a href="<c:url value='/admin/account/accountWrite.do' />" target="if">재고조정</a></li>
+						<li><a href="#">기초재고등록</a></li>
 					</ul></li>
 				<li class="sub-menu">
 					<a href="javascript:void(0);">
@@ -219,59 +226,59 @@ footer{
 					</a>
 					<ul>
 						<li>
-							<a href="ui-alerts-notifications.html">상품 등록
+							<a href="#">상품 등록
 							</a>
 						</li>
-						<li><a href="ui-panels.html">상품조회</a></li>
+						<li><a href="#">상품조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-home"></i><span>매장관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="tables-basic.html">매장신규등록</a></li>
-						<li><a href="tables-basic.html">매장정보조회</a></li>
+						<li><a href="#">매장신규등록</a></li>
+						<li><a href="#">매장정보조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-id-badge"></i><span>인사관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="forms-components.html">인사승인</a></li>
-						<li><a href="forms-validation.html">인사조회</a></li>
-						<li><a href="forms-validation.html">인사등록</a></li>
+						<li><a href="#">인사승인</a></li>
+						<li><a href="#">인사조회</a></li>
+						<li><a href="#">인사등록</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-building"></i><span>구매처관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/admin/account/accountList.do' />">구매처정보조회</a></li>
-						<li><a href="mail-compose.html">구매신청</a></li>
-						<li><a href="mail-compose.html">구매신청현황조회</a></li>
+						<li><a href="<c:url value='#' />">구매처정보조회</a></li>
+						<li><a href="#">구매신청</a></li>
+						<li><a href="#">구매신청현황조회</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-users"></i><span>회원관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="map-google.html">회원정보조회</a></li>
-						<li><a href="charts-chartjs.html">쿠폰등록</a></li>
-						<li><a href="charts-morris.html">쿠폰현황</a></li>
+						<li><a href="#">회원정보조회</a></li>
+						<li><a href="#">쿠폰등록</a></li>
+						<li><a href="#">쿠폰현황</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-wallet"></i><span>매출관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">매장별 판매 현황</a></li>
-						<li><a href="pages-login.html">판매베스트</a></li>
-						<li><a href="pages-sign-up.html">판매 분석(차트)</a></li>
+						<li><a href="#">매장별 판매 현황</a></li>
+						<li><a href="#">판매베스트</a></li>
+						<li><a href="#">판매 분석(차트)</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-truck"></i><span>입고/출고관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">매장입고 등록</a></li>
-						<li><a href="pages-login.html">매장반품 승인</a></li>
-						<li><a href="pages-sign-up.html">매장입고/반품 현황</a></li>
+						<li><a href="#">매장입고 등록</a></li>
+						<li><a href="#">매장반품 승인</a></li>
+						<li><a href="#">매장입고/반품 현황</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-comments"></i><span>공지사항</span><i
