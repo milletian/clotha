@@ -56,6 +56,7 @@ body {
 	-ms-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
 	z-index: 100;
+	padding-top: 0;
 }
 
 .sidebar #leftside-navigation ul, .sidebar #leftside-navigation ul ul {
@@ -88,6 +89,7 @@ body {
 	-o-transition: all 200ms ease-in;
 	-ms-transition: all 200ms ease-in;
 	transition: all 200ms ease-in;
+	
 }
 
 .sidebar #leftside-navigation ul li a:hover {
@@ -130,9 +132,22 @@ footer{
 	padding-left: 240px;
 	text-align: center;
 	width: 100%;
-	background: gray;
+	height : 57px;
+	background: #596d82;
 	position: absolute;
 	bottom: 0 ;
+	color: white;
+}
+
+ #logo{
+	width:240px; 
+	height: 57px;
+	background-color: #596d82;
+	text-decoration: none;
+	display: block;
+	padding: 18px 0 18px 25px;
+	font-size: 12px;
+
 }
 </style>
 
@@ -149,7 +164,7 @@ footer{
 </head>
 
 <body>
-	<header style="text-align: right;">
+	<header style="text-align: right; position: absolute; width: 100%; background-color: #596d82">
 		<div class="fim-dropdown">
 			<label><i class="fa fa-envelope-o fa-lg"></i></label>
 			<div class="inner">
@@ -202,6 +217,9 @@ footer{
 	</script>
 
 	<aside class="sidebar" >
+		<div id="logo">
+			로고만들어서 넣자 !
+		</div>
 		<div id="leftside-navigation" class="nano">
 			<ul class="nano-content">
 				<li class="sub-menu">
@@ -289,4 +307,4 @@ footer{
 			</ul>
 		</div>
 	</aside>
-	<article style="padding-left: 240px">
+	<article style="padding-left: 240px;padding-top: 57px;">

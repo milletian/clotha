@@ -2,7 +2,7 @@
 
 
 
-<iframe src="<c:url value='/admin/account/accountList.do' />" height="800px" width="100%">
+<iframe name="if" src="<c:url value='/admin/account/accountList.do' />" height="800px" width="100%">
 
 </iframe>
 
