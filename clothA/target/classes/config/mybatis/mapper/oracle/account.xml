@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.account">
+<select id="SearchAccount" parameterType="AccountVO" resultType="AccountVO">
+	select * from account 
+	<where>
+		<if test="accIsdeal!='전체'">
+			acc_isdeal =#{accIsdeal}		
+		</if>
+		<if test="searchKeyword!='' and searchKeyword!=null">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'		
+		</if>
+	</where> 
+	order by acc_name
+</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
