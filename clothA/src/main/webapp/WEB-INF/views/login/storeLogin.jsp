@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,6 +29,26 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var ss = 1;
+			setInterval(function(){
+				if(ss==9){
+					ss=1;
+				}
+				$("#main11").css("background-image","url(images/"+ss+".png)")
+				ss++;
+			},2000);
+		});
+	</script>
 </head>
 <body>
 <div class="limiter">
@@ -69,8 +90,9 @@
 						</a>
 					</div>
 				</form>
+				
 
-				<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+				<div id="main11" class="login100-more"></div>
 			</div>
 		</div>
 	</div>
@@ -79,15 +101,7 @@
 
 	<div id="dropDownSelect1"></div>
 	
-<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
+
 	<script>
 		$(".selection-2").select2({
 			minimumResultsForSearch: 20,
