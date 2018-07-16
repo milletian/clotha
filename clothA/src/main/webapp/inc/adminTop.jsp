@@ -270,7 +270,7 @@ footer{
 					<ul>
 						<li><a href="#">인사승인</a></li>
 						<li><a href="#">인사조회</a></li>
-						<li><a href="#">인사등록</a></li>
+						<li><a href="<c:url value='/admin/employee/register.do' />" target="if">인사등록</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-building"></i><span>구매처관리</span><i
