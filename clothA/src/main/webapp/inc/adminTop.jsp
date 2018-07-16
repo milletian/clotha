@@ -139,7 +139,7 @@ footer{
 	color: white;
 }
 
- #logo{
+ .logo{
 	width:240px; 
 	height: 57px;
 	background-color: #596d82;
@@ -147,8 +147,16 @@ footer{
 	display: block;
 	padding: 0;
 	font-size: 12px;
+ }
+ .viewBody{
+ 	padding: 57px 0 57px 240px;
+ 	position: absolute; 
+ 	min-height: 100%;
+ 	width: 100%;
+ 	height: 100%;
+ }
 
-}
+
 </style>
 
 <script
@@ -217,7 +225,7 @@ footer{
 	</script>
 
 	<aside class="sidebar" >
-		<div id="logo" >
+		<div class="logo" >
 			<a href="#" style="text-align: left;"><img alt="" src="<c:url value='/images/logo5.png'/>" style="width: 240px; height: 57px; "></a>
 		</div>
 		<div id="leftside-navigation" class="nano">
@@ -307,4 +315,5 @@ footer{
 			</ul>
 		</div>
 	</aside>
-	<article style="padding-left: 240px;padding-top: 57px;">
+	<article class="viewBody"> 
+	

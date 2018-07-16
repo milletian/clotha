@@ -11,5 +11,11 @@ public class TestController {
 		
 		return "test";
 	}
+	
+	@RequestMapping	("/admin/testbody.do")
+	public String testbody() {
+		
+		return "admin/testbody";
+	}
 
 }
