@@ -20,7 +20,7 @@
 </select>
 <insert id="insertAccount" parameterType="AccountVO">
 	insert into account(ACC_CODE,ACC_NAME,ACC_ZIPCODE,ACC_ADDRESS,ACC_TEL,ACC_CEO,ACC_NO,ACC_ISDEAL,ACC_UNIQUE)
-	values('acc'||accseq.nextval,#{accName},#{accZipcode},#{accAddress},#{accTel},#{accCeo},#{accNo},#{accIsdeal},#{accUnique})
+	values('acc'||account_seq.nextval,#{accName},#{accZipcode},#{accAddress},#{accTel},#{accCeo},#{accNo},#{accIsdeal},#{accUnique})
 </insert>
 <update id="updateAccount" parameterType="AccountVO">
 	update account
