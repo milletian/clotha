@@ -38,7 +38,7 @@ public class StoreLoginController {
 		int result = employeeService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 		logger.info("로그인 결과 ={}",result);
 		
-		String msg = "", url = "/login/storeLogin.do";
+		String msg = "", url = "/storeLogin.do";
 		if(result==employeeService.LOGIN_OK) {
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
 			request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
