@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EmployeeDAOMybatis {
+public class EmployeeDAOMybatis implements EmployeeDAO {
 	private String namespace="config.mybatis.mapper.oracle.employee.";
 	
 	@Autowired private SqlSessionTemplate sqlSession;
