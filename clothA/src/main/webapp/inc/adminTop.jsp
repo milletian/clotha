@@ -252,7 +252,7 @@ footer{
 					</a>
 					<ul>
 						<li>
-							<a href="#">상품 등록
+							<a href="<c:url value='/admin/products/productWrite.do'/>" target="if">상품 등록
 							</a>
 						</li>
 						<li><a href="#">상품조회</a></li>
