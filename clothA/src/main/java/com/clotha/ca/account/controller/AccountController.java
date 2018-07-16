@@ -29,7 +29,7 @@ public class AccountController {
 	
 	@RequestMapping(value="/accountWrite.do", method=RequestMethod.GET)
 	public String accountWrite_get(@RequestParam(required=false) String accCode,Model model) {
-		if(!accCode.isEmpty()&&accCode!=null) {
+		if(accCode!=null&&!accCode.isEmpty()) {
 			AccountVO accVo = accountService.SearchAccountByCode(accCode);
 			model.addAttribute("accVo", accVo);
 		}

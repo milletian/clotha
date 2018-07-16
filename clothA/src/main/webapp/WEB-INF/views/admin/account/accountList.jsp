@@ -7,6 +7,8 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
 <script type="text/javascript">
 $(function() {
 	$('#btn').click(function() {
@@ -47,7 +49,17 @@ $(function() {
 			}
 		})
 	})
+	
 })
+function popupOpen(acc_Code){
+
+	var popUrl = "<c:url value='/admin/account/accountWrite.do?acc_Code="+acc_Code+" '/>";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"정보입력",popOption);
+
+	}
 </script>
 <style type="text/css">
 #wrap,#maincontent{
@@ -58,7 +70,6 @@ $(function() {
 	text-align: left;
 	padding: 15px;
 }
-
 </style>
 <div id="wrap">
 	<form name="frmAccountList" id="frmAccountList">
@@ -78,9 +89,8 @@ $(function() {
 		<input type="button" id="btn" value="거래처 조회">
 	</form>
 </div>
-
 <div id="maincontent">    
-	<a href="#"><i class="fas fa-edit"></i></a>
+	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
 	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
 	<a href="#"><i class="fas fa-trash-alt"></i></a>
 	<div id="content1"></div>
