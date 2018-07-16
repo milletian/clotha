@@ -46,7 +46,7 @@
 				}
 				$("#main11").css("background-image","url(images/"+ss+".png)")
 				ss++;
-			},2000);
+			},3000);
 		});
 	</script>
 </head>
@@ -54,7 +54,7 @@
 <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="post" action="<c:url value='/storeLogin.do'/> " >
 					<span class="login100-form-title p-b-34">
 						Cloth A+
 					</span>

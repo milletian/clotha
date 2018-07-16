@@ -8,5 +8,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
 	private EmployeeDAO employeeDao;
+
+	@Override
+	public EmployeeVO selectEmployee(String empNo) {
+		return employeeDao.selectEmployee(empNo);
+	}
+
+	@Override
+	public int loginCheck(String empNo, String pwd) {
+		String dbPwd = employeeDao.selectPwd(empNo);
+		if(dbPwd==null || dbPwd.isEmpty()) {
+			return ID_NONE;
+		}else {
+			if(pwd.equals(dbPwd)) {
+				return LOGIN_OK;
+			}else {
+				return PWD_DISAGREE; 
+			}
+		}//if
+		
+	}
 	
 }
