@@ -15,16 +15,17 @@ $(function() {
 	})
 })
 </script>
-<form>
-	<input type="hidden" name="accCode">
-	회사명 <input type="text" name="accName"><br>
-	사용여부 <input type="checkbox" name="accIsdeal"><br>
-	대표자명 <input type="text" name="accCeo"><br>
-	대표전화 <input type="text" name="accTel"><br>
-	주소 <input type="text" name="accZipcode"><button id="searchZipcode"></button>
+<form name="frmAccWrite" action="<c:url value='/admin/account/accountWrite.do' />" method="post">
+	<input type="hidden" name="accCode"  value="${accVo.accCode }">  
+	회사명 <input type="text" name="accName" value="${accVo.accName }"><br>
+	사용여부 <input type="checkbox" name="accIsdeal" checked="checked"><br>
+	대표자명 <input type="text" name="accCeo" value="${accVo.accCeo }"><br>
+	대표전화 <input type="text" name="accTel" value="${accVo.accTel }"><br>
+	법인번호 <input type="text" name="accNo" value="${accVo.accNo }"><br>
+	주소 <input type="text" name="accZipcode" ><button id="searchZipcode">우편번호 찾기</button>
 	<input type="text" name="address"><br>
 	<input type="text" name="addressDetail"><br>
-	<input type="text" name="accUnique"><br>
+	<input type="text" name="accUnique" value="${accVo.accUnique }"><br>
 	<hr>
 	<input type="button" id="closeWrite" value="닫기">
 	<input type="submit" value="저장">

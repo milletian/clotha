@@ -10,6 +10,7 @@ public class AccountVO extends SearchVO{
 	private String accTel;
 	private String accCeo;
 	private String accNo;
+	private String accZipcode;
 	private String accIsdeal;
 	private String accUnique;
 	public String getAccCode() {
@@ -60,12 +61,21 @@ public class AccountVO extends SearchVO{
 	public void setAccUnique(String accUnique) {
 		this.accUnique = accUnique;
 	}
+	
+	
+	public String getAccZipcode() {
+		return accZipcode;
+	}
+	public void setAccZipcode(String accZipcode) {
+		this.accZipcode = accZipcode;
+	}
 	@Override
 	public String toString() {
 		return "AccountVO [accCode=" + accCode + ", accName=" + accName + ", accAddress=" + accAddress + ", accTel="
-				+ accTel + ", accCeo=" + accCeo + ", accNo=" + accNo + ", accIsdeal=" + accIsdeal + ", accUnique="
-				+ accUnique + super.toString()+"]";
+				+ accTel + ", accCeo=" + accCeo + ", accNo=" + accNo + ", accZipcode=" + accZipcode + ", accIsdeal="
+				+ accIsdeal + ", accUnique=" + accUnique + "]"+super.toString();
 	}
+	
 	
 	
 }

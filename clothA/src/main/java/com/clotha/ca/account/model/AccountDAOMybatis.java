@@ -16,11 +16,22 @@ public class AccountDAOMybatis implements AccountDAO{
 	private SqlSessionTemplate sqlSession;
 	@Override
 	public List<AccountVO> accountList(AccountVO vo) {
-		System.out.println(vo);
 		List<AccountVO> list = sqlSession.selectList(namespace+"SearchAccount", vo);
-		System.out.println(list.size());
 		
 		return list;
+	}
+	@Override
+	public int insertAccount(AccountVO vo) {
+		return sqlSession.insert(namespace+"insertAccount", vo);
+	}
+	@Override
+	public int updateAccount(AccountVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace+"updateAccount", vo);
+	}
+	@Override
+	public AccountVO SearchAccountByCode(String accCode) {
+		return sqlSession.selectOne(namespace+"SearchAccountByCode", accCode);
 	}
 
 }

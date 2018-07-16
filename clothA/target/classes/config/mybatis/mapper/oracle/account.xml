@@ -14,6 +14,20 @@
 	</where> 
 	order by acc_name
 </select>
+<select id="SearchAccountByCode" parameterType="string" resultType="AccountVO">
+	select * from account where ACC_CODE=#{accCode}
+	
+</select>
+<insert id="insertAccount" parameterType="AccountVO">
+	insert into account(ACC_CODE,ACC_NAME,ACC_ZIPCODE,ACC_ADDRESS,ACC_TEL,ACC_CEO,ACC_NO,ACC_ISDEAL,ACC_UNIQUE)
+	values('acc'||accseq.nextval,#{accName},#{accZipcode},#{accAddress},#{accTel},#{accCeo},#{accNo},#{accIsdeal},#{accUnique})
+</insert>
+<update id="updateAccount" parameterType="AccountVO">
+	update account
+	set ACC_NAME=#{accName},ACC_ZIPCODE=#{accZipcode},ACC_ADDRESS=#{accAddress},ACC_TEL=#{accTel},ACC_CEO=#{accCeo}
+	,ACC_NO=#{accNo},ACC_ISDEAL=#{accIsdeal},ACC_UNIQUE=#{accUnique}
+	where ACC_CODE=#{accCode}
+</update>
 	
 </mapper>
 

@@ -14,4 +14,16 @@ public class AccountServiceImpl implements AccountService {
 	public List<AccountVO> accountList(AccountVO vo){
 		return accountDao.accountList(vo);
 	}
+	@Override
+	public int insertAccount(AccountVO vo) {
+		if(vo.getAccCode().isEmpty()||vo.getAccCode()==null) {
+			return accountDao.insertAccount(vo);
+		}else {
+			return accountDao.updateAccount(vo);
+		}
+	}
+	@Override
+	public AccountVO SearchAccountByCode(String accCode) {
+		return accountDao.SearchAccountByCode(accCode);
+	}
 }

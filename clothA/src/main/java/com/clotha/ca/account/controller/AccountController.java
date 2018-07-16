@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,8 +28,22 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@RequestMapping(value="/accountWrite.do", method=RequestMethod.GET)
-	public String accountWrite_get(@RequestParam(required=false) String accCode) {
+	public String accountWrite_get(@RequestParam(required=false) String accCode,Model model) {
+		if(!accCode.isEmpty()&&accCode!=null) {
+			AccountVO accVo = accountService.SearchAccountByCode(accCode);
+			model.addAttribute("accVo", accVo);
+		}
 		return "admin/account/accountWrite";
+	}
+	
+	@RequestMapping(value="/accountWrite.do", method=RequestMethod.POST)
+	public String accountWrite_post(@RequestParam String address,@RequestParam String addressDetail,@ModelAttribute AccountVO accVo) {
+		logger.info("vo={},address={}",accVo,address);
+		logger.info("detail={}",addressDetail);
+		accVo.setAccAddress(address+addressDetail);
+		accountService.insertAccount(accVo);
+		
+		return "입력성공!";
 	}
 	
 	@RequestMapping(value="/accountList.do", method=RequestMethod.GET)
