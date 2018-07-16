@@ -37,18 +37,6 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			var ss = 1;
-			setInterval(function(){
-				if(ss==9){
-					ss=1;
-				}
-				$("#main11").css("background-image","url(images/"+ss+".png)")
-				ss++;
-			},2000);
-		});
-	</script>
 </head>
 <body>
 <div class="limiter">
@@ -60,11 +48,11 @@
 					</span>
 					
 					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="사원코드를 입력하세요">
-						<input id="first-name" class="input100" type="text" name="empNo" placeholder="사원코드">
+						<input id="first-name" class="input100" type="text" name="username" placeholder="사원코드">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="비밀번호를 입력하세요">
-						<input class="input100" type="password" name="empPwd" placeholder="비밀번호">
+						<input class="input100" type="password" name="pass" placeholder="비밀번호">
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -84,6 +72,11 @@
 						</a>
 					</div>
 
+					<div class="w-full text-center">
+						<a href="#" class="txt3">
+							Sign Up
+						</a>
+					</div>
 				</form>
 				
 

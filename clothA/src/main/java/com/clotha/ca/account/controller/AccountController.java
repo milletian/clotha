@@ -43,7 +43,7 @@ public class AccountController {
 		accVo.setAccAddress(address+addressDetail);
 		accountService.insertAccount(accVo);
 		
-		return "ÀÔ·Â¼º°ø!";
+		return "ìˆ˜ì •ì„±ê³µ!";
 	}
 	
 	@RequestMapping(value="/accountList.do", method=RequestMethod.GET)
