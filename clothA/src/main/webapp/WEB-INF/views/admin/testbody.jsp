@@ -30,13 +30,7 @@
 <div class="viewBody">
 	<!-- Main content  -->
 	<div class="box1">
-		<br>
-	</div>
-	<div class="box1">
-		<br>
-	</div>
-	<div class="box2">
-		<br>
+		
 	</div>
 </div>
 

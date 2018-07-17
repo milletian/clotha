@@ -6,8 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clotha.ca.common.SearchVO;
-
 @Repository
 public class AccountDAOMybatis implements AccountDAO{
 	private String namespace="config.mybatis.mapper.oracle.account.";

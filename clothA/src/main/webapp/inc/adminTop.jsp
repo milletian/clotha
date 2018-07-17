@@ -161,13 +161,6 @@ footer{
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("#leftside-navigation ul li a").click(function(){
-			var $(this).location.href()
-		});
-	});
-</script>
 
 </head>
 
