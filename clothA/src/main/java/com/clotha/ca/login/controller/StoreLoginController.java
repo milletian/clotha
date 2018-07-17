@@ -1,5 +1,8 @@
 package com.clotha.ca.login.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
+import com.clotha.ca.log.model.LogService;
+import com.clotha.ca.log.model.LogVO;
 
 @Controller
 public class StoreLoginController {
 	private static final Logger logger = LoggerFactory.getLogger(StoreLoginController.class);
 	
 	@Autowired private EmployeeService employeeService;
+	@Autowired private LogService logService;
 	
 	@RequestMapping(value="storeLogin.do",method=RequestMethod.GET )
 	public String Login() {
@@ -44,11 +50,24 @@ public class StoreLoginController {
 			request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
 			request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
 			
+			InetAddress local;
+			try {
+				local = InetAddress.getLocalHost();
+				String ip = local.getHostAddress();
+				LogVO logVo = new LogVO();
+				logVo.setEmpNo(vo.getEmpNo());
+				logVo.setLogIp(ip);
+				int cnt = logService.loginInsert(logVo);
+				logger.info("로그찍기 결과 cnt = {} ,ip={}",cnt,ip);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+			
 			Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
 			ck.setPath("/");
 			msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
 			url="/test.do";
-			
+
 		}else if(result == employeeService.PWD_DISAGREE) {
 			msg="비밀번호가 일치하지 않습니다.";
 		}else if(result == employeeService.ID_NONE) {

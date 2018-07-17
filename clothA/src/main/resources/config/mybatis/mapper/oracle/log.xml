@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.log">
+	
+	<insert id="loginInsert" parameterType="logVo">
+		insert into log(log_pk,emp_no,log_ip,log_in)
+		values(log_seq.nextval,#{empNo},#{logIp},sysdate)
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
