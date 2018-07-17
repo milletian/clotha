@@ -47,7 +47,13 @@
 				$("#main11").css("background-image","url(images/"+ss+".png)")
 				ss++;
 			},3000);
+			
+			$("#forgetPwd").click(function(){
+				window.open("<c:url value='/login/forgetPassword.do'/>","비밀번호찾기","width=300, heigth=300, menubar=no, titlebar=no, resizable=yes" );
+			})
 		});
+		
+		
 	</script>
 </head>
 <body>
@@ -79,8 +85,8 @@
 							Forgot
 						</span>
 
-						<a href="#" class="txt2">
-							User name / password?
+						<a href="#" class="txt2" id="forgetPwd" >
+							password
 						</a>
 					</div>
 

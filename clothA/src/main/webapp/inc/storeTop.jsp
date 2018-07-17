@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -208,10 +207,11 @@ footer{
 						class="far fa-id-badge"></i><span>인사관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="forms-components.html">인사등록신청</a></li>
+						<c:if test="${sessionScope.gradeCode >3 }">
+							<li><a href="forms-components.html">인사등록신청</a></li>
+						</c:if>
 						<li><a href="forms-validation.html">인사조회</a></li>
 					</ul></li>
-				
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-users"></i><span>회원관리</span><i
