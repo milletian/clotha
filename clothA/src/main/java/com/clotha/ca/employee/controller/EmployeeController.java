@@ -1,12 +1,22 @@
 package com.clotha.ca.employee.controller;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
+import com.clotha.ca.employee.model.EmployeeVO;
 
 @Controller
 @RequestMapping("/admin/employee")
@@ -16,12 +26,54 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private FileUploadUtil fileUploadUtil;
 	
 	@RequestMapping("register.do")
-	public String register() {
+	public void register() {
 		logger.info("직원등록 페이지 보여주기");
 		
-		return "admin/employee/register";
-		
 	}
+	
+	@RequestMapping("/employeeWrite.do")
+	public String employeeWrite(@ModelAttribute EmployeeVO employeeVo, 
+			HttpServletRequest request,Model model ) {
+		logger.info("인사등록 처리 파라메타 vo={}", employeeVo);
+		
+		
+		//파일 업로드
+		String fileName="";
+		try {
+			List<Map<String, Object>> list
+			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
+			for(Map<String, Object> map:list) {
+				fileName =(String) map.get("fileName");				
+			}
+			employeeVo.setEmpFace(fileName);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		//db
+		int cnt=employeeService.insertEmployee(employeeVo);
+		logger.info("인사등록 결과 cnt={}", cnt);
+		
+		String msg="", url="/admin/employee/register.do";
+		if(cnt>0) {
+			msg="등록 완료 되었습니다";
+		}else {
+			msg="등록에 실패 했습니다";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+}
+	
 }

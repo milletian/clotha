@@ -19,72 +19,69 @@
 
 <div class="viewBody">
 	<!-- Main content  -->
-	<form name="register" method="post" enctype="multipart/form-data" action="#">
+	<form name="frm" method="post" enctype="multipart/form-data" action="<c:url value='/admin/employee/employeeWrite.do'/>">
 
 		<div class="box3">
 			<div>
-				<label>사원코드 </label> <span>등록된 사원번호</span>
-			</div>
-			<div>
-				<label>부서코드 <select>
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
+				<label for="deptNo">부서코드</label>
+				<select name="deptNo" id="deptNo" title="부서코드" class="valid">
+            		<option value="10">정직원</option>
+            		<option value="20">계약직</option>
+            		<option value="30">단기알바</option>
 				</select>
-				</label>
 			</div>
 			<div>
-				<label>이름 <input type="text">
-				</label>
+				<label for="empName">이름 </label>
+				<input type="text" name="empName" id="empName" class="valid">
 			</div>
 			<div>
-				<label>비밀번호 <input type="password">
-				</label>
+				<label for="empPwd">비밀번호</label>
+				<input type="password" name="empPwd" id="empPwd" class="valid">
 			</div>
 			<div>
-				<label>주소 <input type="button" value="검색">
-				</label>
+        		<label for="pwd2">비밀번호 확인</label>
+        		<input type="Password" name="pwd2" id="pwd2">
+		    </div>
+			 <div>
+     		   <label for="zipcode">주소</label>
+        	   <input type="text" name="empZipcode" id="empZipcode"  title="우편번호" >
+        	   <input type="Button" value="우편번호 찾기" id="btnZipcode" title="새창열림"><br />
+        	  <!--  <span class="">&nbsp;</span> -->
+       		   <input type="text" name="empAddress" id="empAddress" title="주소" ><br />
+        	 <!--   <span class="">&nbsp;</span> -->
+        	   <input type="text" name="addressDetail" title="상세주소"  >
+    		</div>
+			<div>
+				<label for="empJumin">주민등록번호</label> 
+				<input type="text" name="empJumin" id="empJumin" class="valid">
 			</div>
 			<div>
-				<label>상세주소 <input type="text">
-				</label>
+				<label for="empTel">전화번호</label>
+				<input type="text" name="empTel" id="empTel" class="valid">
 			</div>
 			<div>
-				<label>주민번호 
-				<input type="text">-<input type="password">
-			</div>
-			</label>
-			<div>
-				<label>전화번호 <input type="text">
-				</label>
+				<label for="empEmail">이메일</label>
+				<input type="text" name="empEmail" id="empEmail" class="valid">
 			</div>
 			<div>
-				<label>사진(이미지) <input type="file">
-				</label>
+				<label for="uploadFace">증명사진첨부(image)</label>
+				<input type="file" name="uploadFace" id="uploadFace">
 			</div>
 			<div>
-				<label>담당업무 <input type="text">
-				</label>
+				<label for="empJob">담당업무</label>
+				<input type="text" name="empJob" id="empJob" class="valid">
 			</div>
 			<div>
-				<label>입사날짜 
-				<select>
-						<option>인사관리</option>
-						<option>재고관리</option>
-						<option>상품관리</option>
-						<option>창고관리</option>
+				<label for="gradeCode">직급</label> 
+				<select name="gradeCode" id="gradeCode" title="직급" class="valid">
+					<option value="1" >마스터</option>
+					<option value="2" >본사 관리자</option>
+					<option value="3" >점장</option>
+					<option value="4" >사원</option>
 				</select>
-				</label>
 			</div>
-			<div>
-				<label>권한코드 
-				<select>
-						<option>전지전능</option>
-						<option>할줄아는게있냐</option>
-						<option>무쓸모</option>
-				</select>
-				</label>
-			</div>
+		 <input type ="submit" value="등록">
+	     <input type ="reset"  value="취소" >
 		</div>
 	</form>
 </div>

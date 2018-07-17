@@ -7,12 +7,17 @@
 		select * from employee where emp_no=#{empNo}
 	</select>
 	
-	<select id="selectPwd" parameterType="string" resultType="string" >
+	<select id="selectPwd" parameterType="string" resultType="String" >
 		select emp_pwd from employee where emp_no=#{empNo}
 	</select>
 	
+	<insert id="insertEmployee" parameterType="EmployeeVO" >
+		insert into employee(EMP_NO, DEPT_NO, EMP_NAME, EMP_PWD, EMP_ZIPCODE, EMP_ADDRESS,
+		          EMP_JUMIN, EMP_TEL, EMP_FACE, EMP_JOB, grade_code,emp_Email)
+        values(employee_seq.nextval, #{deptNo}, #{empName}, #{empPwd}, #{empZipcode}, #{empAddress}, #{empJumin},
+                  #{empTel},#{empFace},#{empJob},#{gradeCode} , #{empEmail})
+	</insert>
 </mapper>
-
 
 
 

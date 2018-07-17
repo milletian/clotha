@@ -28,5 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}//if
 		
 	}
+
+	@Override
+	public int insertEmployee(EmployeeVO employeeVo) {
+		return employeeDao.insertEmployee(employeeVo);
+	}
 	
 }

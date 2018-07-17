@@ -20,4 +20,9 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		return sqlSession.selectOne(namespace+"selectPwd",empNo);
 	}
 
+	@Override
+	public int insertEmployee(EmployeeVO employeeVo) {
+		return sqlSession.insert(namespace+"insertEmployee",employeeVo);
+	}
+
 }
