@@ -17,6 +17,29 @@
 <script type="text/javascript">
 $(function() {
 	$("table").tablesorter(); 
+	
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/account/accountList.do' />",
+    	dataType:'json',
+    	success:function(res){
+    		if (res.length > 0){
+    			$("#selSearchSupplier").html('');
+    			$.each(res,function(idx, item){
+    				var option = "<option value="+item.accCode+">";
+    				option += item.accName;
+    				option += "</option>";
+        			$("#selSearchSupplier").append(option);
+    			})
+    		}else{
+    			$("#selSearchSupplier").html('');
+    		}
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		}
+	})
+	
 	$('#btn').click(function() { 
     	$.ajax({
         	type:"POST",
@@ -82,7 +105,7 @@ $(function() {
 })
 function popupOpen(ACC_DT_CODE){
 
-	var popUrl = "<c:url value='/admin/account/accountWrite.do?acc_Code="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
+	var popUrl = "<c:url value='/admin/account/accountWrite.do?accCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
@@ -104,7 +127,7 @@ function popupOpen(ACC_DT_CODE){
 	<form name="frmAccountDetailList" id="frmAccountDetailList">
 		<label>기간</label><i class="fa fa-calendar"></i><input type="text" id="searchDateRange">
 		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>		
+		<select style="max-height: 30px;" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>		
 		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회(F2)</button>
 		
 		

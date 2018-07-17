@@ -59,9 +59,4 @@ public class AccountController {
 		logger.info("{}",list.size());
 		return list;
 	}
-	
-	@RequestMapping(value="/accountDetailList.do", method=RequestMethod.GET)
-	public String accountDetailList_get() {
-		return "admin/account/accountDetailList";
-	}
 }

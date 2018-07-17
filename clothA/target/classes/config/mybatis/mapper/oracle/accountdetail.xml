@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.accountdetail">
+	<select id="">
+		<!-- select * from ACCOUNT_DETAIL accd join ACCOUNT acc
+		on accd.ACC_CODE = acc.ACC_CODE 
+		where ACC_DT_REGDATE >#{startDay} and ACC_DT_REGDATE <to_date(#{endDay})+1
+		and accd.ACC_CODE='1' -->
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

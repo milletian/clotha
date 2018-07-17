@@ -14,20 +14,114 @@ $(function() {
 	$('#closeWrite').click(function() {
 		self.close();
 	})
+	
+	$("#accTel").keyup(function() {
+		var x = $(this).val();
+		$(this).val(autoHypenPhone(x));
+	});
+	
 	$('form[name=frmAccWrite]').submit(function() {
 		var bool = true;
+		var CpNumber = $('#accNo').val();
+		
 		$('input[type=text]').each(function() {
-			if($(this).val()==''){
+			if($(this).val().length<1){
 				bool = false;
 				$(this).prev().focus();
 				alert($(this).prev().text()+"는 필수 입력 항목입니다.");
 				return false;
 			}
 		})
+		if(bool){
+			if(!CorporationNumber(CpNumber)){
+				bool=false;
+				$('#accNo').prev().focus();
+			}
+		}
+		
+		/* if(bool){
+			alert($('#accTel').val().length);
+			if($('#accTel').val().length<12){
+				bool=false;
+				alert("올바른 형식이 아닙니다.");
+				$('#accTel').prev().focus();
+			}
+		} */
 		return bool;
 	});
 	
+	
+	
 })
+
+//핸드폰번호 자동 하이픈
+function autoHypenPhone(str){
+  str = str.replace(/[^0-9]/g, '');
+  var tmp = '';
+  if( str.length < 4){
+    return str;
+  }else if(str.length < 7){
+    tmp += str.substr(0, 3);
+    tmp += '-';
+    tmp += str.substr(3);
+    return tmp;
+  }else if(str.length < 11){
+    tmp += str.substr(0, 3);
+    tmp += '-';
+    tmp += str.substr(3, 3);
+    tmp += '-';
+    tmp += str.substr(6);
+    return tmp;
+  }else{        
+    tmp += str.substr(0, 3);
+    tmp += '-';
+    tmp += str.substr(3, 4);
+    tmp += '-';
+    tmp += str.substr(7);
+    return tmp;
+  }
+  return str;
+}
+//법인번호 유효성 검사
+function CorporationNumber(str) {
+    // 법인번호 오류검증 공식
+    // 법인번호에서 마지막 자리를 제외한
+    // 앞에 모든 자리수를 1과 2를 순차적으로 곱한다.
+    // 예) 1234567890123
+    //     ************
+    //     121212121212
+    //     각각 곱한 수를 모든 더하고 10으로 나눈 나머지 수를 구한다.
+    //     (각각더한수 % 10)
+    //     나눈 나머지 수와 법인번호 마지막 번호가 일치하면 검증일치 
+    var totalNumber = 0;
+    var num = 0;
+    for (i = 0; i < str.length-1; i++) {
+        if (((i + 1) % 2) == 0) {
+            num = parseInt(str.charAt(i)) * 2;
+        } else {
+            num = parseInt(str.charAt(i)) * 1;
+        }
+        if (num > 0) {
+            totalNumber = totalNumber + num;
+        }
+    }
+    totalNumber = (totalNumber%10 < 10) ? totalNumber%10 : 0;
+    if (str == "") {
+        alert("법인번호를 입력하세요.");
+        return false;
+    } else if (str.length != 13) {
+        alert("유효하지 않은 법인 번호입니다.");
+        return false;
+    } else if (!this.numberChecked(str)) {
+        alert("유효하지 않은 법인 번호입니다.");
+        return false;
+    } else if (totalNumber != str.charAt(str.length-1)) {
+        alert("유효하지 않은 법인 번호입니다.");
+        return false;
+    } else {
+        return true;
+    }
+}
  
 </script>
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -38,13 +132,13 @@ $(function() {
 	<label for="accName">회사명 </label><input type="text" id="accName" name="accName" value="${accVo.accName }"><br>
 	<label for="accIsdeal">사용여부 </label><input type="checkbox" id="accIsdeal" name="accIsdeal" checked="checked"><br>
 	<label for="accCeo">대표자명 </label><input type="text" id="accCeo" name="accCeo" value="${accVo.accCeo }"><br>
-	<label for="accTel">대표전화 </label><input type="text" id="accTel" name="accTel" value="${accVo.accTel }"><br>
-	<label for="accNo">법인번호 </label><input type="text" id="accNo" name="accNo" value="${accVo.accNo }"><br>
+	<label for="accTel">대표전화 </label><input type="text" id="accTel" name="accTel" value="${accVo.accTel }" maxlength="13"><br>
+	<label for="accNo">법인번호 </label><input type="text" id="accNo" name="accNo" value="${accVo.accNo }" maxlength="13"><br>
 	<label for="accZipcode">우편번호</label> <input type="text" id="accZipcode" name="accZipcode" >
 	<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 	<label for="address">주소</label><input type="text" id="address" name="address"><br>
 	<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-	<input type="text" id="accUnique" name="accUnique" value="${accVo.accUnique }"><br>
+	<label for="accUnique">특이사항</label><input type="text" id="accUnique" name="accUnique" value="${accVo.accUnique }"><br>
 	<hr>
 	<input type="button" id="closeWrite" value="닫기">
 	<input type="submit" value="저장">

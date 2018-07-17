@@ -5,7 +5,7 @@
 <select id="SearchAccount" parameterType="AccountVO" resultType="AccountVO">
 	select * from account 
 	<where>
-		<if test="accIsdeal!='전체'">
+		<if test="accIsdeal!='전체' and accIsdeal!=null and accIsdeal!=''">
 			acc_isdeal =#{accIsdeal}		
 		</if>
 		<if test="searchKeyword!='' and searchKeyword!=null">
