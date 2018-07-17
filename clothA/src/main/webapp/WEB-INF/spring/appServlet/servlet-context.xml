@@ -37,4 +37,14 @@
 	     <beans:property name="order" value="0" />
 	</beans:bean>
 	
+	<interceptors>   
+		<interceptor> 
+			<mapping path="/test.do" /> 
+			<mapping path="/admin/*"/>
+			<mapping path="/admin/*/*"/>
+			<!-- <exclude-mapping path="/info/**"/> -->       
+			<beans:ref bean ="loginInterceptor" />
+		</interceptor> 
+	</interceptors>
+	
 </beans:beans>
