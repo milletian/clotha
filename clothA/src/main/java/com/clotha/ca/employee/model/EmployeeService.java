@@ -7,7 +7,7 @@ public interface EmployeeService {
 	int ID_NONE=2;  //해당 아이디가 없다
 	int PWD_DISAGREE=3;  //비밀번호가 일치하지 않는다
 	
-	public EmployeeVO selectEmployee(String empNo);
-	public int loginCheck(String empNo,String pwd);
+	public EmployeeVO selectEmployee(String empNo);	//StoreLoginController
+	public int loginCheck(String empNo,String pwd);	//StoreLoginController
 	
 }

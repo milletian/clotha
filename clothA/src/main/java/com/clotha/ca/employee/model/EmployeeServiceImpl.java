@@ -10,12 +10,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDAO employeeDao;
 
 	@Override
-	public EmployeeVO selectEmployee(String empNo) {
+	public EmployeeVO selectEmployee(String empNo) {	//StoreLoginController
 		return employeeDao.selectEmployee(empNo);
 	}
 
 	@Override
-	public int loginCheck(String empNo, String pwd) {
+	public int loginCheck(String empNo, String pwd) {	//StoreLoginController
 		String dbPwd = employeeDao.selectPwd(empNo);
 		if(dbPwd==null || dbPwd.isEmpty()) {
 			return ID_NONE;

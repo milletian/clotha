@@ -46,28 +46,32 @@ public class StoreLoginController {
 		
 		String msg = "", url = "/storeLogin.do";
 		if(result==employeeService.LOGIN_OK) {
+			
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
-			request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
-			request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
-			
-			InetAddress local;
-			try {
-				local = InetAddress.getLocalHost();
-				String ip = local.getHostAddress();
-				LogVO logVo = new LogVO();
-				logVo.setEmpNo(vo.getEmpNo());
-				logVo.setLogIp(ip);
-				int cnt = logService.loginInsert(logVo);
-				logger.info("로그찍기 결과 cnt = {} ,ip={}",cnt,ip);
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
+			if(employeeVo.getEmpDel().equals("N")) {
+				msg="퇴사 또는 입사승인 대기중인 사원코드입니다.";
+			}else {
+				request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
+				request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
+				
+				InetAddress local;
+				try {
+					local = InetAddress.getLocalHost();
+					String ip = local.getHostAddress();
+					LogVO logVo = new LogVO();
+					logVo.setEmpNo(vo.getEmpNo());
+					logVo.setLogIp(ip);
+					int cnt = logService.loginInsert(logVo);
+					logger.info("로그찍기 결과 cnt = {} ,ip={}",cnt,ip);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}
+				
+				Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
+				ck.setPath("/");
+				msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
+				url="/test.do";
 			}
-			
-			Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
-			ck.setPath("/");
-			msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
-			url="/test.do";
-
 		}else if(result == employeeService.PWD_DISAGREE) {
 			msg="비밀번호가 일치하지 않습니다.";
 		}else if(result == employeeService.ID_NONE) {

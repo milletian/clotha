@@ -12,8 +12,8 @@ public class LogDAOMybatis implements LogDAO {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int loginInsert(LogVO logVo) {
-		return sqlSession.insert(namespace+"loginInsert",logVo);
+	public int loginInsert(LogVO logVo) {	//StoreLoginController
+		return sqlSession.insert(namespace+"loginInsert",logVo);	
 	}
 	
 	

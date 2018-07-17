@@ -10,7 +10,7 @@ public class LogServiceImpl implements LogService {
 	private LogDAO logDao;
 
 	@Override
-	public int loginInsert(LogVO logVo) {
+	public int loginInsert(LogVO logVo) {	//StoreLoginController
 		return logDao.loginInsert(logVo);
 	}
 	

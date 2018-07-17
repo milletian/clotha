@@ -11,12 +11,12 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	@Autowired private SqlSessionTemplate sqlSession;
 
 	@Override
-	public EmployeeVO selectEmployee(String empNo) {
+	public EmployeeVO selectEmployee(String empNo) {	//StoreLoginController
 		return sqlSession.selectOne(namespace+"selectEmployee",empNo);
 	}
 
 	@Override
-	public String selectPwd(String empNo) {
+	public String selectPwd(String empNo) {	//StoreLoginController
 		return sqlSession.selectOne(namespace+"selectPwd",empNo);
 	}
 
