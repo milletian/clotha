@@ -1,14 +1,14 @@
 package com.clotha.ca.accountdetail.model;
 
-import java.sql.Timestamp;
+import com.clotha.ca.common.DateSearchVO;
 
-public class AccountDetailVO {
+public class AccountDetailVO extends DateSearchVO{
 	private String accDtCode;
 	private String accCode;
-	private Timestamp accDtRegdate;
+	private String accDtRegdate;
 	private String pdCode;
 	private int accDtQty;
-	private Timestamp accDtIndate;
+	private String accDtIndate;
 	private String whCode;
 	
 	public String getAccDtCode() {
@@ -23,10 +23,10 @@ public class AccountDetailVO {
 	public void setAccCode(String accCode) {
 		this.accCode = accCode;
 	}
-	public Timestamp getAccDtRegdate() {
+	public String getAccDtRegdate() {
 		return accDtRegdate;
 	}
-	public void setAccDtRegdate(Timestamp accDtRegdate) {
+	public void setAccDtRegdate(String accDtRegdate) {
 		this.accDtRegdate = accDtRegdate;
 	}
 	public String getPdCode() {
@@ -41,10 +41,10 @@ public class AccountDetailVO {
 	public void setAccDtQty(int accDtQty) {
 		this.accDtQty = accDtQty;
 	}
-	public Timestamp getAccDtIndate() {
+	public String getAccDtIndate() {
 		return accDtIndate;
 	}
-	public void setAccDtIndate(Timestamp accDtIndate) {
+	public void setAccDtIndate(String accDtIndate) {
 		this.accDtIndate = accDtIndate;
 	}
 	public String getWhCode() {

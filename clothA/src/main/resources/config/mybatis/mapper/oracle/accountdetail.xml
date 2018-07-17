@@ -2,12 +2,35 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.accountdetail">
-	<select id="">
-		<!-- select * from ACCOUNT_DETAIL accd join ACCOUNT acc
+	<select id="selectAccountDetail" parameterType="AccountDetailVO" resultType="map">
+		select ACC_DT_CODE,accd.ACC_CODE,ACC_DT_REGDATE,pd.PD_CODE,PD_NAME,SIZE_CODE,ACC_DT_QTY,ACC_DT_INDATE,WH_CODE,ACC_NAME
+		from ACCOUNT_DETAIL accd join ACCOUNT acc
 		on accd.ACC_CODE = acc.ACC_CODE 
-		where ACC_DT_REGDATE >#{startDay} and ACC_DT_REGDATE <to_date(#{endDay})+1
-		and accd.ACC_CODE='1' -->
+		join PRODUCTS pd 
+		on accd.PD_CODE = pd.PD_CODE
+		<where>
+			<if test="startDay!=null and startDay!=''">
+			<![CDATA[
+				ACC_DT_REGDATE >#{startDay} and ACC_DT_REGDATE <to_date(#{endDay})+1
+			]]>
+			</if>
+			<if test="accCode!=null and accCode!=''">
+				and accd.ACC_CODE=#{accCode}			
+			</if>
+		</where>
+		order by ACC_DT_CODE DESC
 	</select>
+	
+	<insert id="insertAccountDetail" parameterType="AccountDetailVO">
+		insert into ACCOUNT_DETAIL(acc_dt_code,acc_code,acc_dt_regdate,pd_code,acc_dt_qty,acc_dt_indate,wh_code)
+		values(account_detail_seq.nextval,#{accCode},#{accDtRegdate},#{pdCode},#{accDtQty},#{accDtIndate},#{whCode})
+	</insert>
+	
+	<update id="updateAccountDetail" parameterType="AccountDetailVO">
+		update ACCOUNT_DETAIL set acc_code=#{accCode},acc_dt_regdate=#{accDtRegdate},pd_code=#{pdCode},acc_dt_qty=#{accDtQty},acc_dt_indate=#{accDtIndate},
+		wh_code=#{whCode}
+		where acc_dt_code=#{accDtCode}
+	</update>
 	
 </mapper>
 

@@ -13,6 +13,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script type="text/javascript">
 $(function() {
@@ -26,7 +28,7 @@ $(function() {
     		if (res.length > 0){
     			$("#selSearchSupplier").html('');
     			$.each(res,function(idx, item){
-    				var option = "<option value="+item.accCode+">";
+    				var option = "<option value='"+item.accCode+"'>";
     				option += item.accName;
     				option += "</option>";
         			$("#selSearchSupplier").append(option);
@@ -39,31 +41,27 @@ $(function() {
 			alert("sdsds");
 		}
 	})
-	
-	$('#btn').click(function() { 
+	$("#selSearchSupplier").select2();
+	$('#btnSearch').click(function() { 
     	$.ajax({
         	type:"POST",
-        	url : "<c:url value='/admin/account/accountDetailList.do' />",
+        	url : "<c:url value='/admin/account/ajaxAccountDetailList.do' />",
         	data:$("#frmAccountDetailList").serialize(),
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
         			$("table tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr><td>"+item.accCode+"</td>"
-     					+"<td>"+item.accName+"</td>"
-     					+"<td>"+item.accAddress+"</td>"
-     					+"<td>"+item.accTel+"</td>"
-     					+"<td>"+item.accCeo+"</td>"
-     					+"<td>"+item.accNo+"</td>"
-     					+"<td>"
-     					if(item.accIsdeal=='Y'){
-     						dsd+="사용";
-     					}else{
-     						dsd+="미사용";
-     					}
-     					+"</td>";
-     					dsd+="<td>"+item.accUnique+"</td></tr>";
+     					var dsd ="<tr><td>"+item.ACC_DT_CODE+"</td>"
+     					+"<td>"+item.ACC_CODE+"</td>"
+     					+"<td>"+item.ACC_DT_REGDATE+"</td>"
+     					+"<td>"+item.PD_CODE+"</td>"
+     					+"<td>"+item.PD_NAME+"</td>"
+     					+"<td>"+item.SIZECODE+"</td>"
+     					+"<td>"+item.ACC_DT_QTY+"</td>"
+     					+"<td>"+item.ACC_DT_INDATE+"</td>"
+     					+"<td>"+item.WH_CODE+"</td>"
+     					+"<td>"+item.ACC_NAME+"</td></tr>";
      					 $("table tbody").append(dsd);
      					});
      				}else{
@@ -73,7 +71,7 @@ $(function() {
                  return false; 
         	 },
 			error: function(xhr, status, error){
-				alert("sdsds");
+				alert(status);
 			}
         
    		}); 
@@ -94,7 +92,7 @@ $(function() {
 	  });
 
 	  $('#searchDateRange').on('apply.daterangepicker', function(ev, picker) {
-	      $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+	      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' ~ ' + picker.endDate.format('YYYY/MM/DD'));
 	  });
 
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
@@ -105,7 +103,7 @@ $(function() {
 })
 function popupOpen(ACC_DT_CODE){
 
-	var popUrl = "<c:url value='/admin/account/accountWrite.do?accCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
+	var popUrl = "<c:url value='/admin/account/accountDetailWrite.do?accDtCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
@@ -125,12 +123,10 @@ function popupOpen(ACC_DT_CODE){
 </style>
 <div id="wrap">
 	<form name="frmAccountDetailList" id="frmAccountDetailList">
-		<label>기간</label><i class="fa fa-calendar"></i><input type="text" id="searchDateRange">
+		<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
 		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>		
+		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>		
 		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회(F2)</button>
-		
-		
 	</form>
 </div>
 <div id="maincontent">    
