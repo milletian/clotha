@@ -74,6 +74,11 @@ public class EmployeeController {
 		model.addAttribute("url", url);
 		
 		return "common/message";
-}
+		
+	}
+		@RequestMapping("employeeList.do")
+		public void employeeList() {
+			logger.info("직원리스트 보여주기");
+		}
 	
 }

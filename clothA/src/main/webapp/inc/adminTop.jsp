@@ -262,7 +262,7 @@ footer{
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
 						<li><a href="#">인사승인</a></li>
-						<li><a href="#">인사조회</a></li>
+						<li><a href="<c:url value='/admin/employee/employeeList.do' />" target="if">인사조회</a></li>
 						<li><a href="<c:url value='/admin/employee/register.do' />" target="if">인사등록</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i

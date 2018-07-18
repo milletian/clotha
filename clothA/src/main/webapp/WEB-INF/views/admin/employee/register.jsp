@@ -8,10 +8,10 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		
-		$('#empName').focus();
+		$('#deptNo').focus();
 		$('form[name=employeeWrite]').submit(function(){
 			
-			var bool = false;
+			var bool = true;
 			
 			$('.valid').each(function(idx,item){
 				if($(this).val().length<1){
@@ -21,9 +21,17 @@
 					return false;
 				}
 			});
+			
+			if(bool){
+				if($('#empPwd').val()!=$('#empPwd2').val()){
+					alert('비밀번호가 일치하지 않습니다.');
+					$('#empPwd2').focus();
+					bool= false;
+				}
+			}
 			return bool;
 			
-			//option의 value 가 choice 면 부서코드를 선택해주세요
+			
 			
 		}); 
 	
@@ -43,7 +51,7 @@
 			<div>
 				<label for="deptNo">부서코드</label>
 				<select name="deptNo" id="deptNo" title="부서코드" class="valid">
-            		<option value="choice">선택하세요</option>
+            		<option value="">선택하세요</option>
             		<option value="10">정직원</option>
             		<option value="20">계약직</option>
             		<option value="30">단기알바</option>
@@ -58,8 +66,8 @@
 				<input type="password" name="empPwd" id="empPwd" class="valid">
 			</div>
 			<div>
-        		<label for="pwd2">비밀번호 확인</label>
-        		<input type="Password" name="pwd2" id="pwd2">
+        		<label for="empPwd2">비밀번호 확인</label>
+        		<input type="Password" name="empPwd2" id="empPwd2" class="valid">
 		    </div>
 			 <div>
      		   <label for="zipcode">주소</label>
@@ -93,7 +101,7 @@
 			<div>
 				<label for="gradeCode">직급</label> 
 				<select name="gradeCode" id="gradeCode" title="직급" class="valid">
-					<option value="choice">선택하세요</option>
+					<option value="">선택하세요</option>
 					<option value="1" >마스터</option>
 					<option value="2" >본사 관리자</option>
 					<option value="3" >점장</option>
