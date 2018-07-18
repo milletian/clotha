@@ -9,6 +9,7 @@ public interface EmployeeService {
 	
 	public EmployeeVO selectEmployee(String empNo);	//StoreLoginController
 	public int loginCheck(String empNo,String pwd);	//StoreLoginController
+	public int changePwd(EmployeeVO employeeVo);	//ForgetPasswordController
 	
 	public int insertEmployee(EmployeeVO employeeVo);
 }

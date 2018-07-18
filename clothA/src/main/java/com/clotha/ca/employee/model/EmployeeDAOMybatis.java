@@ -25,4 +25,9 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		return sqlSession.insert(namespace+"insertEmployee",employeeVo);
 	}
 
+	@Override
+	public int changePwd(EmployeeVO employeeVo) {	//ForgetPasswordController
+		return sqlSession.update(namespace+"changePwd",employeeVo);
+	}
+
 }

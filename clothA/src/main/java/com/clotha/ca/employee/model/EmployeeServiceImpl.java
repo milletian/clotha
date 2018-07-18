@@ -33,5 +33,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertEmployee(EmployeeVO employeeVo) {
 		return employeeDao.insertEmployee(employeeVo);
 	}
+
+	@Override
+	public int changePwd(EmployeeVO employeeVo) {	//ForgetPasswordController
+		return employeeDao.changePwd(employeeVo);
+	}
 	
 }
