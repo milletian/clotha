@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
@@ -29,13 +30,14 @@ public class EmployeeController {
 	@Autowired
 	private FileUploadUtil fileUploadUtil;
 	
-	@RequestMapping("register.do")
-	public void register() {
+	
+	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.GET)
+	public void employeeWrite() {
 		logger.info("직원등록 페이지 보여주기");
 		
 	}
 	
-	@RequestMapping("/employeeWrite.do")
+	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.POST)
 	public String employeeWrite(@ModelAttribute EmployeeVO employeeVo, 
 			HttpServletRequest request,Model model ) {
 		logger.info("인사등록 처리 파라메타 vo={}", employeeVo);

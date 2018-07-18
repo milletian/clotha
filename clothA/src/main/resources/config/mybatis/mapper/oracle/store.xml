@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.store">
+	<!-- <insert id="insertProducts" parameterType="ProductsVO">
+		insert into
+		products(PD_CODE,PD_NAME,PD_ORIGINALPRICE,PD_SELLPRICE,STYLE_CODE,COLOR_CODE,SEASON_CODE,SIZE_CODE,ACC_CODE,GENDER_CODE,PD_EXPLANATION,PD_IMAGE,PD_WARNING)
+		values(#{styleCode}||#{sizeCode}||#{genderCode}||#{colorCode}||products_seq.nextval||'-'||#{seasonCode},
+		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning})
+	</insert>
+	<select id="selectProduct" resultType="ProductsVO" parameterType="ProductsVO">
+		select * from
+		(select rownum as RNUM ,list.* from
+		(select * from
+		products
+		order by pd_regdate desc)list)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
+	</select> -->
+</mapper>
+
+
+
+
+
+
+
+
+
