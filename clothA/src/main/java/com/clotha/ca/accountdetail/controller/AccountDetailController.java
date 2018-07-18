@@ -69,4 +69,15 @@ public class AccountDetailController {
 		accDtService.addAccountDetail(accdVO);
 		
 	}
+	
+	@RequestMapping(value="/accountDetailDel.do")
+	@ResponseBody
+	public String accountDetailDelete(@RequestParam String accDtCode){
+		if(accDtCode!=null&&!accDtCode.isEmpty()) {
+			accDtService.deleteAccountDetail(accDtCode);
+			return "삭제되었습니다.";
+		}else {
+			return "선택하셔야합니다.";
+		}
+	}
 }

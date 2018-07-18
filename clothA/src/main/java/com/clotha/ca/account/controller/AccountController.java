@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clotha.ca.account.model.AccountService;
 import com.clotha.ca.account.model.AccountVO;
+import com.clotha.ca.accountdetail.model.AccountDetailService;
 
 @Controller
 @RequestMapping("/admin/account")
@@ -23,6 +24,8 @@ public class AccountController {
 	
 	@Autowired
 	private AccountService accountService;
+	@Autowired
+	private AccountDetailService accountDetailService;
 	
 	@RequestMapping(value="/accountWrite.do", method=RequestMethod.GET)
 	public String accountWrite_get(@RequestParam(required=false) String accCode,Model model) {
@@ -39,11 +42,13 @@ public class AccountController {
 		logger.info("detail={}",addressDetail);
 		if(accVo.getAccIsdeal()!=null&&!accVo.getAccIsdeal().isEmpty()) {
 			accVo.setAccIsdeal("Y");
+		}else {
+			accVo.setAccIsdeal("N");
 		}
-		accVo.setAccAddress(address+addressDetail);
+		accVo.setAccAddress(address+"~"+addressDetail);
 		accountService.insertAccount(accVo);
 		
-		return "수정성공!";
+		return "수정완료!";
 	}
 	
 	@RequestMapping(value="/accountList.do", method=RequestMethod.GET)
@@ -58,5 +63,17 @@ public class AccountController {
 		List<AccountVO> list = accountService.accountList(vo);
 		logger.info("{}",list.size());
 		return list;
+	}
+	
+	@RequestMapping(value="/accountDel.do")
+	@ResponseBody
+	public String accountDel(@RequestParam String accCode) {
+		int count = accountDetailService.selectCountByAccCode(accCode);
+		if(count==0) {
+			return "거래이력이 있는 거래처는 삭제가 불가능 합니다.";
+		}else {
+			accountService.deleteAccount(accCode);
+			return "거래처가 삭제되었습니다.";
+		}
 	}
 }

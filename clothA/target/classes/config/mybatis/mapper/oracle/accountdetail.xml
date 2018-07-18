@@ -21,6 +21,10 @@
 		order by ACC_DT_CODE DESC
 	</select>
 	
+	<select id="selectCountByAccCode" parameterType="string" resultType="int">
+		select count(*) from ACCOUNT_DETAIL where ACC_CODE=#{accCode}
+	</select>
+	
 	<insert id="insertAccountDetail" parameterType="AccountDetailVO">
 		insert into ACCOUNT_DETAIL(acc_dt_code,acc_code,acc_dt_regdate,pd_code,acc_dt_qty,acc_dt_indate,wh_code)
 		values(account_detail_seq.nextval,#{accCode},#{accDtRegdate},#{pdCode},#{accDtQty},#{accDtIndate},#{whCode})
@@ -31,6 +35,9 @@
 		wh_code=#{whCode}
 		where acc_dt_code=#{accDtCode}
 	</update>
+	<delete id="deleteAccountDetail" parameterType="string">
+		delete ACCOUNT_DETAIL where acc_dt_code = ${accDtCode}
+	</delete>
 	
 </mapper>
 

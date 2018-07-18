@@ -57,7 +57,7 @@ public class ForgetPasswordController {
 			if(result==1) {
 				
 				String subject = "ClothA 임시비밀번호 발송";
-				String content = "임시 비밀번호 : "+change+". 비밀번호 변경해주시기 바랍니다.";
+				String content = "임시 비밀번호 : "+change+" 입니다. 비밀번호 변경해주시기 바랍니다.";
 				String to = employeeVo.getEmpEmail();
 				String from = "ClothA@clothacompany.com";
 				
@@ -82,7 +82,7 @@ public class ForgetPasswordController {
 				PrintWriter out = response.getWriter();
 				out.println("<script type='text/javascript'>");
 				out.println("alert('비밀번호 변경 실패하였습니다. 다시 시도해주세요.');");
-				out.print("self.close();");
+				out.print("history.back();");
 				out.print("</script>");
 				
 				return;
@@ -94,7 +94,7 @@ public class ForgetPasswordController {
 			PrintWriter out = response.getWriter();
 			out.println("<script type='text/javascript'>");
 			out.println("alert('사원코드 또는 email주소가 일치하지 않습니다.');");
-			out.print("self.close();");
+			out.print("history.back();");
 			out.print("</script>");
 			
 			return ;

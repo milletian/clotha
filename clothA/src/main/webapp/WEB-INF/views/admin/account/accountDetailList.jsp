@@ -15,11 +15,46 @@
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
+<link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
+<script src="<c:url value='/js/FileSaver.js' />"></script>
+<script src="<c:url value='/js/xlsx.core.min.js' />"></script>
+<script src="<c:url value='/js/tableexport.js' /> "></script>
 <script type="text/javascript">
 $(function() {
+	var Now = new Date();
+	var today = Now.getFullYear()+"/"+(Now.getMonth()+1)+"/"+Now.getDate();
+	$('#searchDateRange').val(today+"~"+today);
+	var accDtCode;
 	$("table").tablesorter(); 
+	// exel다운로드를 위한 변수
+	var liveTableData = $("table").tableExport({
+	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    fileName: "id",                    // (id, String), filename for the downloaded file
+	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
+	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
+	    ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
+	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+	});
 	
+	$('#delbtn').click(function() { 
+    	$.ajax({
+        	type:"POST",
+        	url : "<c:url value='/admin/account/accountDetailDel.do' />",
+        	data:accDtCode,
+        	dataType:'json',
+        	success:function(res){
+        		alert(res);
+        	},
+			error: function(xhr, status, error){
+				alert("sdsds");
+			}
+        
+   		}); 
+	})
+	// select option 설정
 	$.ajax({
 		type:"POST",
     	url : "<c:url value='/admin/account/accountList.do' />",
@@ -41,7 +76,9 @@ $(function() {
 			alert("sdsds");
 		}
 	})
+	// select2 ui 이용
 	$("#selSearchSupplier").select2();
+	// 결과검색 리스트를 뽑아오는 ajax
 	$('#btnSearch').click(function() { 
     	$.ajax({
         	type:"POST",
@@ -52,7 +89,7 @@ $(function() {
         		if (res.length > 0) {
         			$("table tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr><td>"+item.ACC_DT_CODE+"</td>"
+     					var dsd ="<tr ondblclick=popupOpen('"+item.accDtCode+"')><td>"+item.ACC_DT_CODE+"</td>"
      					+"<td>"+item.ACC_CODE+"</td>"
      					+"<td>"+item.ACC_DT_REGDATE+"</td>"
      					+"<td>"+item.PD_CODE+"</td>"
@@ -63,6 +100,7 @@ $(function() {
      					+"<td>"+item.WH_CODE+"</td>"
      					+"<td>"+item.ACC_NAME+"</td></tr>";
      					 $("table tbody").append(dsd);
+     					liveTableData.reset();
      					});
      				}else{
      					$("table tbody").html('');
@@ -77,6 +115,7 @@ $(function() {
    		}); 
 	})
 	
+	// daterangepicker 이용
 	$('#searchDateRange').daterangepicker({
 	      autoUpdateInput: false,
 	      locale: {
@@ -90,17 +129,22 @@ $(function() {
 	          '지난달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 	        }
 	  });
-
+		//daterangepicker 포맷
 	  $('#searchDateRange').on('apply.daterangepicker', function(ev, picker) {
-	      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' ~ ' + picker.endDate.format('YYYY/MM/DD'));
+	      $(this).val(picker.startDate.format('YYYY/MM/DD') + '~' + picker.endDate.format('YYYY/MM/DD'));
 	  });
-
+		//daterangepicker 리셋세팅
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-
-	
+	  $("#btnSearch").trigger("click");
+	  $("table").tableExport();
+		$('table tbody tr').on('click',function(){
+			$(this).css('backgroundColor','skyblue');
+			accCode=$(this).find('td:first').text();
+		})
 })
+// 팝업창 띄우기
 function popupOpen(ACC_DT_CODE){
 
 	var popUrl = "<c:url value='/admin/account/accountDetailWrite.do?accDtCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
@@ -122,17 +166,22 @@ function popupOpen(ACC_DT_CODE){
 }
 </style>
 <div id="wrap">
-	<form name="frmAccountDetailList" id="frmAccountDetailList">
-		<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
+	<form name="frmStockList" id="frmStockList">
 		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>		
-		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회(F2)</button>
+		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+		<label for="selSearchStore">매장</label>
+		<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="검색할 매장를 선택하세요" id="selSearchStore"></select>	<br>
+		<label for="selSearchProduct">상품코드</label>
+		<input type="text" id="selSearchProduct" name="pdCode">
+		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;상품코드조회</button>
+		
+		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
 	</form>
 </div>
 <div id="maincontent">    
 	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
 	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#"><i class="fas fa-trash-alt"></i></a>
+	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 	<div id="content1">
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 

@@ -28,6 +28,10 @@
 	,ACC_NO=#{accNo},ACC_ISDEAL=#{accIsdeal},ACC_UNIQUE=#{accUnique}
 	where ACC_CODE=#{accCode}
 </update>
+
+<delete id="deleteAccount" parameterType="string">
+	delete account where acc_code=#{accCode}
+</delete>
 	
 </mapper>
 

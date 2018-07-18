@@ -26,4 +26,8 @@ public class AccountServiceImpl implements AccountService {
 	public AccountVO SearchAccountByCode(String accCode) {
 		return accountDao.SearchAccountByCode(accCode);
 	}
+	@Override
+	public int deleteAccount(String accCode) {
+		return accountDao.deleteAccount(accCode);
+	}
 }

@@ -28,4 +28,14 @@ public class AccountDetailDAOMybatis implements AccountDetailDAO {
 	public int updateAccountDetail(AccountDetailVO accdVO) {
 		return sqlSession.update(namespace+"updateAccountDetail", accdVO);
 	}
+
+	@Override
+	public int selectCountByAccCode(String accCode) {
+		return sqlSession.selectOne(namespace+"selectCountByAccCode", accCode);
+	}
+
+	@Override
+	public int deleteAccountDetail(String accDtCode) {
+		return sqlSession.delete(namespace+"deleteAccountDetail", accDtCode);
+	}
 }
