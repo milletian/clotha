@@ -25,4 +25,14 @@ public class AccountDetailServiceImpl implements AccountDetailService{
 			return accountDetailDAO.insertAccountDetail(accdVO);
 		}
 	}
+
+	@Override
+	public int selectCountByAccCode(String accCode) {
+		return accountDetailDAO.selectCountByAccCode(accCode);
+	}
+
+	@Override
+	public int deleteAccountDetail(String accDtCode) {
+		return accountDetailDAO.deleteAccountDetail(accDtCode);
+	}
 }

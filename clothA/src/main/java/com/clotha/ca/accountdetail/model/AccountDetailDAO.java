@@ -8,5 +8,7 @@ public interface AccountDetailDAO {
 	public List<Map<String,Object>> selectAccountDetail(AccountDetailVO accdVO);
 	
 	public int insertAccountDetail(AccountDetailVO accdVO);
+	public int selectCountByAccCode(String accCode);
+	public int deleteAccountDetail(String accDtCode);
 	public int updateAccountDetail(AccountDetailVO accdVO);
 }

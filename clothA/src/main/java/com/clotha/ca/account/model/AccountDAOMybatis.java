@@ -31,5 +31,9 @@ public class AccountDAOMybatis implements AccountDAO{
 	public AccountVO SearchAccountByCode(String accCode) {
 		return sqlSession.selectOne(namespace+"SearchAccountByCode", accCode);
 	}
+	@Override
+	public int deleteAccount(String accCode) {
+		return sqlSession.delete(namespace+"deleteAccount", accCode);
+	}
 
 }
