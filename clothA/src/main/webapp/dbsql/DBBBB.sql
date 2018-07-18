@@ -25,7 +25,7 @@ CREATE TABLE "PRODUCTS" (
 	"PD_NAME"          VARCHAR2(100) NOT NULL, -- 상품이름
 	"PD_ORIGINALPRICE" NUMBER        NOT NULL, -- 원가
 	"PD_SELLPRICE"     NUMBER        NOT NULL, -- 판매가
-	"PD_REGDATE"       TIMESTAMP          DEFAULT sysdate, -- 등록날짜
+	"PD_REGDATE"       DATE          DEFAULT sysdate, -- 등록날짜
 	"PD_EXPLANATION"   VARCHAR2(100) NULL,     -- 상품설명
 	"PD_WARNING"       VARCHAR2(100) NULL,     -- 주의사항
 	"PD_IMAGE"         VARCHAR2(100) NULL,     -- 상품이미지
@@ -120,10 +120,10 @@ CREATE TABLE "STORE" (
 	"EMP_NO"        VARCHAR2(50) NOT NULL, -- 점장
 	"STORE_ZIPCODE" VARCHAR2(20) NOT NULL, -- 우편번호
 	"STORE_ADDRESS" VARCHAR2(100) NOT NULL, -- 점포주소
-	"STORE_JOIN"    TIMESTAMP         DEFAULT sysdate, -- 등록날짜
+	"STORE_JOIN"    DATE         DEFAULT sysdate, -- 등록날짜
 	"STORE_IMAGE"   VARCHAR2(100) NULL,     -- 이미지
-	"AREA_CODE"     VARCHAR2(50) NOT NULL, -- 재고위치코드
-	"STORE_DEL"     TIMESTAMP     NULL      -- 폐쇄날짜
+	"STA_CODE"     VARCHAR2(50) NOT NULL, -- 재고위치코드
+	"STORE_DEL"     DATE     NULL      -- 폐쇄날짜
 );
 
 -- 점포 기본키2
@@ -146,8 +146,8 @@ CREATE TABLE "WAREHOUSE" (
 	"WH_NAME"    VARCHAR2(50) NOT NULL, -- 창고이름
 	"WH_ADDRESS" VARCHAR2(100) NOT NULL, -- 창고주소
 	"WH_IMAGE"   VARCHAR2(100) NULL,     -- 창고이미지
-	"WH_REGDATE" TIMESTAMP        DEFAULT sysdate, -- 등록날짜
-	"AREA_CODE"  VARCHAR2(50) NOT NULL, -- 재고위치코드
+	"WH_REGDATE" DATE        DEFAULT sysdate, -- 등록날짜
+	"STA_CODE"  VARCHAR2(50) NOT NULL, -- 재고위치코드
 	"WH_ZIPCODE"        VARCHAR2(20)  NOT NULL  -- 창고 우편번호
 );
 
@@ -186,30 +186,58 @@ ALTER TABLE "DEPT"
 		);
 
 -- 재고위치
-CREATE TABLE "AREA" (
-	"AREA_CODE" VARCHAR2(50) NOT NULL, -- 재고위치코드
-	"AREA_NAME" VARCHAR2(100) NULL,     -- 지역명
-	"EMP_NO"    VARCHAR2(50) NULL      -- 사원코드
+CREATE TABLE "STOCK_AREA" (
+	"STA_CODE" VARCHAR2(50) NOT NULL, -- 재고위치코드
+	"AREA_CODE" VARCHAR2(50) NOT NULL
 );
 
+-- 지역
+CREATE TABLE "AREA" (
+    "AREA_CODE" VARCHAR2(50) PRIMARY KEY,   --지역코드
+    "AREA_NAME" VARCHAR2(30) NOT NULL,  --지역 이름
+    "EMP_NO"    VARCHAR2(50) NULL   -- 지역담당자
+);
+
+-- 지역
+ALTER TABLE "STOCK_AREA"
+	ADD
+		CONSTRAINT "FK_AREA_TO_STOCK_AREA" -- 시즌 -> 의류상품
+		FOREIGN KEY (
+			"AREA_CODE" -- 시즌코드
+		)
+		REFERENCES "AREA" ( -- 시즌
+			"AREA_CODE" -- 시즌코드
+		);
+
+ALTER TABLE "AREA"
+	ADD
+		CONSTRAINT "FK_EMPLOYEE_TO_AREA" -- 시즌 -> 의류상품
+		FOREIGN KEY (
+			"EMP_NO" -- 시즌코드
+		)
+		REFERENCES "EMPLOYEE" ( -- 시즌
+			"EMP_NO" -- 시즌코드
+		);
+		
+		
 -- 재고위치 기본키
-CREATE UNIQUE INDEX "PK_AREA"
-	ON "AREA" ( -- 재고위치
-		"AREA_CODE" ASC -- 재고위치코드
+CREATE UNIQUE INDEX "PK_STOCK_AREA"
+	ON "STOCK_AREA" ( -- 재고위치
+		"STA_CODE" ASC -- 재고위치코드
 	);
 
 -- 재고위치
-ALTER TABLE "AREA"
+ALTER TABLE "STOCK_AREA"
 	ADD
-		CONSTRAINT "PK_AREA" -- 재고위치 기본키
+		CONSTRAINT "PK_STOCK_AREA" -- 재고위치 기본키
 		PRIMARY KEY (
-			"AREA_CODE" -- 재고위치코드
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 재고
 CREATE TABLE "STOCK" (
 	"STOCK_PK"  NUMBER        NOT NULL, -- 재고PK
-	"AREA_CODE" VARCHAR2(50) NOT NULL, -- 재고위치코드
+	"STA_CODE" VARCHAR2(50) NOT NULL, -- 재고위치코드
 	"PD_CODE"   VARCHAR2(50) NULL,     -- 상품코드
 	"STOCK_QTY" NUMBER        NULL      -- 수량
 );
@@ -234,14 +262,15 @@ CREATE TABLE "EMPLOYEE" (
 	"DEPT_NO"      VARCHAR2(50) NOT NULL, -- 부서코드
 	"EMP_NAME"     VARCHAR2(30) NOT NULL, -- 이름
 	"EMP_PWD"      VARCHAR2(50) NOT NULL, -- 비밀번호
+	"EMP_COUNT"    NUMBER       DEFAULT 0 , -- 비밀번호 5회
 	"EMP_ZIPCODE"  VARCHAR2(20) NOT NULL, -- 우편번호
 	"EMP_ADDRESS"  VARCHAR2(100) NOT NULL, -- 주소
 	"EMP_JUMIN"    VARCHAR2(30) NOT NULL, -- 주민번호
 	"EMP_TEL"      VARCHAR2(30) NOT NULL, -- 전화번호
 	"EMP_FACE"     VARCHAR2(100) NULL,     -- 이미지
 	"EMP_JOB"      VARCHAR2(100) NULL,     -- 담당업무
-	"EMP_JOINDATE" TIMESTAMP     NULL,     -- 입사날짜
-	"EMP_OUTDATE"  TIMESTAMP     NULL,     -- 퇴사날짜
+	"EMP_JOINDATE" DATE     NULL,     -- 입사날짜
+	"EMP_OUTDATE"  DATE     NULL,     -- 퇴사날짜
 	"GRADE_CODE"   VARCHAR2(20) NOT NULL, -- 권한코드
 	"EMP_DEL"      VARCHAR2(10)      DEFAULT 'N', -- 사원등록여부
 	"STORE_CODE"   VARCHAR2(50) NULL,     -- 점포코드
@@ -265,7 +294,7 @@ ALTER TABLE "EMPLOYEE"
 -- 매출
 CREATE TABLE "SALES" (
 	"SALES_CODE"    VARCHAR2(50) NOT NULL, -- 매출코드
-	"SALES_REGDATE" TIMESTAMP     NOT NULL, -- 날짜
+	"SALES_REGDATE" DATE     NOT NULL, -- 날짜
 	"STORE_CODE"    VARCHAR2(50) NOT NULL  -- 점포코드
 );
 
@@ -290,7 +319,7 @@ CREATE TABLE "SALES_DETAIL" (
 	"PD_CODE"            VARCHAR2(50) NOT NULL, -- 상품코드
 	"SALES_DETAIL_QTY"   NUMBER        NOT NULL, -- 수량
 	"SALES_DETAIL_TOTAL" NUMBER        NOT NULL, -- 총가격
-	"SALES_DETAIL_DATE"  TIMESTAMP         DEFAULT sysdate, -- 구매일
+	"SALES_DETAIL_DATE"  DATE         DEFAULT sysdate, -- 구매일
 	"MEMBER_CODE"        VARCHAR2(50) NULL,     -- 구매자
 	"SALES_DETAIL_PLUSP" NUMBER        NULL,     -- 적립포인트
 	"SALES_DETAIL_USEP"  NUMBER        NULL,     -- 사용포인트
@@ -337,8 +366,8 @@ CREATE TABLE "LOG" (
 	"LOG_PK"  NUMBER        NOT NULL, -- 접속정보PK
 	"EMP_NO"  VARCHAR2(50) NOT NULL, -- 사원코드
 	"LOG_IP"  VARCHAR2(30) NOT NULL, -- 접속IP
-	"LOG_IN"  TIMESTAMP     NULL,     -- 로그인시간
-	"LOG_OUT" TIMESTAMP     NULL      -- 로그아웃시간
+	"LOG_IN"  DATE     NULL,     -- 로그인시간
+	"LOG_OUT" DATE     NULL      -- 로그아웃시간
 );
 
 -- 접속정보 기본키
@@ -358,9 +387,9 @@ ALTER TABLE "LOG"
 -- 입고/반품관리(매장기준)
 CREATE TABLE "INOUT" (
 	"INOUT_CODE"      VARCHAR2(50) NOT NULL, -- 입고/반품코드
-	"INOUT_STARTDATE" TIMESTAMP     NOT NULL, -- 출발일시
+	"INOUT_STARTDATE" DATE     NOT NULL, -- 출발일시
 	"INOUT_STATUS"    VARCHAR2(20)      DEFAULT '승인대기', -- 상태
-	"INOUT_ENDDATE"   TIMESTAMP     NULL,     -- 도착예정일시
+	"INOUT_ENDDATE"   DATE     NULL,     -- 도착예정일시
 	"AREA_START"      VARCHAR2(50) NOT NULL, -- 출발지
 	"AREA_END"        VARCHAR2(50) NOT NULL, -- 도착지
 	"IS_IN"           VARCHAR2(10)    DEFAULT '입고', -- 입고/반품여부
@@ -407,7 +436,7 @@ ALTER TABLE "INOUT_DETAIL"
 CREATE TABLE "TRANSPORT" (
 	"TP_CODE"     VARCHAR2(50) NOT NULL, -- 점간이동코드
 	"STORE_CODE"  VARCHAR2(50) NOT NULL, -- 출발지점
-	"TP_REGDATE"  TIMESTAMP     NOT NULL, -- 신청날짜
+	"TP_REGDATE"  DATE     NOT NULL, -- 신청날짜
 	"TP_ISAGREE"  VARCHAR2(10)     DEFAULT 'N', -- 승낙여부
 	"STORE_CODE2" VARCHAR2(50) NOT NULL  -- 도착지점
 );
@@ -455,7 +484,7 @@ CREATE TABLE "MEMBER" (
 	"MEMBER_TEL"     VARCHAR2(30) NOT NULL, -- 전화번호
 	"STORE_CODE"     VARCHAR2(50) NOT NULL, -- 가입지점
 	"MEMBER_POINT"   NUMBER            DEFAULT 0, -- 포인트
-	"MEMBER_REGDATE" TIMESTAMP        DEFAULT sysdate -- 가입일
+	"MEMBER_REGDATE" DATE        DEFAULT sysdate -- 가입일
 );
 
 -- 회원 기본키
@@ -476,7 +505,7 @@ ALTER TABLE "MEMBER"
 CREATE TABLE "POINT" (
 	"POINT_PK"      NUMBER        NOT NULL, -- 포인트이력PK
 	"MEMBER_CODE"   VARCHAR2(50) NOT NULL, -- 회원코드
-	"POINT_REGDATE" TIMESTAMP       DEFAULT sysdate, -- 발생일
+	"POINT_REGDATE" DATE       DEFAULT sysdate, -- 발생일
 	"POINT_CHANGE"  NUMBER        NOT NULL  -- 변동포인트
 );
 
@@ -500,9 +529,9 @@ CREATE TABLE "COUPON" (
 	"CP_DISCOUNT"    NUMBER        NOT NULL, -- 할인율
 	"CP_LIMITPRICE"  NUMBER        NULL,     -- 한도
 	"CP_USEOK"       VARCHAR2(10)    DEFAULT 'Y', -- 사용가능여부
-	"CP_TERM"        TIMESTAMP     NOT NULL, -- 사용가능기간
-	"CP_USEDATE"     TIMESTAMP     NULL,     -- 사용일
-	"CP_PUBLISHDATE" TIMESTAMP        DEFAULT SYSDATE -- 발행일
+	"CP_TERM"        DATE     NOT NULL, -- 사용가능기간
+	"CP_USEDATE"     DATE     NULL,     -- 사용일
+	"CP_PUBLISHDATE" DATE        DEFAULT SYSDATE -- 발행일
 );
 
 -- 할인쿠폰 기본키
@@ -550,10 +579,10 @@ ALTER TABLE "ACCOUNT"
 CREATE TABLE "ACCOUNT_DETAIL" (
 	"ACC_DT_CODE"    VARCHAR2(50) NOT NULL, -- 현황코드
 	"ACC_CODE"       VARCHAR2(50) NOT NULL, -- 구매처코드
-	"ACC_DT_REGDATE" TIMESTAMP      DEFAULT sysdate, -- 주문일자
+	"ACC_DT_REGDATE" DATE      DEFAULT sysdate, -- 주문일자
 	"PD_CODE"        VARCHAR2(50) NOT NULL, -- 상품코드
 	"ACC_DT_QTY"     NUMBER        NOT NULL, -- 주문수량
-	"ACC_DT_INDATE"  TIMESTAMP     NULL,     -- 입고예정일
+	"ACC_DT_INDATE"  DATE     NULL,     -- 입고예정일
 	"ACC_DT_ISAGREE" VARCHAR2(10)      DEFAULT 'N', -- 주문확인여부
 	"WH_CODE"        VARCHAR2(50) NOT NULL  -- 받을창고
 );
@@ -601,7 +630,7 @@ CREATE TABLE "MAIL" (
 	"SENDER"         VARCHAR2(50) NOT NULL, -- 보낸사람
 	"MAIL_CONTENT"   CLOB          NULL,     -- 내용
 	"MAIL_FILE"      VARCHAR2(100) NULL,     -- 파일
-	"MAIL_SDATE"     TIMESTAMP        DEFAULT SYSDATE, -- 발송날짜
+	"MAIL_SDATE"     DATE        DEFAULT SYSDATE, -- 발송날짜
 	"MAIL_SENDERDEL" VARCHAR2(10)      DEFAULT 'N', -- 보낸이삭제여부
 	"MAIL_SAVE"      VARCHAR2(10)  NULL      -- 보관여부
 );
@@ -702,12 +731,12 @@ ALTER TABLE "PRODUCTS"
 -- 점포
 ALTER TABLE "STORE"
 	ADD
-		CONSTRAINT "FK_AREA_TO_STORE" -- 재고위치 -> 점포
+		CONSTRAINT "FK_STOCK_AREA_TO_STORE" -- 재고위치 -> 점포
 		FOREIGN KEY (
-			"AREA_CODE" -- 재고위치코드
+			"STA_CODE" -- 재고위치코드
 		)
-		REFERENCES "AREA" ( -- 재고위치
-			"AREA_CODE" -- 재고위치코드
+		REFERENCES "STOCK_AREA" ( -- 재고위치
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 점포
@@ -725,12 +754,12 @@ ALTER TABLE "STORE"
 -- 창고
 ALTER TABLE "WAREHOUSE"
 	ADD
-		CONSTRAINT "FK_AREA_TO_WAREHOUSE" -- 재고위치 -> 창고
+		CONSTRAINT "FK_STOCK_AREA_TO_WAREHOUSE" -- 재고위치 -> 창고
 		FOREIGN KEY (
-			"AREA_CODE" -- 재고위치코드
+			"STA_CODE" -- 재고위치코드
 		)
-		REFERENCES "AREA" ( -- 재고위치
-			"AREA_CODE" -- 재고위치코드
+		REFERENCES "STOCK_AREA" ( -- 재고위치
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 재고위치
@@ -758,12 +787,12 @@ ALTER TABLE "STOCK"
 -- 재고
 ALTER TABLE "STOCK"
 	ADD
-		CONSTRAINT "FK_AREA_TO_STOCK" -- 재고위치 -> 재고
+		CONSTRAINT "FK_STOCK_AREA_TO_STOCK" -- 재고위치 -> 재고
 		FOREIGN KEY (
-			"AREA_CODE" -- 재고위치코드
+			"STA_CODE" -- 재고위치코드
 		)
-		REFERENCES "AREA" ( -- 재고위치
-			"AREA_CODE" -- 재고위치코드
+		REFERENCES "STOCK_AREA" ( -- 재고위치
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 사원
@@ -868,23 +897,23 @@ ALTER TABLE "LOG"
 -- 입고/반품관리(매장기준)
 ALTER TABLE "INOUT"
 	ADD
-		CONSTRAINT "FK_AREA_TO_INOUT" -- 재고위치 -> 입고/반품관리(매장기준)
+		CONSTRAINT "FK_STOCK_AREA_TO_INOUT" -- 재고위치 -> 입고/반품관리(매장기준)
 		FOREIGN KEY (
 			"AREA_START" -- 출발지
 		)
-		REFERENCES "AREA" ( -- 재고위치
-			"AREA_CODE" -- 재고위치코드
+		REFERENCES "STOCK_AREA" ( -- 재고위치
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 입고/반품관리(매장기준)
 ALTER TABLE "INOUT"
 	ADD
-		CONSTRAINT "FK_AREA_TO_INOUT2" -- 재고위치 -> 입고/반품관리(매장기준)2
+		CONSTRAINT "FK_STOCK_AREA_TO_INOUT2" -- 재고위치 -> 입고/반품관리(매장기준)2
 		FOREIGN KEY (
 			"AREA_END" -- 도착지
 		)
-		REFERENCES "AREA" ( -- 재고위치
-			"AREA_CODE" -- 재고위치코드
+		REFERENCES "STOCK_AREA" ( -- 재고위치
+			"STA_CODE" -- 재고위치코드
 		);
 
 -- 입고/반품품목

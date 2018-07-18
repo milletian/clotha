@@ -82,7 +82,7 @@ public class ForgetPasswordController {
 				PrintWriter out = response.getWriter();
 				out.println("<script type='text/javascript'>");
 				out.println("alert('비밀번호 변경 실패하였습니다. 다시 시도해주세요.');");
-				out.print("self.close();");
+				out.print("history.back();");
 				out.print("</script>");
 				
 				return;
@@ -94,7 +94,7 @@ public class ForgetPasswordController {
 			PrintWriter out = response.getWriter();
 			out.println("<script type='text/javascript'>");
 			out.println("alert('사원코드 또는 email주소가 일치하지 않습니다.');");
-			out.print("self.close();");
+			out.print("history.back();");
 			out.print("</script>");
 			
 			return ;
