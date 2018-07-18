@@ -78,10 +78,12 @@ function popupOpen(acc_Code){
 </style>
 <div class="viewBody">
 
-	<div class="box1">
+	<div class="box1" style="padding: 10px">
 		<form name=employeeList id="employeeList">
 			<b>매장</b> 
 			<select>
+				<option>선택하세요</option>
+				<option>전체</option>
 				<option>강남점</option>
 				<option>혜화점</option>
 				<option>신도림점</option>
@@ -95,22 +97,38 @@ function popupOpen(acc_Code){
 			class="fas fa-trash-alt"></i></a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
+				<colgroup>
+					<col style="width:2%;" />
+					<col style="width:5%;" />
+					<col style="width:5%;" />
+					<col style="width:5%;" />
+					<col style="width:5%;" />
+					<col style="width:15%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+					<col style="width:5%;" />		
+				</colgroup>
 				<thead>
 					<tr>
-						<th>매장코드</th>
-						<th>직원코드</th>
-						<th>deptno</th>
-						<th>이름</th>
-						<th>주소 + 상세주소</th>
-						<th>주민등록번호</th>
-						<th>전화번호</th>
-						<th>메일</th>
-						<th>사진</th>
-						<th>job</th>
-						<th>입사일</th>
-						<th>퇴사일</th>
-						<th>grade</th>
-
+						<th scope="col">체크박스?</th>
+						<th scope="col">매장코드</th>
+						<th scope="col">직원코드</th>
+						<th scope="col">deptno</th>
+						<th scope="col">이름</th>
+						<th scope="col">주소 + 상세주소</th>
+						<th scope="col">주민등록번호</th>
+						<th scope="col">전화번호</th>
+						<th scope="col">메일</th>
+						<th scope="col">사진</th>
+						<th scope="col">담당업무</th>
+						<th scope="col">입사일</th>
+						<th scope="col">퇴사일</th>
+						<th scope="col">직급</th>
 					</tr>
 				</thead>
 				<tbody>
