@@ -23,8 +23,8 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectProduct() {
-	/*	sqlSession.selectList(namesapce+, parameter)*/
-		return null;
+	public List<ProductsVO> selectProduct(ProductsVO productsVo) {
+		return sqlSession.selectList(namesapce+"selectProduct", productsVo);
 	}
+
 }

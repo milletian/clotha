@@ -8,18 +8,11 @@
 		values(#{styleCode}||#{sizeCode}||#{genderCode}||#{colorCode}||products_seq.nextval||'-'||#{seasonCode},
 		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning})
 	</insert>
-	<select id="selectProduct" resultType="ProductsVO" parameterType="ProductsVO">
-		select * from
-		(select rownum as RNUM ,list.* from
-		(select * from
-		products
-		order by pd_regdate desc)list)
-		<![CDATA[
-		where RNUM>#{firstRecordIndex} and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
-		]]>
-	</select>
+	<select id="selectProducts" parameterType="String" resultType="ProductsVO">
+	select * from products 
+	order by pd_regdate desc
+</select>
 </mapper>
-
 
 
 

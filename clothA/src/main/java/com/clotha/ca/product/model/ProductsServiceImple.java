@@ -1,5 +1,8 @@
 package com.clotha.ca.product.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,11 @@ public class ProductsServiceImple implements ProductsService  {
 	public int insertProducts(ProductsVO productsVo) {
 		int cnt = productDao.insertProducts(productsVo);
 		return cnt;
+	}
+
+	@Override
+	public List<ProductsVO> selectProduct(ProductsVO productsVo) {
+		return productDao.selectProduct(productsVo);
 	}
 	
 	

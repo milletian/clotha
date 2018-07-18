@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import com.clotha.ca.common.SearchVO;
 
-public class ProductsVO extends SearchVO {
+public class ProductsVO{
 	private String pdCode;
 	private String pdName;
 	private int pdOriginalPrice;
