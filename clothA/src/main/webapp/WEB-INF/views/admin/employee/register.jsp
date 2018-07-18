@@ -3,35 +3,54 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="<c:url value='/js/jquery.tablesorter.js' />"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		
+		$('#empName').focus();
+		$('form[name=employeeWrite]').submit(function(){
+			
+			var bool = false;
+			
+			$('.valid').each(function(idx,item){
+				if($(this).val().length<1){
+					alert($(this).prev().text()+"을 입력하세요.");
+					$(this).focus();
+					bool = false;
+					return false;
+				}
+			});
+			return bool;
+			
+			//option의 value 가 choice 면 부서코드를 선택해주세요
+			
+		}); 
+	
+})
+
+</script>
 
 <style type="text/css">
-.box3 {
-	padding: 5px;
-	background: white;
-	border-width: 3px 1px 1px;
-	border-style: solid;
-	border-color: rgb(210, 214, 222);
-	border-image: initial;
-	border-top: 3px solid 1f84bf;
-	margin-bottom: 20px;
-}
+
 </style>
 
 <div class="viewBody">
 	<!-- Main content  -->
-	<form name="frm" method="post" enctype="multipart/form-data" action="<c:url value='/admin/employee/employeeWrite.do'/>">
+	<form name="employeeWrite" method="post" enctype="multipart/form-data" action="<c:url value='/admin/employee/employeeWrite.do'/>">
 
 		<div class="box3">
 			<div>
 				<label for="deptNo">부서코드</label>
 				<select name="deptNo" id="deptNo" title="부서코드" class="valid">
+            		<option value="choice">선택하세요</option>
             		<option value="10">정직원</option>
             		<option value="20">계약직</option>
             		<option value="30">단기알바</option>
 				</select>
 			</div>
 			<div>
-				<label for="empName">이름 </label>
+				<label for="empName">이름</label>
 				<input type="text" name="empName" id="empName" class="valid">
 			</div>
 			<div>
@@ -74,6 +93,7 @@
 			<div>
 				<label for="gradeCode">직급</label> 
 				<select name="gradeCode" id="gradeCode" title="직급" class="valid">
+					<option value="choice">선택하세요</option>
 					<option value="1" >마스터</option>
 					<option value="2" >본사 관리자</option>
 					<option value="3" >점장</option>
