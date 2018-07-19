@@ -48,8 +48,12 @@
 				ss++;
 			},3000);
 			
+			var popupX = (window.screen.width /2)-(500 / 2);
+
+			var popupY= (window.screen.height /2)-(250 / 2);
+
 			$("#forgetPwd").click(function(){
-				window.open("<c:url value='/login/forgetPassword.do'/>","비밀번호찾기","width=300px, heigth=300px, menubar=no, titlebar=no, resizable=yes" );
+				window.open("<c:url value='/login/forgetPassword.do'/>","비밀번호찾기","status=no,width=500,height=250,location=yes,resizable=yes,left="+popupX+",top="+popupY+",screenX="+popupX+",screenY="+popupY);
 			})
 		});
 		
