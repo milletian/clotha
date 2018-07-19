@@ -1,14 +1,18 @@
 package com.clotha.ca.store.model;
 
-public class StoreVO {
+import com.clotha.ca.common.SearchVO;
+
+public class StoreVO extends SearchVO {
 	private String storeCode;
 	private String empNo;
 	private String storeZipcode;
 	private String storeAddress;
 	private String storeJoin;
-	private String StoreImage;
+	private String storeImage;
 	private String staCode;
 	private String storeDel;
+	private String storeTel;
+	private String storeNo;
 	public String getStoreCode() {
 		return storeCode;
 	}
@@ -40,10 +44,10 @@ public class StoreVO {
 		this.storeJoin = storeJoin;
 	}
 	public String getStoreImage() {
-		return StoreImage;
+		return storeImage;
 	}
 	public void setStoreImage(String storeImage) {
-		StoreImage = storeImage;
+		this.storeImage = storeImage;
 	}
 	public String getStaCode() {
 		return staCode;
@@ -57,12 +61,28 @@ public class StoreVO {
 	public void setStoreDel(String storeDel) {
 		this.storeDel = storeDel;
 	}
+	
+	public String getStoreTel() {
+		return storeTel;
+	}
+	public void setStoreTel(String storeTel) {
+		this.storeTel = storeTel;
+	}
+	public String getStoreNo() {
+		return storeNo;
+	}
+	public void setStoreNo(String storeNo) {
+		this.storeNo = storeNo;
+	}
 	@Override
 	public String toString() {
 		return "StoreVO [storeCode=" + storeCode + ", empNo=" + empNo + ", storeZipcode=" + storeZipcode
-				+ ", storeAddress=" + storeAddress + ", storeJoin=" + storeJoin + ", StoreImage=" + StoreImage
-				+ ", staCode=" + staCode + ", storeDel=" + storeDel + "]";
+				+ ", storeAddress=" + storeAddress + ", storeJoin=" + storeJoin + ", storeImage=" + storeImage
+				+ ", staCode=" + staCode + ", storeDel=" + storeDel + ", storeTel=" + storeTel + ", storeNo=" + storeNo
+				+super.toString()+ "]";
 	}
+
+	
 	
 	
 	

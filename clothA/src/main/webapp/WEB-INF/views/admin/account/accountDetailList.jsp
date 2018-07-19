@@ -57,7 +57,7 @@ $(function() {
 	// select option 설정
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/account/accountList.do' />",
+    	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -141,7 +141,7 @@ $(function() {
 	  $("table").tableExport();
 		$('table tbody tr').on('click',function(){
 			$(this).css('backgroundColor','skyblue');
-			accCode=$(this).find('td:first').text();
+			accDtCode=$(this).find('td:first').text();
 		})
 })
 // 팝업창 띄우기
@@ -166,15 +166,10 @@ function popupOpen(ACC_DT_CODE){
 }
 </style>
 <div id="wrap">
-	<form name="frmStockList" id="frmStockList">
+	<form name="frmAccountDetailList" id="frmAccountDetailList">
+	<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
 		<label for="selSearchSupplier">매입처</label>
 		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
-		<label for="selSearchStore">매장</label>
-		<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="검색할 매장를 선택하세요" id="selSearchStore"></select>	<br>
-		<label for="selSearchProduct">상품코드</label>
-		<input type="text" id="selSearchProduct" name="pdCode">
-		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;상품코드조회</button>
-		
 		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
 	</form>
 </div>
