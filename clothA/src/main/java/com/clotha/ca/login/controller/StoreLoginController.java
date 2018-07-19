@@ -28,6 +28,7 @@ public class StoreLoginController {
 	@Autowired private EmployeeService employeeService;
 	@Autowired private LogService logService;
 	
+	
 	@RequestMapping(value="storeLogin.do",method=RequestMethod.GET )
 	public String Login() {
 		//사원 - 로그인 페이지
@@ -70,7 +71,12 @@ public class StoreLoginController {
 				Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
 				ck.setPath("/");
 				msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
-				url="/test.do";
+				int grade = Integer.parseInt(employeeVo.getGradeCode());
+				if(grade <= 2) {
+					url="/test.do";	//본사 로그인
+				}else {
+					url="/admin/account/accountWrite.do";	//매장 로그인
+				}
 			}
 		}else if(result == employeeService.PWD_DISAGREE) {
 			msg="비밀번호가 일치하지 않습니다.";
