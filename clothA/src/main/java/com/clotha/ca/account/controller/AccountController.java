@@ -58,7 +58,7 @@ public class AccountController {
 		return "admin/account/accountList";
 	}
 	
-	@RequestMapping(value="/accountList.do", method=RequestMethod.POST)
+	@RequestMapping(value="/ajaxAccountList.do")
 	@ResponseBody
 	public List<AccountVO> accountList_post(@ModelAttribute AccountVO vo) {
 		logger.info("{}",vo);
