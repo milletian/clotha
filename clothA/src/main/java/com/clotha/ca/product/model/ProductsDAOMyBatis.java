@@ -24,7 +24,12 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 
 	@Override
 	public List<ProductsVO> selectProduct(ProductsVO productsVo) {
-		return sqlSession.selectList(namesapce+"selectProduct", productsVo);
+		return sqlSession.selectList(namesapce+"selectProducts", productsVo);
+	}
+
+	@Override
+	public List<ProductsVO> selectAll() {
+		return sqlSession.selectList(namesapce+"selectAll");
 	}
 
 }

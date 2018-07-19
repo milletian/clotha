@@ -22,6 +22,12 @@ public class ProductsServiceImple implements ProductsService  {
 	public List<ProductsVO> selectProduct(ProductsVO productsVo) {
 		return productDao.selectProduct(productsVo);
 	}
+
+
+	@Override
+	public List<ProductsVO> selectAll() {
+		return productDao.selectAll();
+	}
 	
 	
 }

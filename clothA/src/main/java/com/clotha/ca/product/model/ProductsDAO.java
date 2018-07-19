@@ -7,5 +7,5 @@ public interface ProductsDAO {
 
 	public int insertProducts(ProductsVO productsVo);
 	public List<ProductsVO> selectProduct(ProductsVO productsVo);
-	
+	public List<ProductsVO> selectAll();
 }

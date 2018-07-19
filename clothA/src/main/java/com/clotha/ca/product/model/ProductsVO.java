@@ -1,15 +1,12 @@
 package com.clotha.ca.product.model;
 
-import java.sql.Timestamp;
-
-import com.clotha.ca.common.SearchVO;
-
 public class ProductsVO{
+	private String accName;
 	private String pdCode;
 	private String pdName;
 	private int pdOriginalPrice;
 	private int pdSellPrice;
-	private Timestamp pdRegdate;
+	private String pdRegdate;
 	private String pdExplanation;
 	private String pdWarning;
 	private String pdImage;
@@ -19,6 +16,15 @@ public class ProductsVO{
 	private String sizeCode;
 	private String accCode;
 	private String genderCode;
+	
+	
+	
+	public String getAccName() {
+		return accName;
+	}
+	public void setAccName(String accName) {
+		this.accName = accName;
+	}
 	public String getPdCode() {
 		return pdCode;
 	}
@@ -43,10 +49,10 @@ public class ProductsVO{
 	public void setPdSellPrice(int pdSellPrice) {
 		this.pdSellPrice = pdSellPrice;
 	}
-	public Timestamp getPdRegdate() {
+	public String getPdRegdate() {
 		return pdRegdate;
 	}
-	public void setPdRegdate(Timestamp pdRegdate) {
+	public void setPdRegdate(String pdRegdate) {
 		this.pdRegdate = pdRegdate;
 	}
 	public String getPdExplanation() {
@@ -103,13 +109,14 @@ public class ProductsVO{
 	public void setGenderCode(String genderCode) {
 		this.genderCode = genderCode;
 	}
+	
 	@Override
 	public String toString() {
-		return "ProductsVO [pdCode=" + pdCode + ", pdName=" + pdName + ", pdOriginalPrice=" + pdOriginalPrice
-				+ ", pdSellPrice=" + pdSellPrice + ", pdRegdate=" + pdRegdate + ", pdExplanation=" + pdExplanation
-				+ ", pdWarning=" + pdWarning + ", pdImage=" + pdImage + ", styleCode=" + styleCode + ", colorCode="
-				+ colorCode + ", seasonCode=" + seasonCode + ", sizeCode=" + sizeCode + ", accCode=" + accCode
-				+ ", genderCode=" + genderCode + "]";
+		return "ProductsVO [accName=" + accName + ", pdCode=" + pdCode + ", pdName=" + pdName + ", pdOriginalPrice="
+				+ pdOriginalPrice + ", pdSellPrice=" + pdSellPrice + ", pdRegdate=" + pdRegdate + ", pdExplanation="
+				+ pdExplanation + ", pdWarning=" + pdWarning + ", pdImage=" + pdImage + ", styleCode=" + styleCode
+				+ ", colorCode=" + colorCode + ", seasonCode=" + seasonCode + ", sizeCode=" + sizeCode + ", accCode="
+				+ accCode + ", genderCode=" + genderCode + "]";
 	}
 	
 	

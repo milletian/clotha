@@ -92,10 +92,20 @@ public class ProductsController {
 	}
 	
 	//상품명 ajax
-	@RequestMapping(value="ajaxProductsList.do", method=RequestMethod.POST)
+	@RequestMapping(value="/products/ajaxProductsName.do")
 	@ResponseBody
-	public List<ProductsVO> accountList_post(@ModelAttribute ProductsVO vo) {
-		logger.info("{}",vo);
+	public List<ProductsVO> ProductsName_post() {
+		logger.info("상품 이름 ajax");
+		//db처리
+		List<ProductsVO> list =	productsService.selectAll();
+		
+		return list;
+	}
+
+	@RequestMapping(value="/products/ajaxProductsList.do")
+	@ResponseBody
+	public List<ProductsVO> ProductsList_post(@ModelAttribute ProductsVO vo) {
+		logger.info("상품목록 vo=",vo);
 		List<ProductsVO> list = productsService.selectProduct(vo);
 		logger.info("{}",list.size());
 		return list;

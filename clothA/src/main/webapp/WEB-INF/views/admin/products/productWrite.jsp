@@ -10,7 +10,7 @@
 $(function(){
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/account/accountList.do' />",
+    	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -43,6 +43,14 @@ $(function(){
 				return false;
 			}
 		});
+		var originalPrice=$('#pdOriginalPrice').val();
+		var sellPrice = $('#pdSellPrice').val();
+		
+		if(parseInt()>$('#pdSellPrice').val()){
+			alert("적절한 판매가격이 아닙니다.");
+			bool=false;
+			return false;
+		}
 		return bool;
 	});
 });

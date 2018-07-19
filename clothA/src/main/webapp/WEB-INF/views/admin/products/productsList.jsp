@@ -22,7 +22,7 @@ $(function() {
 	
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/account/accountList.do' />",
+    	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -40,20 +40,20 @@ $(function() {
     	error: function(xhr, status, error){
 			alert("sdsds");
 		}
-	})
+	});//ajax
 	
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/products/ajaxProductsList.do' />",
+    	url : "<c:url value='/admin/products/ajaxProductsName.do' />",
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
     			$("#selSearchProducts").html('');
     			$.each(res,function(idx, item){
-    				var option = "<option value='"+item.pdCode+"'>";
+    				var option2 = "<option value='"+item.pdCode+"'>";
     				option += item.pdName;
     				option += "</option>";
-        			$("#selSearchProducts").append(option);
+        			$("#selSearchProducts").append(option2);
     			})
     		}else{
     			$("#selSearchProducts").html('');
@@ -61,10 +61,43 @@ $(function() {
     	},
     	error: function(xhr, status, error){
 			alert("sdsds");
+		} 
+	});//ajex
+	
+	$('#btnSearch').click(function() { 
+	$.ajax({
+    	type:"POST",
+    	url : "<c:url value='/admin/products/ajaxProductsList.do' />",
+    	data:$("#frmProductsList").serialize(),
+    	dataType:'json',
+    	success:function(res){
+    		if (res.length > 0) {
+    			$("table tbody").html('');
+ 				$.each(res, function(idx, item) {
+ 					var pdList ="<tr><td>"+item.accCode+"</td>"
+ 					+"<td>"+item.pdCode+"</td>"
+ 					+"<td>"+item.pdName+"</td>"
+ 					+"<td>"+item.pdOriginalPrice+"</td>"
+ 					+"<td>"+item.pdSellPrice+"</td>"
+ 			 		+"<td>"+item.pdRegdate+"</td>"
+ 					+"<td>"+item.styleCode+"</td></tr>";
+ 					 $("table tbody").append(pdList);
+ 					});
+ 				}else{
+ 					$("table tbody").html('');
+ 				}
+    		 $("table").trigger("update"); 
+             return false; 
+    	 },
+		error: function(xhr, status, error){
+			alert("sdsds");
 		}
-	})
-	$("#selSearchSupplier").select2();
-	})
+    
+		}); 
+	}); 
+	
+	$("select").select2();
+
 	
 	$('#searchDateRange').daterangepicker({
 	      autoUpdateInput: false,
@@ -89,7 +122,7 @@ $(function() {
 	  });
 
 	
-})
+});
 function popupOpen(ACC_DT_CODE){
 
 	var popUrl = "<c:url value='/admin/account/accountDetailWrite.do?accDtCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
@@ -116,8 +149,8 @@ function popupOpen(ACC_DT_CODE){
 		<label for="selSearchSupplier">매입처</label>
 		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
 		<label for="selSearchProducts">상품코드/명</label>
-		<select style="max-height: 30px;width: 100px" name="pdCode" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"></select>			
-		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)</button>
+		<select style="max-height: 30px;width: 100px" name="pdName" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"></select>			
+		<button type="button" id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)</button>
 	</form>
 </div>
 <div id="maincontent">    
@@ -133,8 +166,7 @@ function popupOpen(ACC_DT_CODE){
 		            <th>상품명</th> 
 		            <th>분류</th> 
 		            <th>입고가</th> 
-		            <th>판매가</th> 
-		            <th>사용여부</th> 
+		            <th>판매가</th>  
 		            <th>주문수량</th> 
 		            <th>상품 등록일</th> 
 		        </tr> 

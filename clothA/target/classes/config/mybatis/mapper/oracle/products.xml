@@ -8,10 +8,21 @@
 		values(#{styleCode}||#{sizeCode}||#{genderCode}||#{colorCode}||products_seq.nextval||'-'||#{seasonCode},
 		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning})
 	</insert>
-	<select id="selectProducts" parameterType="String" resultType="ProductsVO">
-	select * from products 
-	order by pd_regdate desc
-</select>
+	<select id="selectProducts" parameterType="ProductsVO"
+		resultType="ProductsVO">
+		select * from ACCPRODUCTSVIEW
+		<where>
+		<if test="accCode!=null and accCode=' ' and pdCode!=null and pdCode!=' '">
+		 acc_code=#{accCode} and pd_code=#{pdCode}
+		</if>
+		</where>
+		order by pd_regdate desc
+	</select>
+	<select id="selectAll" parameterType="string" resultType="ProductsVO">
+		select * from products
+		order by pd_regdate desc
+	</select>
+	
 </mapper>
 
 

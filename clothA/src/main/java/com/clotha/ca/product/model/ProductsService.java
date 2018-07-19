@@ -7,4 +7,6 @@ public interface ProductsService {
 
 	public int insertProducts(ProductsVO productsVo);
 	public List<ProductsVO> selectProduct(ProductsVO productsVo);
+	public List<ProductsVO> selectAll();
+	
 }
