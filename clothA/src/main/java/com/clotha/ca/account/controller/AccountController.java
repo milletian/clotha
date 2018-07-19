@@ -27,6 +27,8 @@ public class AccountController {
 	@Autowired
 	private AccountDetailService accountDetailService;
 	
+	// 구매처 등록화면으로 가게하는 매퍼
+	// 파라미터로 구매처 코드가 오게될시 코드로 구매처 정보를 조회한후 화면에 뿌리기 위해 
 	@RequestMapping(value="/accountWrite.do", method=RequestMethod.GET)
 	public String accountWrite_get(@RequestParam(required=false) String accCode,Model model) {
 		if(accCode!=null&&!accCode.isEmpty()) {

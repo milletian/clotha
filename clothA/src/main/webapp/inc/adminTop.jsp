@@ -254,8 +254,7 @@ footer{
 						class="fas fa-home"></i><span>매장관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/admin/store/storeWrite.do' />" target="if">매장신규등록</a></li>
-						<li><a href="#">매장정보조회</a></li>
+						<li><a href="<c:url value='/admin/store/storeList.do' />" target="if">매장관리</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-id-badge"></i><span>인사관리</span><i
@@ -269,9 +268,8 @@ footer{
 						class="far fa-building"></i><span>구매처관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='#' />">구매처정보조회</a></li>
-						<li><a href="#">구매신청</a></li>
-						<li><a href="#">구매신청현황조회</a></li>
+						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처정보조회</a></li>
+						<li><a href="<c:url value='/admin/account/accountDetailList.do' />" target="if">구매현황조회</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
