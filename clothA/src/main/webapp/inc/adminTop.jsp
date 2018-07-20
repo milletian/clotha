@@ -17,9 +17,9 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
 
-
 <link rel='stylesheet prefetch'
 	href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+	
 
 <style>
 /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
@@ -162,41 +162,30 @@ footer{
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#logout").click(function(){
+			location.href="<c:url value='/logout.do'/>";
+		});
+	});
+</script>
+	
+
 </head>
 
 <body>
-	<header style="text-align: right; position: absolute; width: 100%; background-color: #596d82">
+	<header style="text-align: right; position: absolute; width: 100%; background-color: #596d82; z-index: 9 " >
 		<div class="fim-dropdown">
 			<label><i class="fa fa-envelope-o fa-lg"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
 		</div>
 		<div class="fim-dropdown">
 			<label><i class="fa fa-bell-o"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
 		</div>
 		<div class="fim-dropdown">
 			<label><i class="fas fa-user"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
 		</div>
-		<div class="fim-dropdown">
-			<label><i class="fa fa-share-square-o"></i></label>
-			<div class="inner">
-				<textarea placeholder="Share what's new..."></textarea>
-				<div class="share_type">
-					<span><i class="fa fa-camera fim-blue"></i> <small>Photos</small></span>
-					<span><i class="fa fa-link fim-yellow"></i> <small>Link</small></span>
-					<span><i class="fa fa-calendar fim-green"></i> <small>Event</small></span>
-				</div>
-			</div>
+		<div class="fim-dropdown" >
+			<label><i class="fa fa-share-square-o" id="logout"></i></label>
 		</div>
 	</header>
 	<script type="text/javascript">

@@ -13,5 +13,10 @@ public class LogServiceImpl implements LogService {
 	public int loginInsert(LogVO logVo) {	//StoreLoginController
 		return logDao.loginInsert(logVo);
 	}
+
+	@Override
+	public int logoutUpdate(int logPk) {	//LogoutController
+		return logDao.logoutUpdate(logPk);
+	}
 	
 }

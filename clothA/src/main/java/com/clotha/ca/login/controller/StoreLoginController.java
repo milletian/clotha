@@ -56,17 +56,18 @@ public class StoreLoginController {
 				request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
 				
 				InetAddress local;
+				LogVO logVo = new LogVO();
 				try {
 					local = InetAddress.getLocalHost();
 					String ip = local.getHostAddress();
-					LogVO logVo = new LogVO();
 					logVo.setEmpNo(vo.getEmpNo());
 					logVo.setLogIp(ip);
 					int cnt = logService.loginInsert(logVo);
-					logger.info("로그찍기 결과 cnt = {} ,ip={}",cnt,ip);
+					logger.info("로그찍기 결과 cnt = {} ,logPk={}",cnt,logVo.getLogPk());
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}
+				request.getSession().setAttribute("logPk", logVo.getLogPk());
 				
 				Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
 				ck.setPath("/");

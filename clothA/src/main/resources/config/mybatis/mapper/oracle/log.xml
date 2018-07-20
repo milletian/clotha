@@ -4,9 +4,16 @@
 <mapper namespace="config.mybatis.mapper.oracle.log">
 	
 	<insert id="loginInsert" parameterType="logVo">
+		<selectKey order="BEFORE" keyProperty="logPk" resultType="int"  >
+			select log_seq.nextval from dual
+		</selectKey>
 		insert into log(log_pk,emp_no,log_ip,log_in)
-		values(log_seq.nextval,#{empNo},#{logIp},sysdate)
+		values(#{logPk},#{empNo},#{logIp},sysdate)
 	</insert>
+	
+	<update id="logoutUpdate" parameterType="int">
+		update log set log_out=sysdate where log_pk = #{logPk} 
+	</update>
 	
 </mapper>
 

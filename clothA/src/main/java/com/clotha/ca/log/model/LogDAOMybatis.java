@@ -15,6 +15,11 @@ public class LogDAOMybatis implements LogDAO {
 	public int loginInsert(LogVO logVo) {	//StoreLoginController
 		return sqlSession.insert(namespace+"loginInsert",logVo);	
 	}
+
+	@Override
+	public int logoutUpdate(int logPk) {	//LogoutController
+		return sqlSession.update(namespace+"logoutUpdate",logPk);
+	}
 	
 	
 }
