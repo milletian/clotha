@@ -19,6 +19,8 @@
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
+<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
+
 <script type="text/javascript">
 $(function() {
 	var Now = new Date();
@@ -43,7 +45,7 @@ $(function() {
     	$.ajax({
         	type:"POST",
         	url : "<c:url value='/admin/account/accountDetailDel.do' />",
-        	data:accDtCode,
+        	data:{'accDtCode':accDtCode},
         	dataType:'json',
         	success:function(res){
         		alert(res);
@@ -165,37 +167,39 @@ function popupOpen(ACC_DT_CODE){
 	padding: 15px;
 }
 </style>
-<div id="wrap">
-	<form name="frmAccountDetailList" id="frmAccountDetailList">
-	<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
-		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
-		<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
-	</form>
-</div>
-<div id="maincontent">    
-	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
-	<div id="content1">
-		<table cellspacing="1" class="tablesorter">             
-		    <thead> 
-		        <tr> 
-		            <th>구매현황코드</th> 
-		            <th>구매처</th> 
-		            <th>주문일자</th> 
-		            <th>상품코드</th> 
-		            <th>상품명</th> 
-		            <th>사이즈 코드</th> 
-		            <th>주문수량</th> 
-		            <th>입고예정일</th> 
-		            <th>입고예정창고</th> 
-		            <th>구매처명</th> 
-		        </tr> 
-		    </thead> 
-		    <tbody> 
-		       
-		    </tbody> 
-		</table>
+<div class="viewBody">
+	<div class="box1">
+		<form name="frmAccountDetailList" id="frmAccountDetailList">
+		<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
+			<label for="selSearchSupplier">매입처</label>
+			<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+			<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
+		</form>
+	</div>
+	<div class="box2">    
+		<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
+		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
+		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+		<div id="content1">
+			<table cellspacing="1" class="tablesorter">             
+			    <thead> 
+			        <tr> 
+			            <th>구매현황코드</th> 
+			            <th>구매처</th> 
+			            <th>주문일자</th> 
+			            <th>상품코드</th> 
+			            <th>상품명</th> 
+			            <th>사이즈 코드</th> 
+			            <th>주문수량</th> 
+			            <th>입고예정일</th> 
+			            <th>입고예정창고</th> 
+			            <th>구매처명</th> 
+			        </tr> 
+			    </thead> 
+			    <tbody> 
+			       
+			    </tbody> 
+			</table>
+		</div>
 	</div>
 </div>

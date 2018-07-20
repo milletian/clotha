@@ -28,4 +28,14 @@ public class StoreDAOMybatis implements StoreDAO {
 	public int insertStore(StoreVO storeVO) {
 		return sqlSession.insert(namesapce+"insertStore", storeVO);
 	}
+
+	@Override
+	public int updateStore(StoreVO storeVO) {
+		return sqlSession.update(namesapce+"updateStore", storeVO);
+	}
+
+	@Override
+	public int storeDel(String storeCode) {
+		return sqlSession.update(namesapce+"storeDel", storeCode);
+	}
 }

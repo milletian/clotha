@@ -27,6 +27,18 @@
 		values('ca'||store_seq.nextval,#{empNo},#{storeZipcode},#{storeAddress},#{storeImage}, 
 		( select sta_code from ( select * from stock_area order by sta_code desc ) where rownum=1 ) ,#{storeTel},#{storeNo})
 	</insert>
+	
+	<update id="updateStore" parameterType="StoreVO">
+		update store set emp_No= #{empNo},store_zipcode=#{storeZipcode},store_address=#{storeAddress}
+		<if test="storeImage!=null and storeImage!=''">
+			,store_image=#{storeImage}	
+		</if>
+		,store_tel=#{storeTel},store_No=#{storeNo} where store_code=#{storeCode}
+	</update>
+	
+	<update id="storeDel" parameterType="string">
+		update store set store_del='Y' where store_code = #{storeCode}
+	</update>
 </mapper>
 
 

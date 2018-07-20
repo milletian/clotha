@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.stockarea">
+	<insert id="insertStockArea" parameterType="string">
+		insert into stock_area(sta_code,area_code)
+		values(stock_area_seq.nextval,#{areaCode})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+

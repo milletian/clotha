@@ -33,19 +33,22 @@ $(function() {
 	$("table").tablesorter(); 
 	
 	$('#delbtn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountDel.do' />",
-        	data:accCode,
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
-        
-   		}); 
+		if(confirm(storeCode+'지점을 정말로 영업정지 시키시겠습니까?')){
+	    	$.ajax({
+	        	type:"POST",
+	        	url : "<c:url value='/admin/store/ajaxStoreDel.do' />",
+	        	data:storeCode,
+	        	dataType:'json',
+	        	success:function(res){
+	        		alert(res);
+	        	},
+				error: function(xhr, status, error){
+					alert("sdsds");
+				}
+	        
+	   		}); 
+			
+		}
 	})
 	
 	$('#btn').click(function() { 
@@ -63,9 +66,9 @@ $(function() {
      					+"<td>"+item.empNo+"</td>"
      					+"<td>"+item.storeZipcode+"</td>"
      					+"<td>"+item.storeAddress+"</td>"
-     					+"<td>"+item.storeJoin+"</td>"
      					+"<td>"+item.storeNo+"</td>"
      					+"<td>"+item.storeTel+"</td>"
+     					+"<td>"+item.storeJoin+"</td>"
      					+"<td>"
      					if(item.storeDel!=null&&!item.storeDel!=''){
      						dsd+="영업정지";

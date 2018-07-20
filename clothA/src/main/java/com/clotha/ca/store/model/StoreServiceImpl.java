@@ -25,6 +25,16 @@ public class StoreServiceImpl implements StoreService{
 	public int insertStore(StoreVO storeVO) {
 		return storeDao.insertStore(storeVO);
 	}
+
+	@Override
+	public int updateStore(StoreVO storeVO) {
+		return storeDao.updateStore(storeVO);
+	}
+
+	@Override
+	public int storeDel(String storeCode) {
+		return storeDao.storeDel(storeCode);
+	}
 	
 	
 }

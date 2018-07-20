@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.clotha.ca.common.FileUploadUtil;
+import com.clotha.ca.stockarea.model.StockAreaService;
 import com.clotha.ca.store.model.StoreService;
 import com.clotha.ca.store.model.StoreVO;
 
@@ -27,13 +28,16 @@ public class StoreController {
 	private StoreService storeService;
 	
 	@Autowired
+	private StockAreaService stockAreaService;
+	
+	@Autowired
 	private FileUploadUtil fileupload;
 	
 	@RequestMapping(value="/storeWrite.do", method=RequestMethod.GET)
 	public String storeWrite_get(@RequestParam(required=false) String storeCode,Model model) {
 		if(storeCode!=null&&!storeCode.isEmpty()) {
 			StoreVO storeVo = storeService.SearchStoreByCode(storeCode);
-			model.addAttribute("accVo", storeVo);
+			model.addAttribute("storeVo", storeVo);
 		}
 		return "admin/store/storeWrite";
 	}
@@ -41,7 +45,8 @@ public class StoreController {
 	@RequestMapping(value="/storeWrite.do", method=RequestMethod.POST)
 	public String storeWrite_post(MultipartHttpServletRequest multi) {
 		StoreVO storeVO = new StoreVO();
-		String[] oldFileList = multi.getParameter("oldfile").split(",");
+		String oldfile = multi.getParameter("oldfile");
+		String[] oldFileList = oldfile.split(",");
 		String areaCode = multi.getParameter("areaCode");
 		storeVO.setStoreCode(multi.getParameter("storeCode"));
 		storeVO.setEmpNo(multi.getParameter("empNo"));
@@ -52,10 +57,12 @@ public class StoreController {
 		storeVO.setStoreNo(multi.getParameter("storeNo"));
 		logger.info("{},{},{}",multi.getParameter("empNo"));
 		String result = "";
-		String test = "C:\\Users\\hkedu\\git\\clothA\\src\\main\\webapp\\store_images";
-		if(multi.getParameter("oldfile")!=null&&multi.getParameter("oldfile").isEmpty()) {
-			for(String oldfile : oldFileList) {				
-				 File file = new File(test+"\\"+oldfile);
+		String test = "C:\\Users\\hkedu\\git\\clotha\\clothA\\src\\main\\webapp\\store_images"; // 테스트용 경로
+		result = fileupload.multifileup(multi); // 테스트용 업로드(미완성)
+		storeVO.setStoreImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
+		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
+			for(String oldfilename : oldFileList) {				
+				 File file = new File(test+"\\"+oldfilename);
 			     if(file.exists() ){
 			         if(file.delete()){
 			             System.out.println("파일삭제 성공");
@@ -67,12 +74,11 @@ public class StoreController {
 			     }
 			}
 		}
-		result = fileupload.multifileup(multi);
-		storeVO.setStoreImage(result);
 		if(storeVO.getStoreCode()==null||storeVO.getStoreCode().isEmpty()) {
+			stockAreaService.insertStockArea(areaCode);
 			storeService.insertStore(storeVO);
 		}else {
-			
+			storeService.updateStore(storeVO);
 		}
 
 		return "수정완료!";
@@ -90,5 +96,17 @@ public class StoreController {
 		List<StoreVO> list = storeService.SearchStore(storeVO);
 		logger.info("{}",list.size());
 		return list;
+	}
+	
+	@RequestMapping(value="/ajaxStoreDel.do")
+	@ResponseBody
+	public String ajaxStoreDel(@RequestParam String storeCode) {
+		
+		int result = storeService.storeDel(storeCode);
+		if(result==0) {
+			return "영업정지 처분 실패";
+		}else {
+			return "영업정지 처분 성공";			
+		}
 	}
 }

@@ -11,6 +11,27 @@
 
 <script type="text/javascript">
 $(function() {
+	$.ajax({
+    	url : "<c:url value='/admin/area/ajaxAreaList.do' />",
+    	dataType:'json',
+    	success:function(res){
+    		if (res.length > 0){
+    			$("#areaCode").html('');
+    			$.each(res,function(idx, item){
+    				var option = "<option value='"+item.areaCode+"'>";
+    				option += item.areaName;
+    				option += "</option>";
+        			$("#areaCode").append(option);
+    			})
+    		}else{
+    			$("#areaCode").html('');
+    		}
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		}
+	})
+	
 	$('#closeWrite').click(function() {
 		self.close();
 	})
@@ -133,13 +154,13 @@ function CorporationNumber(str) {
 	<input type="button" id="searchEmpNo" value="사원조회">
 	<c:if test="${empty param.storeCode || param.storeCode=='undefined'}">
 		<label for="areaCode">지역 </label>
-		<select id="areaCode">
+		<select id="areaCode" name="areaCode">
 		
 		</select>
 	</c:if>
 	<input type="hidden" name="oldfile" value="${storeVo.storeImage}">
 	<label for="storeImage">이미지</label><input multiple="multiple" type="file" name="file"><br>
-	<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" >
+	<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" value="${storeVo.storeZipcode}" >
 	<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 	<label for="address">주소</label><input type="text" id="address" name="address"><br>
 	<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>

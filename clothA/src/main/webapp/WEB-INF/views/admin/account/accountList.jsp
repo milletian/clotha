@@ -15,6 +15,7 @@
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
+<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
 
 <script type="text/javascript">
 $(function() {
@@ -104,59 +105,51 @@ function popupOpen(acc_Code){
 	}
 
 </script>
-<style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
-</style>
-<div id="wrap">
-	<form name="frmAccountList" id="frmAccountList">
-		<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="accIsdeal" value="전체"><label for="isall">전체 </label>
-		<input type="radio" id="use" name="accIsdeal" value="Y"><label for="use">사용 </label>
-		<input type="radio" id="noneuse" name="accIsdeal" value="N"><label for="noneuse">미사용 </label>
-		
-		검색조건
-		<select name="searchCondition"> 
-			<option value="acc_Code">구매처코드</option>
-			<option value="acc_No">법인등록번호</option>
-			<option value="acc_Name">회사명</option>
-		</select>
-		
-		검색<input type="text" name="searchKeyword">
-		
-		<input type="button" id="btn" value="거래처 조회">
-	</form>
-</div>
-<div id="maincontent">    
-	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
-	<div id="content1">
-		<table cellspacing="1" class="tablesorter">             
-		    <thead> 
-		        <tr> 
-		            <th>매입처코드</th> 
-		            <th>회사명</th> 
-		            <th>주소</th> 
-		            <th>전화번호</th> 
-		            <th>대표자 성명</th> 
-		            <th>법인 등록번호</th> 
-		            <th>사용 여부</th> 
-		            <th>특이사항</th> 
-		        </tr> 
-		    </thead> 
-		    <tbody> 
-		       
-		    </tbody> 
-		</table>
+
+<div class="viewBody">
+	<div class="box1">
+		<form name="frmAccountList" id="frmAccountList">
+			<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="accIsdeal" value="전체"><label for="isall">전체 </label>
+			<input type="radio" id="use" name="accIsdeal" value="Y"><label for="use">사용 </label>
+			<input type="radio" id="noneuse" name="accIsdeal" value="N"><label for="noneuse">미사용 </label>
+			
+			검색조건
+			<select name="searchCondition"> 
+				<option value="acc_Code">구매처코드</option>
+				<option value="acc_No">법인등록번호</option>
+				<option value="acc_Name">회사명</option>
+			</select>
+			
+			검색<input type="text" name="searchKeyword">
+			
+			<input type="button" id="btn" value="거래처 조회">
+		</form>
+	</div>
+	<div class="box2">    
+		<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
+		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
+		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+		<div id="content1">
+			<table cellspacing="1" class="tablesorter">             
+			    <thead> 
+			        <tr> 
+			            <th>매입처코드</th> 
+			            <th>회사명</th> 
+			            <th>주소</th> 
+			            <th>전화번호</th> 
+			            <th>대표자 성명</th> 
+			            <th>법인 등록번호</th> 
+			            <th>사용 여부</th> 
+			            <th>특이사항</th> 
+			        </tr> 
+			    </thead> 
+			    <tbody> 
+			       
+			    </tbody> 
+			</table>
+		</div>
 	</div>
 </div>
-
 
 
 
