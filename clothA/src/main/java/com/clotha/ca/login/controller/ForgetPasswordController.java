@@ -46,7 +46,6 @@ public class ForgetPasswordController {
 		// 사원번호랑 이메일이 일치하면 이메일로 임시 비밀번호를 보내주기
 		logger.info("비밀번호 찾기 post, 파라미터 vo={}",vo);
 		int cnt = employeeService.idcheck(vo.getEmpNo());
-		
 		if(cnt==1) {
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
 			if(employeeVo.getEmpEmail().equals(vo.getEmpEmail())) {

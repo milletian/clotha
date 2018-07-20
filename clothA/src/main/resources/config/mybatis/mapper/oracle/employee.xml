@@ -22,7 +22,7 @@
 		update employee set emp_pwd = #{empPwd} where emp_no = #{empNo}
 	</update>
 	
-	<select id="idcheck" parameterType="string">
+	<select id="idcheck" parameterType="string" resultType="int" >
 		select count(*) from employee where emp_no=#{empNo}
 	</select>
 	
