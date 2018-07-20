@@ -8,7 +8,11 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		
+		/* 맨처음 입력 포커싱 */
 		$('#deptNo').focus();
+		
+		
+		/* 빈칸 입력 막는 검사  */
 		$('form[name=employeeWrite]').submit(function(){
 			
 			var bool = true;
@@ -21,21 +25,55 @@
 					return false;
 				}
 			});
-			
+			/*입력한 비밀번호 1과 확인 비밀번호 2의 일치여부 검사 */
 			if(bool){
 				if($('#empPwd').val()!=$('#empPwd2').val()){
 					alert('비밀번호가 일치하지 않습니다.');
 					$('#empPwd2').focus();
 					bool= false;
+					return false;
+			/* 주민번호 자릿수 맞게 입력했는지 확인 */
+				} else if($('#empJumin1').val().length<6){
+					alert('올바른 주민등록 번호를 입력헤 주세요');
+					$('#empJumin1').focus();
+					bool= false;
+					return false;
+					
+				}else if($('#empJumin2').val().length<7){
+					alert('올바른 주민등록 번호를 입력헤 주세요');
+					$('#empJumin2').focus();
+					bool= false;
+					return false;
 				}
+						
+			
 			}
 			return bool;
-			
-			
-			
-		}); 
+		});
+	});
+
+	/*주민등록번호 유효성체크 */
 	
-})
+	/* 숫자만입력하도록  */
+	function jumin1Keyup(empJumin1) {
+		if(empJumin1.value.match('[^0-9]')){
+			  alert("주민등록번호는 숫자만 입력하셔야 합니다.");
+		        return false;
+	/*앞자리 6자리 숫자 입력하면 자동으로 뒷자리 입력칸으로 이동  */
+		}else if(empJumin1.value.length >= 6){
+				$('#empJumin2').focus();
+		}
+	}
+	/* 숫자만 입력하도록 */
+	function jumin2Keyup(empJumin2) {
+		if(empJumin2.value.match('[^0-9]')){
+			  alert("주민등록번호는 숫자만 입력하셔야 합니다.");
+		        return false;
+			}
+		}
+	
+	
+
 
 </script>
 
@@ -80,15 +118,34 @@
     		</div>
 			<div>
 				<label for="empJumin">주민등록번호</label> 
-				<input type="text" name="empJumin" id="empJumin" class="valid">
+				<input type="text" name="empJumin1" id="empJumin1" class="valid" onkeyup="jumin1Keyup(this)" maxlength="6">-
+				<input type="text" name="empJumin2" id="empJumin2" onkeyup="jumin2Keyup(this)"maxlength="7">
+				
 			</div>
 			<div>
-				<label for="empTel">전화번호</label>
-				<input type="text" name="empTel" id="empTel" class="valid">
+				<label for="emptel">핸드폰</label>&nbsp;
+				 <span class="valid"><select name="hp1" id="hp1" title="휴대폰 앞자리">
+					<option value="010">010</option>
+					<option value="011">011</option>
+					<option value="016">016</option>
+					<option value="017">017</option>
+					<option value="018">018</option>
+					<option value="019">019</option>
+				</select>- 
+				<input type="text" name="hp2" id="hp2" maxlength="4" title="휴대폰 가운데자리" >- 
+				<input type="text" name="hp3" id="hp3" maxlength="4" title="휴대폰 뒷자리" ></span>
 			</div>
 			<div>
-				<label for="empEmail">이메일</label>
-				<input type="text" name="empEmail" id="empEmail" class="valid">
+				<label for="empEmail">이메일 주소</label> 
+				<input type="text" name="email1" id="email1" title="이메일주소 앞자리" class="valid">
+				@ <select name="email2"	id="email2" title="이메일주소 뒷자리">
+					<option value="naver.com">naver.com</option>
+					<option value="hanmail.net">hanmail.net</option>
+					<option value="nate.com">nate.com</option>
+					<option value="gmail.com">gmail.com</option>
+					<option value="etc">직접입력</option>
+				</select> 
+				<input type="text" name="email3" id="email3" title="직접입력인 경우 이메일주소 뒷자리" style="visibility: hidden">
 			</div>
 			<div>
 				<label for="uploadFace">증명사진첨부(image)</label>
@@ -113,5 +170,6 @@
 		</div>
 	</form>
 </div>
+
 
 
