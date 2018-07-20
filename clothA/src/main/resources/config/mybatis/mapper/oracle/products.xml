@@ -9,16 +9,21 @@
 		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning})
 	</insert>
 	<select id="selectProducts" parameterType="ProductsVO"
-		resultType="ProductsVO">
-		select * from ACCPRODUCTSVIEW
+		resultType="map">
+		select  ACC_NAME, PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE, PD_REGDATE,STYLE_CODE from ACCPRODUCTSVIEW
 		<where>
+		<if test="startDay!=null and startDay!=''">
+			<![CDATA[
+			pd_regdate>#{startDay} and pd_regdate<to_date(#{endDay})+1
+			]]>
+		</if>
 		<if test="accCode!=null and accCode=' ' and pdCode!=null and pdCode!=' '">
 		 acc_code=#{accCode} and pd_code=#{pdCode}
 		</if>
 		</where>
 		order by pd_regdate desc
 	</select>
-	<select id="selectAll" parameterType="string" resultType="ProductsVO">
+	<select id="selectAll" resultType="ProductsVO">
 		select * from products
 		order by pd_regdate desc
 	</select>

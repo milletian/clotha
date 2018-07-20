@@ -1,6 +1,8 @@
 package com.clotha.ca.product.model;
 
-public class ProductsVO{
+import com.clotha.ca.common.DateSearchVO;
+
+public class ProductsVO extends DateSearchVO{
 	private String accName;
 	private String pdCode;
 	private String pdName;

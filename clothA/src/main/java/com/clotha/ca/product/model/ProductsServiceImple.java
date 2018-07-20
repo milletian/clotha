@@ -19,7 +19,7 @@ public class ProductsServiceImple implements ProductsService  {
 	}
 
 	@Override
-	public List<ProductsVO> selectProduct(ProductsVO productsVo) {
+	public List<Map<String, Object>> selectProduct(ProductsVO productsVo) {
 		return productDao.selectProduct(productsVo);
 	}
 

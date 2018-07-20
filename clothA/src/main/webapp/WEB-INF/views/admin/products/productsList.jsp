@@ -51,8 +51,8 @@ $(function() {
     			$("#selSearchProducts").html('');
     			$.each(res,function(idx, item){
     				var option2 = "<option value='"+item.pdCode+"'>";
-    				option += item.pdName;
-    				option += "</option>";
+    				option2 += item.pdName;
+    				option2 += "</option>";
         			$("#selSearchProducts").append(option2);
     			})
     		}else{
@@ -74,13 +74,13 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var pdList ="<tr><td>"+item.accCode+"</td>"
- 					+"<td>"+item.pdCode+"</td>"
- 					+"<td>"+item.pdName+"</td>"
- 					+"<td>"+item.pdOriginalPrice+"</td>"
- 					+"<td>"+item.pdSellPrice+"</td>"
- 			 		+"<td>"+item.pdRegdate+"</td>"
- 					+"<td>"+item.styleCode+"</td></tr>";
+ 					var pdList ="<tr><td>"+item.ACC_NAME+"</td>"
+ 					+"<td>"+item.PD_CODE+"</td>"
+ 					+"<td>"+item.PD_NAME+"</td>"
+ 					+"<td>"+item.STYLE_CODE+"</td>"
+ 					+"<td>"+item.PD_ORIGINALPRICE+"</td>"
+ 					+"<td>"+item.PD_SELLPRICE+"</td>"
+ 			 		+"<td>"+item.PD_REGDATE+"</td></tr>";
  					 $("table tbody").append(pdList);
  					});
  				}else{
@@ -96,7 +96,7 @@ $(function() {
 		}); 
 	}); 
 	
-	$("select").select2();
+	$(".ajax").select2();
 
 	
 	$('#searchDateRange').daterangepicker({
@@ -147,9 +147,40 @@ function popupOpen(ACC_DT_CODE){
 	<form name="frmProductsList" id="frmProductsList">
 		<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
 		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier" class="ajax"></select>
 		<label for="selSearchProducts">상품코드/명</label>
-		<select style="max-height: 30px;width: 100px" name="pdName" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"></select>			
+		<select style="max-height: 30px;width: 100px" name="pdName" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"  class="ajax"></select>			
+		<label for="selSearchColors">색상</label>
+		<select name="colorCode">
+			<option value="69">navy</option>
+			<option value="89">black</option>
+			<option value="00">white</option>
+			<option value="04">pink</option>
+			<option value="32">beige</option>
+			<option value="67">blue</option>
+			<option value="05">red</option>
+			<option value="88">gray</option>
+			<option value="25">yellow</option>
+			<option value="99">gold</option>
+		</select>
+		<label for="selSearchStyle">스타일</label>
+		<select name="styleCode">
+			<option value="S"></option>
+			<option value="O">black</option>
+			<option value="T">white</option>
+			<option value="K">pink</option>
+			<option value="P">beige</option>
+			<option value="U">blue</option>
+			<option value="E">red</option>
+		</select>
+		<label for="selSearchSize">사이즈</label>
+		<select name="sizeCode">
+			<option value="XS">85</option>
+			<option value="S">90</option>
+			<option value="M">95</option>
+			<option value="L">100</option>
+			<option value="XL">105</option>
+		</select>
 		<button type="button" id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)</button>
 	</form>
 </div>
@@ -166,9 +197,8 @@ function popupOpen(ACC_DT_CODE){
 		            <th>상품명</th> 
 		            <th>분류</th> 
 		            <th>입고가</th> 
-		            <th>판매가</th>  
-		            <th>주문수량</th> 
-		            <th>상품 등록일</th> 
+		            <th>판매가</th> 
+		            <th>상품등록일</th>  
 		        </tr> 
 		    </thead> 
 		    <tbody> 

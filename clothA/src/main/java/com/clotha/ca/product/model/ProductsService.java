@@ -6,7 +6,7 @@ import java.util.Map;
 public interface ProductsService {
 
 	public int insertProducts(ProductsVO productsVo);
-	public List<ProductsVO> selectProduct(ProductsVO productsVo);
+	public List<Map<String, Object>> selectProduct(ProductsVO productsVo);
 	public List<ProductsVO> selectAll();
 	
 }
