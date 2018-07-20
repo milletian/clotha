@@ -127,15 +127,18 @@ function CorporationNumber(str) {
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 	<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
-<form name="frmStoreWrite" action="<c:url value='/admin/store/storeWrite.do' />" method="post">
+<form name="frmStoreWrite" action="<c:url value='/admin/store/storeWrite.do' />" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="storeCode"  value="${storeVo.storeCode }">  
 	<label for="empNo">점장 </label><input type="text" id="empNo" name="empNo" value="${storeVo.empNo}">
 	<input type="button" id="searchEmpNo" value="사원조회">
 	<c:if test="${empty param.storeCode || param.storeCode=='undefined'}">
-		<label for="areaCode">지역 </label><input type="text" id="areaCode" name="areaCode"><br>
-		<input type="button" id="searchArea" value="지역조회">
+		<label for="areaCode">지역 </label>
+		<select id="areaCode">
+		
+		</select>
 	</c:if>
-	<label for="storeImage">이미지</label><input type="file" id="storeImage" name="Image"><br>
+	<input type="hidden" name="oldfile" value="${storeVo.storeImage}">
+	<label for="storeImage">이미지</label><input multiple="multiple" type="file" name="file"><br>
 	<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" >
 	<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 	<label for="address">주소</label><input type="text" id="address" name="address"><br>

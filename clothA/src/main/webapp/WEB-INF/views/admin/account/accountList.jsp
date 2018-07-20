@@ -50,8 +50,7 @@ $(function() {
 	
 	$('#btn').click(function() { 
     	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountList.do' />",
+        	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
         	data:$("#frmAccountList").serialize(),
         	dataType:'json',
         	success:function(res){

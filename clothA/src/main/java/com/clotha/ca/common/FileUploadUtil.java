@@ -80,6 +80,35 @@ public class FileUploadUtil {
 
 		return fileName;
 	}
+	public String multifileup(MultipartHttpServletRequest multi) {
+		List<MultipartFile> fileList = multi.getFiles("file");
+		int count =0;
+		String result ="";
+        String path = fileUploadProps.getProperty("storeImageFile.upload.path.test");
+        for (MultipartFile mf : fileList) {
+        	if(mf.getOriginalFilename()!=null&&!mf.getOriginalFilename().isEmpty()) {
+        		String originFileName = mf.getOriginalFilename()+System.currentTimeMillis(); // 원본 파일 명
+        		logger.info("{}",originFileName);
+        		String safeFile = path +"\\"+ originFileName;
+        		if(count>0) {
+        			result+=",";
+        		}
+        		result += originFileName;
+        		count++;
+        		try {
+        			mf.transferTo(new File(safeFile));
+        		} catch (IllegalStateException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        		
+        	}
+        }
+        return result;
+	}
 
 	public List<Map<String, Object>> fileUpload(HttpServletRequest request,int isimg) throws IllegalStateException, IOException {
 		// 파일 업로드 처리하는 메서드

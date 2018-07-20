@@ -20,6 +20,11 @@ public class StoreServiceImpl implements StoreService{
 	public StoreVO SearchStoreByCode(String storeCode) {
 		return storeDao.SearchStoreByCode(storeCode);
 	}
+
+	@Override
+	public int insertStore(StoreVO storeVO) {
+		return storeDao.insertStore(storeVO);
+	}
 	
 	
 }

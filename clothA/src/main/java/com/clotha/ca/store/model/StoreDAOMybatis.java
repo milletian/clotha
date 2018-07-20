@@ -23,4 +23,9 @@ public class StoreDAOMybatis implements StoreDAO {
 	public StoreVO SearchStoreByCode(String storeCode) {
 		return sqlSession.selectOne(namesapce+"SearchStoreByCode", storeCode);
 	}
+
+	@Override
+	public int insertStore(StoreVO storeVO) {
+		return sqlSession.insert(namesapce+"insertStore", storeVO);
+	}
 }
