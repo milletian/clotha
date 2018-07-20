@@ -5,6 +5,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("input[name=empNo]").focus();
+		$("input[type=submit]").click(function(){
+			var bool = true;
+			$("input[type=text]").each(function(){
+				if($('input[type=text]').val()==''){
+					alert($(this).prev().text()+"를 입력하여야 합니다.");
+					$(this).focus();
+					
+					bool = false;
+					return false;
+				}
+			});
+			return bool;
+		});
+	});
+</script>
 <style type="text/css">
 	body{
 		background-image: url("<c:url value='/images/logo1.png'/>");
@@ -31,9 +50,9 @@
 </head>
 <body>
 	<div>
-		<form action="<c:url value='/login/forgetPassword.do'/>" method="post" >
-			<span>사원코드 : </span><input type="text" name="empNo" ><br>
-			<span>email : </span><input type="text" name="empEmail" ><br><br>
+		<form action="<c:url value='/login/forgetPassword.do'/>" method="post" name="forgetfrm" >
+			<span>사원코드  </span><input type="text" name="empNo" ><br>
+			<span>email  </span><input type="text" name="empEmail" ><br><br>
 			<input type="submit" value="확인">
 		</form>
 	</div>
