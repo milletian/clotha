@@ -30,4 +30,9 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		return sqlSession.update(namespace+"changePwd",employeeVo);
 	}
 
+	@Override
+	public int idcheck(String empNo) {
+		return sqlSession.insert(namespace+"idcheck",empNo);
+	}
+
 }

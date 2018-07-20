@@ -38,5 +38,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int changePwd(EmployeeVO employeeVo) {	//ForgetPasswordController
 		return employeeDao.changePwd(employeeVo);
 	}
+
+	@Override
+	public int idcheck(String empNo) {
+		return employeeDao.idcheck(empNo);
+	}
 	
 }
