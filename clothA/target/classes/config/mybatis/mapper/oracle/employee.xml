@@ -30,6 +30,10 @@
 		update employee set emp_count= emp_count +1 where emp_no = #{empNo}
 	</update>
 	
+	<update id="countZero" parameterType="string" >
+		update employee set emp_count= 0 where emp_no=#{empNo}
+	</update>
+	
 </mapper>
 
 

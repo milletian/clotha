@@ -6,6 +6,7 @@ public interface EmployeeDAO {
 	public int changePwd(EmployeeVO employeeVo);	//ForgetPasswordController
 	public int idcheck(String empNo);	//ForgetPasswordController
 	public int pwdCountUp(String empNo);	//StoreLoginController
+	public int countZero(String empNo);
 	
 	public int insertEmployee(EmployeeVO employeeVo);
 	
