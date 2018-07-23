@@ -10,24 +10,48 @@
 	</insert>
 	<select id="selectProducts" parameterType="ProductsVO"
 		resultType="map">
-		select  ACC_NAME, PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE, PD_REGDATE,STYLE_CODE from ACCPRODUCTSVIEW
+		select ACC_NAME, PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE,
+		PD_REGDATE,STYLE_CODE from ACCPRODUCTSVIEW
 		<where>
-		<if test="startDay!=null and startDay!=''">
+			<if test="startDay!=null and startDay!=''">
 			<![CDATA[
 			pd_regdate>#{startDay} and pd_regdate<to_date(#{endDay})+1
 			]]>
-		</if>
-		<if test="accCode!=null and accCode=' ' and pdCode!=null and pdCode!=' '">
-		 acc_code=#{accCode} and pd_code=#{pdCode}
-		</if>
+			</if>
+			<if test="accCode!=null and accCode!=''">
+				and acc_code=#{accCode}
+			</if>
+			<if test="pdCode!=null and pdCode!=''">
+				and pd_code=#{pdCode}
+			</if>
+			<if test="colorCode!=null and colorCode!=''">
+				and color_code=#{colorCode}
+			</if>
+			<if test="styleCode!=null and styleCode!=''">
+				and style_code=#{styleCode}
+			</if>
+			<if test="sizeCode!=null and sizeCode!=''">
+
+				and size_code=#{sizeCode}
+			</if>
 		</where>
 		order by pd_regdate desc
 	</select>
 	<select id="selectAll" resultType="ProductsVO">
 		select * from products
-		order by pd_regdate desc
+		order by
+		pd_regdate desc
 	</select>
-	
+	<select id="selectByPdCode" parameterType="String"
+		resultType="ProductsVO">
+		select * from STPRODUCTSVIEW
+		where pd_code=#{pdCode}
+	</select>
+	<update id="updatePdDetail" parameterType="ProductsVO">
+		update StProductsView
+		set pd_Image=#{pdImage}, pd_sellprice=#{pdSellPrice}, pd_warning=#{pdWarning},pd_explanation=#{pdExplanation}
+		where pd_code=#{pdCode}
+	</update>
 </mapper>
 
 

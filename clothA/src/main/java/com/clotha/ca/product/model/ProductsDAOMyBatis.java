@@ -32,4 +32,14 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 		return sqlSession.selectList(namesapce+"selectAll");
 	}
 
+	@Override
+	public ProductsVO selectByPdCode(String pdCode) {
+		return sqlSession.selectOne(namesapce+"selectByPdCode", pdCode);
+	}
+
+	@Override
+	public int updatePdDetail(ProductsVO productsVo) {
+		return sqlSession.update(namesapce+"updatePdDetail", productsVo);
+	}
+
 }
