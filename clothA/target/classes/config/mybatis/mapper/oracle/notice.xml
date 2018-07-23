@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.notice">
+
+	<select id="selectNoticeAll" resultType="noticeVo">
+		select * from notice
+	</select>
+	
+	<insert id="noticeInsert" parameterType="noticeVo">
+		insert into notice(notice_no,notice_title,emp_no,notice_content,notice_read)
+		values(notice_seq.nextval,#{noticeTitle},#{empNo},#{noticeContent},#{noticeRead})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

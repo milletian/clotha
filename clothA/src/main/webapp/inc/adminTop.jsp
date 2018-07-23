@@ -290,7 +290,7 @@ footer{
 						class="fas fa-comments"></i><span>공지사항</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">조회</a></li>
+						<li><a href="<c:url value='/notice/notice.do'/> " target="if">조회</a></li>
 					</ul></li>
 			</ul>
 		</div>
