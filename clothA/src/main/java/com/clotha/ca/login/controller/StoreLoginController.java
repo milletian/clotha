@@ -49,37 +49,44 @@ public class StoreLoginController {
 		if(result==employeeService.LOGIN_OK) {
 			
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
-			if(employeeVo.getEmpDel().equals("N")) {
-				msg="퇴사 또는 입사승인 대기중인 사원코드입니다.";
-			}else {
-				request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
-				request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
+			if(employeeVo.getEmpCount()<=5) {
 				
-				InetAddress local;
-				LogVO logVo = new LogVO();
-				try {
-					local = InetAddress.getLocalHost();
-					String ip = local.getHostAddress();
-					logVo.setEmpNo(vo.getEmpNo());
-					logVo.setLogIp(ip);
-					int cnt = logService.loginInsert(logVo);
-					logger.info("로그찍기 결과 cnt = {} ,logPk={}",cnt,logVo.getLogPk());
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				}
-				request.getSession().setAttribute("logPk", logVo.getLogPk());
-				
-				Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
-				ck.setPath("/");
-				msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
-				int grade = Integer.parseInt(employeeVo.getGradeCode());
-				if(grade <= 2) {
-					url="/test.do";	//본사 로그인
+				if(employeeVo.getEmpDel().equals("N")) {
+					msg="퇴사 또는 입사승인 대기중인 사원코드입니다.";
 				}else {
-					url="/admin/account/accountWrite.do";	//매장 로그인
+					request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
+					request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
+					
+					InetAddress local;
+					LogVO logVo = new LogVO();
+					try {
+						local = InetAddress.getLocalHost();
+						String ip = local.getHostAddress();
+						logVo.setEmpNo(vo.getEmpNo());
+						logVo.setLogIp(ip);
+						int cnt = logService.loginInsert(logVo);
+						logger.info("로그찍기 결과 cnt = {} ,logPk={}",cnt,logVo.getLogPk());
+					} catch (UnknownHostException e) {
+						e.printStackTrace();
+					}
+					request.getSession().setAttribute("logPk", logVo.getLogPk());
+					
+					Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
+					ck.setPath("/");
+					msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
+					int grade = Integer.parseInt(employeeVo.getGradeCode());
+					if(grade <= 2) {
+						url="/test.do";	//본사 로그인
+					}else {
+						url="/admin/account/accountWrite.do";	//매장 로그인
+					}
 				}
+			}else {
+				msg="비밀번호 5회 이상 틀리셨습니다.점장님께 문의하시기 바랍니다.";
 			}
 		}else if(result == employeeService.PWD_DISAGREE) {
+			int cnt = employeeService.pwdCountUp(vo.getEmpNo());
+			logger.info("비밀번호 불일치 countUp 결과 ={} ",cnt);
 			msg="비밀번호가 일치하지 않습니다.";
 		}else if(result == employeeService.ID_NONE) {
 			msg="해당 사원코드가 존재하지 않습니다.";

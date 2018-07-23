@@ -19,6 +19,16 @@ public class EmployeeVO {
 	private String empDel;
 	private String storeCode;
 	private String empEmail;
+	private int empCount;
+	
+	
+	
+	public int getEmpCount() {
+		return empCount;
+	}
+	public void setEmpCount(int empCount) {
+		this.empCount = empCount;
+	}
 	public String getEmpNo() {
 		return empNo;
 	}
@@ -122,8 +132,10 @@ public class EmployeeVO {
 				+ ", empZipcode=" + empZipcode + ", empAddress=" + empAddress + ", empJumin=" + empJumin + ", empTel="
 				+ empTel + ", empFace=" + empFace + ", empJob=" + empJob + ", empJoindate=" + empJoindate
 				+ ", empOutdate=" + empOutdate + ", gradeCode=" + gradeCode + ", empDel=" + empDel + ", storeCode="
-				+ storeCode + ", empEmail=" + empEmail + "]";
+				+ storeCode + ", empEmail=" + empEmail + ", empCount=" + empCount + "]";
 	}
+	
+
 	
 	
 }

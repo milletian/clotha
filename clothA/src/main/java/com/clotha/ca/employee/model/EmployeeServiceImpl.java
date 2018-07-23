@@ -43,5 +43,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int idcheck(String empNo) {
 		return employeeDao.idcheck(empNo);
 	}
+
+	@Override
+	public int pwdCountUp(String empNo) {	//StoreLoginController
+		return employeeDao.pwdCountUp(empNo);
+	}
 	
 }

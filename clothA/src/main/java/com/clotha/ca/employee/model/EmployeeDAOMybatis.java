@@ -35,4 +35,9 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		return sqlSession.selectOne(namespace+"idcheck",empNo);
 	}
 
+	@Override
+	public int pwdCountUp(String empNo) {	//StroeLoginController
+		return sqlSession.update(namespace+"pwdCountUp",empNo);
+	}
+
 }

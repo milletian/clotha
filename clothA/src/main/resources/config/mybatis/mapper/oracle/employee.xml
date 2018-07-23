@@ -26,6 +26,10 @@
 		select count(*) from employee where emp_no=#{empNo}
 	</select>
 	
+	<update id="pwdCountUp" parameterType="string" >
+		update employee set emp_count= emp_count +1 where emp_no = #{empNo}
+	</update>
+	
 </mapper>
 
 
