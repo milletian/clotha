@@ -12,7 +12,7 @@ public class ProductsVO extends DateSearchVO{
 	private String pdExplanation;
 	private String pdWarning;
 	private String pdImage;
-	private String styleCode;
+	private String styleCode; 
 	private String colorCode;
 	private String seasonCode;
 	private String sizeCode;

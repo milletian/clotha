@@ -10,4 +10,4 @@ public interface ProductsService {
 	public List<ProductsVO> selectAll();
 	public ProductsVO selectByPdCode(String pdCode);
 	public int updatePdDetail(ProductsVO productsVo);
-}
+} 

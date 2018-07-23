@@ -27,7 +27,7 @@
 	<label>상품코드</label>
 	<span>${param.pdCode}</span>
 	<br>
-	
+	 
 	<label>상품이름</label>
 	<span>${vo.pdName}</span>
 	<br>

@@ -60,7 +60,7 @@ public class ProductsController {
 			}
 			productsVo.setPdImage(fileName);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

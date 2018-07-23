@@ -12,7 +12,7 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 	
 	private String namesapce="config.mybatis.mapper.oracle.products.";
 	
-	@Autowired
+	@Autowired 
 	private SqlSessionTemplate sqlSession;
 
 	@Override

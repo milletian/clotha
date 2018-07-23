@@ -9,5 +9,5 @@ public interface ProductsDAO {
 	public List<Map<String, Object>> selectProduct(ProductsVO productsVo);
 	public List<ProductsVO> selectAll();
 	public ProductsVO selectByPdCode(String pdCode);
-	public int updatePdDetail(ProductsVO productsVo);
+	public int updatePdDetail(ProductsVO productsVo); 
 }
