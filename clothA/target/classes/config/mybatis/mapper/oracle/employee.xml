@@ -30,7 +30,7 @@
 		update employee set emp_count= emp_count +1 where emp_no = #{empNo}
 	</update>
 	
-	<update id="countZero" parameterType="string" >
+	<update id="countZero" parameterType="logVo" >
 		update employee set emp_count= 0 where emp_no=#{empNo}
 	</update>
 	

@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clotha.ca.log.model.LogVO;
+
 @Repository
 public class EmployeeDAOMybatis implements EmployeeDAO {
 	private String namespace="config.mybatis.mapper.oracle.employee.";
@@ -41,8 +43,8 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	}
 
 	@Override
-	public int countZero(String empNo) {
-		return sqlSession.update(namespace+"countZero",empNo);
+	public int countZero(LogVO logVo) {	//StoreLoginController - logService
+		return sqlSession.update(namespace+"countZero",logVo);
 	}
 
 }

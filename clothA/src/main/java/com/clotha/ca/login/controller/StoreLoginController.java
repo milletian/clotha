@@ -82,7 +82,7 @@ public class StoreLoginController {
 					}
 				}
 			}else {
-				msg="비밀번호 5회 이상 틀리셨습니다.점장님께 문의하시기 바랍니다.";
+				msg="비밀번호 5회 이상 틀리셨습니다. 점장님께 문의하시기 바랍니다.";
 			}
 		}else if(result == employeeService.PWD_DISAGREE) {
 			int cnt = employeeService.pwdCountUp(vo.getEmpNo());

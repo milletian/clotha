@@ -21,7 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return ID_NONE;
 		}else {
 			if(pwd.equals(dbPwd)) {
-				employeeDao.countZero(empNo);	//로그인 시도 횟수 초기화
 				return LOGIN_OK;
 			}else {
 				return PWD_DISAGREE; 
