@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
@@ -39,9 +40,24 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.POST)
 	public String employeeWrite(@ModelAttribute EmployeeVO employeeVo, 
+			@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
+			@RequestParam String empJumin1, @RequestParam String empJumin2,
 			HttpServletRequest request,Model model ) {
-		logger.info("인사등록 처리 파라메타 vo={}", employeeVo);
+		//주민번호 셋팅
+		employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
 		
+		//이메일 주소 셋팅
+		if(selectEmail.equals("self")) {
+			employeeVo.setEmpEmail(email1+"@"+email2);
+			
+		}else {
+			employeeVo.setEmpEmail(email1+"@"+selectEmail);
+			
+		}
+				
+		
+		logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
+
 		
 		//파일 업로드
 		String fileName="";
@@ -57,9 +73,6 @@ public class EmployeeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 		
 		//db
 		int cnt=employeeService.insertEmployee(employeeVo);
