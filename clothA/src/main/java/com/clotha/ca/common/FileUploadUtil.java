@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FileUploadUtil {
 	public static final int PATH_FLAG_PDS = 1;
 	public static final int PATH_FLAG_IMAGE = 2;
+	public static final int PATH_FLAG_WAREHOUSEIMAGE = 3;
+	public static final int PATH_FLAG_STOREIMAGE = 4;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 
@@ -80,11 +82,16 @@ public class FileUploadUtil {
 
 		return fileName;
 	}
-	public String multifileup(MultipartHttpServletRequest multi) {
+	public String multifileup(MultipartHttpServletRequest multi,int isImg) {
 		List<MultipartFile> fileList = multi.getFiles("file");
 		int count =0;
 		String result ="";
-        String path = fileUploadProps.getProperty("storeImageFile.upload.path.test");
+        String path = "";
+        if(isImg==PATH_FLAG_STOREIMAGE) {
+        	path=fileUploadProps.getProperty("storeImageFile.upload.path.test");
+        }else if(isImg==PATH_FLAG_WAREHOUSEIMAGE) {
+        	path=fileUploadProps.getProperty("warehousesImageFile.upload.path.test");
+        }
         for (MultipartFile mf : fileList) {
         	if(mf.getOriginalFilename()!=null&&!mf.getOriginalFilename().isEmpty()) {
         		String originFileName = mf.getOriginalFilename()+System.currentTimeMillis(); // 원본 파일 명

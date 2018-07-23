@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.warehouse">
+	<select id="SearchWarehouse" parameterType="WarehouseVO" resultType="WarehouseVO">
+		select * from Warehouse 
+		<where>
+			<if test='whDel!="전체" and whDel!="N"'>
+				wh_del is not null		
+			</if>
+			<if test='whDel!="전체" and whDel!="Y"'>
+				and wh_del is null		
+			</if>
+			<if test="searchKeyword!='' and searchKeyword!=null">
+				and ${searchCondition} like '%' || #{searchKeyword} || '%'		
+			</if>
+		</where> 
+		order by wh_code
+	</select>
+		
+	<select id="SearchWarehouseByCode" parameterType="string" resultType="WarehouseVO">
+		select * from Warehouse where wh_CODE=#{whCode}
+	</select>
+	
+	<insert id="insertWarehouse" parameterType="WarehouseVO">
+		insert into Warehouse(wh_code,wh_Name,wh_zipcode,wh_address,wh_image,sta_code)
+		values('wh'||warehouse_seq.nextval,#{whName},#{whZipcode},#{whAddress},#{whImage}, 
+		( select sta_code from ( select * from stock_area order by sta_code desc ) where rownum=1 ) )
+	</insert>
+	
+	<update id="updateWarehouse" parameterType="WarehouseVO">
+		update warehouse set wh_Name= #{whName},wh_zipcode=#{whZipcode},wh_address=#{whAddress}
+		<if test="whImage!=null and whImage!=''">
+			,wh_image=#{whImage}	
+		</if>
+	</update>
+	
+	<update id="warehouseDel" parameterType="string">
+		update Warehouse set wh_del=sysdate where wh_code = #{whCode}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+

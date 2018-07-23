@@ -67,11 +67,11 @@ public class AccountController {
 		return list;
 	}
 	
-	@RequestMapping(value="/accountDel.do")
+	@RequestMapping(value="/accountDel.do", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String accountDel(@RequestParam String accCode) {
 		int count = accountDetailService.selectCountByAccCode(accCode);
-		if(count==0) {
+		if(count!=0) {
 			return "거래이력이 있는 거래처는 삭제가 불가능 합니다.";
 		}else {
 			accountService.deleteAccount(accCode);

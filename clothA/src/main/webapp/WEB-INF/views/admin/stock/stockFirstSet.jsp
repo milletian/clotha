@@ -19,6 +19,42 @@
 <script type="text/javascript">
 $(function() {
 	var accCode;
+	var whorst = 'store';
+	
+	$('input[name=whorst]').change(function() {
+		whorst = $(this).val();
+		var url;
+		if(whorst=='store'){
+			url = "<c:url value='/admin/store/ajaxStoreList.do' />";
+		}else{
+			url = "<c:url value='/admin/warehouse/ajaxWarehouseList.do' />";
+		}
+		$.ajax({
+	    	url : url,
+	    	dataType:'json',
+	    	success:function(res){
+	    		if (res.length > 0){
+	    			$("#selSearchSupplier").html('');
+	    			$.each(res,function(idx, item){
+	    				var option = "<option value='"+item.staCode+"'>";
+	    				if(whorst=="store"){
+	    					option += item.storeCode;
+	    				}else{
+	    					option += item.whCode;
+	    				}
+	    				option += "</option>";
+	        			$("#selSearchSupplier").append(option);
+	    			})
+	    		}else{
+	    			$("#selSearchSupplier").html('');
+	    		}
+	    	},
+	    	error: function(xhr, status, error){
+				alert("sdsds");
+			}
+		})
+	})
+	
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -31,20 +67,9 @@ $(function() {
 	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
 	});
 	$("table").tablesorter(); 
-	$('input[name=whorst]'){
-		$.ajax({
-			type:"POST",
-        	url : "<c:url value='/admin/stock/ajaxStockList.do' />",
-        	data:accCode,
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
-		})
-	}
+	
+	
+	
 	$('#delbtn').click(function() { 
     	$.ajax({
         	type:"POST",
@@ -99,8 +124,8 @@ $(function() {
 			}
         
    		}); 
-	})
-	$("#btn").trigger("click");
+	})/* 
+	$("#btn").trigger("click"); */
 	$("table").tableExport();
 	$('table tbody tr').live('click',function(){
 		$(this).css('backgroundColor','skyblue');
@@ -135,9 +160,10 @@ function popupOpen(acc_Code){
 				<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
 			</div>
 			<div id='selectwhorst'>
-				<c:if test="">
+				<b>선택</b>
+				<select name="staCode" id="selSearchSupplier">
 				
-				</c:if>
+				</select>
 			</div>
 			<input type="button" id="btn" value="조회">
 		

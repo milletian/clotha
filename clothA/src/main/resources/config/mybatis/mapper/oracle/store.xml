@@ -5,10 +5,10 @@
 	<select id="SearchStore" parameterType="StoreVO" resultType="StoreVO">
 		select * from store 
 		<where>
-			<if test='storeDel!="전체" and storeDel!="N"'>
+			<if test='storeDel!=null and storeDel!="전체" and storeDel!="N"'>
 				store_del is not null		
 			</if>
-			<if test='storeDel!="전체" and storeDel!="Y"'>
+			<if test='storeDel!=null and storeDel!="전체" and storeDel!="Y"'>
 				and store_del is null		
 			</if>
 			<if test="searchKeyword!='' and searchKeyword!=null">
@@ -37,7 +37,7 @@
 	</update>
 	
 	<update id="storeDel" parameterType="string">
-		update store set store_del='Y' where store_code = #{storeCode}
+		update store set store_del=sysdate where store_code = #{storeCode}
 	</update>
 </mapper>
 

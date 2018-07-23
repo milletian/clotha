@@ -58,7 +58,7 @@ public class StoreController {
 		logger.info("{},{},{}",multi.getParameter("empNo"));
 		String result = "";
 		String test = "C:\\Users\\hkedu\\git\\clotha\\clothA\\src\\main\\webapp\\store_images"; // 테스트용 경로
-		result = fileupload.multifileup(multi); // 테스트용 업로드(미완성)
+		result = fileupload.multifileup(multi,fileupload.PATH_FLAG_STOREIMAGE); // 테스트용 업로드(미완성)
 		storeVO.setStoreImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
 		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
 			for(String oldfilename : oldFileList) {				
@@ -98,10 +98,10 @@ public class StoreController {
 		return list;
 	}
 	
-	@RequestMapping(value="/ajaxStoreDel.do")
+	@RequestMapping(value="/ajaxStoreDel.do", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String ajaxStoreDel(@RequestParam String storeCode) {
-		
+		logger.info("{}",storeCode);
 		int result = storeService.storeDel(storeCode);
 		if(result==0) {
 			return "영업정지 처분 실패";

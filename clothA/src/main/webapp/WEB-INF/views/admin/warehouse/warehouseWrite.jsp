@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
-<link rel="stylesheet" href="<c:url value='/css/form.css' />"> 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -12,18 +11,33 @@
 
 <script type="text/javascript">
 $(function() {
+	$.ajax({
+    	url : "<c:url value='/admin/area/ajaxAreaList.do' />",
+    	dataType:'json',
+    	success:function(res){
+    		if (res.length > 0){
+    			$("#areaCode").html('');
+    			$.each(res,function(idx, item){
+    				var option = "<option value='"+item.areaCode+"'>";
+    				option += item.areaName;
+    				option += "</option>";
+        			$("#areaCode").append(option);
+    			})
+    		}else{
+    			$("#areaCode").html('');
+    		}
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		}
+	})
+	
 	$('#closeWrite').click(function() {
 		self.close();
 	})
 	
-	$("#accTel").keyup(function() {
-		var x = $(this).val();
-		$(this).val(autoHypenPhone(x));
-	});
-	
-	$('form[name=frmAccWrite]').submit(function() {
-		var bool = true;
-		var CpNumber = $('#accNo').val();
+	$('form[name=frmWarehouseWrite]').submit(function() {
+		var bool = true
 		
 		$('input[type=text]').each(function() {
 			if($(this).val().length<1){
@@ -33,12 +47,6 @@ $(function() {
 				return false;
 			}
 		})
-		if(bool){
-			if(!CorporationNumber(CpNumber)){
-				bool=false;
-				$('#accNo').prev().focus();
-			}
-		}
 		
 		/* if(bool){
 			alert($('#accTel').val().length);
@@ -54,92 +62,26 @@ $(function() {
 	
 	
 })
-
-//핸드폰번호 자동 하이픈
-function autoHypenPhone(str){
-  str = str.replace(/[^0-9]/g, '');
-  var tmp = '';
-  if( str.length < 4){
-    return str;
-  }else if(str.length < 7){
-    tmp += str.substr(0, 3);
-    tmp += '-';
-    tmp += str.substr(3);
-    return tmp;
-  }else if(str.length < 11){
-    tmp += str.substr(0, 3);
-    tmp += '-';
-    tmp += str.substr(3, 3);
-    tmp += '-';
-    tmp += str.substr(6);
-    return tmp;
-  }else{        
-    tmp += str.substr(0, 3);
-    tmp += '-';
-    tmp += str.substr(3, 4);
-    tmp += '-';
-    tmp += str.substr(7);
-    return tmp;
-  }
-  return str;
-}
-//법인번호 유효성 검사
-function CorporationNumber(str) {
-    // 법인번호 오류검증 공식
-    // 법인번호에서 마지막 자리를 제외한
-    // 앞에 모든 자리수를 1과 2를 순차적으로 곱한다.
-    // 예) 1234567890123
-    //     ************
-    //     121212121212
-    //     각각 곱한 수를 모든 더하고 10으로 나눈 나머지 수를 구한다.
-    //     (각각더한수 % 10)
-    //     나눈 나머지 수와 법인번호 마지막 번호가 일치하면 검증일치 
-    var totalNumber = 0;
-    var num = 0;
-    for (i = 0; i < str.length-1; i++) {
-        if (((i + 1) % 2) == 0) {
-            num = parseInt(str.charAt(i)) * 2;
-        } else {
-            num = parseInt(str.charAt(i)) * 1;
-        }
-        if (num > 0) {
-            totalNumber = totalNumber + num;
-        }
-    }
-    totalNumber = (totalNumber%10 < 10) ? totalNumber%10 : 0;
-    if (str == "") {
-        alert("법인번호를 입력하세요.");
-        return false;
-    } else if (str.length != 13) {
-        alert("유효하지 않은 법인 번호입니다.");
-        return false;
-    } else if (!this.numberChecked(str)) {
-        alert("유효하지 않은 법인 번호입니다.");
-        return false;
-    } else if (totalNumber != str.charAt(str.length-1)) {
-        alert("유효하지 않은 법인 번호입니다.");
-        return false;
-    } else {
-        return true;
-    }
-}
  
 </script>
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 	<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
-<form name="frmAccWrite" action="<c:url value='/admin/account/accountWrite.do' />" method="post">
-	<input type="hidden" name="accCode"  value="${accVo.accCode }">  
-	<label for="accName">회사명 </label><input type="text" id="accName" name="accName" value="${accVo.accName }"><br>
-	<label for="accIsdeal">사용여부 </label><input type="checkbox" id="accIsdeal" name="accIsdeal" checked="checked"><br>
-	<label for="accCeo">대표자명 </label><input type="text" id="accCeo" name="accCeo" value="${accVo.accCeo }"><br>
-	<label for="accTel">대표전화 </label><input type="text" id="accTel" name="accTel" value="${accVo.accTel }" maxlength="13"><br>
-	<label for="accNo">법인번호 </label><input type="text" id="accNo" name="accNo" value="${accVo.accNo }" maxlength="13"><br>
-	<label for="accZipcode">우편번호</label> <input type="text" id="accZipcode" name="accZipcode" >
+<form name="frmWarehouseWrite" action="<c:url value='/admin/warehouse/warehouseWrite.do' />" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="whCode"  value="${warehouseVo.whCode }">
+	<c:if test="${empty param.whCode || param.whCode=='undefined'}">
+		<label for="areaCode">지역 </label>
+		<select id="areaCode" name="areaCode">
+		
+		</select>
+	</c:if>
+	<input type="hidden" name="oldfile" value="${warehouseVo.whImage}">
+	<label for="whImage">이미지</label><input multiple="multiple" type="file" name="file"><br>
+	<label for="whZipcode">우편번호</label> <input type="text" id="whZipcode" name="whZipcode" value="${warehouseVo.whZipcode}" >
 	<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 	<label for="address">주소</label><input type="text" id="address" name="address"><br>
 	<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-	<label for="accUnique">특이사항</label><input type="text" id="accUnique" name="accUnique" value="${accVo.accUnique }"><br>
+	<label for="whName">창고 이름</label><input type="text" id="whName" name="whName"><br>
 	<hr>
 	<input type="button" id="closeWrite" value="닫기">
 	<input type="submit" value="저장">
@@ -180,9 +122,9 @@ function CorporationNumber(str) {
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('accZipcode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('whZipcode').value = data.zonecode; //5자리 새우편번호 사용
                 document.getElementById('address').value = fullAddr;
-                $('#accZipcode').attr('readonly','readonly');
+                $('#whZipcode').attr('readonly','readonly');
                 $('#address').attr('readonly','readonly');
 
                 // iframe을 넣은 element를 안보이게 한다.
