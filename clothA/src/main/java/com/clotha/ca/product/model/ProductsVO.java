@@ -12,12 +12,13 @@ public class ProductsVO extends DateSearchVO{
 	private String pdExplanation;
 	private String pdWarning;
 	private String pdImage;
-	private String styleCode;
+	private String styleCode; 
 	private String colorCode;
 	private String seasonCode;
 	private String sizeCode;
 	private String accCode;
 	private String genderCode;
+	private String styleName;
 	
 	
 	
@@ -112,13 +113,19 @@ public class ProductsVO extends DateSearchVO{
 		this.genderCode = genderCode;
 	}
 	
+	public String getStyleName() {
+		return styleName;
+	}
+	public void setStyleName(String styleName) {
+		this.styleName = styleName;
+	}
 	@Override
 	public String toString() {
 		return "ProductsVO [accName=" + accName + ", pdCode=" + pdCode + ", pdName=" + pdName + ", pdOriginalPrice="
 				+ pdOriginalPrice + ", pdSellPrice=" + pdSellPrice + ", pdRegdate=" + pdRegdate + ", pdExplanation="
 				+ pdExplanation + ", pdWarning=" + pdWarning + ", pdImage=" + pdImage + ", styleCode=" + styleCode
 				+ ", colorCode=" + colorCode + ", seasonCode=" + seasonCode + ", sizeCode=" + sizeCode + ", accCode="
-				+ accCode + ", genderCode=" + genderCode + "]";
+				+ accCode + ", genderCode=" + genderCode + ", styleName=" + styleName + "]";
 	}
 	
 	

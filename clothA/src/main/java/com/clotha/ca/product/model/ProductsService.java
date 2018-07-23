@@ -8,5 +8,6 @@ public interface ProductsService {
 	public int insertProducts(ProductsVO productsVo);
 	public List<Map<String, Object>> selectProduct(ProductsVO productsVo);
 	public List<ProductsVO> selectAll();
-	
-}
+	public ProductsVO selectByPdCode(String pdCode);
+	public int updatePdDetail(ProductsVO productsVo);
+} 

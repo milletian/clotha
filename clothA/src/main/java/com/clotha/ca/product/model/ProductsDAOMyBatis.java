@@ -12,7 +12,7 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 	
 	private String namesapce="config.mybatis.mapper.oracle.products.";
 	
-	@Autowired
+	@Autowired 
 	private SqlSessionTemplate sqlSession;
 
 	@Override
@@ -30,6 +30,16 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 	@Override
 	public List<ProductsVO> selectAll() {
 		return sqlSession.selectList(namesapce+"selectAll");
+	}
+
+	@Override
+	public ProductsVO selectByPdCode(String pdCode) {
+		return sqlSession.selectOne(namesapce+"selectByPdCode", pdCode);
+	}
+
+	@Override
+	public int updatePdDetail(ProductsVO productsVo) {
+		return sqlSession.update(namesapce+"updatePdDetail", productsVo);
 	}
 
 }

@@ -28,6 +28,16 @@ public class ProductsServiceImple implements ProductsService  {
 	public List<ProductsVO> selectAll() {
 		return productDao.selectAll();
 	}
+
+	@Override
+	public ProductsVO selectByPdCode(String pdCode) {
+		return productDao.selectByPdCode(pdCode);
+	}
+
+	@Override
+	public int updatePdDetail(ProductsVO productsVo) {
+		return productDao.updatePdDetail(productsVo);
+	}
 	
 	
 }

@@ -17,7 +17,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script type="text/javascript">
-$(function() {
+$(function() { 
 	$("table").tablesorter(); 
 	
 	$.ajax({
@@ -71,12 +71,13 @@ $(function() {
     	data:$("#frmProductsList").serialize(),
     	dataType:'json',
     	success:function(res){
+    		alert(res.length);
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
  					var pdList ="<tr><td>"+item.ACC_NAME+"</td>"
  					+"<td>"+item.PD_CODE+"</td>"
- 					+"<td>"+item.PD_NAME+"</td>"
+ 					+"<td>"+"<a href='<c:url value='/admin/products/productsDetail.do?pdCode="+item.PD_CODE+"'/>'"+">"+item.PD_NAME+"</a>"+"</td>"
  					+"<td>"+item.STYLE_CODE+"</td>"
  					+"<td>"+item.PD_ORIGINALPRICE+"</td>"
  					+"<td>"+item.PD_SELLPRICE+"</td>"
@@ -84,7 +85,7 @@ $(function() {
  					 $("table tbody").append(pdList);
  					});
  				}else{
- 					$("table tbody").html('');
+ 					$("table tbody").html('해당 내역이 없습니다.');
  				}
     		 $("table").trigger("update"); 
              return false; 
@@ -149,9 +150,10 @@ function popupOpen(ACC_DT_CODE){
 		<label for="selSearchSupplier">매입처</label>
 		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier" class="ajax"></select>
 		<label for="selSearchProducts">상품코드/명</label>
-		<select style="max-height: 30px;width: 100px" name="pdName" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"  class="ajax"></select>			
+		<select style="max-height: 30px;width: 100px" name="pdCode" data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"  class="ajax"></select>			
 		<label for="selSearchColors">색상</label>
 		<select name="colorCode">
+			<option value="">선택</option>
 			<option value="69">navy</option>
 			<option value="89">black</option>
 			<option value="00">white</option>
@@ -165,16 +167,18 @@ function popupOpen(ACC_DT_CODE){
 		</select>
 		<label for="selSearchStyle">스타일</label>
 		<select name="styleCode">
-			<option value="S"></option>
-			<option value="O">black</option>
-			<option value="T">white</option>
-			<option value="K">pink</option>
-			<option value="P">beige</option>
-			<option value="U">blue</option>
-			<option value="E">red</option>
+			<option value="">선택</option>
+			<option value="S">셔츠</option>
+			<option value="O">원피스</option>
+			<option value="T">티셔츠</option>
+			<option value="K">치마/스커트</option>
+			<option value="P">바지</option>
+			<option value="U">아우터</option>
+			<option value="E">기타</option>
 		</select>
 		<label for="selSearchSize">사이즈</label>
 		<select name="sizeCode">
+			<option value="">선택</option>
 			<option value="XS">85</option>
 			<option value="S">90</option>
 			<option value="M">95</option>

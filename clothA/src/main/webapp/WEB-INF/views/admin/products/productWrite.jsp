@@ -63,7 +63,7 @@ $(function(){
 
 </style>
 
-<div class="viewBody">
+<div class="viewBody"> 
 	<!-- Main content  -->
 	<div class="box1">
 		<form name="productsWrite" method="Post"
