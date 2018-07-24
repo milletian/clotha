@@ -4,17 +4,20 @@
 
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript"  >
+<script>
 	$(document).ready(function(){
-		$("#noticeWrite").click(function(){
-			location.href="<c:url value='/notice/noticeWrite.do'/>";
+		$(".backlist").click(function(){
+			location.href="<c:url value='/notice/notice.do'/> ";
+		});
+		
+		$('.deleteNotice').click(function(){
+			location.href="<c:url value='/notice/noticeDelete.do'/> ";
 		});
 	});
 </script>
                                
 <style type="text/css">
 	.box1{
-	
 	padding: 5px;
 	background: white;
 		
@@ -33,10 +36,6 @@
     border : 1px solid black;
     margin-bottom: 20px;
 	}
-	table{
-		width: 97%;
-		text-align: center;
-	}
 </style>
 
 <div class="viewBody">
@@ -45,30 +44,12 @@
 		<h1>공지사항</h1>
 	</div>
 	<div class="box1">
-		<table>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>조회수</th>
-			</tr>
-			<c:if test="${empty list }">
-				<tr>
-					<td colspan="4">공지사항이 없습니다.</td>
-				</tr>
-			</c:if>
-			<c:if test="${!empty list }">
-				<c:forEach var="vo" items="${list }" >
-					<tr>
-						<td>${vo.noticeNo }</td>
-						<td><a href="<c:url value='/notice/noticeDetail.do?noticeNo=${vo.noticeNo }'/> " >${vo.noticeTitle }</a></td>
-						<td>${sessionScope.empName }</td>
-						<td>${vo.noticeRead }</td>
-					</tr>
-				</c:forEach>
-			</c:if>
-		</table>
-		<button id="noticeWrite" >공지사항 등록</button>
+		<h2>제목 : ${vo.noticeTitle } </h2><br>
+		<h3>작성자 : ${sessionScope.empName }</h3><br><hr>
+		<h3>내용</h3><br>
+		<div>${vo.noticeContent }</div><br>
+		<input type="button" class="backlist" value="목록" >
+		<input type="button" class="deleteNotice" value="삭제" >
 	</div>
 </div>
 

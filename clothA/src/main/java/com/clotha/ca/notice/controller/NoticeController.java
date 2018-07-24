@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.clotha.ca.notice.model.NoticeService;
 import com.clotha.ca.notice.model.NoticeVO;
@@ -65,6 +66,17 @@ public class NoticeController {
 		return "common/message";
 	}
 	
+	@RequestMapping(value="/noticeDetail.do")
+	public String noticeDetail(@RequestParam int noticeNo , Model model ) {
+		logger.info("공지사항 세부정보 파라미터 noticeNo = {} " , noticeNo);
+		
+		NoticeVO vo = noticeService.selectNotice(noticeNo);
+		logger.info("선택한 공지사항 보기 Vo = {}",vo);
+		
+		model.addAttribute("vo",vo);
+		
+		return "notice/noticeDetail";
+	}
 	
 	
 }

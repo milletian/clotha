@@ -5,12 +5,21 @@
 
 	<select id="selectNoticeAll" resultType="noticeVo">
 		select * from notice
+		order by notice_no desc
 	</select>
 	
 	<insert id="noticeInsert" parameterType="noticeVo">
 		insert into notice(notice_no,notice_title,emp_no,notice_content,notice_read)
 		values(notice_seq.nextval,#{noticeTitle},#{empNo},#{noticeContent},#{noticeRead})
 	</insert>
+	
+	<select id="selectNotice" parameterType="int" resultType="noticeVo" >
+		select * from notice where notice_no = #{noticeNo}
+	</select>
+	
+	<update id="readUp" parameterType="int">
+		update notice set notice_read = notice_read+1 where notice_no = #{noticeNo}
+	</update>
 	
 </mapper>
 

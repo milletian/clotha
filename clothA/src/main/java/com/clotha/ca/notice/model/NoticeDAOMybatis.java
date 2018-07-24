@@ -23,5 +23,15 @@ public class NoticeDAOMybatis implements NoticeDAO {
 	public List<NoticeVO> selectNoticeAll(NoticeVO noticeVO) {	//NoticeController
 		return sqlSession.selectList(namespace+"selectNoticeAll",noticeVO);
 	}
+
+	@Override
+	public NoticeVO selectNotice(int noticeNo) {	//NoticeController
+		return sqlSession.selectOne(namespace+"selectNotice",noticeNo);
+	}
+
+	@Override
+	public int readUp(int noticeNo) {
+		return sqlSession.update(namespace+"readUp",noticeNo);
+	}
 	
 }

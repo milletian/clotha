@@ -3,9 +3,9 @@ package com.clotha.ca.login.controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class StoreLoginController {
 	}
 	
 	@RequestMapping(value="storeLogin.do",method=RequestMethod.POST)
-	public String Login_post(@ModelAttribute EmployeeVO vo, Model model, HttpServletRequest request, HttpServletResponse response  ) {
+	public String Login_post(@ModelAttribute EmployeeVO vo, Model model, HttpServletRequest request, HttpServletResponse response , HttpSession session ) {
 		//사원 - 로그인 완료 페이지
 		logger.info("로그인 완료 , 파라미터 ={}",vo);
 		
@@ -56,6 +56,9 @@ public class StoreLoginController {
 				}else {
 					request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
 					request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
+					request.getSession().setAttribute("empName", employeeVo.getEmpName());
+					
+					session.setMaxInactiveInterval(60*30);
 					
 					InetAddress local;
 					LogVO logVo = new LogVO();
@@ -71,8 +74,6 @@ public class StoreLoginController {
 					}
 					request.getSession().setAttribute("logPk", logVo.getLogPk());
 					
-					Cookie ck = new Cookie("ck_empNo", vo.getEmpNo());
-					ck.setPath("/");
 					msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
 					int grade = Integer.parseInt(employeeVo.getGradeCode());
 					if(grade <= 2) {
