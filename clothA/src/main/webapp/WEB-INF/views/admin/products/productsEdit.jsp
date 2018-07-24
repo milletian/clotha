@@ -13,6 +13,13 @@
     float: left;
 }
 
+.pdDetail{
+	border: 1px solid;
+    width: 300px;
+    float: left;
+    clear: both;
+}
+
 </style>
 </head>
 <body>
@@ -46,6 +53,14 @@
 	
 	<label>판매가</label>
 	<span><input type="text" name="pdSellPrice" value="${vo.pdSellPrice}"></span>
+	<br>
+	
+	<label>사용여부</label>
+	<select name="pdDel">
+		<option value="Y">사용</option>
+		<option value="N">미사용</option>
+	</select>
+	<br>
 </div>
 <div id="pdDetail2">
 	<label>상품주의 사항</label>

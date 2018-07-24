@@ -42,4 +42,9 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 		return sqlSession.update(namesapce+"updatePdDetail", productsVo);
 	}
 
+	@Override
+	public int deleteProducts(Map<String, String[]> map) {
+		return sqlSession.delete(namesapce+"deleteProducts", map);
+	}
+
 }

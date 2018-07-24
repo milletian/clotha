@@ -10,13 +10,16 @@
 	</insert>
 	<select id="selectProducts" parameterType="ProductsVO"
 		resultType="map">
-		select ACC_NAME, PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE,
+		select ACC_NAME,PD_DEL,PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE,
 		PD_REGDATE,STYLE_CODE from ACCPRODUCTSVIEW
 		<where>
 			<if test="startDay!=null and startDay!=''">
 			<![CDATA[
 			pd_regdate>#{startDay} and pd_regdate<to_date(#{endDay})+1
 			]]>
+			</if>
+			<if test="pdDel!='전체' and pdDel!=null and pdDel!=''">
+				and pd_del=#{pdDel}
 			</if>
 			<if test="accCode!=null and accCode!=''">
 				and acc_code=#{accCode}
@@ -52,6 +55,13 @@
 		set pd_Image=#{pdImage}, pd_sellprice=#{pdSellPrice}, pd_warning=#{pdWarning},pd_explanation=#{pdExplanation}
 		where pd_code=#{pdCode}
 	</update>
+	<delete id="deleteProducts" parameterType="map">
+	delete products
+	where pd_code in
+	<foreach  item="pdCode" collection="pdCodes" open="(" close=")" separator="," index="index">
+	#{pdCode}
+	</foreach> 
+	</delete>
 </mapper>
 
 

@@ -19,7 +19,7 @@ public class ProductsVO extends DateSearchVO{
 	private String accCode;
 	private String genderCode;
 	private String styleName;
-	
+	private String pdDel;
 	
 	
 	public String getAccName() {
@@ -119,13 +119,20 @@ public class ProductsVO extends DateSearchVO{
 	public void setStyleName(String styleName) {
 		this.styleName = styleName;
 	}
+	
+	public String getPdDel() {
+		return pdDel;
+	}
+	public void setPdDel(String pdDel) {
+		this.pdDel = pdDel;
+	}
 	@Override
 	public String toString() {
 		return "ProductsVO [accName=" + accName + ", pdCode=" + pdCode + ", pdName=" + pdName + ", pdOriginalPrice="
 				+ pdOriginalPrice + ", pdSellPrice=" + pdSellPrice + ", pdRegdate=" + pdRegdate + ", pdExplanation="
 				+ pdExplanation + ", pdWarning=" + pdWarning + ", pdImage=" + pdImage + ", styleCode=" + styleCode
 				+ ", colorCode=" + colorCode + ", seasonCode=" + seasonCode + ", sizeCode=" + sizeCode + ", accCode="
-				+ accCode + ", genderCode=" + genderCode + ", styleName=" + styleName + "]";
+				+ accCode + ", genderCode=" + genderCode + ", styleName=" + styleName + ", pdDel=" + pdDel + "]";
 	}
 	
 	

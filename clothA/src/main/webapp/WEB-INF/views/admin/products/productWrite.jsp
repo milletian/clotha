@@ -144,6 +144,13 @@ $(function(){
 					class="valid">
 			</div>
 			<div>
+				<label>사용여부</label>
+				<select name="pdDel">
+					<option value="Y">사용</option>
+					<option value"N">미사용</option>
+				</select>
+			</div>
+			<div>
 				<label>주의 사항 </label>
 				<textarea name="pdWarning">
 				</textarea>

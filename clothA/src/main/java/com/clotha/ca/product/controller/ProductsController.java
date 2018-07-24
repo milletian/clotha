@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -191,6 +192,37 @@ public class ProductsController {
 				logger.info("기존 파일 삭제여부:{}",bool);
 			}
 		}//기존 파일 삭제 if
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	
+	@RequestMapping(value="/products/productsDelete.do", method=RequestMethod.POST)
+	public String productsDelete_post(@RequestParam String[] chk, Model model) {
+		logger.info("여러 상품코드 삭제");
+		
+		if(chk!=null) {
+			int i=0;
+			for(String no:chk) {
+				logger.info("{} : 파라미터 => {}",i++, no);
+			}
+		}//if
+		
+		logger.info("멀티 응답!");
+		Map<String, String[]> map = new HashMap<>();
+		map.put("pdCodes", chk);
+		int cnt = productsService.deleteProducts(map);
+		logger.info("여러 상품코드 삭제 결과, cnt={}",cnt);
+		
+		String msg="", url="/admin/products/productsList.do";
+		if(cnt>0) {
+			msg="삭제에 성공하셨습니다.";
+		}else {
+			msg="삭제에 실패하셨습니다!!";
+		}
 		
 		model.addAttribute("msg",msg);
 		model.addAttribute("url",url);

@@ -237,7 +237,7 @@ footer{
 							<a href="<c:url value='/admin/products/productWrite.do'/>" target="if">상품 등록
 							</a>
 						</li>
-						<li><a href="#">상품조회</a></li>
+						<li><a href="<c:url value='/admin/products/productsList.do'/>" target="if">상품조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-home"></i><span>매장관리</span><i

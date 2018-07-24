@@ -44,6 +44,10 @@
 	
 	<label>판매가</label>
 	<span>${vo.pdSellPrice}</span>
+	<br>
+	
+	<label>사용여부</label>
+	<span>${vo.pdDel}</span>
 </div>
 <div id="pdDetail2">
 	<label>상품주의 사항</label>

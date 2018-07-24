@@ -33,7 +33,7 @@
 		<h1> 공지사항 </h1>
 	</div>
 	<div class="box1">
-		<form action="<c:url value='/notice/notice.do'/> " method="post" name="frm1" >
+		<form action="<c:url value='/notice/noticeWrite.do'/> " method="post" name="frm1" >
 			제목  :  <input type="text" name="noticeTitle" >
 			<textarea rows="10" cols="80" name="noticeContent" id="editor1" >
 				

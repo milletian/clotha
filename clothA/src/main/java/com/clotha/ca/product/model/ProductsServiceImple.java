@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductsServiceImple implements ProductsService  {
@@ -37,6 +38,12 @@ public class ProductsServiceImple implements ProductsService  {
 	@Override
 	public int updatePdDetail(ProductsVO productsVo) {
 		return productDao.updatePdDetail(productsVo);
+	}
+	
+	@Transactional
+	@Override
+	public int deleteProducts(Map<String, String[]> map) {
+		return productDao.deleteProducts(map);
 	}
 	
 	

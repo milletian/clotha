@@ -8,9 +8,9 @@ on p.ACC_CODE=a.ACC_CODE;
 
 create view StProductsView
 as
-select p.pd_code, p.PD_NAME,p.PD_IMAGE,p.PD_REGDATE,s.STYLE_NAME, p.PD_ORIGINALPRICE,p.PD_SELLPRICE,p.PD_WARNING,p.PD_EXPLANATION 
+select p.pd_code, p.PD_NAME,p.PD_DEL,p.PD_IMAGE,p.PD_REGDATE,s.STYLE_NAME, p.PD_ORIGINALPRICE,p.PD_SELLPRICE,p.PD_WARNING,p.PD_EXPLANATION 
 from products p join style s
 on p.STYLE_CODE = s.STYLE_CODE;
 
 commit;
- 
+
