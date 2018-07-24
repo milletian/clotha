@@ -18,8 +18,8 @@
 
 <script type="text/javascript">
 $(function() {
-	var accCode;
 	var whorst = 'store';
+	var storeOrwh;
 	
 	$('input[name=whorst]').change(function() {
 		whorst = $(this).val();
@@ -58,7 +58,7 @@ $(function() {
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -66,56 +66,34 @@ $(function() {
 	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
 	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
 	});
+	
 	$("table").tablesorter(); 
 	
 	
 	
-	$('#delbtn').click(function() { 
+	$('#selSearchSupplier').change(function() { 
+		storeOrwh = $(this).val();
     	$.ajax({
         	type:"POST",
-        	url : "<c:url value='/admin/account/accountDel.do' />",
-        	data:accCode,
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
-        
-   		}); 
-	})
-	
-	$('#btn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountList.do' />",
+        	url : "<c:url value='/admin/stock/ajaxStockList.do' />",
         	data:$("#frmStockFirstSet").serialize(),
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
         			$("table tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr><td>"+item.accCode+"</td>"
-     					+"<td><input>"+item.accName+"</td>"
-     					+"<td>"+item.accAddress+"</td>"
-     					+"<td>"+item.accTel+"</td>"
-     					+"<td>"+item.accCeo+"</td>"
-     					+"<td>"+item.accNo+"</td>"
-     					+"<td>"
-     					if(item.accIsdeal=='Y'){
-     						dsd+="사용";
-     					}else{
-     						dsd+="미사용";
-     					}
-     					+"</td>";
-     					dsd+="<td>"+item.accUnique+"</td></tr>";
-     					 $("table tbody").append(dsd);
+     					var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+item.STA_CODE+"'></td>";
+     					dsd+= "<td><input type='text' name='pdCode' readonly='readonly' value='"+item.PD_CODE+"' ></td>";
+     					dsd+= "<td><input type='text' readonly='readonly' value='"+item.PD_NAME+"' ></td>";
+     					dsd+= "<td><input type='text' name='stockQty' value='"+item.STOCK_QTY+"' ></td>";
+     					dsd+= "<input type='hidden' name='stockPk' value='"+item.STOCK_PK+"' ></tr>";
+ 
+     					$("table tbody").append(dsd);
      					liveTableData.reset();
-     					});
-     				}else{
-     					$("table tbody").html('');
-     				}
+     				})	 
+     			}else{
+     				$("table tbody").html('');
+     			}
         		 $("table").trigger("update"); 
                  return false; 
         	 },
@@ -124,14 +102,56 @@ $(function() {
 			}
         
    		}); 
-	})/* 
-	$("#btn").trigger("click"); */
-	$("table").tableExport();
-	$('table tbody tr').live('click',function(){
-		$(this).css('backgroundColor','skyblue');
-		accCode=$(this).find('td:first').text();
 	})
+	
+	$("#newRecord").click(function() {
+		var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
+			dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ></td>";
+			dsd+= "<td><input type='text' readonly='readonly' ></td>";
+			dsd+= "<td><input type='number' name='stockQty' ></td>";
+			dsd+= "<input type='hidden' name='stockPk' ></tr>";
+		$("table tbody").append(dsd);
+		$('#selSearchSupplier').attr('disabled','disabled');
+		$('input[name=whorst]').attr('disabled','disabled');
+	})
+	
+	$('#addbtn').click(function() {
+		renameForModelAttribute();
+		console.log($("#frmStockFirstSetting").serialize());
+		var sta = $('input[name=stockList[0].staCode]').val();
+		var stockQty1 = $('input[name=stockList[0].stockQty]').val();
+		alert($("#frmStockFirstSetting").serialize());
+		$.ajax({
+        	type:"POST",
+        	url : "<c:url value='/admin/stock/ajaxStockWrite.do' />",
+        	data:$("#frmStockFirstSetting").serialize(),
+        	/* data:{"stockList[0].staCode" :sta,
+        		"stockList[0].stockQty" : stockQty1}, */
+        	//dataType:'json',
+        	success:function(res){
+        		 alert(res);
+        	 },
+			error: function(xhr, status, error){
+				alert(status+","+error);
+				
+			}
+        
+   		}); 
+	})
+	
+	
+	
 })
+function renameForModelAttribute() {
+    $("#frmStockFirstSetting").each( function (index) {
+        $(this).find("input[name=staCode]").attr("name", "stockList[" + index + "].staCode");
+        //alert($(this).find("input[name=staCode]").attr("name"));
+        $(this).find("input[name=pdCode]").attr("name", "stockList[" + index + "].pdCode");
+        $(this).find("input[name=stockQty]").attr("name", "stockList[" + index + "].stockQty");
+        $(this).find("input[name=stockPk]").attr("name", "stockList[" + index + "].stockPk");
+    })
+}
+
 function popupOpen(acc_Code){
 
 	var popUrl = "<c:url value='/admin/account/accountWrite.do?accCode="+acc_Code+" '/>";	//팝업창에 출력될 페이지 URL
@@ -156,7 +176,7 @@ function popupOpen(acc_Code){
 <form name="frmStockFirstSet" id="frmStockFirstSet">
 	<div id="wrap">
 			<div>
-				<b>구분</b><input type="radio" name="whorst" value="store" id='store'><label for="store">매장</label>
+				<b>구분</b><input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
 				<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
 			</div>
 			<div id='selectwhorst'>
@@ -165,30 +185,33 @@ function popupOpen(acc_Code){
 				
 				</select>
 			</div>
-			<input type="button" id="btn" value="조회">
 		
 	</div>
+</form>
 	<div id="maincontent">    
-		<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
+
+		<a href="#" id="newRecord"><i class="fas fa-edit"></i></a>
 		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+		<a href="#" id="addbtn"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
-			<table cellspacing="1" class="tablesorter">             
-			    <thead> 
-			        <tr> 
-			            <th>재고위치ID</th> 
-			            <th>상품코드</th> 
-			            <th>상품명</th> 
-			            <th>수량</th> 
-			        </tr> 
-			    </thead> 
-			    <tbody> 
-			       
-			    </tbody> 
-			</table>
+			<form name="frmStockFirstSetting" id="frmStockFirstSetting">
+			
+				<table cellspacing="1" class="tablesorter">             
+				    <thead> 
+				        <tr> 
+				            <th>재고위치ID</th> 
+				            <th>상품코드</th> 
+				            <th>상품명</th> 
+				            <th>수량</th> 
+				        </tr> 
+				    </thead> 
+				    <tbody> 
+				       
+				    </tbody> 
+				</table>
+			</form>
 		</div>
 	</div>
-</form>
 
 
 

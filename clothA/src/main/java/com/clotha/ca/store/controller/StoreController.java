@@ -50,6 +50,7 @@ public class StoreController {
 		String areaCode = multi.getParameter("areaCode");
 		storeVO.setStoreCode(multi.getParameter("storeCode"));
 		storeVO.setEmpNo(multi.getParameter("empNo"));
+		storeVO.setStoreName(multi.getParameter("storeName"));
 		storeVO.setStoreZipcode(multi.getParameter("storeZipcode"));
 		storeVO.setStoreAddress(multi.getParameter("address")+"~"+multi.getParameter("addressDetail"));
 		storeVO.setStaCode(multi.getParameter("staCode"));

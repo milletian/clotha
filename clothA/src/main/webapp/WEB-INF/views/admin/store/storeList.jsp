@@ -67,6 +67,7 @@ $(function() {
      					var dsd ="<tr ondblclick=popupOpen('"+item.storeCode+"')><td>"+item.storeCode+"</td>"
      					+"<td>"+item.staCode+"</td>"
      					+"<td>"+item.empNo+"</td>"
+     					+"<td>"+item.storeName+"</td>"
      					+"<td>"+item.storeZipcode+"</td>"
      					+"<td>"+item.storeAddress+"</td>"
      					+"<td>"+item.storeNo+"</td>"
@@ -155,7 +156,8 @@ function popupOpen(storeCode){
 		        <tr> 
 		            <th>점포코드</th> 
 		            <th>재고위치코드</th> 
-		            <th>점주이름</th> 
+		            <th>점주코드</th> 
+		            <th>점포이름</th> 
 		            <th>우편번호</th> 
 		            <th>주소</th> 
 		            <th>법인번호</th>

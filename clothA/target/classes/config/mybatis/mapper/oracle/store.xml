@@ -23,13 +23,13 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreVO">
-		insert into store(store_code,emp_No,store_zipcode,store_address,store_image,sta_code,store_tel,store_No)
-		values('ca'||store_seq.nextval,#{empNo},#{storeZipcode},#{storeAddress},#{storeImage}, 
+		insert into store(store_code,emp_No,store_Name,store_zipcode,store_address,store_image,sta_code,store_tel,store_No)
+		values('ca'||store_seq.nextval,#{empNo},#{storeName},#{storeZipcode},#{storeAddress},#{storeImage}, 
 		( select sta_code from ( select * from stock_area order by sta_code desc ) where rownum=1 ) ,#{storeTel},#{storeNo})
 	</insert>
 	
 	<update id="updateStore" parameterType="StoreVO">
-		update store set emp_No= #{empNo},store_zipcode=#{storeZipcode},store_address=#{storeAddress}
+		update store set emp_No= #{empNo},store_Name=#{storeName},store_zipcode=#{storeZipcode},store_address=#{storeAddress}
 		<if test="storeImage!=null and storeImage!=''">
 			,store_image=#{storeImage}	
 		</if>

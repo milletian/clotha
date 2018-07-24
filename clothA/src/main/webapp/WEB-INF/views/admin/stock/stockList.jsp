@@ -6,23 +6,69 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
 
+
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type = "text/javascript"  src = "<c:url value='/js/jquery-latest.js' />" > </script>  
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>s
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script type="text/javascript">
 $(function() {
+	$("#selSearchSupplier").select2();
+	$.changeOption = function(whorst) {
+		var url;
+		if(whorst=='store'){
+			url = "<c:url value='/admin/store/ajaxStoreList.do' />";
+		}else{
+			url = "<c:url value='/admin/warehouse/ajaxWarehouseList.do' />";
+		}
+		
+		$.ajax({
+	    	url : url,
+	    	dataType:'json',
+	    	success:function(res){
+	    		if (res.length > 0){
+	    			$("#selectwhorst").html('');
+	    			$.each(res,function(idx, item){
+	    				var option = "<option value='"+item.staCode+"'>";
+	    				if(whorst=="store"){
+	    					option += item.storeCode;
+	    				}else{
+	    					option += item.whCode;
+	    				}
+	    				option += "</option>";
+	        			$("#selectwhorst").append(option);
+	    			})
+	    		}else{
+	    			$("#selectwhorst").html('');
+	    		}
+	    	},
+	    	error: function(xhr, status, error){
+				alert("sdsds");
+			}
+		})
+	}
+	
+	var whorst = 'store';
+	var storeOrwh;
 	var accCode;
+	
+	$('input[name=whorst]').change(function() {
+		whorst = $(this).val();
+		$.changeOption(whorst);
+		
+	})
+	
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -47,6 +93,30 @@ $(function() {
         
    		}); 
 	})
+	
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
+    	dataType:'json',
+    	success:function(res){
+    		if (res.length > 0){
+    			$("#selSearchSupplier").html('');
+    			$.each(res,function(idx, item){
+    				var option = "<option value='"+item.accCode+"'>";
+    				option += item.accName;
+    				option += "</option>";
+        			$("#selSearchSupplier").append(option);
+    			})
+    		}else{
+    			$("#selSearchSupplier").html('');
+    		}
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		}
+	})
+	
+	
 	
 	$('#btn').click(function() { 
     	$.ajax({
@@ -87,12 +157,13 @@ $(function() {
         
    		}); 
 	})
-	$("#btn").trigger("click");
 	$("table").tableExport();
-	$('table tbody tr').live('click',function(){
+	$('table tbody tr').on('click',function(){
 		$(this).css('backgroundColor','skyblue');
 		accCode=$(this).find('td:first').text();
 	})
+	
+	$.changeOption(whorst);
 })
 function popupOpen(acc_Code){
 
@@ -116,21 +187,28 @@ function popupOpen(acc_Code){
 }
 </style>
 <div id="wrap">
-	<form name="frmAccountList" id="frmAccountList">
-		<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="accIsdeal" value="전체"><label for="isall">전체 </label>
-		<input type="radio" id="use" name="accIsdeal" value="Y"><label for="use">사용 </label>
-		<input type="radio" id="noneuse" name="accIsdeal" value="N"><label for="noneuse">미사용 </label>
+	<form name="frmStockList" id="frmStockList">
+		<label for="selSearchSupplier">매입처</label>
+		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+		<div>
+			<b>구분</b><input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
+			<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+		</div>
+		<div>
+			<b>선택</b>
+			<select name="staCode" id="selectwhorst">
+				
+			</select>
+		</div><br>
+		<label for="pdCode">상품 코드</label><input type="text" name="pdCode" id="pdCode">
+		<input type="button" id="pdbtn" value="상품코드 조회">
+	
+		<b>상품 사용 여부</b> <input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
+		<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
+		<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
 		
-		검색조건
-		<select name="searchCondition"> 
-			<option value="acc_Code">구매처코드</option>
-			<option value="acc_No">법인등록번호</option>
-			<option value="acc_Name">회사명</option>
-		</select>
 		
-		검색<input type="text" name="searchKeyword">
-		
-		<input type="button" id="btn" value="거래처 조회">
+		<input type="button" id="btn" value="재고현황 조회">
 	</form>
 </div>
 <div id="maincontent">    

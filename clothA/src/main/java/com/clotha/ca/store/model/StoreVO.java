@@ -5,6 +5,7 @@ import com.clotha.ca.common.SearchVO;
 public class StoreVO extends SearchVO {
 	private String storeCode;
 	private String empNo;
+	private String storeName;
 	private String storeZipcode;
 	private String storeAddress;
 	private String storeJoin;
@@ -74,9 +75,17 @@ public class StoreVO extends SearchVO {
 	public void setStoreNo(String storeNo) {
 		this.storeNo = storeNo;
 	}
+	
+	
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 	@Override
 	public String toString() {
-		return "StoreVO [storeCode=" + storeCode + ", empNo=" + empNo + ", storeZipcode=" + storeZipcode
+		return "StoreVO [storeCode=" + storeCode + ", empNo=" + empNo+ storeName + ", storeZipcode=" + storeZipcode
 				+ ", storeAddress=" + storeAddress + ", storeJoin=" + storeJoin + ", storeImage=" + storeImage
 				+ ", staCode=" + staCode + ", storeDel=" + storeDel + ", storeTel=" + storeTel + ", storeNo=" + storeNo
 				+super.toString()+ "]";

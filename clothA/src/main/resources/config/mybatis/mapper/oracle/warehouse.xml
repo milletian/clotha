@@ -5,10 +5,10 @@
 	<select id="SearchWarehouse" parameterType="WarehouseVO" resultType="WarehouseVO">
 		select * from Warehouse 
 		<where>
-			<if test='whDel!="전체" and whDel!="N"'>
+			<if test='whDel!=null and whDel!="전체" and whDel!="N"'>
 				wh_del is not null		
 			</if>
-			<if test='whDel!="전체" and whDel!="Y"'>
+			<if test='whDel!=null and whDel!="전체" and whDel!="Y"'>
 				and wh_del is null		
 			</if>
 			<if test="searchKeyword!='' and searchKeyword!=null">
