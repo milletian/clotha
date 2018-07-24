@@ -111,20 +111,24 @@ $(function() {
 			dsd+= "<td><input type='number' name='stockQty' ></td>";
 			dsd+= "<input type='hidden' name='stockPk' ></tr>";
 		$("table tbody").append(dsd);
+		renameForModelAttribute();
 		$('#selSearchSupplier').attr('disabled','disabled');
 		$('input[name=whorst]').attr('disabled','disabled');
 	})
 	
 	$('#addbtn').click(function() {
-		renameForModelAttribute();
+		//renameForModelAttribute();
 		console.log($("#frmStockFirstSetting").serialize());
 		var sta = $('input[name=stockList[0].staCode]').val();
 		var stockQty1 = $('input[name=stockList[0].stockQty]').val();
 		alert($("#frmStockFirstSetting").serialize());
+		//var sss =$("#frmStockFirstSetting").serialize();
+		var sss =$("#frmStockFirstSetting").serializeArray();
 		$.ajax({
         	type:"POST",
         	url : "<c:url value='/admin/stock/ajaxStockWrite.do' />",
         	data:$("#frmStockFirstSetting").serialize(),
+        	//data:sss,
         	/* data:{"stockList[0].staCode" :sta,
         		"stockList[0].stockQty" : stockQty1}, */
         	//dataType:'json',
