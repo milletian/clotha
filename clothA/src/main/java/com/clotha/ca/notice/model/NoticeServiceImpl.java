@@ -32,6 +32,11 @@ public class NoticeServiceImpl implements NoticeService{
 			logger.info("readcount up 실행결과 ={}",cnt);
 		}
 		return noticeDao.selectNotice(noticeNo);
+	}
+
+	@Override
+	public int deleteNotice(int noticeNo) {
+		return noticeDao.deleteNotice(noticeNo);
 	} 
 	
 }

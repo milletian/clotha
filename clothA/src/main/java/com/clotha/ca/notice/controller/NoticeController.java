@@ -78,5 +78,39 @@ public class NoticeController {
 		return "notice/noticeDetail";
 	}
 	
+	@RequestMapping(value="/noticeDelete.do")
+	public String noticeDelete(@RequestParam int noticeNo, Model model) {
+		logger.info("공지사항 삭제하기 파라미터 , noticeNo={}",noticeNo);
+		
+		String msg="", url="/notice/notice.do";
+		int cnt = noticeService.deleteNotice(noticeNo);
+		if(cnt==1) {
+			msg="삭제되었습니다.";
+		}else {
+			msg="삭제 실패하였습니다.";
+			url="/notice/noticeDetail.do?noticeNo="+noticeNo;
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

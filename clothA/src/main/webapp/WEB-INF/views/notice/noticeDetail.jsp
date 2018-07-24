@@ -11,7 +11,13 @@
 		});
 		
 		$('.deleteNotice').click(function(){
-			location.href="<c:url value='/notice/noticeDelete.do'/> ";
+			var result = confirm('정말 삭제하시겠습니다?');
+			
+			if(result){
+				location.href="<c:url value='/notice/noticeDelete.do?noticeNo=${vo.noticeNo}'/> ";
+			}else{
+				return false;
+			}
 		});
 	});
 </script>

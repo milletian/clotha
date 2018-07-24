@@ -21,6 +21,10 @@
 		update notice set notice_read = notice_read+1 where notice_no = #{noticeNo}
 	</update>
 	
+	<delete id="deleteNotice" parameterType="int" >
+		delete from notice where notice_no=#{noticeNo}
+	</delete>
+	
 </mapper>
 
 
