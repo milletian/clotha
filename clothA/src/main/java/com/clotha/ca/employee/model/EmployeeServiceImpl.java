@@ -1,5 +1,7 @@
 package com.clotha.ca.employee.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int pwdCountUp(String empNo) {	//StoreLoginController
 		return employeeDao.pwdCountUp(empNo);
+	}
+
+	@Override
+	public List<EmployeeVO> selectAll() {
+		return employeeDao.selectAll();
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo) {
+		return employeeDao.selectEmp(employeeVo);
+	}
+
+	@Override
+	public List<EmployeeVO> selectStore() {
+		return employeeDao.selectStore();
 	}
 	
 }

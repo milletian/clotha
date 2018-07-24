@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
+import com.clotha.ca.product.model.ProductsVO;
 
 @Controller
 @RequestMapping("/admin/employee")
@@ -91,9 +93,32 @@ public class EmployeeController {
 		return "common/message";
 		
 	}
-		@RequestMapping("employeeList.do")
-		public void employeeList() {
-			logger.info("직원리스트 보여주기");
-		}
 	
+	
+		@RequestMapping("/employeeList.do")
+		public void employeeList_get() {
+			logger.info("직원리스트 화면보여주기");
+		}
+		
+		//매장코드명 ajax
+		@RequestMapping("/ajaxEmployeeStore.do")
+		@ResponseBody
+		public List<EmployeeVO> employeeStoreCode() {
+			logger.info("매장 이름 ajax");
+			//db처리
+			List<EmployeeVO> list =	employeeService.selectStore();
+			
+			logger.info("list={}", list.size());
+			return list;
+		}
+		
+		@RequestMapping("/ajaxEmployeeList.do")
+		public List<EmployeeVO> employeeList_post(@ModelAttribute EmployeeVO employeeVo) {
+			logger.info("검색조건 employeeVo ={}", employeeVo);
+			
+			List<EmployeeVO> list = employeeService.selectEmp(employeeVo);
+			
+			return list;
+		}
+		
 }

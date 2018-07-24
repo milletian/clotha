@@ -1,5 +1,7 @@
 package com.clotha.ca.employee.model;
 
+import java.util.List;
+
 public interface EmployeeService {
 	
 	//로그인 처리에서 사용
@@ -14,4 +16,7 @@ public interface EmployeeService {
 	public int pwdCountUp(String empNo);	//StoreLoginController
 	
 	public int insertEmployee(EmployeeVO employeeVo);
+	public List<EmployeeVO> selectAll();
+	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo);
+	public List<EmployeeVO> selectStore();
 }

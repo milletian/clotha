@@ -1,5 +1,7 @@
 package com.clotha.ca.employee.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,6 +47,21 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	@Override
 	public int countZero(LogVO logVo) {	//StoreLoginController - logService
 		return sqlSession.update(namespace+"countZero",logVo);
+	}
+
+	@Override
+	public List<EmployeeVO> selectAll() {
+		return sqlSession.selectList(namespace+"selectAll");
+	}
+
+	@Override
+	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo) {
+		return sqlSession.selectList(namespace+"selectEmp", employeeVo);
+	}
+
+	@Override
+	public List<EmployeeVO> selectStore() {
+		return sqlSession.selectList(namespace+"selectStore");
 	}
 
 }

@@ -34,6 +34,40 @@
 		update employee set emp_count= 0 where emp_no=#{empNo}
 	</update>
 	
+	<select id="selectAll" resultType="EmployeeVO">
+		select * from employee
+		order by
+		store_code desc
+	</select>
+	
+	<select id="selectStore"  resultType="EmployeeVO">
+		select DISTINCT store_code
+		from employee
+	</select>
+	
+	<select id="selectEmp" parameterType="EmployeeVO"	resultType="EmployeeVO">
+		select STORE_CODE, EMP_NO, DEPT_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
+        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, GRADE_CODE
+		from EMPLOYEE
+		
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+				store_code=#{storeCode}
+			</if>
+			<if test="empName!=null and empName!=''">
+				and emp_name like '%' || #{empName} || '%'
+			</if>
+			<if test="deptNo!=null and deptno!=''">
+				and dept_No=#{deptNo}
+			</if>
+			<if test="gradeCode!=null and gradeCode!=''">
+				and grade_code=#{gradeCode}
+			</if>
+		</where>
+		order by grade_code desc
+	</select>
+	
+	
 </mapper>
 
 
