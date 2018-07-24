@@ -16,7 +16,7 @@
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
-
+ 
 <script type="text/javascript">
 $(function() {
 	var accCode;
