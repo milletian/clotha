@@ -49,7 +49,7 @@ public class StoreLoginController {
 		if(result==employeeService.LOGIN_OK) {
 			
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
-			if(employeeVo.getEmpCount()<=5) {
+			if(employeeVo.getEmpCount()<5) {
 				
 				if(employeeVo.getEmpDel().equals("N")) {
 					msg="퇴사 또는 입사승인 대기중인 사원코드입니다.";
@@ -88,7 +88,9 @@ public class StoreLoginController {
 		}else if(result == employeeService.PWD_DISAGREE) {
 			int cnt = employeeService.pwdCountUp(vo.getEmpNo());
 			logger.info("비밀번호 불일치 countUp 결과 ={} ",cnt);
-			msg="비밀번호가 일치하지 않습니다.";
+			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
+			logger.info("비밀번호 카운트 count={}",employeeVo.getEmpCount());
+			msg="비밀번호가 일치하지 않습니다."+employeeVo.getEmpCount()+" 번 틀리셨습니다. 5번 틀리면 로그인이 제한됩니다.";
 		}else if(result == employeeService.ID_NONE) {
 			msg="해당 사원코드가 존재하지 않습니다.";
 		}else {
