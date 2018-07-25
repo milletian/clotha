@@ -30,6 +30,14 @@
 	
 	<div class="pdDetail">
 		<input type="file" name="changeFile" >
+		<br>
+		 <span>상품이미지</span>
+            <c:if test="${!empty vo.pdImage}">
+            	<span>${vo.pdImage}</span>
+            	<br>
+            	<span style="color:green;font-weight: bold">
+            		첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
+            </c:if>
 	</div>
 	
 	<div class="pdDetail">
@@ -55,8 +63,16 @@
 	<div class="pdDetail">
 	<label>사용여부</label>
 	<select name="pdDel">
-		<option value="Y">사용</option>
-		<option value="N">미사용</option>
+		<option value="Y"
+		<c:if test="${vo.pdDel=='Y'}">
+			selected="selected"
+		</c:if>
+		>사용</option>
+		<option value="N"
+		<c:if test="${vo.pdDel=='N'}">
+			selected="selected"
+		</c:if>
+		>미사용</option>
 	</select>
 	</div>
 </div>

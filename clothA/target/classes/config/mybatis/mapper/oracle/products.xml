@@ -52,7 +52,7 @@
 	</select>
 	<update id="updatePdDetail" parameterType="ProductsVO">
 		update StProductsView
-		set pd_Image=#{pdImage}, pd_sellprice=#{pdSellPrice}, pd_warning=#{pdWarning},pd_explanation=#{pdExplanation}
+		set pd_Image=#{pdImage}, pd_sellprice=#{pdSellPrice}, pd_warning=#{pdWarning},pd_explanation=#{pdExplanation},pd_del=#{pdDel}
 		where pd_code=#{pdCode}
 	</update>
 	<delete id="deleteProducts" parameterType="map">
