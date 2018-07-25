@@ -229,4 +229,11 @@ public class ProductsController {
 		
 		return "common/message";
 	}
+	
+	//상품검색창 화면 
+	
+	@RequestMapping(value="/products/productsSearch.do", method=RequestMethod.GET)
+	public void productSearch() {
+		logger.info("검색화면 보여주기");
+	}
 }

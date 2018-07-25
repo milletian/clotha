@@ -6,71 +6,69 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <style type="text/css">
-#pdImage{
-    width: 240px;
-    height: 220px;
-    float: left;
-}
-
-.pdDetail{
-	border: 1px solid;
-    width: 300px;
-    float: left;
-    clear: both;
-}
-
 </style>
 </head>
 <body>
 <form name="frmPdEdit" method="post" action="<c:url value='/admin/products/productsEdit.do'/>" enctype="multipart/form-data" >
-<div id="pdImage">
-	<img alt="${vo.pdName}" src="<c:url value='/pd_images/${vo.pdImage}'/>" id="pdImage">
-	<input type="file" name="changeFile" >
+<div class="pdImage">
+	<img alt="${vo.pdName}" src="<c:url value='/pd_images/${vo.pdImage}'/>" class="pdImage">
 </div>
-<div id="pdDetail">
+
+<div>
 	<input type="hidden" name="pdCode" value="${param.pdCode}">
 	<input type="hidden" name="oldFileName" value="${vo.pdImage}">
-	<label>상품코드</label>
-	<span>${param.pdCode}</span>
-	<br>
-	 
-	<label>상품이름</label>
-	<span>${vo.pdName}</span>
-	<br>
+	<div class="pdDetail">
+		<label>상품코드</label>
+		<span>${param.pdCode}</span>
+	</div>
+	<div class="pdDetail">
+		<label>상품이름</label>
+		<span>${vo.pdName}</span>
+	</div>
 	
-	<label>생산년도</label>
-	<span>${pdYear}년도</span>
-	<br>
+	<div class="pdDetail">
+		<input type="file" name="changeFile" >
+	</div>
 	
-	<label>스타일</label>
-	<span>${vo.styleName}</span>
-	<br>
+	<div class="pdDetail">
+		<label>생산년도</label>
+		<span>${pdYear}년도</span>
+	</div>
 	
-	<label>입고가</label>
-	<span>${vo.pdOriginalPrice }</span>
-	<br>
+	<div class="pdDetail">
+		<label>스타일</label>
+		<span>${vo.styleName}</span>
+	</div>
 	
-	<label>판매가</label>
-	<span><input type="text" name="pdSellPrice" value="${vo.pdSellPrice}"></span>
-	<br>
+	<div class="pdDetail">
+		<label>입고가</label>
+		<span>${vo.pdOriginalPrice }</span>
+	</div>
+		
+	<div class="pdDetail"> 
+		<label>판매가</label>
+		<span><input type="text" name="pdSellPrice" value="${vo.pdSellPrice}"></span>
+	</div>	
 	
+	<div class="pdDetail">
 	<label>사용여부</label>
 	<select name="pdDel">
 		<option value="Y">사용</option>
 		<option value="N">미사용</option>
 	</select>
-	<br>
+	</div>
 </div>
-<div id="pdDetail2">
+<div id="pdEdit2">
 	<label>상품주의 사항</label>
 	<textarea name="pdWarning">${vo.pdWarning}</textarea>
 </div>
-<div id="pdDetail3">
+<div id="pdEdit3">
 	<label>상품설명</label>
 	<textarea name="pdExplanation">${vo.pdExplanation}</textarea>
 </div>
-	<input type="submit" value="수정완료">
+	<input type="submit" value="수정완료" id="editSubmit">
 </form>
 
 </body>

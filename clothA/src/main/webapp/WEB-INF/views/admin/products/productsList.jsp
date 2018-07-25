@@ -176,10 +176,7 @@ function popupOpen(ACC_DT_CODE){
 	}
 </script>
 <style type="text/css">
-.center{
-	width:20px; 
-	text-align: center;
-}
+
 </style>
 <div class="viewBody">
 		<div id="wrap" class="box1">

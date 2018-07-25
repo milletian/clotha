@@ -6,50 +6,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <style type="text/css">
-#pdImage{
-    width: 240px;
-    height: 220px;
-    float: left;
-}
- 
 </style>
 </head>
 <body>
-<div id="pdImage">
-	<img alt="${vo.pdName}" src="<c:url value='/pd_images/${vo.pdImage}'/>" id="pdImage">
+<div class="pdImage">
+	<img alt="${vo.pdName}" src="<c:url value='/pd_images/${vo.pdImage}'/>" class="pdImage">
 </div>
-<div id="pdDetail">
-	<input type="hidden" value="${param.pdCode}">
-	<input type="hidden" value="${vo}">
-	<label>상품코드</label>
-	<span>${param.pdCode }</span>
-	<br>
+<div >
+	<div class="pdDetail">
+		<input type="hidden" value="${param.pdCode}" class="pdDetail">
+		<input type="hidden" value="${vo}" class="pdDetail">
+		<label>상품코드</label>
+		<span>${param.pdCode }</span>
+	</div>
+	<div class="pdDetail">	
+		<label>상품이름</label>
+		<span>${vo.pdName}</span>
+	</div>
 	
-	<label>상품이름</label>
-	<span>${vo.pdName}</span>
-	<br>
-	
-	<label>생산년도</label>
-	<span>${pdYear}년도</span>
-	<br>
-	
-	<label>스타일</label>
-	<span>${vo.styleName}</span>
-	<br>
-	
-	<label>입고가</label>
-	<span>${vo.pdOriginalPrice }</span>
-	<br>
-	
-	<label>판매가</label>
-	<span>${vo.pdSellPrice}</span>
-	<br>
-	
-	<label>사용여부</label>
-	<span>${vo.pdDel}</span>
+	<div class="pdDetail">	
+		<label>생산년도</label>
+		<span>${pdYear}년도</span>
+	</div>
+	<div class="pdDetail">
+		<label>스타일</label>
+		<span>${vo.styleName}</span>
+	</div>
+	<div class="pdDetail">	
+		<label>입고가</label>
+		<span>${vo.pdOriginalPrice }</span>
+	</div>
+	<div class="pdDetail">	
+		<label>판매가</label>
+		<span>${vo.pdSellPrice}</span>
+	</div>
+	<div class="pdDetail">	
+		<label>사용여부</label>
+		<span>${vo.pdDel}</span>
+	</div>
 </div>
-<div id="pdDetail2">
+<div class="pdDetail">
 	<label>상품주의 사항</label>
 	<c:if test="${empty vo.pdWarning}">
 	<p>입력사항 없습니다.</p>
@@ -58,7 +56,7 @@
 	<p>${vo.pdWarning}</p>
 	</c:if>
 </div>
-<div id="pdDetail3">
+<div class="pdDetail">
 	<label>상품설명</label>
 	<c:if test="${empty vo.pdExplanation}">
 	<p>입력사항 없습니다.</p>

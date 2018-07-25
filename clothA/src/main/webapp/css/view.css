@@ -1,17 +1,17 @@
 /* iframe 내 뷰페이지 기본 설정  */
+body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
 
- body{
-    margin: 0;
-    width: 100%;
- 	height: 100%;
- }
- .viewBody{
- 	padding : 10px;
-    background: transparent;
-    min-height: inherit; 
- }
- 
- .box1 {
+.viewBody {
+	padding: 10px;
+	background: transparent;
+	min-height: inherit;
+}
+
+.box1 {
 	padding: 5px;
 	background: white;
 	border-width: 3px 1px 1px;
@@ -38,4 +38,45 @@
 	border-image: initial;
 	border-top: 3px solid 1f84bf;
 	margin-bottom: 20px;
+}
+
+.center {
+	width: 20px;
+	text-align: center;
+}
+
+.pdImage {
+	width: 240px;
+	height: 220px;
+	float: left;
+}
+
+.pdDetail {
+	margin-bottom: 5px;
+	margin-left: 254px;
+	margin-top: 5px;
+}
+
+
+#pdEdit2 {
+	clear: both;
+	border: 1px solid;
+	width: 265px;
+	height: 200px;
+	margin: 0;
+	float: left;
+}
+
+#pdEdit3 {
+	float: left;
+	width: 280px;
+	border: 1px solid;
+	height: 200px;
+}
+
+#editSubmit {
+	clear: both;
+	float: left;
+	margin-left: 480px;
+	margin-top: 15px;
 }
