@@ -90,7 +90,11 @@ public class StoreLoginController {
 			logger.info("비밀번호 불일치 countUp 결과 ={} ",cnt);
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
 			logger.info("비밀번호 카운트 count={}",employeeVo.getEmpCount());
-			msg="비밀번호가 일치하지 않습니다."+employeeVo.getEmpCount()+" 번 틀리셨습니다. 5번 틀리면 로그인이 제한됩니다.";
+			if(employeeVo.getEmpCount()<5) {
+				msg="비밀번호가 일치하지 않습니다."+employeeVo.getEmpCount()+" 번 틀리셨습니다. 5번 틀리면 로그인이 제한됩니다.";
+			}else {
+				msg="비밀번호 5회이상 틀리셨습니다. 점장님께 문의하시기 바랍니다.";
+			}
 		}else if(result == employeeService.ID_NONE) {
 			msg="해당 사원코드가 존재하지 않습니다.";
 		}else {

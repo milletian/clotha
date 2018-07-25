@@ -97,6 +97,33 @@ public class NoticeController {
 		return "common/message";
 	}
 	
+	@RequestMapping(value="/noticeEdit.do", method=RequestMethod.GET)
+	public String noticeEdit_get(@RequestParam int noticeNo, Model model) {
+		logger.info("공지사항 수정화면 , 파라미터 noticeNo={}",noticeNo);
+		
+		NoticeVO vo = noticeService.selectNotice(noticeNo);
+		model.addAttribute("vo",vo);
+		return "/notice/noticeEdit";
+	}
+	
+	@RequestMapping(value="/noticeEdit.do", method=RequestMethod.POST )
+	public String noticeEdit_post(@ModelAttribute NoticeVO vo, Model model ) {
+		logger.info("공지사항 수정 처리화면, vo = {} " ,vo);
+		
+		int cnt = noticeService.noticeEdit(vo);
+		String msg="",url="/notice/noticeDetail.do?noticeNo="+vo.getNoticeNo();
+		if( cnt == 1 ) {
+			msg="수정처리 완료";
+		}else {
+			msg="수정처리 실패";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
 }
 
 

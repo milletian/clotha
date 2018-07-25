@@ -10,11 +10,15 @@
 			location.href="<c:url value='/notice/notice.do'/> ";
 		});
 		
+		$(".editNotice").click(function(){
+			location.href="<c:url value='/notice/noticeEdit.do?noticeNo=${vo.noticeNo}'/> ";
+		});
+		
 		$('.deleteNotice').click(function(){
 			var result = confirm('정말 삭제하시겠습니다?');
 			
 			if(result){
-				location.href="<c:url value='/notice/noticeDelete.do?noticeNo=${vo.noticeNo}'/> ";
+				location.href="<c:url value='/notice/noticeDelete.do?noticeNo=${vo.noticeNo}'/> "; 
 			}else{
 				return false;
 			}
@@ -55,6 +59,7 @@
 		<h3>내용</h3><br>
 		<div>${vo.noticeContent }</div><br>
 		<input type="button" class="backlist" value="목록" >
+		<input type="button" class="editNotice" value="수정" >
 		<input type="button" class="deleteNotice" value="삭제" >
 	</div>
 </div>

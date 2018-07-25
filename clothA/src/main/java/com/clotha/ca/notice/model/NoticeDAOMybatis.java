@@ -38,5 +38,10 @@ public class NoticeDAOMybatis implements NoticeDAO {
 	public int deleteNotice(int noticeNo) {
 		return sqlSession.delete(namespace+"deleteNotice",noticeNo);
 	}
+
+	@Override
+	public int noticeEdit(NoticeVO noticeVo) {
+		return sqlSession.update(namespace+"noticeEdit",noticeVo);
+	}
 	
 }

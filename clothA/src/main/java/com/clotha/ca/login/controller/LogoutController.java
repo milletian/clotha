@@ -1,6 +1,5 @@
 package com.clotha.ca.login.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,15 +21,15 @@ public class LogoutController {
 	public String logout_get(HttpServletRequest request, HttpServletResponse response) {
 		//로그아웃 페이지
 		String empNo = (String) request.getSession().getAttribute("empNo");
-		String logPk = (String) request.getSession().getAttribute("logPk");
+		int logPk = (int) request.getSession().getAttribute("logPk");
 		logger.info("로그아웃 페이지, 파라미터 empNo={}, logPk={}",empNo,logPk);
 		
 		if(empNo!=null && !empNo.isEmpty()) {
-			int cnt = logService.logoutUpdate(Integer.parseInt(logPk));
+			int cnt = logService.logoutUpdate(logPk);
 			logger.info("로그아웃 날짜 찍기결과 cnt={}",cnt);
 			
 			request.getSession().removeAttribute(empNo);
-			request.getSession().removeAttribute(logPk);
+			request.getSession().removeAttribute("logPk");
 			request.getSession().removeAttribute("gradeCode");
 			request.getSession().removeAttribute("empName");
 		}else {

@@ -7,4 +7,5 @@ public interface NoticeService {
 	public List<NoticeVO> selectNoticeAll(NoticeVO noticeVO);	//NoticeController
 	public NoticeVO selectNotice(int noticeNo);	//NoticeController
 	public int deleteNotice(int noticeNo);	//NoticeController
+	public int noticeEdit(NoticeVO noticeVo);	//NoticeController
 }
