@@ -1,6 +1,7 @@
 package com.clotha.ca.employee.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +56,15 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	}
 
 	@Override
-	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo) {
+	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo) {
 		return sqlSession.selectList(namespace+"selectEmp", employeeVo);
 	}
 
+
 	@Override
-	public List<EmployeeVO> selectStore() {
-		return sqlSession.selectList(namespace+"selectStore");
+	public Map<String, Object> selectByEmpNo(String empNo) {
+		return sqlSession.selectOne(namespace+"selectByEmpNo", empNo);
+		
 	}
 
 }

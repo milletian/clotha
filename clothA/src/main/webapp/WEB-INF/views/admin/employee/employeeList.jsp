@@ -24,7 +24,7 @@ $(function() {
 	/* 매장코드로 검색 */
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/employee/ajaxEmployeeStore.do' />",
+    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -53,28 +53,28 @@ $(function() {
 	$('#btnSearch').click(function() { 
 		$.ajax({
 	    	type:"POST",
-	    	url : "<c:url value='/admin/emlployee/ajaxEmployeeList.do' />",
+	    	url : "<c:url value='/admin/employee/ajaxEmployeeList.do' />",
 	    	data:$("#employeeList").serialize(),
 	    	dataType:'json',
 	    	success:function(res){
-	    		alert(res.length);
+	    		
 	    		if (res.length > 0) {
 	    			$("table tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
 	 					"<tr><td>"+item.STORE_CODE+"</td>"
-	 					/* +"<td>"+item.STORE_NAME+"</td>" */
+	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
-	 					+"<td>"+item.DEPT_NO+"</td>"
+	 					+"<td>"+item.DEPT_NAME+"</td>"
 	 					+"<td>"+"<a href='<c:url value='/admin/employee/employeeDetail.do?empNo="+item.EMP_NO+"'/>'"+">"+item.EMP_NAME+"</a>"+"</td>"
 	 					+"<td>"+item.EMP_ZIPCODE+item.EMP_ADDRESS+"</td>"
 	 					+"<td>"+item.EMP_JUMIN+"</td>"
 	 					+"<td>"+item.EMP_TEL+"</td>"
 	 					+"<td>"+item.EMP_EMAIL+"</td>"
 	 					+"<td>"+item.EMP_JOB+"</td>"
-	 					+"<td>"+item.EMP_EMP_JOINDATE+"</td>"
-	 					+"<td>"+item.EMP_EMP_OUTDATE+"</td>"
-	 			 		+"<td>"+item.GRADE_CODE+"</td></tr>";
+	 					+"<td>"+item.EMP_JOINDATE+"</td>"
+	 					+"<td>"+item.EMP_OUTDATE+"</td>"
+	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
 	 					 $("table tbody").append(empList);
 	 					});
 	 				}else{
@@ -112,8 +112,8 @@ function popupOpen(acc_Code){
 			<label for="searchStore">매장</label>
 			<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="검색할 매장을 선택하세요" id="searchStore" class="ajax"></select>
 			
-			<label for="searchEmpName">이름</label>
-			<input type="text" name="searchEmpName" id="searchEmpName">
+			<label for="empName">이름</label>
+			<input type="text" name="empName" id="empName">
 			
 			<label for="searchDeptNo">고용형태</label>
 			<select name="deptNo">
@@ -145,6 +145,7 @@ function popupOpen(acc_Code){
 					<col style="width:5%;" />
 					<col style="width:5%;" />
 					<col style="width:5%;" />
+					<col style="width:5%;" />
 					<col style="width:15%;" />		
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		
@@ -157,7 +158,7 @@ function popupOpen(acc_Code){
 				<thead>
 					<tr>
 						<th scope="col">매장코드</th>
-						<!-- <th scope="col">매장이름</th> -->
+						<th scope="col">매장이름</th>
 						<th scope="col">직원코드</th>
 						<th scope="col">고용형태</th>
 						<th scope="col">이름</th>

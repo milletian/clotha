@@ -1,6 +1,7 @@
 package com.clotha.ca.employee.model;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
 	
@@ -17,6 +18,6 @@ public interface EmployeeService {
 	
 	public int insertEmployee(EmployeeVO employeeVo);
 	public List<EmployeeVO> selectAll();
-	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo);
-	public List<EmployeeVO> selectStore();
+	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo);
+	public Map<String, Object> selectByEmpNo(String empNo);
 }

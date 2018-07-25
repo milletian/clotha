@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,19 +35,24 @@ public class EmployeeController {
 	private FileUploadUtil fileUploadUtil;
 	
 	
+	/*인사등록 뷰페이지*/
 	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.GET)
 	public void employeeWrite() {
 		logger.info("직원등록 페이지 보여주기");
 		
 	}
 	
+	/*인사등록*/
 	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.POST)
 	public String employeeWrite(@ModelAttribute EmployeeVO employeeVo, 
 			@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
-			@RequestParam String empJumin1, @RequestParam String empJumin2,
+			@RequestParam String empJumin1, @RequestParam String empJumin2, @RequestParam(required=false) String addressDetail, 
 			HttpServletRequest request,Model model ) {
 		//주민번호 셋팅
 		employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
+		
+		//주소 셋팅
+		employeeVo.setEmpAddress(employeeVo.getEmpAddress()+"~"+addressDetail);
 		
 		//이메일 주소 셋팅
 		if(selectEmail.equals("self")) {
@@ -100,25 +106,29 @@ public class EmployeeController {
 			logger.info("직원리스트 화면보여주기");
 		}
 		
-		//매장코드명 ajax
-		@RequestMapping("/ajaxEmployeeStore.do")
+		/* 조회 list ajax*/
+		@RequestMapping("/ajaxEmployeeList.do")
 		@ResponseBody
-		public List<EmployeeVO> employeeStoreCode() {
-			logger.info("매장 이름 ajax");
-			//db처리
-			List<EmployeeVO> list =	employeeService.selectStore();
+		public List<Map<String, Object>> employeeList_post(@ModelAttribute EmployeeVO employeeVo) {
+			logger.info("검색조건 employeeVo ={}", employeeVo);
 			
-			logger.info("list={}", list.size());
+			List<Map<String, Object>> list = employeeService.selectEmp(employeeVo);
+			
+			logger.info("list.size={}", list.size());
+			logger.info("list={}", list);
 			return list;
 		}
 		
-		@RequestMapping("/ajaxEmployeeList.do")
-		public List<EmployeeVO> employeeList_post(@ModelAttribute EmployeeVO employeeVo) {
-			logger.info("검색조건 employeeVo ={}", employeeVo);
-			
-			List<EmployeeVO> list = employeeService.selectEmp(employeeVo);
-			
-			return list;
+		@RequestMapping("/employeeDetail.do")
+		public String employeeDetail(@RequestParam(required=false) String empNo, Model model) {
+			 logger.info("인사정보 상세페이지 empNo={}", empNo);
+			 
+			 Map<String, Object> map = employeeService.selectByEmpNo(empNo);
+			 logger.info("수정화면 map={}",map);
+			 
+			 model.addAttribute("map",map);
+			 
+			 return "admin/employee/employeeDetail";
 		}
 		
 }

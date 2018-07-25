@@ -1,6 +1,7 @@
 package com.clotha.ca.employee.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,13 +58,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<EmployeeVO> selectEmp(EmployeeVO employeeVo) {
+	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo) {
 		return employeeDao.selectEmp(employeeVo);
 	}
 
+
 	@Override
-	public List<EmployeeVO> selectStore() {
-		return employeeDao.selectStore();
+	public Map<String, Object> selectByEmpNo(String empNo) {
+		return employeeDao.selectByEmpNo(empNo);
 	}
+
+	
 	
 }

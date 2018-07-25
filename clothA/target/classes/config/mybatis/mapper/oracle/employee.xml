@@ -40,15 +40,14 @@
 		store_code desc
 	</select>
 	
-	<select id="selectStore"  resultType="EmployeeVO">
-		select DISTINCT store_code
-		from employee
-	</select>
-	
-	<select id="selectEmp" parameterType="EmployeeVO"	resultType="EmployeeVO">
-		select STORE_CODE, EMP_NO, DEPT_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
-        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, GRADE_CODE
-		from EMPLOYEE
+	<select id="selectEmp" parameterType="EmployeeVO"	resultType="map">
+		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
+        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, 
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME  
+		from EMPLOYEE e join DEPT d
+		on e.DEPT_NO = d.DEPT_NO
+		join GRADE g
+		ON e.GRADE_CODE = g.GRADE_CODE
 		
 		<where>
 			<if test="storeCode!=null and storeCode!=''">
@@ -57,16 +56,25 @@
 			<if test="empName!=null and empName!=''">
 				and emp_name like '%' || #{empName} || '%'
 			</if>
-			<if test="deptNo!=null and deptno!=''">
-				and dept_No=#{deptNo}
+			<if test="deptNo!=null and deptNo!=''">
+				and e.dept_No=#{deptNo}
 			</if>
 			<if test="gradeCode!=null and gradeCode!=''">
-				and grade_code=#{gradeCode}
+				and e.grade_code=#{gradeCode}
 			</if>
 		</where>
-		order by grade_code desc
+		order by e.grade_code asc
 	</select>
-	
+	<select id="selectByEmpNo" parameterType="String" resultType="map">
+		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
+        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, 
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME  
+		from EMPLOYEE e join DEPT d
+		on e.DEPT_NO = d.DEPT_NO
+		join GRADE g
+		ON e.GRADE_CODE = g.GRADE_CODE
+		where e.EMP_NO=#{empNo}
+	</select>
 	
 </mapper>
 
