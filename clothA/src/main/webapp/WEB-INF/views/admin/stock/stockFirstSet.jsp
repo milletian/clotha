@@ -9,26 +9,28 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type = "text/javascript"  src = "<c:url value='/js/jquery-latest.js' />" > </script>  
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
+
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
+
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
+<script src="<c:url value='/js/jquery.form.min.js' /> "></script>
+
 
 <script type="text/javascript">
 $(function() {
 	var whorst = 'store';
 	var storeOrwh;
-	
-	$('input[name=whorst]').change(function() {
-		whorst = $(this).val();
+	$.changeOption = function(whorst) {
 		var url;
 		if(whorst=='store'){
 			url = "<c:url value='/admin/store/ajaxStoreList.do' />";
 		}else{
 			url = "<c:url value='/admin/warehouse/ajaxWarehouseList.do' />";
 		}
+		
 		$.ajax({
 	    	url : url,
 	    	dataType:'json',
@@ -53,6 +55,11 @@ $(function() {
 				alert("sdsds");
 			}
 		})
+	}
+	$('input[name=whorst]').change(function() {
+		whorst = $(this).val();
+		$.changeOption(whorst);
+		storeOrwh = $("#selSearchSupplier").val();
 	})
 	
 	var liveTableData = $("table").tableExport({
@@ -104,34 +111,22 @@ $(function() {
    		}); 
 	})
 	
-	$("#newRecord").click(function() {
+	$("#newRecord").one('click',function() {
 		var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
-			dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ></td>";
+			dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='...' /></td>";
 			dsd+= "<td><input type='text' readonly='readonly' ></td>";
 			dsd+= "<td><input type='number' name='stockQty' ></td>";
 			dsd+= "<input type='hidden' name='stockPk' ></tr>";
 		$("table tbody").append(dsd);
-		renameForModelAttribute();
 		$('#selSearchSupplier').attr('disabled','disabled');
 		$('input[name=whorst]').attr('disabled','disabled');
 	})
 	
 	$('#addbtn').click(function() {
-		//renameForModelAttribute();
-		console.log($("#frmStockFirstSetting").serialize());
-		var sta = $('input[name=stockList[0].staCode]').val();
-		var stockQty1 = $('input[name=stockList[0].stockQty]').val();
-		alert($("#frmStockFirstSetting").serialize());
-		//var sss =$("#frmStockFirstSetting").serialize();
-		var sss =$("#frmStockFirstSetting").serializeArray();
 		$.ajax({
         	type:"POST",
         	url : "<c:url value='/admin/stock/ajaxStockWrite.do' />",
         	data:$("#frmStockFirstSetting").serialize(),
-        	//data:sss,
-        	/* data:{"stockList[0].staCode" :sta,
-        		"stockList[0].stockQty" : stockQty1}, */
-        	//dataType:'json',
         	success:function(res){
         		 alert(res);
         	 },
@@ -142,12 +137,13 @@ $(function() {
         
    		}); 
 	})
-	
-	
-	
+	$.changeOption(whorst);
+	/* $('#pdCodeSearch')on('click',function(){
+		
+	}) */
 })
 function renameForModelAttribute() {
-    $("#frmStockFirstSetting").each( function (index) {
+    $("#frmStockFirstSetting table tbody tr").each( function (index) {
         $(this).find("input[name=staCode]").attr("name", "stockList[" + index + "].staCode");
         //alert($(this).find("input[name=staCode]").attr("name"));
         $(this).find("input[name=pdCode]").attr("name", "stockList[" + index + "].pdCode");
@@ -164,7 +160,44 @@ function popupOpen(acc_Code){
 
 		window.open(popUrl,"정보입력",popOption);
 
+}
+
+function checkFileType(filePath){
+	var fileFormat = filePath.split(".");
+	if(fileFormat.indexOf("xls") > -1){
+		return true;
+	}else if(fileFormat.indexOf("xlsx") > -1){
+		return true;
+	}else{
+		return false;
 	}
+}
+
+function check(){
+	var file = $("#excel").val();
+	if(file == "" || file == null){
+		alert("파일을 선택");
+		return false;
+	}else if(!checkFileType(file)){
+		alert("엑셀 파일만 업로드");
+		return false;
+	}
+	var fileFormat = file.split(".");
+	var fileType = fileFormat[1];
+	if(confirm("업로드 하시겠습니까?")){
+		$("#excelUpForm").attr("action","<c:url value='/admin/stock/ajaxStockExcelUpload.do' />");
+		var options = {
+			success:function(data){
+				alert("업로드 완료");
+				$("#ajax-content").html(data);
+			},
+			type: "POST",
+			data : {"excelType" : fileType}
+		};
+		$("#excelUpForm").ajaxSubmit(options);
+	}
+}
+
 
 </script>
 <style type="text/css">
@@ -191,6 +224,10 @@ function popupOpen(acc_Code){
 			</div>
 		
 	</div>
+</form>
+<form id="excelUpForm" method="post" action="" role="form" enctype="multipart/form-data">
+	<input id="excel" name="excel" class="file" type="file" multiple data-show-upload="false" data-show-caption="true">
+	<button type="button" id="excelUp" onclick="check()">등록</button>
 </form>
 	<div id="maincontent">    
 

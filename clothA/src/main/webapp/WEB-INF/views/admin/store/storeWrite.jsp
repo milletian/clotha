@@ -151,8 +151,8 @@ function CorporationNumber(str) {
 <form name="frmStoreWrite" action="<c:url value='/admin/store/storeWrite.do' />" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="storeCode"  value="${storeVo.storeCode }">  
 	<label for="empNo">점장 </label><input type="text" id="empNo" name="empNo" value="${storeVo.empNo}">
-	<label for="storeName">점포이름 </label><input type="text" id="storeName" name="storeName" value="${storeVo.storeName}">
 	<input type="button" id="searchEmpNo" value="사원조회">
+	<label for="storeName">점포이름 </label><input type="text" id="storeName" name="storeName" value="${storeVo.storeName}">
 	<c:if test="${empty param.storeCode || param.storeCode=='undefined'}">
 		<label for="areaCode">지역 </label>
 		<select id="areaCode" name="areaCode">

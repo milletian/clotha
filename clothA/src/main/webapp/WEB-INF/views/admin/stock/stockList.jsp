@@ -9,7 +9,7 @@
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>s
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
@@ -121,27 +121,25 @@ $(function() {
 	$('#btn').click(function() { 
     	$.ajax({
         	type:"POST",
-        	url : "<c:url value='/admin/account/accountList.do' />",
-        	data:$("#frmAccountList").serialize(),
+        	url : "<c:url value='/admin/stock/ajaxSearchStockList.do' />",
+        	data:$("#frmStockList").serialize(),
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
         			$("table tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr ondblclick=popupOpen('"+item.accCode+"')><td>"+item.accCode+"</td>"
-     					+"<td>"+item.accName+"</td>"
-     					+"<td>"+item.accAddress+"</td>"
-     					+"<td>"+item.accTel+"</td>"
-     					+"<td>"+item.accCeo+"</td>"
-     					+"<td>"+item.accNo+"</td>"
+     					var dsd ="<tr><td>"+item.PD_CODE+"</td>"
+     					+"<td>"+item.PD_NAME+"</td>"
+     					+"<td>"+item.STOCK_QTY+"</td>"
+     					+"<td>"+item.PD_ORIGINALPRICE+"</td>"
+     					+"<td>"+item.PD_SELLPRICE+"</td>"
      					+"<td>"
-     					if(item.accIsdeal=='Y'){
+     					if(item.PD_DEL!=null&&item.PD_DEL!=''){
      						dsd+="사용";
      					}else{
      						dsd+="미사용";
      					}
      					+"</td>";
-     					dsd+="<td>"+item.accUnique+"</td></tr>";
      					 $("table tbody").append(dsd);
      					liveTableData.reset();
      					});
@@ -156,11 +154,6 @@ $(function() {
 			}
         
    		}); 
-	})
-	$("table").tableExport();
-	$('table tbody tr').on('click',function(){
-		$(this).css('backgroundColor','skyblue');
-		accCode=$(this).find('td:first').text();
 	})
 	
 	$.changeOption(whorst);
@@ -219,14 +212,12 @@ function popupOpen(acc_Code){
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 
 		        <tr> 
-		            <th>매입처코드</th> 
-		            <th>회사명</th> 
-		            <th>주소</th> 
-		            <th>전화번호</th> 
-		            <th>대표자 성명</th> 
-		            <th>법인 등록번호</th> 
+		            <th>상품코드</th> 
+		            <th>상품명</th> 
+		            <th>재고 수량</th> 
+		            <th>구매가</th> 
+		            <th>판매가</th>
 		            <th>사용 여부</th> 
-		            <th>특이사항</th> 
 		        </tr> 
 		    </thead> 
 		    <tbody> 

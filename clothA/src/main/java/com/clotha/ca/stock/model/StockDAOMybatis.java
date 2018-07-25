@@ -28,5 +28,10 @@ public class StockDAOMybatis implements StockDAO{
 	public int updateStock(StockVO stockVO) {
 		return sqlSession.update(namesapce+"updateStock", stockVO);
 	}
+
+	@Override
+	public List<Map<String, Object>> stockSearchList(Map<String, String> map) {
+		return sqlSession.selectList(namesapce+"selectSerachStock", map);
+	}
 	
 }

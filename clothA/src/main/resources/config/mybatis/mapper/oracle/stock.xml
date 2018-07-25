@@ -6,6 +6,27 @@
 		select s.*,pd.PD_NAME from STOCK s join products pd 
 		on s.PD_CODE = pd.PD_CODE
 	</select>
+	<select id="selectSerachStock" parameterType="map" resultType="map">
+		select pd.pd_code,pd_name,pd_originalprice,pd_sellprice,pd_del,acc_code,stock_qty,sta_code from stock s join products pd 
+		on s.pd_code=pd.pd_code
+		<where>			
+			<if test="pdCode!=null and pdCode!=''">
+				pd.pd_code=#{pdCode}		
+			</if>
+			<if test="accCode!=null and accCode!=''">
+				and acc_code =#{accCode}
+			</if>
+			<if test="staCode!=null and staCode!=''">
+				and sta_code =#{staCode}
+			</if>
+			<if test="pdDel!='전체' and pdDel!=null and pdDel!='N'">
+				and pd_del is null			
+			</if>
+			<if test="pdDel!='전체' and pdDel!=null and pdDel!='Y'">
+				and pd_del is not null			
+			</if>
+		</where>
+	</select>
 	
 	<insert id="insertStock" parameterType="StockVO">
 		insert into stock(stock_pk,sta_code,pd_code,stock_qty)
