@@ -20,4 +20,5 @@ public interface EmployeeService {
 	public List<EmployeeVO> selectAll();
 	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo);
 	public Map<String, Object> selectByEmpNo(String empNo);
+	public int updateEmp(EmployeeVO employeeVo);
 }

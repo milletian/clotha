@@ -67,7 +67,7 @@
 	</select>
 	<select id="selectByEmpNo" parameterType="String" resultType="map">
 		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
-        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, 
+        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, EMP_FACE,
         e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME  
 		from EMPLOYEE e join DEPT d
 		on e.DEPT_NO = d.DEPT_NO
@@ -76,6 +76,12 @@
 		where e.EMP_NO=#{empNo}
 	</select>
 	
+	<update id="updateEmp" parameterType="EmployeeVO">
+	update employee
+	set DEPT_NO=#{deptNo},EMP_NAME=#{empName},EMP_PWD=#{empPwd},EMP_ZIPCODE=#{empZipcode},EMP_ADDRESS=#{empAddress},
+		EMP_JUMIN=#{empJumin},EMP_TEL=#{empTel},EMP_FACE=#{empFace},EMP_JOB=#{empJob},GRADE_CODE=#{gradeCode}, EMP_EMAIL=#{empEmail}
+		where EMP_NO=#{empNo}
+	</update>
 </mapper>
 
 

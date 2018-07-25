@@ -68,6 +68,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.selectByEmpNo(empNo);
 	}
 
+	@Override
+	public int updateEmp(EmployeeVO employeeVo) {
+		return employeeDao.updateEmp(employeeVo);
+	}
+
 	
 	
 }

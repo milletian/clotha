@@ -147,7 +147,7 @@ function popupOpen(acc_Code){
 					<col style="width:5%;" />
 					<col style="width:5%;" />
 					<col style="width:15%;" />		
-					<col style="width:5%;" />		
+					<col style="width:8%;" />		
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		

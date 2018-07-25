@@ -35,7 +35,7 @@
 		
 		
 		/* 빈칸 입력 막는 검사  */
-		$('form[name=employeeWrite]').submit(function(){
+		$('form[name=employeeEdit]').submit(function(){
 			
 			var bool = true;
 			
@@ -163,11 +163,25 @@
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeWrite" method="post" enctype="multipart/form-data"
-		action="<c:url value='/admin/employee/employeeUpdate.do'/>">
+	<form name="employeeEdit" method="post" enctype="multipart/form-data"
+		action="<c:url value='/admin/employee/employeeEdit.do'/>">
 
-		<div class="box3">
-			<div class="middle-box">
+		<div >
+			<div >
+				<div>
+					<input type="hidden" name="oldFileName" value="${map.EMP_FACE}">
+					<c:if test="${!empty map.EMP_FACE }">
+					<img alt="직원사진" src="<c:url value='/pd_images/${map.EMP_FACE}'/>" style="width: 150px;">
+					</c:if>
+					<c:if test="${empty map.EMP_FACE }">
+					<span>등록된 사진이 없습니다</span>
+					</c:if>
+				</div>
+				
+				<div>
+					<label for="empNo">사원코드</label>
+					<span>${map.EMP_NO }</span>
+				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
 						<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
@@ -176,11 +190,11 @@
 							<option value="20">계약직</option>
 							<option value="30">단기알바</option>
 						</select>
-					</div>
-					<div>
+				</div>
+				<div>
 						<label for="empName">이름</label> 
 						<input type="text" name="empName" id="empName" class="valid" value="${map.EMP_NAME }">
-					</div>
+				</div>
 				<div>
 					<label for="empPwd">비밀번호</label> 
 					<input type="password" name="empPwd" id="empPwd" class="valid">
@@ -225,8 +239,11 @@
 					</select> 
 				</div>
 				<div>
-					<label for="uploadFace">증명사진첨부(image)</label>
-					 <input type="file"	name="uploadFace" id="uploadFace">
+					<label for="changeFile">사진변경(image)</label><input type="file" name="changeFile">
+					<br>
+		            <c:if test="${!empty map.EMP_FACE}">
+		            	<span style="color:green;font-weight: bold">첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
+		            </c:if>
 				</div>
 				<div>
 					<label for="empJob">담당업무</label> 

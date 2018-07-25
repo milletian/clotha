@@ -1,10 +1,12 @@
 package com.clotha.ca.employee.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
-import com.clotha.ca.product.model.ProductsVO;
 
 @Controller
 @RequestMapping("/admin/employee")
@@ -62,7 +62,6 @@ public class EmployeeController {
 			employeeVo.setEmpEmail(email1+"@"+selectEmail);
 			
 		}
-				
 		
 		logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
 
@@ -129,6 +128,75 @@ public class EmployeeController {
 			 model.addAttribute("map",map);
 			 
 			 return "admin/employee/employeeDetail";
+		}
+		
+		@RequestMapping("/employeeEdit.do")
+		public String employeeEdit(@ModelAttribute EmployeeVO employeeVo, Model model,
+				HttpServletRequest request, @RequestParam String oldFileName,  HttpSession session,
+				@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
+				@RequestParam String empJumin1, @RequestParam String empJumin2, @RequestParam(required=false) String addressDetail) {
+			logger.info("인사정보 수정 employeeVo={}, 파일정보", employeeVo);
+			String empNo =(String) session.getAttribute("empNo");
+			
+			employeeVo.setEmpNo(empNo);;
+			
+			logger.info("사원번호={}",employeeVo.getEmpNo());
+			//주민번호 셋팅
+			employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
+			
+			//주소 셋팅
+			employeeVo.setEmpAddress(employeeVo.getEmpAddress()+"~"+addressDetail);
+			
+			//이메일 주소 셋팅
+			if(selectEmail.equals("self")) {
+				employeeVo.setEmpEmail(email1+"@"+email2);
+				
+			}else {
+				employeeVo.setEmpEmail(email1+"@"+selectEmail);
+				
+			}
+			
+			logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
+			
+			//파일 업로드처리
+			String fileName="";
+			try {
+				List<Map<String, Object>> list = fileUploadUtil.fileUpload(request,FileUploadUtil.PATH_FLAG_IMAGE);
+				
+				for(Map<String, Object> map : list) {
+				fileName =(String)map.get("fileName");
+				}
+			//파일정보 셋팅
+				employeeVo.setEmpFace(fileName);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			int cnt = employeeService.updateEmp(employeeVo);
+			String msg="", url="/admin/employee/employeeEdit";
+			if(cnt>0) {
+				msg="수정에 성공하셨습니다.";
+				url="/admin/employee/employeeDetail.do?empNo="+employeeVo.getEmpNo();
+			}else {
+				msg="수정에 실패하셨습니다!!";
+			}
+			
+			//기존에 있던 파일 삭제
+			if(fileName!=null && !fileName.isEmpty()) {
+				File oldFile
+				= new File(fileUploadUtil.getUploadPath(request, fileUploadUtil.PATH_FLAG_IMAGE),oldFileName);
+				if(oldFile.exists()) {
+					boolean bool = oldFile.delete();
+					logger.info("기존 파일 삭제여부:{}",bool);
+				}
+			}//기존 파일 삭제 if
+			
+			model.addAttribute("msg",msg);
+			model.addAttribute("url",url);
+			
+			return "common/message";
 		}
 		
 }

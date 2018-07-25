@@ -67,4 +67,9 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		
 	}
 
+	@Override
+	public int updateEmp(EmployeeVO employeeVo) {
+		return sqlSession.update(namespace+"updateEmp", employeeVo);
+	}
+
 }
