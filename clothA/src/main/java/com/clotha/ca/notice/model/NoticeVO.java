@@ -9,8 +9,6 @@ public class NoticeVO {
 	private int noticeRead;
 	private String empName;
 	
-	
-	
 	public String getEmpName() {
 		return empName;
 	}

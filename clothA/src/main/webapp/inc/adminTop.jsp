@@ -167,6 +167,11 @@ footer{
 		$("#logout").click(function(){
 			location.href="<c:url value='/logout.do'/>";
 		});
+		
+		$("#mail").click(function(){
+			window.open("<c:url value='/mail/mail.do'/>","쪽지","status=no,width=700,height=700,location=yes,resizable=yes,left=800,top=30");
+		});
+		
 	});
 </script>
 	
@@ -176,7 +181,7 @@ footer{
 <body>
 	<header style="text-align: right; position: absolute; width: 100%; background-color: #596d82; z-index: 9 " >
 		<div class="fim-dropdown">
-			<label><i class="fa fa-envelope-o fa-lg"></i></label>
+			<label><i class="fa fa-envelope-o fa-lg" id="mail" ></i></label>
 		</div>
 		<div class="fim-dropdown">
 			<label><i class="fa fa-bell-o"></i></label>
