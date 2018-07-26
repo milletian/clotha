@@ -82,10 +82,8 @@ public class ProductsController {
 	}
 	
 	@RequestMapping("/products/productsList.do")
-	public String productsList(@ModelAttribute ProductsVO productsVo, Model model) {
-		logger.info("상품목록 파라미터 productsVo={}",productsVo);
-		
-		return "/admin/products/productsList";
+	public void productsList() {
+		logger.info("상품목록 화면 이동");
 		
 	}
 	

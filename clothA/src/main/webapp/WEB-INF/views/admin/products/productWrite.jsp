@@ -147,7 +147,7 @@ $(function(){
 				<label>사용여부</label>
 				<select name="pdDel">
 					<option value="Y">사용</option>
-					<option value"N">미사용</option>
+					<option value="N">미사용</option>
 				</select>
 			</div>
 			<div>

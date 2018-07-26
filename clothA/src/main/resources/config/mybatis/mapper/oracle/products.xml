@@ -4,13 +4,13 @@
 <mapper namespace="config.mybatis.mapper.oracle.products">
 	<insert id="insertProducts" parameterType="ProductsVO">
 		insert into
-		products(PD_CODE,PD_NAME,PD_ORIGINALPRICE,PD_SELLPRICE,STYLE_CODE,COLOR_CODE,SEASON_CODE,SIZE_CODE,ACC_CODE,GENDER_CODE,PD_EXPLANATION,PD_IMAGE,PD_WARNING)
+		products(PD_CODE,PD_NAME,PD_ORIGINALPRICE,PD_SELLPRICE,STYLE_CODE,COLOR_CODE,SEASON_CODE,SIZE_CODE,ACC_CODE,GENDER_CODE,PD_EXPLANATION,PD_IMAGE,PD_WARNING,PD_DEL)
 		values(#{styleCode}||#{sizeCode}||#{genderCode}||#{colorCode}||products_seq.nextval||'-'||#{seasonCode},
-		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning})
+		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdImage},#{pdWarning},#{pdDel})
 	</insert>
 	<select id="selectProducts" parameterType="ProductsVO"
 		resultType="map">
-		select ACC_NAME,PD_DEL,PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE,
+		select ACC_NAME,ACC_CODE,PD_DEL,PD_CODE, PD_NAME, PD_ORIGINALPRICE, PD_SELLPRICE,
 		PD_REGDATE,STYLE_CODE from ACCPRODUCTSVIEW
 		<where>
 			<if test="startDay!=null and startDay!=''">

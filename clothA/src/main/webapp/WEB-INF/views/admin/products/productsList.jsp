@@ -95,10 +95,10 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var pdList ="<tr class='center'><td>"+"<input type='checkbox' name='chk'  value='"+item.PD_CODE+"'></td>"
+ 					var pdList ="<tr class='center'  ondblclick=detail('"+item.PD_CODE+"')><td>"+"<input type='checkbox' name='chk'  value='"+item.PD_CODE+"'></td>"
  					+"<td>"+item.ACC_NAME+"</td>"
  					+"<td>"+item.PD_CODE+"</td>" 
- 					+"<td>"+"<a href='<c:url value='/admin/products/productsDetail.do?pdCode="+item.PD_CODE+"'/>'"+">"+item.PD_NAME+"</a>"+"</td>"
+ 					+"<td>"+item.PD_NAME+"</td>"
  					+"<td>"
  					if(item.PD_DEL=='Y'){
  						pdList+="<img class='center' alt='"+item.PD_DEL+"' src='<c:url value='/images/inUsed.jpg'/>'>";	
@@ -151,19 +151,20 @@ $(function() {
 	
 	  $('form[name=frmDel]').submit(function(){
 		 var count=0;
-		 $('input[name=chk]').each(function(idx,item){
-			if($(this).is(':checked')){
-				count++;
-			} 
-		 });
-		 
+		 var deletemsg = confirm("삭제 하시겠습니까?");
+		 if(deletemsg){
+		 	$('input[name=chk]').each(function(idx,item){
+				if($(this).is(':checked')){
+					count++;
+				} 
+		 	});
+		 }else{
 		 if(count==0){
 			 alert('삭제할 상품을 선택하세요.');
 			  return false;
-		 }
+		 	}
+		 } 
 	  });
-	  
-	
 });// document
 function popupOpen(ACC_DT_CODE){
 
@@ -174,6 +175,12 @@ function popupOpen(ACC_DT_CODE){
 		window.open(popUrl,"정보입력",popOption);
 
 	}
+	
+function detail(PD_CODE){
+	window.location.href= "/ca/admin/products/productsDetail.do?pdCode="+PD_CODE;
+}
+	
+
 </script>
 <style type="text/css">
 
