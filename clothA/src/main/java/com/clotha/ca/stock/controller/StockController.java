@@ -62,8 +62,8 @@ public class StockController {
 	@ResponseBody
 	public String stockWrite(@ModelAttribute MultiStock stockList) {
 		logger.info("/ajaxStockWrite.do - {}",stockList.getStockList());
-		//int result =stockService.addStock(stockList.getStockList());
-		//logger.info("{}",result);
+		int result =stockService.addStock(stockList.getStockList());
+		logger.info("{}",result);
 		return "test";
 	}
 	
@@ -74,18 +74,13 @@ public class StockController {
 		List<StockVO> list = new ArrayList<>();
 		logger.info("ajaxStockExcelUpload : excelType={}",excelType);
 		if(excelType.equals("xlsx")) {
-			return list;
+			return stockService.xlsxExcelReader(req);
 		}else if(excelType.equals("xls")) {
-			return list;
+			return stockService.xlsExcelReader(req);
 		}
 		return list;
-
-
-
-
-
-
 	}
+	
 	
 	
 	

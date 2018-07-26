@@ -33,5 +33,15 @@ public class StockDAOMybatis implements StockDAO{
 	public List<Map<String, Object>> stockSearchList(Map<String, String> map) {
 		return sqlSession.selectList(namesapce+"selectSerachStock", map);
 	}
+
+	@Override
+	public int insertExcelStock(StockVO vo) {
+		return sqlSession.insert(namesapce+"insertExcelStock", vo);
+	}
+
+	@Override
+	public int selectBystaCodeandpdCode(StockVO vo) {
+		return sqlSession.selectOne(namesapce+"selectBystaCodeandpdCode", vo);
+	}
 	
 }

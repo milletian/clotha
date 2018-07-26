@@ -5,7 +5,13 @@
 	<select id="selectStock" parameterType="StockVO" resultType="map">
 		select s.*,pd.PD_NAME from STOCK s join products pd 
 		on s.PD_CODE = pd.PD_CODE
+		where s.sta_code = #{staCode}
 	</select>
+	
+	<select id="selectBystaCodeandpdCode" parameterType="StockVO" resultType="int">
+		select count(*) from stock where sta_code = #{staCode} and pd_code=#{pdCode}
+	</select>
+	
 	<select id="selectSerachStock" parameterType="map" resultType="map">
 		select pd.pd_code,pd_name,pd_originalprice,pd_sellprice,pd_del,acc_code,stock_qty,sta_code from stock s join products pd 
 		on s.pd_code=pd.pd_code
@@ -19,10 +25,10 @@
 			<if test="staCode!=null and staCode!=''">
 				and sta_code =#{staCode}
 			</if>
-			<if test="pdDel!='전체' and pdDel!=null and pdDel!='N'">
+			<if test='pdDel!="전체" and pdDel!=null and pdDel!="N"'>
 				and pd_del is null			
 			</if>
-			<if test="pdDel!='전체' and pdDel!=null and pdDel!='Y'">
+			<if test='pdDel!="전체" and pdDel!=null and pdDel!="Y"'>
 				and pd_del is not null			
 			</if>
 		</where>
@@ -34,9 +40,15 @@
 	</insert>
 	
 	<update id="updateStock" parameterType="StockVO">
-		update stock set stock_qty
-		where sta_code = #{staCode}
+		update stock set stock_qty = #{stockQty}
+		where sta_code = #{staCode} and pd_code = #{pdCode}
 	</update>
+	
+	<insert id="insertExcelStock" parameterType="StockVO">
+		INSERT INTO stock(stock_pk,sta_code,pd_code,stock_qty)
+		VALUES(stock_seq.nextval,#{staCode}, #{pdCode}, #{stockQty})
+	</insert>
+	
 </mapper>
 
 

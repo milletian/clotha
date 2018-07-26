@@ -10,4 +10,6 @@ public interface StockDAO {
 	
 	public int insertStock(StockVO stockVO);
 	public int updateStock(StockVO stockVO);
+	public int insertExcelStock(StockVO vo);
+	public int selectBystaCodeandpdCode(StockVO vo);
 }

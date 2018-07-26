@@ -20,9 +20,9 @@
 
 
 <script type="text/javascript">
+	var storeOrwh;
 $(function() {
 	var whorst = 'store';
-	var storeOrwh;
 	$.changeOption = function(whorst) {
 		var url;
 		if(whorst=='store'){
@@ -77,7 +77,6 @@ $(function() {
 	$("table").tablesorter(); 
 	
 	
-	
 	$('#selSearchSupplier').change(function() { 
 		storeOrwh = $(this).val();
     	$.ajax({
@@ -97,6 +96,7 @@ $(function() {
  
      					$("table tbody").append(dsd);
      					liveTableData.reset();
+     					renameForModelAttribute();
      				})	 
      			}else{
      				$("table tbody").html('');
@@ -112,17 +112,14 @@ $(function() {
 	})
 	
 	$("#newRecord").one('click',function() {
-		var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
-			dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='...' /></td>";
-			dsd+= "<td><input type='text' readonly='readonly' ></td>";
-			dsd+= "<td><input type='number' name='stockQty' ></td>";
-			dsd+= "<input type='hidden' name='stockPk' ></tr>";
-		$("table tbody").append(dsd);
+		//storeOrwh = $('#selSearchSupplier').val();
+		newRecord();
 		$('#selSearchSupplier').attr('disabled','disabled');
 		$('input[name=whorst]').attr('disabled','disabled');
 	})
 	
 	$('#addbtn').click(function() {
+		renameForModelAttribute();
 		$.ajax({
         	type:"POST",
         	url : "<c:url value='/admin/stock/ajaxStockWrite.do' />",
@@ -141,20 +138,32 @@ $(function() {
 	/* $('#pdCodeSearch')on('click',function(){
 		
 	}) */
+	
+	storeOrwh = $('#selSearchSupplier').val();
 })
+
 function renameForModelAttribute() {
     $("#frmStockFirstSetting table tbody tr").each( function (index) {
         $(this).find("input[name=staCode]").attr("name", "stockList[" + index + "].staCode");
-        //alert($(this).find("input[name=staCode]").attr("name"));
         $(this).find("input[name=pdCode]").attr("name", "stockList[" + index + "].pdCode");
         $(this).find("input[name=stockQty]").attr("name", "stockList[" + index + "].stockQty");
         $(this).find("input[name=stockPk]").attr("name", "stockList[" + index + "].stockPk");
     })
 }
 
-function popupOpen(acc_Code){
+function newRecord() {
+	var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
+	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='...' onclick=popupOpen() /></td>";
+	dsd+= "<td><input type='text' readonly='readonly' ></td>";
+	dsd+= "<td><input type='number' name='stockQty' ></td>";
+	dsd+= "<input type='hidden' name='stockPk' ></tr>";
+	$("table tbody").append(dsd);
+	renameForModelAttribute();
+}
 
-	var popUrl = "<c:url value='/admin/account/accountWrite.do?accCode="+acc_Code+" '/>";	//팝업창에 출력될 페이지 URL
+function popupOpen(){
+
+	var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 

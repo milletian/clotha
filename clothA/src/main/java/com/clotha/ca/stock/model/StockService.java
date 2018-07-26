@@ -11,5 +11,6 @@ public interface StockService {
 	public int addStock(List<StockVO> list);
 	
 	public List<StockVO> xlsExcelReader(MultipartHttpServletRequest req);
+	public List<StockVO> xlsxExcelReader(MultipartHttpServletRequest req);
 
 }

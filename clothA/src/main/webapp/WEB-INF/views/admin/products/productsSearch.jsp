@@ -70,7 +70,7 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var pdList ="<tr onclick='popupText("+item.PD_CODE+")' class='center'><td>"+item.ACC_NAME+"</td>"
+ 					var pdList ="<tr ondblclick=popupText('"+item.PD_CODE+"','"+item.PD_NAME+"','"+item.PD_ORIGINALPRICE+"','"+item.PD_SELLPRICE+"','"+item.ACC_CODE+"') class='center'><td>"+item.ACC_NAME+"</td>"
  					+"<td id='pdCode'>"+item.PD_CODE+"</td>" 
  					+"<td>"+item.PD_NAME+"</td>"
  					+"<td>"
@@ -83,7 +83,7 @@ $(function() {
  					pdList+="<td>"+item.PD_ORIGINALPRICE+"</td>";
  					pdList+="<td>"+item.PD_SELLPRICE+"</td>";
  					pdList+="<td>"+item.PD_REGDATE+"</td></tr>";
- 					 $("table tbody").append(pdList);
+ 					$("table tbody").append(pdList);
  					});
  				}else{
  					$("table tbody").html('해당 상품이 없습니다.');
@@ -103,11 +103,44 @@ $(function() {
 
 });// document
 
-function popupText(pdCode){
-
-	opener.document.getElementById("").value= document.getElementById("pdCode").value
-	self.close();
+function popupText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode){
+	var bool = true;
+	var openUrl =window.opener.document.URL;
+	openUrl=openUrl.substring(openUrl.lastIndexOf('/')+1,openUrl.length);
+	if(openUrl.indexOf("stockFirstSet.do")!=-1){
+		$(opener.document).find('table tr td:eq(1) input[type=text]').each(function() {
+			if($(this).val()==pdCode){
+				alert('이미 선택된 상품입니다.');
+				bool=false;
+				return false;
+			}			
+		})
+		if(bool){
+			$(opener.document).find('table tr:last td:eq(1) input[type=text]').val(pdCode);
+			$(opener.document).find('table tr:last td:eq(2) input[type=text]').val(pdName);
+			$(opener.document).find('#pdCodeSearch').remove();
+			$(opener.location).attr("href", "javascript:newRecord();");
+			self.close();
+		}
+	}else if (openUrl.indexOf("stockList.do")!=-1){
+		$(opener.document).find('#pdCode').val(pdCode);
+		self.close();
+	}else if (openUrl.indexOf("accountDetailWrite.do")!=-1){
+		$(opener.document).find('#pdCode').val(pdCode);
+		$(opener.document).find('#pdCode').attr('readonly','readonly');
+		$(opener.document).find('#pdName').val(pdName);
+		$(opener.document).find('#pdName').attr('readonly','readonly');
+		$(opener.document).find('#accCode').val(accCode);
+		$(opener.document).find('#accCode').attr('readonly','readonly');
+		$(opener.document).find('#pdOriginalprice').val(pdOriginalprice);
+		$(opener.document).find('#pdOriginalprice').attr('readonly','readonly');
+		$(opener.document).find('#pdSellprice').val(pdSellprice);
+		$(opener.document).find('#pdSellprice').attr('readonly','readonly');
+		self.close();
 	}
+		
+	
+}
 </script>
 <style type="text/css">
 

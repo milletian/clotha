@@ -69,10 +69,13 @@ $(function() {
 	      }
 	});
 	
+	$('#pdCbtn').click(function() {
+		popupOpen();
+	})
 })
-function popupOpen(PD_CODE){
+function popupOpen(){
 
-	var popUrl = "<c:url value='/admin/account/accountDetailWrite.do?pdCode="+PD_CODE+" '/>";	//팝업창에 출력될 페이지 URL
+	var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
@@ -95,12 +98,12 @@ function popupOpen(PD_CODE){
 		<label for="searchRegDate">주문일자</label><input type="text" class="searchDate" id="searchRegDate" name="accDtRegdate" readonly="readonly">
 		<label for="searchInDate">입고예정일</label><input type="text" class="searchDate" id="searchInDate" name="accDtIndate"><br>
 		<label for="whCode">입고될 창고</label><input type="text" id="whCode" name="whCode">
-		<button id="whcbtn">검색</button>
+		<input type="button" id="whcbtn" value="창고 검색">
 		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode">
-		<button id="pdCbtn">검색</button>
+		<input type="button" id="pdCbtn" value="상품 검색">
 		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName"><Br>
 		<input type="hidden" id="accCode" name="accCode" value="acc9">
-		<label for="accName">매입처</label><input type="text" id="accName" name="accName">
+		<label for="accCode">매입처 코드</label><input type="text" id="accCode" name="accCode">
 		<label for="accDtQty">주문수량</label><input type="text" id="accDtQty" name="accDtQty"><br>
 		<label for="pdOriginalprice">개당 원가</label><input type="text" id="pdOriginalprice" name="pdOriginalprice">
 		<label for="pdSellprice">개당 판매가</label><input type="text" id="pdSellprice" name="pdSellprice">
