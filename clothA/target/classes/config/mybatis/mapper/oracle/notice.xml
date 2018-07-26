@@ -4,8 +4,9 @@
 <mapper namespace="config.mybatis.mapper.oracle.notice">
 
 	<select id="selectNoticeAll" resultType="noticeVo">
-		select * from notice
-		order by notice_no desc
+		select n.* ,e.EMP_NAME from
+		employee e join notice n on e.EMP_NO = n.EMP_NO
+		order by n.notice_no
 	</select>
 	
 	<insert id="noticeInsert" parameterType="noticeVo">

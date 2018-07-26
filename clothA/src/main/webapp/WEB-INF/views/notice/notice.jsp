@@ -62,7 +62,7 @@
 					<tr>
 						<td>${vo.noticeNo }</td>
 						<td><a href="<c:url value='/notice/noticeDetail.do?noticeNo=${vo.noticeNo }'/> " >${vo.noticeTitle }</a></td>
-						<td>${sessionScope.empName }</td>
+						<td>${vo.empName }</td>
 						<td>${vo.noticeRead }</td>
 					</tr>
 				</c:forEach>

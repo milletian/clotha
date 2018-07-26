@@ -55,7 +55,7 @@
 	</div>
 	<div class="box1">
 		<h2>제목 : ${vo.noticeTitle } </h2><br>
-		<h3>작성자 : ${sessionScope.empName }</h3><br><hr>
+		<h3>작성자 : ${vo.empName }</h3><br><hr>
 		<h3>내용</h3><br>
 		<div>${vo.noticeContent }</div><br>
 		<input type="button" class="backlist" value="목록" >

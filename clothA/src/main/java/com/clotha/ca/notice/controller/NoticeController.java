@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.clotha.ca.employee.model.EmployeeService;
+import com.clotha.ca.employee.model.EmployeeVO;
 import com.clotha.ca.notice.model.NoticeService;
 import com.clotha.ca.notice.model.NoticeVO;
 
@@ -24,6 +26,8 @@ public class NoticeController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@RequestMapping(value="/notice.do")
 	public String notice(Model model) {
@@ -72,6 +76,8 @@ public class NoticeController {
 		
 		NoticeVO vo = noticeService.selectNotice(noticeNo);
 		logger.info("선택한 공지사항 보기 Vo = {}",vo);
+		EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
+		vo.setEmpName(employeeVo.getEmpName());
 		
 		model.addAttribute("vo",vo);
 		

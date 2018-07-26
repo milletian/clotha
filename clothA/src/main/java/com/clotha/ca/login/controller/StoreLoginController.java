@@ -58,7 +58,7 @@ public class StoreLoginController {
 					request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
 					request.getSession().setAttribute("empName", employeeVo.getEmpName());
 					
-					session.setMaxInactiveInterval(60*30);
+					session.setMaxInactiveInterval(24*60*60);
 					
 					InetAddress local;
 					LogVO logVo = new LogVO();
