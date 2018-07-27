@@ -77,13 +77,13 @@ body h1{
 			<li><a href="#tabs-3">보낸쪽지</a></li>
 		</ul>
 		<div id="tabs-1">
-			<iframe src="<c:url value='/mail/mailWrite.do' />"style="width: 100%; height: 80%"></iframe>
+			<iframe src="<c:url value='/mail/mailWrite.do' />"style="width: 100%; height: 80%; border: none "></iframe>
 		</div>
 		<div id="tabs-2">
-			<iframe src="<c:url value='/mail/getMail.do' />"style="width: 100%; height: 80%"></iframe>
+			<iframe src="<c:url value='/mail/getMail.do' />"style="width: 100%; height: 80%; border: none "></iframe>
 		</div>
 		<div id="tabs-3">
-			<iframe src="<c:url value='/mail/sendMail.do' />"style="width: 100%; height: 80%"></iframe>
+			<iframe src="<c:url value='/mail/sendMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
 		</div>
 	</div>
 </body>

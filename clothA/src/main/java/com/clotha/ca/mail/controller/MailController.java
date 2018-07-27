@@ -1,19 +1,26 @@
 package com.clotha.ca.mail.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
 import com.clotha.ca.mail.model.MailService;
+import com.clotha.ca.mail.model.MailVO;
 
 @Controller
 @RequestMapping("/mail")
@@ -23,7 +30,8 @@ public class MailController {
 	
 	@Autowired
 	private MailService mailService;
-	
+	@Autowired
+	private FileUploadUtil fileUploadUtil;
 	@Autowired
 	private EmployeeService employeeService;
 	
@@ -42,6 +50,7 @@ public class MailController {
 		return "mail/mailWrite";
 	}
 	
+	
 	@RequestMapping("/ajaxmailWrite.do")
 	@ResponseBody
 	public List<EmployeeVO> mailEmpno(@ModelAttribute EmployeeVO employeeVo) {
@@ -52,12 +61,38 @@ public class MailController {
 	}
 	
 	@RequestMapping(value="/mailWrite.do",method=RequestMethod.POST)
-	public String mailWrite_post() {
-		logger.info("쪽지쓰기 처리");
+	public String mailWrite_post(@ModelAttribute MailVO vo, Model model, HttpServletRequest request) {
+		logger.info("쪽지쓰기 처리 파라미터 vo={}",vo);
+		String empNo = (String)request.getSession().getAttribute("empNo");
+		vo.setSender(empNo);
+		
+		String msg="", url="/mail/mailWrite.do";
+		
+		String fileName="";
+		try {
+			List<Map<String, Object>> list
+			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
+			for(Map<String, Object> map:list) {
+				fileName =(String) map.get("fileName");				
+			}
+			vo.setMailFile(fileName);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int cnt = mailService.insertMail(vo);
+		if(cnt>0) {
+			msg="쪽지를 보냈습니다.";
+		}else {
+			msg="쪽지쓰기를 실패하였습니다.\n 다시시도해 주세요";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
 		
 		
-		
-		return "mail/mailWrite";
+		return "common/message";
 	}
 	
 	@RequestMapping(value="/getMail.do",method=RequestMethod.GET )

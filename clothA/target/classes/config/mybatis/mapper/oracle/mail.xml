@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.mail">
-	
+	<insert id="insertMail" parameterType="mailVo">
+		insert into mail(mail_no,sender,mail_content,mail_file,mail_name)
+		values(mail_seq.nextval,#{sender},#{mailContent},#{mailFile},#{mailName})
+	</insert>
 </mapper>
 
 

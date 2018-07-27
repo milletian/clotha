@@ -8,6 +8,11 @@ public class MailServiceImpl implements MailService{
 	
 	@Autowired
 	private MailDAO MailDao;
+
+	@Override
+	public int insertMail(MailVO vo) {
+		return MailDao.insertMail(vo);
+	}
 	
 	
 }
