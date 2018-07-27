@@ -238,11 +238,7 @@ footer{
 					<i class="arrow fa fa-angle-right pull-right"></i>
 					</a>
 					<ul>
-						<li>
-							<a href="<c:url value='/admin/products/productWrite.do'/>" target="if">상품 등록
-							</a>
-						</li>
-						<li><a href="<c:url value='/admin/products/productsList.do'/>" target="if">상품조회</a></li>
+						<li><a href="<c:url value='/admin/products/productsList.do'/>" target="if">상품 등록 / 조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-home"></i><span>매장관리</span><i
@@ -255,8 +251,7 @@ footer{
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
 						<li><a href="#">인사승인</a></li>
-						<li><a href="<c:url value='/admin/employee/employeeList.do' />" target="if">인사조회</a></li>
-						<li><a href="<c:url value='/admin/employee/employeeWrite.do' />" target="if">인사등록</a></li>
+						<li><a href="<c:url value='/admin/employee/employeeList.do' />" target="if">인사 등록 / 조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-building"></i><span>구매처관리</span><i
