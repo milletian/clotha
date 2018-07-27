@@ -65,7 +65,7 @@ public class StoreController {
 		logger.info("storeWrite={}",storeVO);
 		String result = "";
 		String path = fileupload.getUploadPath(request, fileupload.PATH_FLAG_STOREIMAGE);
-		result = fileupload.multifileup(multi,path);
+		result = fileupload.multifileup(multi, path);
 		storeVO.setStoreImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
 		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
 			for(String oldfilename : oldFileList) {				

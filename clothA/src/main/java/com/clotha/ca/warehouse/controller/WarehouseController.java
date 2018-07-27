@@ -61,7 +61,7 @@ public class WarehouseController {
 		warehouseVO.setWhAddress(multi.getParameter("address")+"~"+multi.getParameter("addressDetail"));
 		String result = "";
 		String path = fileupload.getUploadPath(request,fileupload.PATH_FLAG_WAREHOUSEIMAGE); // 테스트용 경로
-		result = fileupload.multifileup(multi,path); // 테스트용 업로드(미완성)
+		result = fileupload.multifileup(multi, path); // 테스트용 업로드(미완성)
 		warehouseVO.setWhImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
 		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
 			for(String oldfilename : oldFileList) {				
