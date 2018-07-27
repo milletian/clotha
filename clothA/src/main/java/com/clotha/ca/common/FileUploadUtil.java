@@ -44,6 +44,10 @@ public class FileUploadUtil {
 				upPath = fileUploadProps.getProperty("imageFile.upload.path.test");
 			}else if(isimg==PATH_FLAG_PDS) {
 				upPath = fileUploadProps.getProperty("file.upload.path.test");
+			}else if(isimg==PATH_FLAG_WAREHOUSEIMAGE) {
+				upPath = fileUploadProps.getProperty("warehouseImageFile.upload.path.test");
+			}else if(isimg==PATH_FLAG_STOREIMAGE) {
+				upPath = fileUploadProps.getProperty("storeImageFile.upload.path.test");
 			}
 		} else {
 			// 실제 물리적인 경로 구하기
@@ -53,7 +57,12 @@ public class FileUploadUtil {
 			}else if(isimg==PATH_FLAG_PDS) {
 				upPath = fileUploadProps.getProperty("file.upload.path");
 				upPath = request.getSession().getServletContext().getRealPath(upPath);
-				
+			}else if(isimg==PATH_FLAG_WAREHOUSEIMAGE) {
+			upPath = fileUploadProps.getProperty("warehouseImageFile.upload.path");
+			upPath = request.getSession().getServletContext().getRealPath(upPath);
+			}else if(isimg==PATH_FLAG_STOREIMAGE) {
+				upPath = fileUploadProps.getProperty("storeImageFile.upload.path");
+				upPath = request.getSession().getServletContext().getRealPath(upPath);
 			}
 		}
 		logger.info("업로드 경로 : {}", upPath);
@@ -82,16 +91,11 @@ public class FileUploadUtil {
 
 		return fileName;
 	}
-	public String multifileup(MultipartHttpServletRequest multi,int isImg) {
+
+	public String multifileup(MultipartHttpServletRequest multi,String path) {
 		List<MultipartFile> fileList = multi.getFiles("file");
 		int count =0;
 		String result ="";
-        String path = "";
-        if(isImg==PATH_FLAG_STOREIMAGE) {
-        	path=fileUploadProps.getProperty("storeImageFile.upload.path.test");
-        }else if(isImg==PATH_FLAG_WAREHOUSEIMAGE) {
-        	path=fileUploadProps.getProperty("warehousesImageFile.upload.path.test");
-        }
         for (MultipartFile mf : fileList) {
         	if(mf.getOriginalFilename()!=null&&!mf.getOriginalFilename().isEmpty()) {
         		String originFileName = mf.getOriginalFilename()+System.currentTimeMillis(); // 원본 파일 명
@@ -116,7 +120,7 @@ public class FileUploadUtil {
         }
         return result;
 	}
-
+	
 	public List<Map<String, Object>> fileUpload(HttpServletRequest request,int isimg) throws IllegalStateException, IOException {
 		// 파일 업로드 처리하는 메서드
 		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
