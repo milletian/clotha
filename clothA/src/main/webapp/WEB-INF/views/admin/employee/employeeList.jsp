@@ -62,11 +62,11 @@ $(function() {
 	    			$("table tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
-	 					"<tr><td>"+item.STORE_CODE+"</td>"
+	 					"<tr ondblclick=popupOpen('"+item.STORE_CODE+"')><td>"+item.STORE_CODE+"</td>"
 	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.DEPT_NAME+"</td>"
-	 					+"<td>"+"<a href='<c:url value='/admin/employee/employeeDetail.do?empNo="+item.EMP_NO+"'/>'"+">"+item.EMP_NAME+"</a>"+"</td>"
+	 					+"<td>"+item.EMP_NAME+"</td>"
 	 					+"<td>"+item.EMP_ZIPCODE+item.EMP_ADDRESS+"</td>"
 	 					+"<td>"+item.EMP_JUMIN+"</td>"
 	 					+"<td>"+item.EMP_TEL+"</td>"

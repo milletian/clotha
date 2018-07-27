@@ -11,6 +11,32 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		/* 매장코드로 매장이름 불러오기 */
+		$.ajax({
+			type:"POST",
+	    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
+	    	dataType:'json',
+	    	success:function(res){
+	    		if (res.length > 0){
+	    			$("#storeCode").html('');
+	    				var option1 = "<option value=''>선택하세요</option>";
+	    				$("#storeCode").append(option1);
+	    			$.each(res,function(idx, item){
+	    				var option2 =
+	   					"<option value='"+item.storeCode+"'>";
+	    				option2 += item.storeName;
+	    				option2 += "</option>";
+	        			$("#storeCode").append(option2);
+	    			})
+	    		}else{
+	    			$("#storeName").html('');
+	    		}
+	    	},
+	    	error: function(xhr, status, error){
+				alert("등록된 매장을 선택해주세요");
+			}
+		});//ajax
+		
 		
 		/* 맨처음 입력 포커싱 */
 		$('#deptNo').focus();
@@ -145,7 +171,7 @@
       }
       return str;
     }
-  
+
  
 
 </script>
@@ -159,20 +185,23 @@
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeWrite" method="post" enctype="multipart/form-data"
-		action="<c:url value='/admin/employee/employeeWrite.do'/>">
+	<form name="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
 
 		<div class="box3">
 			<div class="middle-box">
 				<div>
+					<label for="storeCode">매장이름</label>
+						<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax"></select>
+				</div>
+				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
-						<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
-							<option value="">선택하세요</option>
-							<option value="10">정직원</option>
-							<option value="20">계약직</option>
-							<option value="30">단기알바</option>
-						</select>
-					</div>
+					<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
+						<option value="">선택하세요</option>
+						<option value="10">정직원</option>
+						<option value="20">계약직</option>
+						<option value="30">단기알바</option>
+					</select>
+				</div>
 					<div>
 						<label for="empName">이름</label> 
 						<input type="text" name="empName" id="empName" class="valid">
