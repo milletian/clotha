@@ -17,7 +17,7 @@ public interface EmployeeService {
 	public int pwdCountUp(String empNo);	//StoreLoginController
 	
 	public int insertEmployee(EmployeeVO employeeVo);
-	public List<EmployeeVO> selectAll();
+	public List<EmployeeVO> selectAll(EmployeeVO employeeVo);
 	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo);
 	public Map<String, Object> selectByEmpNo(String empNo);
 	public int updateEmp(EmployeeVO employeeVo);

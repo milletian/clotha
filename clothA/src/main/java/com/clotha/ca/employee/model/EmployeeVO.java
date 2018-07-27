@@ -2,7 +2,9 @@ package com.clotha.ca.employee.model;
 
 import java.sql.Timestamp;
 
-public class EmployeeVO {
+import com.clotha.ca.common.SearchVO;
+
+public class EmployeeVO extends SearchVO {
 	private String empNo;
 	private String deptNo;
 	private String empName;
@@ -125,15 +127,19 @@ public class EmployeeVO {
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
 	}
-	
 	@Override
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", deptNo=" + deptNo + ", empName=" + empName + ", empPwd=" + empPwd
 				+ ", empZipcode=" + empZipcode + ", empAddress=" + empAddress + ", empJumin=" + empJumin + ", empTel="
 				+ empTel + ", empFace=" + empFace + ", empJob=" + empJob + ", empJoindate=" + empJoindate
 				+ ", empOutdate=" + empOutdate + ", gradeCode=" + gradeCode + ", empDel=" + empDel + ", storeCode="
-				+ storeCode + ", empEmail=" + empEmail + ", empCount=" + empCount + "]";
+				+ storeCode + ", empEmail=" + empEmail + ", empCount=" + empCount + ", toString()=" + super.toString()
+				+ "]";
 	}
+	
+	
+	
+
 	
 
 	

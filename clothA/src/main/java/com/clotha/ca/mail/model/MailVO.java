@@ -10,6 +10,15 @@ public class MailVO {
 	private String mailSave;
 	private String mailSenderDel;
 	private Timestamp mailSdate;
+	private String mailName;
+	
+	
+	public String getMailName() {
+		return mailName;
+	}
+	public void setMailName(String mailName) {
+		this.mailName = mailName;
+	}
 	public int getMailNo() {
 		return mailNo;
 	}
@@ -56,8 +65,9 @@ public class MailVO {
 	public String toString() {
 		return "MailVO [mailNo=" + mailNo + ", sender=" + sender + ", mailContent=" + mailContent + ", mailFile="
 				+ mailFile + ", mailSave=" + mailSave + ", mailSenderDel=" + mailSenderDel + ", mailSdate=" + mailSdate
-				+ "]";
+				+ ", mailName=" + mailName + "]";
 	}
+
 	
 	
 }

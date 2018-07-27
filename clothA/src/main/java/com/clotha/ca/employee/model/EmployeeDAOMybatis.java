@@ -51,8 +51,12 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	}
 
 	@Override
-	public List<EmployeeVO> selectAll() {
-		return sqlSession.selectList(namespace+"selectAll");
+	public List<EmployeeVO> selectAll(EmployeeVO employeeVo) {
+		if(employeeVo.getEmpNo()!=null && !employeeVo.getEmpNo().isEmpty()) {
+			return sqlSession.selectList(namespace+"selectAll",employeeVo);
+		}else {
+			return sqlSession.selectList(namespace+"selectAll");
+		}
 	}
 
 	@Override

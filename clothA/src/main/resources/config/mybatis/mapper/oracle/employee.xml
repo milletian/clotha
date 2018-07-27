@@ -34,8 +34,14 @@
 		update employee set emp_count= 0 where emp_no=#{empNo}
 	</update>
 	
-	<select id="selectAll" resultType="EmployeeVO">
+	<select id="selectAll" resultType="EmployeeVO" parameterType="EmployeeVO">
 		select * from employee
+		<if test="empNo!='전체' and empNo!=null and empNo!=''">
+			emp_No =#{empNo}		
+		</if>
+		<if test="searchKeyword!='' and searchKeyword!=null">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'		
+		</if>
 		order by
 		store_code desc
 	</select>

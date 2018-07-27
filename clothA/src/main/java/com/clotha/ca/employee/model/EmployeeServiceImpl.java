@@ -53,8 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<EmployeeVO> selectAll() {
-		return employeeDao.selectAll();
+	public List<EmployeeVO> selectAll(EmployeeVO employeeVo) {	//MailController
+		return employeeDao.selectAll(employeeVo);
 	}
 
 	@Override
@@ -73,6 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.updateEmp(employeeVo);
 	}
 
+	
 	
 	
 }
