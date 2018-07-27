@@ -160,7 +160,7 @@ function CorporationNumber(str) {
 		</select>
 	</c:if>
 	<input type="hidden" name="oldfile" value="${storeVo.storeImage}">
-	<label for="storeImage">이미지</label><input multiple="multiple" type="file" name="file"><br>
+	<label for="storeImage">이미지</label><input type="file" name="file"><br>
 	<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" value="${storeVo.storeZipcode}" >
 	<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 	<label for="address">주소</label><input type="text" id="address" name="address"><br>

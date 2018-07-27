@@ -38,7 +38,7 @@ public class AccountController {
 		return "admin/account/accountWrite";
 	}
 	
-	@RequestMapping(value="/accountWrite.do", method=RequestMethod.POST)
+	@RequestMapping(value="/ajaxAccountWrite.do")
 	public String accountWrite_post(@RequestParam String address,@RequestParam String addressDetail,@ModelAttribute AccountVO accVo) {
 		logger.info("vo={},address={}",accVo,address);
 		logger.info("detail={}",addressDetail);

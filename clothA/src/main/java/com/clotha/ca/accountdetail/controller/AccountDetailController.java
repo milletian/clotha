@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clotha.ca.accountdetail.model.AccountDetailService;
 import com.clotha.ca.accountdetail.model.AccountDetailVO;
+import com.clotha.ca.stock.model.StockService;
+import com.clotha.ca.stock.model.StockVO;
 
 @Controller
 @RequestMapping("/admin/account")
@@ -25,6 +27,9 @@ public class AccountDetailController {
 
 	@Autowired
 	private AccountDetailService accDtService;
+	
+	@Autowired
+	private StockService stockService;
 	
 	@RequestMapping(value="/accountDetailList.do", method=RequestMethod.GET)
 	public String accountDetailList_get() {
@@ -62,11 +67,24 @@ public class AccountDetailController {
 		return "admin/account/accountDetailWrite";
 	}
 	
-	@RequestMapping(value="/accountDetailWrite.do", method=RequestMethod.POST)
-	public void accountDetailWrite_post(@ModelAttribute AccountDetailVO accdVO){
-		logger.info("{}",accdVO);
-		
+	@RequestMapping(value="/ajaxAccountDetailWrite.do")
+	@ResponseBody
+	public String accountDetailWrite_post(@ModelAttribute AccountDetailVO accdVO,@ModelAttribute StockVO stockVO){
+		logger.info("accountDetailWrite_post{}",accdVO);
+		logger.info("accountDetailWrite_post{}",stockVO);
+		stockVO.setStockQty(accdVO.getAccDtQty());
 		accDtService.addAccountDetail(accdVO);
+		int result = stockService.selectBystaCodeandpdCode(stockVO);
+		logger.info("result = {}",result);
+		if(result==0) {
+			//인서트
+			stockService.insertStock(stockVO);
+		}else {
+			//업데이트
+			stockService.updateStockQty(stockVO);
+		}
+		
+		return "성공";
 		
 	}
 	

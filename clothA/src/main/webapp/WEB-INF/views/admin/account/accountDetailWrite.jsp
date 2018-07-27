@@ -21,41 +21,6 @@ $(function() {
 		self.close();
 	})
 	
-	$('#btn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountDetailList.do' />",
-        	data:$("#frmAccountDetailList").serialize(),
-        	dataType:'json',
-        	success:function(res){
-        		if (res.length > 0) {
-        			$("table tbody").html('');
-     				$.each(res, function(idx, item) {
-     					var dsd ="<tr><td>"+item.ACCDTCODE+"</td>"
-     					+"<td>"+item.ACCCODE+"</td>"
-     					+"<td>"+item.ACCDTREGDATE+"</td>"
-     					+"<td>"+item.PDCODE+"</td>"
-     					+"<td>"+item.PDNAME+"</td>"
-     					+"<td>"+item.SIZECODE+"</td>"
-     					+"<td>"+item.ACCDTQTY+"</td>"
-     					+"<td>"+item.ACCDTINDATE+"</td>"
-     					+"<td>"+item.WHCODE+"</td>"
-     					+"<td>"+item.ACCNAME+"</td></tr>";
-     					 $("table tbody").append(dsd);
-     					});
-     				}else{
-     					$("table tbody").html('');
-     				}
-        		 $("table").trigger("update"); 
-                 return false; 
-        	 },
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
-        
-   		}); 
-	})
-	
 	$('#searchRegDate').daterangepicker({
 		singleDatePicker: true,
 	      locale: {
@@ -70,16 +35,87 @@ $(function() {
 	});
 	
 	$('#pdCbtn').click(function() {
-		popupOpen();
+		popupOpen('pd');
+	})
+	
+	$('#whcbtn').click(function() {
+		popupOpen('wh');
+	})
+	$('#submit').click(function() {
+		$.ajax({
+			type:"POST",
+			url:"<c:url value='/admin/account/ajaxAccountDetailWrite.do' />",
+			data:{"accDtRegdate":$('#searchRegDate').val(),
+				"accDtIndate":$('#searchInDate').val(),
+				"whCode":$('#whCode').val(),
+				"staCode":$('#staCode').val(),
+				"accCode":$('#accCode').val(),
+				"accDtQty":$('#accDtQty').val(),
+				"pdCode":$('#pdCode').val()
+				},
+			dataType:"json",
+			success:function(res){
+				alert(res);
+				self.close();
+			},
+			error:function(xhr, status, error){
+				alert("sdsds");
+			}
+		})
 	})
 })
-function popupOpen(){
 
-	var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
+function ajaxStockByStaCode() {
+	if($('#staCode').val()!=null && $('#staCode').val()!=''){
+		$.ajax({
+        	type:"POST",
+        	url : "<c:url value='/admin/stock/ajaxSearchStockList.do' />",
+        	data:{"staCode":$('#staCode').val()},
+        	dataType:'json',
+        	success:function(res){
+        		if (res.length > 0) {
+        			$("table tbody").html('');
+     				$.each(res, function(idx, item) {
+     					var dsd ="<tr><td>"+item.PD_CODE+"</td>"
+     					+"<td>"+item.PD_NAME+"</td>"
+     					+"<td>"+item.STOCK_QTY+"</td>"
+     					+"<td>"+item.PD_ORIGINALPRICE+"</td>"
+     					+"<td>"+item.PD_SELLPRICE+"</td>"
+     					+"<td>"
+     					if(item.PD_DEL=='Y'){
+     						dsd+="사용";
+     					}else{
+     						dsd+="미사용";
+     					}
+     					+"</td>";
+     					 $("table tbody").append(dsd);
+     					liveTableData.reset();
+     					});
+     				}else{
+     					$("table tbody").html('');
+     				}
+        		 $("table").trigger("update"); 
+                 return false; 
+        	 },
+			error: function(xhr, status, error){
+				alert("sdsds");
+			}
+        
+   		}); 
+	}
+}
 
+function popupOpen(str){
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+	if(str=='pd'){
+		var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
+		window.open(popUrl,"상품조회",popOption);
+	}else{
+		var popUrl = "<c:url value='/admin/warehouse/warehouseSearch.do'/>";	//팝업창에 출력될 페이지 URL		
+		window.open(popUrl,"창고조회",popOption);
+	}
 
-		window.open(popUrl,"정보입력",popOption);
+
 
 	}
 </script>
@@ -94,21 +130,22 @@ function popupOpen(){
 }
 </style>
 <div id="wrap">
-	<form name="accDetailWritefrm" method="post" action="<c:url value='/admin/account/accountDetailWrite.do' />">
-		<label for="searchRegDate">주문일자</label><input type="text" class="searchDate" id="searchRegDate" name="accDtRegdate" readonly="readonly">
+	<form name="accDetailWritefrm" id="accDetailWritefrm" method="post" action="<c:url value='/admin/account/accountDetailWrite.do' />">
+		<label for="searchRegDate">주문일자</label><input type="text" class="searchDate" id="searchRegDate" name="accDtRegdate">
 		<label for="searchInDate">입고예정일</label><input type="text" class="searchDate" id="searchInDate" name="accDtIndate"><br>
-		<label for="whCode">입고될 창고</label><input type="text" id="whCode" name="whCode">
+		<label for="whCode">입고될 창고</label><input type="text" id="whCode" name="whCode" readonly="readonly">
+		<input type="hidden" id="staCode" name="staCode" readonly="readonly">
 		<input type="button" id="whcbtn" value="창고 검색">
-		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode">
+		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode" readonly="readonly">
 		<input type="button" id="pdCbtn" value="상품 검색">
-		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName"><Br>
-		<input type="hidden" id="accCode" name="accCode" value="acc9">
-		<label for="accCode">매입처 코드</label><input type="text" id="accCode" name="accCode">
+		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName" readonly="readonly"><Br>
+		<input type="hidden" id="accCode" name="accCode">
+		<label for="accName">매입처 이름</label><input type="text" id="accName" name="accName" readonly="readonly">
 		<label for="accDtQty">주문수량</label><input type="text" id="accDtQty" name="accDtQty"><br>
-		<label for="pdOriginalprice">개당 원가</label><input type="text" id="pdOriginalprice" name="pdOriginalprice">
-		<label for="pdSellprice">개당 판매가</label><input type="text" id="pdSellprice" name="pdSellprice">
+		<label for="pdOriginalprice">개당 원가</label><input type="text" id="pdOriginalprice" name="pdOriginalprice" readonly="readonly">
+		<label for="pdSellprice">개당 판매가</label><input type="text" id="pdSellprice" name="pdSellprice" readonly="readonly">
 		<input type="button" id="closeWrite" value="닫기">
-		<input type="submit" value="저장">
+		<input type="button" id="submit" value="저장">
 </form>
 </div>
 <div id="maincontent">    
@@ -118,16 +155,12 @@ function popupOpen(){
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 
 		        <tr> 
-		            <th>구매현황코드</th> 
-		            <th>구매처</th> 
-		            <th>주문일자</th> 
 		            <th>상품코드</th> 
 		            <th>상품명</th> 
-		            <th>사이즈 코드</th> 
-		            <th>주문수량</th> 
-		            <th>입고예정일</th> 
-		            <th>입고예정창고</th> 
-		            <th>구매처명</th> 
+		            <th>재고 수량</th> 
+		            <th>구매가</th> 
+		            <th>판매가</th>
+		            <th>사용 여부</th> 
 		        </tr> 
 		    </thead> 
 		    <tbody> 

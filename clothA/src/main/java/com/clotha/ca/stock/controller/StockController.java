@@ -46,7 +46,7 @@ public class StockController {
 	
 	@RequestMapping("/ajaxSearchStockList.do")
 	@ResponseBody
-	public List<Map<String,Object>> ajaxStockSearchList(@ModelAttribute StockVO stockVO,@RequestParam(required=false) String accCode,@RequestParam String pdDel) {
+	public List<Map<String,Object>> ajaxStockSearchList(@ModelAttribute StockVO stockVO,@RequestParam(required=false) String accCode,@RequestParam(required=false) String pdDel) {
 		logger.info("search!!!!stock = {}, accCode= {}",stockVO,accCode);
 		logger.info("search2!!!!,pdDel={}",pdDel);
 		Map<String,String> map = new HashMap<>();

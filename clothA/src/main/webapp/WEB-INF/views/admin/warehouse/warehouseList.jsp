@@ -22,7 +22,7 @@ $(function() {
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -106,7 +106,7 @@ function popupOpen(whCode){
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
-		window.open(popUrl,"정보입력",popOption);
+		window.open(popUrl,"창고등록",popOption);
 
 	}
 

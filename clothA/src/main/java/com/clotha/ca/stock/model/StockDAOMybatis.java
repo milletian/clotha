@@ -43,5 +43,10 @@ public class StockDAOMybatis implements StockDAO{
 	public int selectBystaCodeandpdCode(StockVO vo) {
 		return sqlSession.selectOne(namesapce+"selectBystaCodeandpdCode", vo);
 	}
+
+	@Override
+	public int updateStockQty(StockVO stockVO) {
+		return sqlSession.update(namesapce+"updateStockQty", stockVO);
+	}
 	
 }

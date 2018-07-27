@@ -22,7 +22,7 @@ $(function() {
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -65,7 +65,7 @@ $(function() {
         		if (res.length > 0) {
         			$("table tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr ondblclick=popupOpen('"+item.whCode+"')><td>"+item.whCode+"</td>"
+     					var dsd ="<tr ondblclick=popupText('"+item.whCode+"','"+item.staCode+"','"+item.whName+"')><td>"+item.whCode+"</td>"
      					+"<td>"+item.staCode+"</td>"
      					+"<td>"+item.whName+"</td>"
      					+"<td>"+item.whZipcode+"</td>"
@@ -93,23 +93,22 @@ $(function() {
         
    		}); 
 	})
-	$("#btn").trigger("click");
-	$("table").tableExport();
 	$('table tbody tr').live('click',function(){
 		$(this).css('backgroundColor','skyblue');
 		whCode=$(this).find('td:first').text();
 	})
 })
-function popupOpen(whCode){
-
-	var popUrl = "<c:url value='/admin/warehouse/warehouseWrite.do?whCode="+whCode+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
+function popupText(whCode,staCode,whName) {
+	var bool = true;
+	var openUrl =window.opener.document.URL;
+	openUrl=openUrl.substring(openUrl.lastIndexOf('/')+1,openUrl.length);
+	if(openUrl.indexOf("accountDetailWrite.do")!=-1){
+		$(opener.document).find('#whCode').val(whCode);
+		$(opener.document).find('#staCode').val(staCode);
+		$(opener.location).attr("href", "javascript:ajaxStockByStaCode();");
+		self.close();
 	}
-
+}
 </script>
 <style type="text/css">
 #wrap,#maincontent{
@@ -124,8 +123,8 @@ function popupOpen(whCode){
 <div id="wrap">
 	<form name="frmWarehouseList" id="frmWarehouseList">
 		<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
-		<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">정상영업 </label>
-		<input type="radio" id="use" name="whDel" value="Y"><label for="use">영업정지 </label>
+		<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">사용중 </label>
+		<input type="radio" id="use" name="whDel" value="Y"><label for="use">미사용 </label>
 		검색조건
 		<select name="searchCondition"> 
 			<option value="wh_code">창고코드</option>
@@ -134,13 +133,10 @@ function popupOpen(whCode){
 		
 		검색<input type="text" name="searchKeyword">
 		
-		<input type="button" id="btn" value="점포 조회">
+		<input type="button" id="btn" value="창고 조회">
 	</form>
 </div>
 <div id="maincontent">    
-	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 	<div id="content1">
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 

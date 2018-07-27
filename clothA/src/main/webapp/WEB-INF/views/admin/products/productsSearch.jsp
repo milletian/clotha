@@ -70,7 +70,7 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var pdList ="<tr ondblclick=popupText('"+item.PD_CODE+"','"+item.PD_NAME+"','"+item.PD_ORIGINALPRICE+"','"+item.PD_SELLPRICE+"','"+item.ACC_CODE+"') class='center'><td>"+item.ACC_NAME+"</td>"
+ 					var pdList ="<tr ondblclick=popupText('"+item.PD_CODE+"','"+item.PD_NAME+"','"+item.PD_ORIGINALPRICE+"','"+item.PD_SELLPRICE+"','"+item.ACC_CODE+"','"+item.ACC_NAME+"') class='center'><td>"+item.ACC_NAME+"</td>"
  					+"<td id='pdCode'>"+item.PD_CODE+"</td>" 
  					+"<td>"+item.PD_NAME+"</td>"
  					+"<td>"
@@ -103,7 +103,7 @@ $(function() {
 
 });// document
 
-function popupText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode){
+function popupText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode,accName){
 	var bool = true;
 	var openUrl =window.opener.document.URL;
 	openUrl=openUrl.substring(openUrl.lastIndexOf('/')+1,openUrl.length);
@@ -127,15 +127,11 @@ function popupText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode){
 		self.close();
 	}else if (openUrl.indexOf("accountDetailWrite.do")!=-1){
 		$(opener.document).find('#pdCode').val(pdCode);
-		$(opener.document).find('#pdCode').attr('readonly','readonly');
 		$(opener.document).find('#pdName').val(pdName);
-		$(opener.document).find('#pdName').attr('readonly','readonly');
 		$(opener.document).find('#accCode').val(accCode);
-		$(opener.document).find('#accCode').attr('readonly','readonly');
+		$(opener.document).find('#accName').val(accName);
 		$(opener.document).find('#pdOriginalprice').val(pdOriginalprice);
-		$(opener.document).find('#pdOriginalprice').attr('readonly','readonly');
 		$(opener.document).find('#pdSellprice').val(pdSellprice);
-		$(opener.document).find('#pdSellprice').attr('readonly','readonly');
 		self.close();
 	}
 		

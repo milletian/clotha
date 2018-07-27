@@ -32,7 +32,7 @@ $(function() {
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -96,7 +96,6 @@ $(function() {
      					+"<td>"+item.ACC_DT_REGDATE+"</td>"
      					+"<td>"+item.PD_CODE+"</td>"
      					+"<td>"+item.PD_NAME+"</td>"
-     					+"<td>"+item.SIZECODE+"</td>"
      					+"<td>"+item.ACC_DT_QTY+"</td>"
      					+"<td>"+item.ACC_DT_INDATE+"</td>"
      					+"<td>"+item.WH_CODE+"</td>"
@@ -139,8 +138,6 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-	  $("#btnSearch").trigger("click");
-	  $("table").tableExport();
 		$('table tbody tr').on('click',function(){
 			$(this).css('backgroundColor','skyblue');
 			accDtCode=$(this).find('td:first').text();
@@ -153,7 +150,7 @@ function popupOpen(ACC_DT_CODE){
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
-		window.open(popUrl,"정보입력",popOption);
+		window.open(popUrl,"구매신청작성",popOption);
 
 	}
 </script>
@@ -189,10 +186,9 @@ function popupOpen(ACC_DT_CODE){
 			            <th>주문일자</th> 
 			            <th>상품코드</th> 
 			            <th>상품명</th> 
-			            <th>사이즈 코드</th> 
 			            <th>주문수량</th> 
-			            <th>입고예정일</th> 
-			            <th>입고예정창고</th> 
+			            <th>입고일</th> 
+			            <th>입고창고</th> 
 			            <th>구매처명</th> 
 			        </tr> 
 			    </thead> 

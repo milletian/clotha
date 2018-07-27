@@ -240,5 +240,25 @@ public class StockServiceImpl implements StockService{
 		}
 		return list;
 	}
+
+	@Override
+	public int updateStock(StockVO stockVO) {
+		return stockDAO.updateStock(stockVO);
+	}
+
+	@Override
+	public int selectBystaCodeandpdCode(StockVO vo) {
+		return stockDAO.selectBystaCodeandpdCode(vo);
+	}
+
+	@Override
+	public int insertStock(StockVO stockVO) {
+		return stockDAO.insertStock(stockVO);
+	}
+
+	@Override
+	public int updateStockQty(StockVO stockVO) {
+		return stockDAO.updateStockQty(stockVO);
+	}
 }
 

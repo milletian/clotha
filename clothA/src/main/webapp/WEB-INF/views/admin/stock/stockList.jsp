@@ -162,15 +162,6 @@ $(function() {
 	
 	$.changeOption(whorst);
 })
-function popupOpen(){
-
-	var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
-	}
 
 </script>
 <style type="text/css">

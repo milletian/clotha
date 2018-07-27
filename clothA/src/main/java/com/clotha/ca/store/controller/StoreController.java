@@ -1,7 +1,12 @@
 package com.clotha.ca.store.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +48,8 @@ public class StoreController {
 	}
 	
 	@RequestMapping(value="/storeWrite.do", method=RequestMethod.POST)
-	public String storeWrite_post(MultipartHttpServletRequest multi) {
+	public void storeWrite_post(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request; 
 		StoreVO storeVO = new StoreVO();
 		String oldfile = multi.getParameter("oldfile");
 		String[] oldFileList = oldfile.split(",");
@@ -56,14 +62,14 @@ public class StoreController {
 		storeVO.setStaCode(multi.getParameter("staCode"));
 		storeVO.setStoreTel(multi.getParameter("storeTel"));
 		storeVO.setStoreNo(multi.getParameter("storeNo"));
-		logger.info("{},{},{}",multi.getParameter("empNo"));
+		logger.info("storeWrite={}",storeVO);
 		String result = "";
-		String test = "C:\\Users\\hkedu\\git\\clotha\\clothA\\src\\main\\webapp\\store_images"; // 테스트용 경로
-		result = fileupload.multifileup(multi,fileupload.PATH_FLAG_STOREIMAGE); // 테스트용 업로드(미완성)
+		String path = fileupload.getUploadPath(request, fileupload.PATH_FLAG_STOREIMAGE);
+		result = fileupload.multifileup(multi,path);
 		storeVO.setStoreImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
 		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
 			for(String oldfilename : oldFileList) {				
-				 File file = new File(test+"\\"+oldfilename);
+				 File file = new File(path+"\\"+oldfilename);
 			     if(file.exists() ){
 			         if(file.delete()){
 			             System.out.println("파일삭제 성공");
@@ -82,7 +88,14 @@ public class StoreController {
 			storeService.updateStore(storeVO);
 		}
 
-		return "수정완료!";
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script type='text/javascript'>");
+		out.println("alert('성공!');");
+		out.print("self.close();");
+		out.print("</script>");
+		
+		return;
 	}
 	
 	@RequestMapping(value="/storeList.do", method=RequestMethod.GET)

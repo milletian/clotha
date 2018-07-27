@@ -44,6 +44,11 @@
 		where sta_code = #{staCode} and pd_code = #{pdCode}
 	</update>
 	
+	<update id="updateStockQty">
+		update stock set stock_qty = stock_qty+#{stockQty}
+		where sta_code = #{staCode} and pd_code = #{pdCode}
+	</update>
+	
 	<insert id="insertExcelStock" parameterType="StockVO">
 		INSERT INTO stock(stock_pk,sta_code,pd_code,stock_qty)
 		VALUES(stock_seq.nextval,#{staCode}, #{pdCode}, #{stockQty})

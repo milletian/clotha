@@ -1,7 +1,12 @@
 package com.clotha.ca.warehouse.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +49,9 @@ public class WarehouseController {
 	}
 	
 	@RequestMapping(value="/warehouseWrite.do", method=RequestMethod.POST)
-	public String warehouseWrite_post(MultipartHttpServletRequest multi) {
+	public void warehouseWrite_post(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		WarehouseVO warehouseVO = new WarehouseVO();
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
 		String oldfile = multi.getParameter("oldfile");
 		String[] oldFileList = oldfile.split(",");
 		String areaCode = multi.getParameter("areaCode");
@@ -54,12 +60,12 @@ public class WarehouseController {
 		warehouseVO.setWhZipcode(multi.getParameter("whZipcode"));
 		warehouseVO.setWhAddress(multi.getParameter("address")+"~"+multi.getParameter("addressDetail"));
 		String result = "";
-		String test = "C:\\Users\\hkedu\\git\\clotha\\clothA\\src\\main\\webapp\\warehouse_images"; // 테스트용 경로
-		result = fileupload.multifileup(multi,fileupload.PATH_FLAG_WAREHOUSEIMAGE); // 테스트용 업로드(미완성)
+		String path = fileupload.getUploadPath(request,fileupload.PATH_FLAG_WAREHOUSEIMAGE); // 테스트용 경로
+		result = fileupload.multifileup(multi,path); // 테스트용 업로드(미완성)
 		warehouseVO.setWhImage(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
 		if(oldfile!=null&&!oldfile.isEmpty()&&result!=null&&!result.isEmpty()) {
 			for(String oldfilename : oldFileList) {				
-				 File file = new File(test+"\\"+oldfilename);
+				 File file = new File(path+"\\"+oldfilename);
 			     if(file.exists() ){
 			         if(file.delete()){
 			             System.out.println("파일삭제 성공");
@@ -78,11 +84,22 @@ public class WarehouseController {
 			warehouseService.updateWarehouse(warehouseVO);
 		}
 
-		return "수정완료!";
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script type='text/javascript'>");
+		out.println("alert('성공.');");
+		out.print("self.close();");
+		out.print("</script>");
+		
+		return;
 	}
 	
 	@RequestMapping(value="/warehouseList.do", method=RequestMethod.GET)
-	public void storeList() {
+	public void warehouseList() {
+		
+	}
+	@RequestMapping(value="/warehouseSearch.do", method=RequestMethod.GET)
+	public void warehouseSearch() {
 		
 	}
 	

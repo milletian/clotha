@@ -167,7 +167,7 @@ function popupOpen(){
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
-		window.open(popUrl,"정보입력",popOption);
+		window.open(popUrl,"상품조회",popOption);
 
 }
 
@@ -198,7 +198,6 @@ function check(){
 		var options = {
 			success:function(data){
 				alert("업로드 완료");
-				$("#ajax-content").html(data);
 			},
 			type: "POST",
 			data : {"excelType" : fileType}
@@ -241,8 +240,6 @@ function check(){
 	<div id="maincontent">    
 
 		<a href="#" id="newRecord"><i class="fas fa-edit"></i></a>
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-		<a href="#" id="addbtn"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
 			<form name="frmStockFirstSetting" id="frmStockFirstSetting">
 			
@@ -262,9 +259,3 @@ function check(){
 			</form>
 		</div>
 	</div>
-
-
-
-
-
-
