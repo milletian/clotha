@@ -47,17 +47,19 @@
 	</select>
 	
 	<select id="selectEmp" parameterType="EmployeeVO"	resultType="map">
-		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
+		select e.STORE_CODE, e.EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
         EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, 
-        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME  
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, s.STORE_NAME 
 		from EMPLOYEE e join DEPT d
-		on e.DEPT_NO = d.DEPT_NO
+		ON e.DEPT_NO = d.DEPT_NO
 		join GRADE g
 		ON e.GRADE_CODE = g.GRADE_CODE
+		left outer join STORE s
+		on e.STORE_CODE = s.STORE_CODE
 		
 		<where>
 			<if test="storeCode!=null and storeCode!=''">
-				store_code=#{storeCode}
+				e.store_code=#{storeCode}
 			</if>
 			<if test="empName!=null and empName!=''">
 				and emp_name like '%' || #{empName} || '%'

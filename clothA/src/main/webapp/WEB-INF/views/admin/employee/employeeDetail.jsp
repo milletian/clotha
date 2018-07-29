@@ -260,6 +260,7 @@
 					</select>
 				</div>
 				<input type="submit" value="수정"> 
+				<input type="button" value="삭제" onclick="delconfirm()">
 				<input type="reset"	value="취소">
 			</div>
 		</div>

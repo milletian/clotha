@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" />
 <script type="text/javascript">
 $(function() {
+	
 	/* 테이블 정렬 */
 	$("table").tablesorter(); 
 
@@ -34,7 +35,7 @@ $(function() {
     			$.each(res,function(idx, item){
     				var option2 =
    					"<option value='"+item.storeCode+"'>";
-    				option2 += item.storeCode;
+    				option2 += item.storeName;
     				option2 += "</option>";
         			$("#searchStore").append(option2);
     			})
@@ -45,7 +46,8 @@ $(function() {
     	error: function(xhr, status, error){
 			alert("등록된 매장을 선택해주세요");
 		}
-	});//ajax
+	});//ajax  
+	   //검색버튼
 	
 	$(".ajax").select2();
 	
@@ -62,7 +64,7 @@ $(function() {
 	    			$("table tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
-	 					"<tr ondblclick=popupOpen('"+item.STORE_CODE+"')><td>"+item.STORE_CODE+"</td>"
+	 					"<tr ondblclick=popupOpen2('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.DEPT_NAME+"</td>"
@@ -76,7 +78,16 @@ $(function() {
 	 					+"<td>"+item.EMP_OUTDATE+"</td>"
 	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
 	 					 $("table tbody").append(empList);
+	 					 //undefined 항목 빈칸으로 출력
+	 					$('tbody td').each(function (idx,item) {
+	 					 var a = $(this).text();
+	 					
+		 				if(a=='undefined'){
+		 					$(this).text('');
+						}
+		 				})
 	 					});
+	 				
 	 				}else{
 	 					$("table tbody").html('해당 내역이 없습니다.');
 	 				}
@@ -88,19 +99,32 @@ $(function() {
 			}
 	    
 			}); 
-		});  //검색버튼
+		}); 
+	
+
 	
 })//제이쿼리
 
-function popupOpen(acc_Code){
+function popupOpen(){
 
-	var popUrl = "<c:url value='/admin/employee/employeeWrite.do?acc_Code="+acc_Code+" '/>";	//팝업창에 출력될 페이지 URL
+	var popUrl = "<c:url value='/admin/employee/employeeWrite.do'/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
 		window.open(popUrl,"정보입력",popOption);
 
-	}
+}
+function popupOpen2(empNo){
+
+	var popUrl = "<c:url value='/admin/employee/employeeDetail.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "width=800, height=700, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"정보입력",popOption);
+
+}
+
+
 
 </script>
 <style type="text/css">

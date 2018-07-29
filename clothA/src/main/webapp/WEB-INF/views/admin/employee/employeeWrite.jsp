@@ -39,7 +39,7 @@
 		
 		
 		/* 맨처음 입력 포커싱 */
-		$('#deptNo').focus();
+		$('#storeCode').focus();
 		
 		/* 휴대폰번호 자동 하이픈  */
 		$("#empTel").keyup(function() {
