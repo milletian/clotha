@@ -24,7 +24,6 @@ public class AccountDAOMybatis implements AccountDAO{
 	}
 	@Override
 	public int updateAccount(AccountVO vo) {
-		// TODO Auto-generated method stub
 		return sqlSession.update(namespace+"updateAccount", vo);
 	}
 	@Override

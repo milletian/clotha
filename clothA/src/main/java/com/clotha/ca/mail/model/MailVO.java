@@ -11,8 +11,43 @@ public class MailVO {
 	private String mailSenderDel;
 	private Timestamp mailSdate;
 	private String mailName;
+	private String empNo;
+	private int getMailPk;
+	private String getMailSave;
+	private String getMailDel;
+	private String getMailRead;
 	
 	
+	public int getGetMailPk() {
+		return getMailPk;
+	}
+	public void setGetMailPk(int getMailPk) {
+		this.getMailPk = getMailPk;
+	}
+	public String getGetMailSave() {
+		return getMailSave;
+	}
+	public void setGetMailSave(String getMailSave) {
+		this.getMailSave = getMailSave;
+	}
+	public String getGetMailDel() {
+		return getMailDel;
+	}
+	public void setGetMailDel(String getMailDel) {
+		this.getMailDel = getMailDel;
+	}
+	public String getGetMailRead() {
+		return getMailRead;
+	}
+	public void setGetMailRead(String getMailRead) {
+		this.getMailRead = getMailRead;
+	}
+	public String getEmpNo() {
+		return empNo;
+	}
+	public void setEmpNo(String empNo) {
+		this.empNo = empNo;
+	}
 	public String getMailName() {
 		return mailName;
 	}
@@ -65,8 +100,10 @@ public class MailVO {
 	public String toString() {
 		return "MailVO [mailNo=" + mailNo + ", sender=" + sender + ", mailContent=" + mailContent + ", mailFile="
 				+ mailFile + ", mailSave=" + mailSave + ", mailSenderDel=" + mailSenderDel + ", mailSdate=" + mailSdate
-				+ ", mailName=" + mailName + "]";
+				+ ", mailName=" + mailName + ", empNo=" + empNo + ", getMailPk=" + getMailPk + ", getMailSave="
+				+ getMailSave + ", getMailDel=" + getMailDel + ", getMailRead=" + getMailRead + "]";
 	}
+
 
 	
 	

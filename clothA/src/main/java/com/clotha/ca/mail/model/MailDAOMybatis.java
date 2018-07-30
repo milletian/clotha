@@ -15,6 +15,11 @@ public class MailDAOMybatis implements MailDAO {
 	public int insertMail(MailVO vo) {
 		return sqlSession.insert(namespace+"insertMail",vo);
 	}
+
+	@Override
+	public int insertGet(MailVO mailvo) {
+		return sqlSession.insert(namespace+"insertGet",mailvo);
+	}
 	
 	
 }

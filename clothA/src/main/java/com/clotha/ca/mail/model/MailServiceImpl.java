@@ -11,7 +11,22 @@ public class MailServiceImpl implements MailService{
 
 	@Override
 	public int insertMail(MailVO vo) {
-		return MailDao.insertMail(vo);
+		int result = 0;
+		int cnt = MailDao.insertMail(vo);
+		if(cnt > 0) {
+			if(vo.getEmpNo().length()>5) {
+				MailVO vo2 = new MailVO();
+				vo2.setMailNo(vo.getMailNo());
+				String[] empNo = vo.getEmpNo().split(",");
+				for(String emp : empNo) {
+					vo2.setEmpNo(emp);
+					cnt += MailDao.insertGet(vo2);
+				}
+			}
+			result = cnt;
+		}
+		
+		return result;
 	}
 	
 	

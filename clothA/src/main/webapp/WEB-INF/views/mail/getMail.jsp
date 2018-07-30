@@ -7,6 +7,15 @@
 <title>받은쪽지</title>
 </head>
 <body>
-
+	<div>
+		<table>
+			<tr>
+				<th><input type="checkbox" name="checkAll"></th>
+				<th>쪽지 번호</th>
+				<th>제목</th>
+				<th>보낸이</th>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>
