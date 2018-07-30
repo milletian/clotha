@@ -38,8 +38,15 @@ public class AccountController {
 		return "admin/account/accountWrite";
 	}
 	
-	@RequestMapping(value="/ajaxAccountWrite.do")
-	public String accountWrite_post(@RequestParam String address,@RequestParam String addressDetail,@ModelAttribute AccountVO accVo) {
+	@RequestMapping(value="/ajaxAccountOne.do")
+	@ResponseBody
+	public AccountVO ajaxAccountOne(@RequestParam(required=false) String accCode) {
+		AccountVO accountVO = accountService.SearchAccountByCode(accCode);
+		return accountVO;
+	}
+	
+	@RequestMapping(value="/ajaxAccountWrite.do",produces = "application/text; charset=utf8")
+	public @ResponseBody String accountWrite_post(@RequestParam String address,@RequestParam String addressDetail,@ModelAttribute AccountVO accVo) {
 		logger.info("vo={},address={}",accVo,address);
 		logger.info("detail={}",addressDetail);
 		if(accVo.getAccIsdeal()!=null&&!accVo.getAccIsdeal().isEmpty()) {

@@ -9,21 +9,21 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type = "text/javascript"  src = "<c:url value='/js/jquery-latest.js' />" > </script>  
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
- 
+  
 <script type="text/javascript">
 $(function() {
 	var accCode;
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx", "xls", "csv", "txt"],    // (String[]), filetypes for the export
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
 	    fileName: "id",                    // (id, String), filename for the downloaded file
 	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
 	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
@@ -42,9 +42,20 @@ $(function() {
         	success:function(res){
         		alert(res);
         	},
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
+        	error:function(x,e){ 
+				if(x.status==0){
+					alert('You are offline!!n Please Check Your Network.'); 
+				}else if(x.status==404){ 
+					alert('Requested URL not found.'); 
+				}else if(x.status==500){ 
+					alert('Internel Server Error.'); 
+				}else if(e=='parsererror'){ 
+					alert('Error.nParsing JSON Request failed.'); 
+				}else if(e=='timeout'){
+					alert('Request Time out.'); 
+				}else { 
+					alert('Unknow Error.n'+x.responseText); } 
+				}
         
    		}); 
 	})
@@ -81,28 +92,65 @@ $(function() {
         		 $("table").trigger("update"); 
                  return false; 
         	 },
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
+        	 error:function(x,e){ 
+					if(x.status==0){
+						alert('You are offline!!n Please Check Your Network.'); 
+					}else if(x.status==404){ 
+						alert('Requested URL not found.'); 
+					}else if(x.status==500){ 
+						alert('Internel Server Error.'); 
+					}else if(e=='parsererror'){ 
+						alert('Error.nParsing JSON Request failed.'); 
+					}else if(e=='timeout'){
+						alert('Request Time out.'); 
+					}else { 
+						alert('Unknow Error.n'+x.responseText); } 
+					}
         
    		}); 
 	})
-	$("#btn").trigger("click");
-	$("table").tableExport();
-	$('table tbody tr').live('click',function(){
+	
+	$('.box2 table tbody tr').on('click',function(){
 		$(this).css('backgroundColor','skyblue');
 		accCode=$(this).find('td:first').text();
 	})
+	
+	$('#modal-testNew').on('hidden.bs.modal', function (e) {
+	  $(this).find('form')[0].reset();
+	});
+	
 })
-function popupOpen(acc_Code){
-
-	var popUrl = "<c:url value='/admin/account/accountWrite.do?accCode="+acc_Code+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
-	}
+function popupOpen(accCode) {
+	$.ajax({
+		url:"<c:url value='/admin/account/ajaxAccountOne.do' />",
+		data:{"accCode":accCode},
+		dataType:"json",
+		success:function(res){
+			$('#modal-testNew #accCode').val(res.accCode);
+			$('#modal-testNew #accName').val(res.accName);
+			$('#modal-testNew #accCeo').val(res.accCeo);
+			$('#modal-testNew #accTel').val(res.accTel);
+			$('#modal-testNew #accNo').val(res.accNo);
+			$('#modal-testNew #accZipcode').val(res.accZipcode);
+			$('#modal-testNew #accUnique').val(res.accUnique);
+			$('#openmodal').trigger('click');
+		},
+		error:function(x,e){ 
+			if(x.status==0){
+				alert('You are offline!!n Please Check Your Network.'); 
+			}else if(x.status==404){ 
+				alert('Requested URL not found.'); 
+			}else if(x.status==500){ 
+				alert('Internel Server Error.'); 
+			}else if(e=='parsererror'){ 
+				alert('Error.nParsing JSON Request failed.'); 
+			}else if(e=='timeout'){
+				alert('Request Time out.'); 
+			}else { 
+				alert('Unknow Error.n'+x.responseText); } 
+			}
+	})
+}
 
 </script>
 
@@ -126,7 +174,7 @@ function popupOpen(acc_Code){
 		</form>
 	</div>
 	<div class="box2">    
-		<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
+		<a href="#"><i class="fas fa-edit"></i></a>
 		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
 		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
@@ -152,7 +200,7 @@ function popupOpen(acc_Code){
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<%-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -171,11 +219,21 @@ function popupOpen(acc_Code){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
+</div> --%>
+<a  data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success" id="openmodal">구매처 등록</span>
+</a>
+ 
+ 
+<div id="modal-testNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+       		 <%@include file="accountWrite.jsp" %>
+        </div>
+    </div>
 </div>
-
 
 

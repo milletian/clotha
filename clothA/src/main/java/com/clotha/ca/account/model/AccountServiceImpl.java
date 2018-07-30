@@ -16,7 +16,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 	@Override
 	public int insertAccount(AccountVO vo) {
-		if(vo.getAccCode().isEmpty()||vo.getAccCode()==null) {
+		if(vo.getAccCode()==null||vo.getAccCode().isEmpty()) {
 			return accountDao.insertAccount(vo);
 		}else {
 			return accountDao.updateAccount(vo);

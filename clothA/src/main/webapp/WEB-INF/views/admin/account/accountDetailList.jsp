@@ -27,9 +27,9 @@ $(function() {
 	var today = Now.getFullYear()+"/"+(Now.getMonth()+1)+"/"+Now.getDate();
 	$('#searchDateRange').val(today+"~"+today);
 	var accDtCode;
-	$("table").tablesorter(); 
+	$("#searchDetailtable").tablesorter(); 
 	// exel다운로드를 위한 변수
-	var liveTableData = $("table").tableExport({
+	var liveTableData = $("#searchDetailtable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
 	    formats: ["xlsx"],    // (String[]), filetypes for the export
@@ -79,6 +79,7 @@ $(function() {
 		}
 	})
 	// select2 ui 이용
+	
 	$("#selSearchSupplier").select2();
 	// 결과검색 리스트를 뽑아오는 ajax
 	$('#btnSearch').click(function() { 
@@ -89,7 +90,7 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
-        			$("table tbody").html('');
+        			$("#searchDetailtable tbody").html('');
      				$.each(res, function(idx, item) {
      					var dsd ="<tr ondblclick=popupOpen('"+item.accDtCode+"')><td>"+item.ACC_DT_CODE+"</td>"
      					+"<td>"+item.ACC_CODE+"</td>"
@@ -100,13 +101,13 @@ $(function() {
      					+"<td>"+item.ACC_DT_INDATE+"</td>"
      					+"<td>"+item.WH_CODE+"</td>"
      					+"<td>"+item.ACC_NAME+"</td></tr>";
-     					 $("table tbody").append(dsd);
+     					 $("#searchDetailtable tbody").append(dsd);
      					liveTableData.reset();
      					});
      				}else{
-     					$("table tbody").html('');
+     					$("#searchDetailtable tbody").html('');
      				}
-        		 $("table").trigger("update"); 
+        		 $("#searchDetailtable").trigger("update"); 
                  return false; 
         	 },
 			error: function(xhr, status, error){
@@ -138,10 +139,21 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-		$('table tbody tr').on('click',function(){
+		$('#searchDetailtable tbody tr').on('click',function(){
 			$(this).css('backgroundColor','skyblue');
 			accDtCode=$(this).find('td:first').text();
-		})
+	})
+
+	$('#modal-searchPd #btnClose ').click(function() {
+		alert(window.returnValue.pdCode);
+	})
+	
+	$('#modal-searchWh #btnClose ').click(function() {
+		alert(window.returnValue.staCode);
+	})
+	
+		
+	
 })
 // 팝업창 띄우기
 function popupOpen(ACC_DT_CODE){
@@ -178,7 +190,7 @@ function popupOpen(ACC_DT_CODE){
 		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
 		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
-			<table cellspacing="1" class="tablesorter">             
+			<table id="searchDetailtable" cellspacing="1" class="tablesorter">             
 			    <thead> 
 			        <tr> 
 			            <th>구매현황코드</th> 
@@ -198,4 +210,32 @@ function popupOpen(ACC_DT_CODE){
 			</table>
 		</div>
 	</div>
+</div>
+<a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+
+<div id="modal-accountDetailWrite" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="accountDetailWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../products/productsSearch.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-searchWh" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../warehouse/warehouseSearch.jsp" %>
+        </div>
+    </div>
 </div>

@@ -47,8 +47,8 @@ public class StoreController {
 		return "admin/store/storeWrite";
 	}
 	
-	@RequestMapping(value="/storeWrite.do", method=RequestMethod.POST)
-	public void storeWrite_post(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@RequestMapping(value="/ajaxStoreWrite.do",produces = "application/text; charset=utf8")
+	public @ResponseBody String storeWrite_post(HttpServletRequest request){
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request; 
 		StoreVO storeVO = new StoreVO();
 		String oldfile = multi.getParameter("oldfile");
@@ -87,15 +87,7 @@ public class StoreController {
 		}else {
 			storeService.updateStore(storeVO);
 		}
-
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script type='text/javascript'>");
-		out.println("alert('성공!');");
-		out.print("self.close();");
-		out.print("</script>");
-		
-		return;
+		return "등록 성공!";
 	}
 	
 	@RequestMapping(value="/storeList.do", method=RequestMethod.GET)

@@ -173,6 +173,19 @@ function popupOpen(storeCode){
 	</div>
 </div>
 
+<a data-toggle="modal" data-target="#modal-storeWrite" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+ 
+<div id="modal-storeWrite" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="storeWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
 
 
 
