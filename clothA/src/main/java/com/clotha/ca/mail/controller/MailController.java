@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
@@ -63,13 +64,19 @@ public class MailController {
 	
 	@RequestMapping(value="/mailWrite.do",method=RequestMethod.POST)
 	public String mailWrite_post(@ModelAttribute MailVO vo, Model model, HttpServletRequest request, @RequestParam String empNo) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
 		logger.info("쪽지쓰기 처리 파라미터 vo={}, 받는이 empNo={}",vo,empNo);
 		String sendEmpNo = (String)request.getSession().getAttribute("empNo");
 		vo.setSender(sendEmpNo);
 		
 		String msg="", url="/mail/mailWrite.do";
 		
-		String fileName="";
+		String result = "";
+		String path = fileUploadUtil.getUploadPath(request, fileUploadUtil.PATH_FLAG_MAILFILES);
+		result = fileUploadUtil.multifileup(multi, path);
+		logger.info("{}",result);
+		vo.setMailFile(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
+		/*String fileName="";
 		try {
 			List<Map<String, Object>> list
 			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
@@ -81,7 +88,7 @@ public class MailController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		vo.setEmpNo(empNo);
 		int cnt = mailService.insertMail(vo);
 		

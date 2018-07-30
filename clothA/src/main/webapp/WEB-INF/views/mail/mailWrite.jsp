@@ -60,7 +60,7 @@ $(function() {
 			<script>
 				CKEDITOR.replace('editor1');
 			</script>
-			첨부 파일 : <input type="file" multiple="multiple" name="uploadFile[]" ><br><br>
+			첨부 파일 : <input type="file" multiple="multiple" name="file" ><br><br>
 			<input type="submit" value="보내기" >
 		</form>
 	</div>         

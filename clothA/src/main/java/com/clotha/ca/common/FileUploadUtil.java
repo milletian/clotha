@@ -26,6 +26,7 @@ public class FileUploadUtil {
 	public static final int PATH_FLAG_IMAGE = 2;
 	public static final int PATH_FLAG_WAREHOUSEIMAGE = 3;
 	public static final int PATH_FLAG_STOREIMAGE = 4;
+	public static final int PATH_FLAG_MAILFILES = 5;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 
@@ -48,6 +49,8 @@ public class FileUploadUtil {
 				upPath = fileUploadProps.getProperty("warehouseImageFile.upload.path.test");
 			}else if(isimg==PATH_FLAG_STOREIMAGE) {
 				upPath = fileUploadProps.getProperty("storeImageFile.upload.path.test");
+			}else if(isimg==PATH_FLAG_MAILFILES) {
+				upPath = fileUploadProps.getProperty("mailFiles.upload.path.test");
 			}
 		} else {
 			// 실제 물리적인 경로 구하기
@@ -62,6 +65,9 @@ public class FileUploadUtil {
 			upPath = request.getSession().getServletContext().getRealPath(upPath);
 			}else if(isimg==PATH_FLAG_STOREIMAGE) {
 				upPath = fileUploadProps.getProperty("storeImageFile.upload.path");
+				upPath = request.getSession().getServletContext().getRealPath(upPath);
+			}else if(isimg==PATH_FLAG_MAILFILES) {
+				upPath = fileUploadProps.getProperty("mailFiles.upload.path");
 				upPath = request.getSession().getServletContext().getRealPath(upPath);
 			}
 		}
@@ -94,11 +100,12 @@ public class FileUploadUtil {
 
 	public String multifileup(MultipartHttpServletRequest multi,String path) {
 		List<MultipartFile> fileList = multi.getFiles("file");
+		System.out.println(fileList.size());
 		int count =0;
 		String result ="";
         for (MultipartFile mf : fileList) {
         	if(mf.getOriginalFilename()!=null&&!mf.getOriginalFilename().isEmpty()) {
-        		String originFileName = mf.getOriginalFilename()+System.currentTimeMillis(); // 원본 파일 명
+        		String originFileName = mf.getOriginalFilename().substring(0,mf.getOriginalFilename().lastIndexOf("."))+ System.currentTimeMillis() +mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
         		logger.info("{}",originFileName);
         		String safeFile = path +"\\"+ originFileName;
         		if(count>0) {
