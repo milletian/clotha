@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.inout">
+	<select id="inoutSelectAll" parameterType="InoutVO" resultType="map">
+	select IS_IN,INOUT_CODE,INOUT_STARTDATE,INOUT_ENDDATE,WH_NAME,WH_CODE,STORE_NAME,STORE_CODE,ACC_CODE,ACC_NAME,PD_CODE,PD_NAME,COLOR_CODE,COLOR_NAME,INOUT_DETAIL_QTY
+	from warehousingview
+	<where>
+		<if test="startDay!=null and startDay!=''">
+			<![CDATA[
+			INOUT_STARTDATE>#{startDay} and INOUT_STARTDATE<to_date(#{endDay})+1
+			]]>
+		</if>
+		<if test="STORE_CODE!=null and store_code=''">
+			and store_code=#{storeCode}
+		</if>
+		<if test="acc_code!=null and acc_code=''">
+			and acc_code=#{accCode}
+		</if>
+		<if test="wh_code!=null and wh_code=''">
+			and wh_code=#{whCode}
+		</if>
+		<if test="pd_code!=null and pd_code=''">
+			and pd_code=#{pdCode}
+		</if>
+	</where>
+	order by INOUT_STARTDATE desc
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
