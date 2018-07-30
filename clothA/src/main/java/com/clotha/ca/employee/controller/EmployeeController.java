@@ -115,6 +115,9 @@ public class EmployeeController {
 			
 			List<Map<String, Object>> list = employeeService.selectEmp(employeeVo);
 			
+			logger.info("list.size={}", list.size());
+			logger.info("list={}", list);
+			return list;
 			//날짜 yyyy-MM-dd 찍어주기
 			/*for(Map<String,Object> map : list) {
 				String str=Utility.convertDate(map.get("EMP_OUTDATE"));
@@ -125,9 +128,6 @@ public class EmployeeController {
 				
 				logger.info("map={}",map);
 			}*/
-			logger.info("list.size={}", list.size());
-			logger.info("list={}", list);
-			return list;
 		}
 		
 		@RequestMapping("/employeeDetail.do")
@@ -238,22 +238,35 @@ public class EmployeeController {
 
 	}
 		
-		@RequestMapping("/employeeAgree.do")
-		public void employeeAgree_get() {
+		@RequestMapping("/employeeApprove.do")
+		public void empApprove_get() {
 			logger.info("등록신청 직원 화면보여주기");
 		}
 		
-		/* 조회 list ajax*/
-		@RequestMapping("/ajaxEmployeeAgree.do")
+		/* 등록신청 list ajax*/
+		@RequestMapping("/ajaxEmployeeApprove.do")
 		@ResponseBody
-		public List<Map<String, Object>> employeeAgee_post(@RequestParam String empDel) {
+		public List<Map<String, Object>> empApprove_post(@ModelAttribute String empDel) {
 			logger.info("검색조건 empDel ={}", empDel);
 			
-			List<Map<String, Object>> list = employeeService.selectAgree(empDel);
+			List<Map<String, Object>> list = employeeService.empApprove(empDel);
 			
 			logger.info("list.size={}", list.size());
 			logger.info("list={}", list);
 			return list;
+		
+		}
+		
+		@RequestMapping("/employeeFinal.do")
+		public String empFinal(@RequestParam(required=false) String empNo, Model model) {
+			 logger.info("인사정보 상세페이지 empNo={}", empNo);
+			 
+			 Map<String, Object> map = employeeService.selectByEmpNo(empNo);
+			 logger.info("수정화면 map={}",map);
+			 
+			 model.addAttribute("map",map);
+			 
+			 return "admin/employee/employeeFinal";
 		}
 		
 }

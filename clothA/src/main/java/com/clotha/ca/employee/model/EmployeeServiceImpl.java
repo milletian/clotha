@@ -79,8 +79,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectAgree(String empDel) {
-		return employeeDao.selectAgree(empDel);
+	public List<Map<String, Object>> empApprove(String empDel) {
+		return employeeDao.empApprove(empDel);
 	}
 
 	

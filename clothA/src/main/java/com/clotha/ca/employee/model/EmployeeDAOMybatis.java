@@ -83,8 +83,8 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectAgree(String empDel) {
-		return sqlSession.selectList(namespace+"selectAgree", empDel);
+	public List<Map<String, Object>> empApprove(String empDel) {
+		return sqlSession.selectList(namespace+"empApprove", empDel);
 	}
 
 	

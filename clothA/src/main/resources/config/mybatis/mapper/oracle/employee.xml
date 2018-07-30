@@ -98,7 +98,7 @@
 	
 	</update>
 	
-	<select id="selectAgree" parameterType="String" resultType="map">
+	<select id="empApprove" parameterType="String" resultType="map">
 	select e.STORE_CODE, e.EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,  EMP_TEL, EMP_EMAIL,
 	       EMP_JOB, to_char(EMP_JOINDATE,'YYYY/MM/DD') as EMP_JOINDATE,  to_char(EMP_OUTDATE,'YYYY/MM/DD') as EMP_OUTDATE, 
            e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, s.STORE_NAME , EMP_DEL

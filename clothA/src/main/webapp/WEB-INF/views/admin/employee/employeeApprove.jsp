@@ -22,42 +22,13 @@ $(function() {
 	
 	/* 테이블 정렬 */
 	$("table").tablesorter(); 
-
-	/* 매장코드로 검색 */
-	$.ajax({
-		type:"POST",
-    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){
-    			$("#searchStore").html('');
-    				var option1 = "<option value=''>전체</option>";
-    				$("#searchStore").append(option1);
-    			$.each(res,function(idx, item){
-    				var option2 =
-   					"<option value='"+item.storeCode+"'>";
-    				option2 += item.storeName;
-    				option2 += "</option>";
-        			$("#searchStore").append(option2);
-    			})
-    		}else{
-    			$("#searchStore").html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("등록된 매장을 선택해주세요");
-		}
-	});//ajax  
-	   //검색버튼
-	
-	$(".ajax").select2();
 	
 	/* 인사정보리스트 */
 	$('#btnSearch').click(function() { 
 		$.ajax({
 	    	type:"POST",
-	    	url : "<c:url value='/admin/employee/ajaxEmployeeAgree.do' />",
-	    	data:$("#employeeAgree").serialize(),
+	    	url : "<c:url value='/admin/employee/ajaxEmployeeApprove.do' />",
+	    	data:$("#empApprove").serialize(),
 	    	dataType:'json',
 	    	success:function(res){
 	    		if (res.length > 0) {
@@ -74,8 +45,8 @@ $(function() {
 	 					+"<td>"+item.EMP_TEL+"</td>"
 	 					+"<td>"+item.EMP_EMAIL+"</td>"
 	 					+"<td>"+item.EMP_JOB+"</td>"
-	 					+"<td>"+item.EMP_DEL+"</td>"
-	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
+	 			 		+"<td>"+item.GRADE_NAME+"</td>"
+	 			 		+"<td>"+item.EMP_DEL+"</td></tr>";
 	 					 $("table tbody").append(empList);
 	 					 //undefined 항목 빈칸으로 출력
 	 					$('tbody td').each(function (idx,item) {
@@ -103,10 +74,9 @@ $(function() {
 	
 })//제이쿼리
 
-
 function popupOpen2(empNo){
 
-	var popUrl = "<c:url value='/admin/employee/employeeDetail.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
+	var popUrl = "<c:url value='/admin/employee/employeeFinal.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
 
 	var popOption = "width=800, height=700, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
 
@@ -122,12 +92,14 @@ function popupOpen2(empNo){
 <div class="viewBody">
 
 	<div class="box1" style="padding: 10px">
-		<form name=employeeAgree id="employeeAgree">
+		<form name=empApprove id="empApprove">
 			<button type="button" id="btnSearch">&nbsp;조회</button>
-			<input type="hidden" name="empDel" value="N">
 		</form>
 	</div>
 	<div class="box2">
+		<a href="#" onclick="popupOpen()"><i class="fas fa-edit"></i></a> 
+		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
+		<a href="#"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>
@@ -156,8 +128,8 @@ function popupOpen2(empNo){
 						<th scope="col">전화번호</th>
 						<th scope="col">메일</th>
 						<th scope="col">담당업무</th>
-						<th scope="col">del?</th>
 						<th scope="col">직급</th>
+						<th scope="col">승인요청</th>
 					</tr>
 				</thead>
 				<tbody>

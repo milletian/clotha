@@ -20,5 +20,5 @@ public interface EmployeeDAO {
 	public Map<String, Object> selectByEmpNo(String empNo);
 	public int updateEmp(EmployeeVO employeeVo);
 	public int delConfirm(String empNo);
-	public List<Map<String, Object>> selectAgree(String empDel);
+	public List<Map<String, Object>> empApprove(String empDel);
 }

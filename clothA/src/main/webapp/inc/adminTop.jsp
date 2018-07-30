@@ -250,7 +250,7 @@ footer{
 						class="far fa-id-badge"></i><span>인사관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/admin/employee/employeeAgree.do' />" target="if">인사승인</a></li>
+						<li><a href="<c:url value='/admin/employee/employeeApprove.do' />" target="if">인사승인</a></li>
 						<li><a href="<c:url value='/admin/employee/employeeList.do' />" target="if">인사 등록 / 조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
