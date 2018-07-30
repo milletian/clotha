@@ -73,6 +73,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.updateEmp(employeeVo);
 	}
 
+	@Override
+	public int delConfirm(String empNo) {
+		return employeeDao.delConfirm(empNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAgree(String empDel) {
+		return employeeDao.selectAgree(empDel);
+	}
+
 	
 	
 	

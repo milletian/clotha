@@ -2,10 +2,12 @@ package com.clotha.ca.employee.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -113,6 +115,16 @@ public class EmployeeController {
 			
 			List<Map<String, Object>> list = employeeService.selectEmp(employeeVo);
 			
+			//날짜 yyyy-MM-dd 찍어주기
+			/*for(Map<String,Object> map : list) {
+				String str=Utility.convertDate(map.get("EMP_OUTDATE"));
+				map.put("EMP_OUTDATE",str);
+			
+				String str2=Utility.convertDate(map.get("EMP_JOINDATE"));
+				map.put("EMP_JOINDATE",str2);
+				
+				logger.info("map={}",map);
+			}*/
 			logger.info("list.size={}", list.size());
 			logger.info("list={}", list);
 			return list;
@@ -132,15 +144,12 @@ public class EmployeeController {
 		
 		@RequestMapping("/employeeEdit.do")
 		public String employeeEdit(@ModelAttribute EmployeeVO employeeVo, Model model,
-				HttpServletRequest request, @RequestParam String oldFileName,  HttpSession session,
+				HttpServletRequest request, @RequestParam String oldFileName,
 				@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
 				@RequestParam String empJumin1, @RequestParam String empJumin2, @RequestParam(required=false) String addressDetail) {
 			logger.info("인사정보 수정 employeeVo={}, 파일정보", employeeVo);
-			String empNo =(String) session.getAttribute("empNo");
+			logger.info("empNo={}",employeeVo.getEmpNo());
 			
-			employeeVo.setEmpNo(empNo);;
-			
-			logger.info("사원번호={}",employeeVo.getEmpNo());
 			//주민번호 셋팅
 			employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
 			
@@ -157,6 +166,8 @@ public class EmployeeController {
 			}
 			
 			logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
+			
+			
 			
 			//파일 업로드처리
 			String fileName="";
@@ -197,6 +208,52 @@ public class EmployeeController {
 			model.addAttribute("url",url);
 			
 			return "common/message";
+		}
+	
+		//퇴사처리 outdate 찍기
+		@RequestMapping("/employeeDel.do")
+		public void employeeDel(@RequestParam String empNo, Model model, HttpServletResponse response) throws IOException {
+		logger.info("퇴사일 찍기 empNo={}", empNo);
+
+		int cnt = employeeService.delConfirm(empNo);
+		if(cnt>0) {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>");
+			out.println("alert('삭제완료.');");
+			out.print("self.close();");
+			out.print("</script>");
+			
+			return ;
+		}else {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script type='text/javascript'>");
+			out.println("alert('삭제 실패.');");
+			out.print("history.back();");
+			out.print("</script>");
+			
+			return ;
+		}
+
+	}
+		
+		@RequestMapping("/employeeAgree.do")
+		public void employeeAgree_get() {
+			logger.info("등록신청 직원 화면보여주기");
+		}
+		
+		/* 조회 list ajax*/
+		@RequestMapping("/ajaxEmployeeAgree.do")
+		@ResponseBody
+		public List<Map<String, Object>> employeeAgee_post(@RequestParam String empDel) {
+			logger.info("검색조건 empDel ={}", empDel);
+			
+			List<Map<String, Object>> list = employeeService.selectAgree(empDel);
+			
+			logger.info("list.size={}", list.size());
+			logger.info("list={}", list);
+			return list;
 		}
 		
 }

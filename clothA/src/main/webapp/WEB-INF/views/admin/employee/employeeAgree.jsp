@@ -56,8 +56,8 @@ $(function() {
 	$('#btnSearch').click(function() { 
 		$.ajax({
 	    	type:"POST",
-	    	url : "<c:url value='/admin/employee/ajaxEmployeeList.do' />",
-	    	data:$("#employeeList").serialize(),
+	    	url : "<c:url value='/admin/employee/ajaxEmployeeAgree.do' />",
+	    	data:$("#employeeAgree").serialize(),
 	    	dataType:'json',
 	    	success:function(res){
 	    		if (res.length > 0) {
@@ -74,8 +74,7 @@ $(function() {
 	 					+"<td>"+item.EMP_TEL+"</td>"
 	 					+"<td>"+item.EMP_EMAIL+"</td>"
 	 					+"<td>"+item.EMP_JOB+"</td>"
-	 					+"<td>"+item.EMP_JOINDATE+"</td>"
-	 					+"<td>"+item.EMP_OUTDATE+"</td>"
+	 					+"<td>"+item.EMP_DEL+"</td>"
 	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
 	 					 $("table tbody").append(empList);
 	 					 //undefined 항목 빈칸으로 출력
@@ -104,15 +103,7 @@ $(function() {
 	
 })//제이쿼리
 
-function popupOpen(){
 
-	var popUrl = "<c:url value='/admin/employee/employeeWrite.do'/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
-}
 function popupOpen2(empNo){
 
 	var popUrl = "<c:url value='/admin/employee/employeeDetail.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
@@ -131,36 +122,12 @@ function popupOpen2(empNo){
 <div class="viewBody">
 
 	<div class="box1" style="padding: 10px">
-		<form name=employeeList id="employeeList">
-			<label for="searchStore">매장</label>
-			<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="검색할 매장을 선택하세요" id="searchStore" class="ajax"></select>
-			
-			<label for="empName">이름</label>
-			<input type="text" name="empName" id="empName">
-			
-			<label for="searchDeptNo">고용형태</label>
-			<select name="deptNo">
-				<option value="">선택하세요</option>
-				<option value="10">정직원</option>
-				<option value="20">계약직</option>
-				<option value="30">단기알바</option>
-			</select>
-			
-			<label for="searchGrade">직급</label>
-			<select name="GradeCode">
-				<option value="">선택하세요</option>
-				<option value="1">마스터</option>
-				<option value="2">본사관리자</option>
-				<option value="3">점장</option>
-				<option value="4">사원</option>
-			</select>
+		<form name=employeeAgree id="employeeAgree">
 			<button type="button" id="btnSearch">&nbsp;조회</button>
+			<input type="hidden" name="empDel" value="N">
 		</form>
 	</div>
 	<div class="box2">
-		<a href="#" onclick="popupOpen()"><i class="fas fa-edit"></i></a> 
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
-		<a href="#"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>
@@ -174,8 +141,7 @@ function popupOpen2(empNo){
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		
-					<col style="width:7%;" />		
-					<col style="width:7%;" />		
+					<col style="width:5%;" />		
 					<col style="width:5%;" />		
 				</colgroup>
 				<thead>
@@ -190,8 +156,7 @@ function popupOpen2(empNo){
 						<th scope="col">전화번호</th>
 						<th scope="col">메일</th>
 						<th scope="col">담당업무</th>
-						<th scope="col">입사일</th>
-						<th scope="col">퇴사일</th>
+						<th scope="col">del?</th>
 						<th scope="col">직급</th>
 					</tr>
 				</thead>

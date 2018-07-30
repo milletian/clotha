@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="toDay" class="java.util.Date" />
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <script
@@ -100,6 +102,17 @@
 
 				}
 		});
+		 /* 인사정보 삭제처리 outdate 입력  */
+		 $('.employeeDel').click(function () {
+			 var result = confirm('정말 삭제하시겠습니까?');
+				
+				if(result){
+					 location.href="<c:url value='/admin/employee/employeeDel.do?empNo=${map.EMP_NO }'/> ";
+				}else{
+					return false;
+				}
+		})
+		 
 	})//제이쿼리
 	
 /*주민등록번호 유효성체크 */
@@ -153,6 +166,18 @@
       }
       return str;
     }
+  
+/* 	function delconfirm(){
+		var delconfirm = confirm('삭제하시겠습니까?');
+    	
+    	if(delconfirm){
+    		alert('삭제 되었습니다.');
+    	}else{
+    		alert('삭제가 취소되었습니다.');
+    		return false;
+    	}
+    } */
+
 </script>
 <style type="text/css">
 
@@ -181,6 +206,7 @@
 				<div>
 					<label for="empNo">사원코드</label>
 					<span>${map.EMP_NO }</span>
+					<input type="hidden" name="empNo" value="${map.EMP_NO }">
 				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
@@ -260,11 +286,14 @@
 					</select>
 				</div>
 				<input type="submit" value="수정"> 
-				<input type="button" value="삭제" onclick="delconfirm()">
 				<input type="reset"	value="취소">
 			</div>
 		</div>
 	</form>
+	<div>
+		<input type="button" value="삭제" class="employeeDel">
+		<input type="text" name="empNo" value="${map.EMP_NO }">
+	 </div>
 </div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element

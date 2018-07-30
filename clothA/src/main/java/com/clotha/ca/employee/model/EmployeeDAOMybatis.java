@@ -1,5 +1,6 @@
 package com.clotha.ca.employee.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +76,17 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	public int updateEmp(EmployeeVO employeeVo) {
 		return sqlSession.update(namespace+"updateEmp", employeeVo);
 	}
+
+	@Override
+	public int delConfirm(String empNo) {
+		return sqlSession.update(namespace+"delConfirm", empNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAgree(String empDel) {
+		return sqlSession.selectList(namespace+"selectAgree", empDel);
+	}
+
+	
 
 }

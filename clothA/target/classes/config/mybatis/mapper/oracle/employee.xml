@@ -48,7 +48,7 @@
 	
 	<select id="selectEmp" parameterType="EmployeeVO"	resultType="map">
 		select e.STORE_CODE, e.EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
-        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, 
+        EMP_TEL, EMP_EMAIL, EMP_JOB, to_char(EMP_JOINDATE,'YYYY/MM/DD') as EMP_JOINDATE,  to_char(EMP_OUTDATE,'YYYY/MM/DD') as EMP_OUTDATE, 
         e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, s.STORE_NAME 
 		from EMPLOYEE e join DEPT d
 		ON e.DEPT_NO = d.DEPT_NO
@@ -88,8 +88,30 @@
 	update employee
 	set DEPT_NO=#{deptNo},EMP_NAME=#{empName},EMP_PWD=#{empPwd},EMP_ZIPCODE=#{empZipcode},EMP_ADDRESS=#{empAddress},
 		EMP_JUMIN=#{empJumin},EMP_TEL=#{empTel},EMP_FACE=#{empFace},EMP_JOB=#{empJob},GRADE_CODE=#{gradeCode}, EMP_EMAIL=#{empEmail}
-		where EMP_NO=#{empNo}
+	where EMP_NO=#{empNo}
 	</update>
+	
+	<update id="delConfirm" parameterType="String">
+	update employee
+	set EMP_OUTDATE=to_char(sysdate,'YYYY/MM/DD')
+	where EMP_NO=#{empNo}
+	
+	</update>
+	
+	<select id="selectAgree" parameterType="String" resultType="map">
+	select e.STORE_CODE, e.EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,  EMP_TEL, EMP_EMAIL,
+	       EMP_JOB, to_char(EMP_JOINDATE,'YYYY/MM/DD') as EMP_JOINDATE,  to_char(EMP_OUTDATE,'YYYY/MM/DD') as EMP_OUTDATE, 
+           e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, s.STORE_NAME , EMP_DEL
+	from EMPLOYEE e join DEPT d
+		ON e.DEPT_NO = d.DEPT_NO
+		join GRADE g
+		ON e.GRADE_CODE = g.GRADE_CODE
+		left outer join STORE s
+		on e.STORE_CODE = s.STORE_CODE
+	where EMP_DEL = 'N'		
+		order by e.grade_code asc
+	</select>
+	
 </mapper>
 
 

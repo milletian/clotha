@@ -1,5 +1,6 @@
 package com.clotha.ca.employee.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -21,4 +22,6 @@ public interface EmployeeService {
 	public List<Map<String, Object>> selectEmp(EmployeeVO employeeVo);
 	public Map<String, Object> selectByEmpNo(String empNo);
 	public int updateEmp(EmployeeVO employeeVo);
+	public int delConfirm(String empNo);
+	public List<Map<String, Object>> selectAgree(String empDel);
 }
