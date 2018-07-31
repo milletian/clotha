@@ -13,6 +13,7 @@
 <script src="<c:url value='/js/FileSaver.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/tableexport.js' /> "></script><!-- 엑셀 플러그인 -->
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATFwoVtGMig3PcR40NStCbeE4-BcHgNjc&sensor=true"></script>
 
 
@@ -67,7 +68,7 @@ $(function() {
      					+"<td>"+item.empNo+"</td>"
      					+"<td>"+item.storeName+"</td>"
      					+"<td>"+item.storeZipcode+"</td>"
-     					+"<td><a onclick=mapview('"+item.storeAddress+"','"+item.accAddress.replace(/ /gi,"")+"')>"+item.storeAddress+"</a></td>"
+     					+"<td><a onclick=mapview('"+item.storeAddress.replace(/ /gi,"")+"','"+item.storeName+"','"+item.storeTel+"')>"+item.storeAddress+"</a></td>"
      					+"<td>"+item.storeNo+"</td>"
      					+"<td>"+item.storeTel+"</td>"
      					+"<td>"+item.storeJoin+"</td>"
@@ -148,7 +149,7 @@ function mapview(address1,name,tel){
 	var size_y = 40; // 마커로 사용할 이미지의 세로 크기
 	
 	// 마커로 사용할 이미지 주소
-	var image = new google.maps.MarkerImage( '주소 여기에 기입!',
+	var image = new google.maps.MarkerImage(
 	                                    new google.maps.Size(size_x, size_y),
 	                                    '',
 	                                    '',
@@ -164,7 +165,7 @@ function mapview(address1,name,tel){
 	marker = new google.maps.Marker({
 	                map: map,
 	                icon: image, // 마커로 사용할 이미지(변수)
-	                title: '구매처', // 마커에 마우스 포인트를 갖다댔을 때 뜨는 타이틀
+	                title: '매장', // 마커에 마우스 포인트를 갖다댔을 때 뜨는 타이틀
 	                position: results[0].geometry.location
 	            });
 	

@@ -15,6 +15,8 @@
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
  
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATFwoVtGMig3PcR40NStCbeE4-BcHgNjc&sensor=true"></script>
+ 
 <script type="text/javascript">
 $(function() {
 	var whCode="";
@@ -68,7 +70,7 @@ $(function() {
      					+"<td>"+item.staCode+"</td>"
      					+"<td>"+item.whName+"</td>"
      					+"<td>"+item.whZipcode+"</td>"
-     					+"<td>"+item.whAddress+"</td>"
+     					+"<td><a onclick=mapview('"+item.whAddress.replace(/ /gi,"")+"','"+item.whName+"','전화번호없음')>"+item.whAddress+"</a></td>"
      					+"<td>"+item.whRegdate+"</td>"
      					+"<td>"
      					if(item.whDel!=null&&item.whDel!=''){
@@ -124,7 +126,53 @@ function popupOpen(whCode) {
 			}
 	})
 }
-
+function mapview(address1,name,tel){
+	$('#map').html("");
+	var addressarr = address1.split('~');
+	var mapOptions = {
+	          zoom: 18, // 지도를 띄웠을 때의 줌 크기
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	
+	
+	var map = new google.maps.Map(document.getElementById("map"), // div의 id과 값이 같아야 함. "map-canvas"
+	                    mapOptions);
+	
+	var size_x = 40; // 마커로 사용할 이미지의 가로 크기
+	var size_y = 40; // 마커로 사용할 이미지의 세로 크기
+	
+	// 마커로 사용할 이미지 주소
+	var image = new google.maps.MarkerImage(
+	                                    new google.maps.Size(size_x, size_y),
+	                                    '',
+	                                    '',
+	                                    new google.maps.Size(size_x, size_y));
+	
+	// Geocoding *****************************************************
+	var address = addressarr[0]; // DB에서 주소 가져와서 검색하거나 왼쪽과 같이 주소를 바로 코딩.
+	var marker = null;
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode( { 'address': address}, function(results, status) {
+	if (status == google.maps.GeocoderStatus.OK) {
+	map.setCenter(results[0].geometry.location);
+	marker = new google.maps.Marker({
+	                map: map,
+	                icon: image, // 마커로 사용할 이미지(변수)
+	                title: '구매처', // 마커에 마우스 포인트를 갖다댔을 때 뜨는 타이틀
+	                position: results[0].geometry.location
+	            });
+	
+	var content = name; // 말풍선 안에 들어갈 내용
+	
+	// 마커를 클릭했을 때의 이벤트. 말풍선 뿅~
+	var infowindow = new google.maps.InfoWindow({ content: content});
+	google.maps.event.addListener(marker, "click", function() {infowindow.open(map,marker);});
+	} else {
+	alert("Geocode was not successful for the following reason: " + status);
+	}
+});
+    $("#modal-map").modal();
+}
 </script>
 <style type="text/css">
 #wrap,#maincontent{
@@ -190,5 +238,12 @@ function popupOpen(whCode) {
     </div>
 </div>
 
+<div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<div id="map" style="width:100%;height:100%;"></div>
+        </div>
+    </div>
+</div>
 
 

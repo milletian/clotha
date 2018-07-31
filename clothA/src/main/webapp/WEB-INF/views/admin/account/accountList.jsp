@@ -170,7 +170,7 @@ function mapview(address1,name,tel){
 		var size_y = 40; // 마커로 사용할 이미지의 세로 크기
 		
 		// 마커로 사용할 이미지 주소
-		var image = new google.maps.MarkerImage( '주소 여기에 기입!',
+		var image = new google.maps.MarkerImage(
 		                                    new google.maps.Size(size_x, size_y),
 		                                    '',
 		                                    '',
