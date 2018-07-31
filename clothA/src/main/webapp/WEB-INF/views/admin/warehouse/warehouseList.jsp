@@ -9,7 +9,6 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type = "text/javascript"  src = "<c:url value='/js/jquery-latest.js' />" > </script>  
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
@@ -93,22 +92,38 @@ $(function() {
         
    		}); 
 	})
-	$("#btn").trigger("click");
-	$("table").tableExport();
-	$('table tbody tr').live('click',function(){
+	$('table tbody tr').on('click',function(){
 		$(this).css('backgroundColor','skyblue');
 		whCode=$(this).find('td:first').text();
 	})
 })
-function popupOpen(whCode){
-
-	var popUrl = "<c:url value='/admin/warehouse/warehouseWrite.do?whCode="+whCode+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"창고등록",popOption);
-
-	}
+function popupOpen(whCode) {
+	$.ajax({
+		url:"<c:url value='/admin/warehouse/ajaxWarehouseOne.do' />",
+		data:{"whCode":whCode},
+		dataType:"json",
+		success:function(res){
+			$('#modal-warehouseWrite #oldfile').val(res.whImage);
+			$('#modal-warehouseWrite #whZipcode').val(res.whZipcode);
+			$('#modal-warehouseWrite #whName').val(res.whName);
+			$('#openWhWritemodal').trigger('click');
+		},
+		error:function(x,e){ 
+			if(x.status==0){
+				alert('You are offline!!n Please Check Your Network.'); 
+			}else if(x.status==404){ 
+				alert('Requested URL not found.'); 
+			}else if(x.status==500){ 
+				alert('Internel Server Error.'); 
+			}else if(e=='parsererror'){ 
+				alert('Error.nParsing JSON Request failed.'); 
+			}else if(e=='timeout'){
+				alert('Request Time out.'); 
+			}else { 
+				alert('Unknow Error.n'+x.responseText); } 
+			}
+	})
+}
 
 </script>
 <style type="text/css">
@@ -134,11 +149,11 @@ function popupOpen(whCode){
 		
 		검색<input type="text" name="searchKeyword">
 		
-		<input type="button" id="btn" value="점포 조회">
+		<input type="button" id="btn" value="창고 조회">
 	</form>
 </div>
 <div id="maincontent">    
-	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
+	<a href="#"><i class="fas fa-edit"></i></a>
 	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
 	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 	<div id="content1">
@@ -162,6 +177,18 @@ function popupOpen(whCode){
 </div>
 
 
+<a data-toggle="modal" data-target="#modal-warehouseWrite" id="openWhWritemodal" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+ 
+<div id="modal-warehouseWrite" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="warehouseWrite.jsp" %>
+        </div>
+    </div>
+</div>
 
 
 

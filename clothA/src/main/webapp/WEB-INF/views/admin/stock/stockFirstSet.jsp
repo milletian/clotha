@@ -161,15 +161,6 @@ function newRecord() {
 	renameForModelAttribute();
 }
 
-function popupOpen(){
-
-	var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"상품조회",popOption);
-
-}
 
 function checkFileType(filePath){
 	var fileFormat = filePath.split(".");
@@ -206,7 +197,16 @@ function check(){
 	}
 }
 
-
+/* function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			var bool
+			$('#stockFirstSetTable tr').each
+			window.returnValue=null;
+		}
+	}
+} */
 </script>
 <style type="text/css">
 #wrap,#maincontent{
@@ -243,7 +243,7 @@ function check(){
 		<div id="content1">
 			<form name="frmStockFirstSetting" id="frmStockFirstSetting">
 			
-				<table cellspacing="1" class="tablesorter">             
+				<table id="stockFirstSetTable" cellspacing="1" class="tablesorter">             
 				    <thead> 
 				        <tr> 
 				            <th>재고위치ID</th> 
@@ -259,3 +259,16 @@ function check(){
 			</form>
 		</div>
 	</div>
+	
+<a data-toggle="modal" data-target="#modal-searchPd" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+ 
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../products/productsSearch.jsp" %>
+        </div>
+    </div>
+</div>

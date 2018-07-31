@@ -48,12 +48,15 @@ public class WarehouseController {
 		return "admin/warehouse/warehouseWrite";
 	}
 	
-	@RequestMapping(value="/warehouseWrite.do", method=RequestMethod.POST)
-	public void warehouseWrite_post(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@RequestMapping(value="/ajaxWarehouseWrite.do",produces = "application/text; charset=utf8")
+	public @ResponseBody String warehouseWrite_post(HttpServletRequest request){
 		WarehouseVO warehouseVO = new WarehouseVO();
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
 		String oldfile = multi.getParameter("oldfile");
-		String[] oldFileList = oldfile.split(",");
+		String[] oldFileList =null;
+		if(oldfile!=null&& !oldfile.isEmpty()) {
+			oldFileList = oldfile.split(",");
+		}
 		String areaCode = multi.getParameter("areaCode");
 		warehouseVO.setWhCode(multi.getParameter("whCode"));
 		warehouseVO.setWhName(multi.getParameter("whName"));
@@ -83,15 +86,9 @@ public class WarehouseController {
 		}else {
 			warehouseService.updateWarehouse(warehouseVO);
 		}
-
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script type='text/javascript'>");
-		out.println("alert('성공.');");
-		out.print("self.close();");
-		out.print("</script>");
 		
-		return;
+		
+		return "등록성공!";
 	}
 	
 	@RequestMapping(value="/warehouseList.do", method=RequestMethod.GET)
@@ -110,6 +107,13 @@ public class WarehouseController {
 		List<WarehouseVO> list = warehouseService.Searchwarehouse(warehouseVO);
 		logger.info("{}",list.size());
 		return list;
+	}
+	
+	@RequestMapping(value="/ajaxWarehouseOne.do")
+	@ResponseBody
+	public WarehouseVO ajaxWarehouseOne(@RequestParam String whCode) {
+		WarehouseVO warehouseVO = warehouseService.SearchWarehouseByCode(whCode);
+		return warehouseVO;
 	}
 	
 	@RequestMapping(value="/ajaxWarehouseDel.do", produces = "application/json; charset=utf8")

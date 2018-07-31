@@ -1,13 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
 <div class="modal-header">
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
@@ -33,20 +25,17 @@
 			}
 		})
 		
-		$('#closeWrite').click(function() {
-			self.close();
-		})
 		
-		$("#storeTel").keyup(function() {
+		$("#frmStoreWrite #storeTel").keyup(function() {
 			var x = $(this).val();
 			$(this).val(autoHypenPhone(x));
 		});
 		
 		$('#storeSubmit').click(function() {
 			var bool = true;
-			var CpNumber = $('#storeNo').val();
+			var CpNumber = $('#frmStoreWrite #storeNo').val();
 			
-			$('input[type=text]').each(function() {
+			$('#frmStoreWrite input[type=text]').each(function() {
 				if($(this).val().length<1){
 					bool = false;
 					$(this).prev().focus();
@@ -57,20 +46,38 @@
 			if(bool){
 				if(!CorporationNumber(CpNumber)){
 					bool=false;
-					$('#accNo').prev().focus();
+					$('#frmStoreWrite #accNo').prev().focus();
 				}
 			}
 			 // ajax 해야됨 /ajaxStoreWrite.do !!!!!
 			if(bool){
+				var formData = new FormData($('#frmStoreWrite')[0]);
 				$.ajax({
-			    	url : "<c:url value='/admin/area/ajaxStoreWrite.do' />",
-			    	dataType:'json',
+					type:"post",
+			    	url : "<c:url value='/admin/store/ajaxStoreWrite.do' />",
+			    	dataType:'text',
+			    	contentType: false,
+			    	processData: false,
+			    	data : formData,
 			    	success:function(res){
+			    		alert(res);
+			    		$('#storeWriteClose').click();
 			    		
 			    	},
-			    	error: function(xhr, status, error){
-						alert("sdsds");
-					}
+			    	error:function(x,e){ 
+		                  if(x.status==0){
+		                     alert('You are offline!!n Please Check Your Network.'); 
+		                  }else if(x.status==404){ 
+		                     alert('Requested URL not found.'); 
+		                  }else if(x.status==500){ 
+		                     alert('Internel Server Error.'); 
+		                  }else if(e=='parsererror'){ 
+		                     alert('Error.nParsing JSON Request failed.'); 
+		                  }else if(e=='timeout'){
+		                     alert('Request Time out.'); 
+		                  }else { 
+		                     alert('Unknow Error.n'+x.responseText); } 
+		                  }
 				})
 			}
 			/* if(bool){
@@ -145,13 +152,13 @@
 	    } else if (str.length != 13) {
 	        alert("유효하지 않은 법인 번호입니다.");
 	        return false;
-	    } else if (!this.numberChecked(str)) {
+	    }/*  else if (!this.numberChecked(str)) {
 	        alert("유효하지 않은 법인 번호입니다.");
 	        return false;
 	    } else if (totalNumber != str.charAt(str.length-1)) {
 	        alert("유효하지 않은 법인 번호입니다.");
 	        return false;
-	    } else {
+	    } */ else {
 	        return true;
 	    }
 	}
@@ -165,28 +172,26 @@
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="frmStoreWrite" enctype="multipart/form-data">
-		<input type="hidden" name="storeCode"  value="${storeVo.storeCode }">  
-		<label for="empNo">점장 </label><input type="text" id="empNo" name="empNo" value="${storeVo.empNo}">
+	<form id="frmStoreWrite" name="frmStoreWrite" enctype="multipart/form-data">
+		<input type="hidden" name="storeCode" >  
+		<label for="empNo">점장 </label><input type="text" id="empNo" name="empNo">
 		<input type="button" id="searchEmpNo" value="사원조회">
-		<label for="storeName">점포이름 </label><input type="text" id="storeName" name="storeName" value="${storeVo.storeName}">
+		<label for="storeName">점포이름 </label><input type="text" id="storeName" name="storeName">
 		<c:if test="${empty param.storeCode || param.storeCode=='undefined'}">
 			<label for="areaCode">지역 </label>
 			<select id="areaCode" name="areaCode">
 			
 			</select>
 		</c:if>
-		<input type="hidden" name="oldfile" value="${storeVo.storeImage}">
+		<input type="hidden" name="oldfile">
 		<label for="storeImage">이미지</label><input type="file" name="file"><br>
-		<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" value="${storeVo.storeZipcode}" >
+		<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" >
 		<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 		<label for="address">주소</label><input type="text" id="address" name="address"><br>
 		<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-		<label for="storeTel">대표전화 </label><input type="text" id="storeTel" name="storeTel" value="${storeVo.storeTel }" maxlength="13"><br>
-		<label for="storeNo">법인번호 </label><input type="text" id="storeNo" name="storeNo" value="${storeVo.storeNo }" maxlength="13"><br>
-		<hr>
-		<input type="button" id="closeWrite" value="닫기">
-		<input type="submit" value="저장">
+		<label for="storeTel">대표전화 </label><input type="text" id="storeTel" name="storeTel" maxlength="13"><br>
+		<label for="storeNo">법인번호 </label><input type="text" id="storeNo" name="storeNo"  maxlength="13"><br>
+	
 		
 	</form>
 		<script type="text/javascript">
@@ -268,7 +273,7 @@
     <span class="btn btn-sm btn-success" id="storeSubmit">
         저장<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
     </span>
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="storeWriteClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
 </div>

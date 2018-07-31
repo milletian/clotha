@@ -143,28 +143,31 @@ $(function() {
 			$(this).css('backgroundColor','skyblue');
 			accDtCode=$(this).find('td:first').text();
 	})
-
-	$('#modal-searchPd #btnClose ').click(function() {
-		alert(window.returnValue.pdCode);
-	})
-	
-	$('#modal-searchWh #btnClose ').click(function() {
-		alert(window.returnValue.staCode);
-	})
-	
-		
-	
 })
 // 팝업창 띄우기
-function popupOpen(ACC_DT_CODE){
-
-	var popUrl = "<c:url value='/admin/account/accountDetailWrite.do?accDtCode="+ACC_DT_CODE+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"구매신청작성",popOption);
-
+function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			$('#accDetailWritefrm #pdCode').val(reval.pdCode);
+			$('#accDetailWritefrm #pdName').val(reval.pdName);
+			$('#accDetailWritefrm #pdOriginalprice').val(reval.pdOriginalprice);
+			$('#accDetailWritefrm #pdSellprice').val(reval.pdSellprice);
+			$('#accDetailWritefrm #accName').val(reval.accName);
+			$('#accDetailWritefrm #accCode').val(reval.accCode);
+			
+			window.returnValue=null;
+		}
+	}else if(str=='wh'){
+		if(reval!=null&& reval!=''){
+			$('#accDetailWritefrm #staCode').val(reval.staCode);
+			$('#accDetailWritefrm #whCode').val(reval.whCode);
+			
+			window.returnValue=null;
+			window.ajaxStockByStaCode();
+		}
 	}
+}
 </script>
 <style type="text/css">
 #wrap,#maincontent{

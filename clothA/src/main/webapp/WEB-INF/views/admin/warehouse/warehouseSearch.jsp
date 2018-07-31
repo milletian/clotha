@@ -54,7 +54,7 @@
 	        		if (res.length > 0) {
 	        			$("#searchwhtable tbody").html('');
 	     				$.each(res, function(idx, item) {
-	     					var dsd ="<tr ondblclick=popupText('"+item.whCode+"','"+item.staCode+"','"+item.whName+"')><td>"+item.whCode+"</td>"
+	     					var dsd ="<tr ondblclick=popupWhText('"+item.whCode+"','"+item.staCode+"','"+item.whName+"')><td>"+item.whCode+"</td>"
 	     					+"<td>"+item.staCode+"</td>"
 	     					+"<td>"+item.whName+"</td>"
 	     					+"<td>"+item.whZipcode+"</td>"
@@ -87,13 +87,14 @@
 			whCode=$(this).find('td:first').text();
 		})
 	})
-	function popupText(whCode,staCode,whName){
+	function popupWhText(whCode,staCode,whName){
 		var obj = new Object();
 		obj.whCode=whCode;
 		obj.staCode=staCode;
 		obj.whName=whName;
 		
 		window.returnValue = obj;
+		window.returnValueRead('wh');
 		$('#modal-searchWh #btnClose').trigger('click');
 	}
 	/* function popupText(whCode,staCode,whName) {

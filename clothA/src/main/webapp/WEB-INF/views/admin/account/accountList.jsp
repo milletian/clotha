@@ -9,13 +9,14 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATFwoVtGMig3PcR40NStCbeE4-BcHgNjc&sensor=true"></script>
   
 <script type="text/javascript">
 $(function() {
@@ -71,7 +72,7 @@ $(function() {
      				$.each(res, function(idx, item) {
      					var dsd ="<tr ondblclick=popupOpen('"+item.accCode+"')><td>"+item.accCode+"</td>"
      					+"<td>"+item.accName+"</td>"
-     					+"<td>"+item.accAddress+"</td>"
+     					+"<td><a onclick=mapview('"+item.accAddress.replace(/ /gi,"")+"','"+item.accName+"','"+item.accTel+"')>"+item.accAddress+"</a></td>"
      					+"<td>"+item.accTel+"</td>"
      					+"<td>"+item.accCeo+"</td>"
      					+"<td>"+item.accNo+"</td>"
@@ -110,7 +111,8 @@ $(function() {
    		}); 
 	})
 	
-	$('.box2 table tbody tr').on('click',function(){
+	$('table tbody tr td').on('click',function(){
+		alert("dddd");
 		$(this).css('backgroundColor','skyblue');
 		accCode=$(this).find('td:first').text();
 	})
@@ -150,6 +152,54 @@ function popupOpen(accCode) {
 				alert('Unknow Error.n'+x.responseText); } 
 			}
 	})
+}
+
+function mapview(address1,name,tel){
+		$('#map').html("");
+		var addressarr = address1.split('~');
+		var mapOptions = {
+		          zoom: 18, // 지도를 띄웠을 때의 줌 크기
+		          mapTypeId: google.maps.MapTypeId.ROADMAP
+		    };
+		
+		
+		var map = new google.maps.Map(document.getElementById("map"), // div의 id과 값이 같아야 함. "map-canvas"
+		                    mapOptions);
+		
+		var size_x = 40; // 마커로 사용할 이미지의 가로 크기
+		var size_y = 40; // 마커로 사용할 이미지의 세로 크기
+		
+		// 마커로 사용할 이미지 주소
+		var image = new google.maps.MarkerImage( '주소 여기에 기입!',
+		                                    new google.maps.Size(size_x, size_y),
+		                                    '',
+		                                    '',
+		                                    new google.maps.Size(size_x, size_y));
+		
+		// Geocoding *****************************************************
+		var address = addressarr[0]; // DB에서 주소 가져와서 검색하거나 왼쪽과 같이 주소를 바로 코딩.
+		var marker = null;
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+		map.setCenter(results[0].geometry.location);
+		marker = new google.maps.Marker({
+		                map: map,
+		                icon: image, // 마커로 사용할 이미지(변수)
+		                title: '구매처', // 마커에 마우스 포인트를 갖다댔을 때 뜨는 타이틀
+		                position: results[0].geometry.location
+		            });
+		
+		var content = name+"<br/><br/>Tel: "+tel; // 말풍선 안에 들어갈 내용
+		
+		// 마커를 클릭했을 때의 이벤트. 말풍선 뿅~
+		var infowindow = new google.maps.InfoWindow({ content: content});
+		google.maps.event.addListener(marker, "click", function() {infowindow.open(map,marker);});
+		} else {
+		alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
+	    $("#modal-map").modal();
 }
 
 </script>
@@ -199,30 +249,7 @@ function popupOpen(accCode) {
 	</div>
 </div>
 
-<!-- Button trigger modal -->
-<%-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      	<%@include file="accountWriteTest.jsp" %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> --%>
 <a  data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
  <span class="btn btn-xs btn-success" id="openmodal">구매처 등록</span>
 </a>
@@ -232,6 +259,17 @@ function popupOpen(accCode) {
     <div class="modal-dialog" style="width:1200px;height:700px">
         <div class="modal-content">
        		 <%@include file="accountWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+
+ 
+ 
+<div id="modal-map" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<div id="map" style="width:100%;height:100%;"></div>
         </div>
     </div>
 </div>

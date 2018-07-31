@@ -52,8 +52,12 @@ public class StoreController {
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request; 
 		StoreVO storeVO = new StoreVO();
 		String oldfile = multi.getParameter("oldfile");
-		String[] oldFileList = oldfile.split(",");
+		String[] oldFileList = null;
+		if(oldfile!=null&&!oldfile.isEmpty()) {
+			oldFileList = oldfile.split(",");			
+		}
 		String areaCode = multi.getParameter("areaCode");
+		
 		storeVO.setStoreCode(multi.getParameter("storeCode"));
 		storeVO.setEmpNo(multi.getParameter("empNo"));
 		storeVO.setStoreName(multi.getParameter("storeName"));
@@ -102,6 +106,13 @@ public class StoreController {
 		List<StoreVO> list = storeService.SearchStore(storeVO);
 		logger.info("{}",list.size());
 		return list;
+	}
+	
+	@RequestMapping(value="/ajaxStoreOne.do")
+	@ResponseBody
+	public StoreVO ajaxStoreOne(@RequestParam String storeCode) {
+		StoreVO storeVO = storeService.SearchStoreByCode(storeCode);
+		return storeVO;
 	}
 	
 	@RequestMapping(value="/ajaxStoreDel.do", produces = "application/json; charset=utf8")

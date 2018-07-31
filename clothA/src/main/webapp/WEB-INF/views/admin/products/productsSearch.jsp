@@ -53,7 +53,7 @@
 			    		if (res.length > 0) {
 			    			$("#searchpdtable tbody").html('');
 			 				$.each(res, function(idx, item) {
-			 					var pdList ="<tr ondblclick=popupText('"+item.PD_CODE+"','"+item.PD_NAME+"','"+item.PD_ORIGINALPRICE+"','"+item.PD_SELLPRICE+"','"+item.ACC_CODE+"','"+item.ACC_NAME+"') class='center'><td>"+item.ACC_NAME+"</td>"
+			 					var pdList ="<tr ondblclick=popupPdText('"+item.PD_CODE+"','"+item.PD_NAME+"','"+item.PD_ORIGINALPRICE+"','"+item.PD_SELLPRICE+"','"+item.ACC_CODE+"','"+item.ACC_NAME+"') class='center'><td>"+item.ACC_NAME+"</td>"
 			 					+"<td id='pdCode'>"+item.PD_CODE+"</td>" 
 			 					+"<td>"+item.PD_NAME+"</td>"
 			 					+"<td>"
@@ -132,7 +132,7 @@
 			
 		
 	} */
-	function popupText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode,accName){
+	function popupPdText(pdCode,pdName,pdOriginalprice,pdSellprice,accCode,accName){
 		var obj = new Object();
 		obj.pdCode=pdCode;
 		obj.pdName=pdName;
@@ -142,7 +142,8 @@
 		obj.accName=accName;
 		
 		window.returnValue = obj;
-		$('#modal-searchPd #btnClose').trigger('click');
+		window.returnValueRead('pd');
+		$('#btnsearchPdClose').trigger('click');
 	}
 	
 	</script>
@@ -189,7 +190,7 @@
 </div>
  
 <div class="modal-footer">
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnsearchPdClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
 </div>

@@ -155,13 +155,18 @@ $(function() {
         
    		}); 
 	})
-	
-	$('#pdbtn').click(function() {
-		popupOpen();
-	})
-	
 	$.changeOption(whorst);
 })
+function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			$('#pdCode').val(reval.pdCode);
+			window.returnValue=null;
+		}
+		
+	}
+}
 
 </script>
 <style type="text/css">
@@ -223,6 +228,18 @@ $(function() {
 </div>
 
 
+<a data-toggle="modal" data-target="#modal-searchPd" id="searchPdopen" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+ 
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../products/productsSearch.jsp" %>
+        </div>
+    </div>
+</div>
 
 
 

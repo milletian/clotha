@@ -7,9 +7,7 @@
 <script type="text/javascript">
 $(function() {
 	$("#WriteDetailtable").tablesorter(); 
-	$('#closeWrite').click(function() {
-		self.close();
-	})
+	
 	
 	$('#searchRegDate').daterangepicker({
 		singleDatePicker: true,
@@ -24,13 +22,6 @@ $(function() {
 	      }
 	});
 	
-	$('#pdCbtn').click(function() {
-		popupOpen('pd');
-	})
-	
-	$('#whcbtn').click(function() {
-		popupOpen('wh');
-	})
 	$('#submit').click(function() {
 		$.ajax({
 			type:"POST",
@@ -43,14 +34,25 @@ $(function() {
 				"accDtQty":$('#accDtQty').val(),
 				"pdCode":$('#pdCode').val()
 				},
-			dataType:"json",
+			dataType:"text",
 			success:function(res){
-				alert(res);
-				self.close();
+				alert("등록성공!!");
+				$('#btnAccountDetailClose').trigger('click');
 			},
-			error:function(xhr, status, error){
-				alert("sdsds");
-			}
+			error:function(x,e){ 
+                if(x.status==0){
+                   alert('You are offline!!n Please Check Your Network.'); 
+                }else if(x.status==404){ 
+                   alert('Requested URL not found.'); 
+                }else if(x.status==500){ 
+                   alert('Internel Server Error.'); 
+                }else if(e=='parsererror'){ 
+                   alert('Error.nParsing JSON Request failed.'); 
+                }else if(e=='timeout'){
+                   alert('Request Time out.'); 
+                }else { 
+                   alert('Unknow Error.n'+x.responseText); } 
+                }
 		})
 	})
 })
@@ -95,19 +97,6 @@ function ajaxStockByStaCode() {
 	}
 }
 
-function popupOpen(str){
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-	if(str=='pd'){
-		var popUrl = "<c:url value='/admin/products/productsSearch.do'/>";	//팝업창에 출력될 페이지 URL
-		window.open(popUrl,"상품조회",popOption);
-	}else{
-		var popUrl = "<c:url value='/admin/warehouse/warehouseSearch.do'/>";	//팝업창에 출력될 페이지 URL		
-		window.open(popUrl,"창고조회",popOption);
-	}
-
-
-
-	}
 </script>
 <style type="text/css">
 #wrap,#maincontent{
@@ -177,7 +166,7 @@ function popupOpen(str){
     <span class="btn btn-sm btn-success" id="submit">
         저장<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
     </span>
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnAccountDetailClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
 </div>
