@@ -83,6 +83,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.empApprove(empDel);
 	}
 
+	@Override
+	public int appConfirm(EmployeeVO employeeVo) {
+		return employeeDao.appConfirm(employeeVo);
+	}
+
+	@Override
+	public List<Map<String, Object>> empSearch(EmployeeVO employeeVo) {
+		return employeeDao.empSearch(employeeVo);
+	}
+
+	
+
 	
 	
 	

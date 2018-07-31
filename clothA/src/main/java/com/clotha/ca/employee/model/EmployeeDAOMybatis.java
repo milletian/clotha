@@ -87,6 +87,16 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 		return sqlSession.selectList(namespace+"empApprove", empDel);
 	}
 
+	@Override
+	public int appConfirm(EmployeeVO employeeVo) {
+		return sqlSession.update(namespace+"appConfirm", employeeVo);
+	}
+
+	@Override
+	public List<Map<String, Object>> empSearch(EmployeeVO employeeVo) {
+		return sqlSession.selectList(namespace+"empSearch", employeeVo);
+	}
+
 	
 
 }

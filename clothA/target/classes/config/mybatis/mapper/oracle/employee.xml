@@ -70,6 +70,9 @@
 			<if test="gradeCode!=null and gradeCode!=''">
 				and e.grade_code=#{gradeCode}
 			</if>
+			<if test="empOutdate==null or empOutdate==''">
+				and emp_outdate is null
+			</if>
 		</where>
 		order by e.grade_code asc
 	</select>
@@ -111,6 +114,26 @@
 	where EMP_DEL = 'N'		
 		order by e.grade_code asc
 	</select>
+	
+	<update id="appConfirm" parameterType="String">
+	update employee
+	set EMP_JOINDATE=to_char(sysdate,'YYYY/MM/DD'), EMP_DEL='Y'
+	where EMP_NO=#{empNo}
+	</update>
+
+	<select id="empSearch" parameterType="EmployeeVO"	resultType="map">
+		select e.STORE_CODE, e.EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
+        EMP_TEL, EMP_EMAIL, EMP_JOB, to_char(EMP_JOINDATE,'YYYY/MM/DD') as EMP_JOINDATE,  to_char(EMP_OUTDATE,'YYYY/MM/DD') as EMP_OUTDATE, 
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, s.STORE_NAME 
+		from EMPLOYEE e join DEPT d
+		ON e.DEPT_NO = d.DEPT_NO
+		join GRADE g
+		ON e.GRADE_CODE = g.GRADE_CODE
+		left outer join STORE s
+		on e.STORE_CODE = s.STORE_CODE
+		where e.GRADE_CODE=3
+	</select>	
+	
 	
 </mapper>
 

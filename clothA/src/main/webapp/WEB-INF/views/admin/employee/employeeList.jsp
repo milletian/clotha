@@ -75,7 +75,6 @@ $(function() {
 	 					+"<td>"+item.EMP_EMAIL+"</td>"
 	 					+"<td>"+item.EMP_JOB+"</td>"
 	 					+"<td>"+item.EMP_JOINDATE+"</td>"
-	 					+"<td>"+item.EMP_OUTDATE+"</td>"
 	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
 	 					 $("table tbody").append(empList);
 	 					 //undefined 항목 빈칸으로 출력
@@ -147,7 +146,7 @@ function popupOpen2(empNo){
 			</select>
 			
 			<label for="searchGrade">직급</label>
-			<select name="GradeCode">
+			<select name="gradeCode">
 				<option value="">선택하세요</option>
 				<option value="1">마스터</option>
 				<option value="2">본사관리자</option>
@@ -175,7 +174,6 @@ function popupOpen2(empNo){
 					<col style="width:5%;" />		
 					<col style="width:5%;" />		
 					<col style="width:7%;" />		
-					<col style="width:7%;" />		
 					<col style="width:5%;" />		
 				</colgroup>
 				<thead>
@@ -191,7 +189,6 @@ function popupOpen2(empNo){
 						<th scope="col">메일</th>
 						<th scope="col">담당업무</th>
 						<th scope="col">입사일</th>
-						<th scope="col">퇴사일</th>
 						<th scope="col">직급</th>
 					</tr>
 				</thead>

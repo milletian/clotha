@@ -4,7 +4,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
+<script src="<c:url value='/js/jquery-3.3.1.min.js'/>"></script>
 <script type="text/javascript">
+	$(document).ready(function () {
+		
+		$('.employeeApp').click(function () {
+			 var result = confirm('하시겠습니까?');
+				
+				if(result){
+					 location.href="<c:url value='/admin/employee/employeeApp.do?empNo=${map.EMP_NO }'/> ";
+				}else{
+					return false;
+				}
+		})
+	})//제이쿼리
 
 </script>
 <style type="text/css">
@@ -26,53 +39,50 @@
 				</div>
 				<div>
 					<label for="empNo">사원코드</label>
-					<input type="text" name="empNo" value="${map.EMP_NO }" readonly="readonly">
+					<span>${map.EMP_NO }</span>
 				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
-					<input type="text" name="deptNo" value="${map.DEPT_NO }" readonly="readonly">
+					<span>${map.DEPT_NAME }</span>
 				</div>
 				<div>
 						<label for="empName">이름</label> 
-						<input type="text" name="empName" id="empName" class="valid" value="${map.EMP_NAME }" readonly="readonly">
+						<span>${map.EMP_NAME }</span>
 				</div>
 				<div>
 					<label for="empZipcode">우편번호</label> 
-					<input type="text" id="empZipcode" name="empZipcode" value="${map.EMP_ZIPCODE }" readonly="readonly"><br>
+					<span>${map.EMP_ZIPCODE }</span><br>
 					<label for="empAddress">주소</label>
 					<c:set var="address" value="${map.EMP_ADDRESS.split('~') }"></c:set>
-					<input type="text" id="empAddress" name="empAddress" value="${address[0] }" readonly="readonly"><br>
+					<span>${address[0] }</span><br>
 					<label for="addressDetail">상세주소</label>
-					<input type="text" id="addressDetail" name="addressDetail" value="${address[1] }" readonly="readonly"><br> 
+					<span>${address[1] }</span><br> 
 				</div>
 				<div>
 					<label for="empJumin">주민등록번호</label>
 					<c:set var="jumin" value="${map.EMP_JUMIN.split('-') }"></c:set>  
-					<input type="text"	name="empJumin1" id="empJumin1" value="${jumin[0] }" readonly="readonly">-
-					<input type="text" name="empJumin2" id="empJumin2"	value="${jumin[1] }" readonly="readonly">
+					<span>${jumin[0] }-${jumin[1] }</span>
 				</div>
 				<div>
 					<label for="empTel" >핸드폰</label>
-					<input type="text" id="empTel" name="empTel"value="${map.EMP_TEL }" readonly="readonly"><br>
+					<span>${map.EMP_TEL }</span><br>
 				</div>
 				<div>
 					<label for="empEmail">이메일 주소</label> 
 					<c:set var="email" value="${map.EMP_EMAIL.split('@') }"></c:set>
-					<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" value='${email[0]}' readonly="readonly">
-					@ <input type="text" name="email2" id="email2" title="이메일주소 뒷자리" value='${email[1]}' readonly="readonly">
+					<span>${email[0]}@${email[1]}</span>
 				</div>
 				<div>
 					<label for="empJob">담당업무</label> 
-					<input type="text" name="empJob" id="empJob" value="${map.EMP_JOB }" readonly="readonly">
+					<span>${map.EMP_JOB }</span>
 				</div>
 				<div>
 					<label for="gradeCode">직급</label>
-					<input type="text" name="gradeCode" value="${map.GRADE_CODE }" readonly="readonly">
-					 
-			</div>
+					<span>${map.GRADE_NAME }</span>
+				</div>
 		</div>
 		<div>
-			<input type="button" value="승인">
+			<input type="button" value="승인" class="employeeApp">
 			<input type="reset" value="취소" >
 			<input type="text" name="empNo" value="${map.EMP_NO }">
 		 </div>
