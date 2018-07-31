@@ -106,7 +106,7 @@ $(function() {
     	error: function(xhr, status, error){
 			alert("sdsds");
 		} 
-	});//ajex
+	});//ajex 매장
 	
 	$('#btnSearch').click(function() { 
 	$.ajax({
@@ -119,8 +119,8 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var inoutList ="<tr class='center'><td>"+item.INOUT_STARTDATE+"</td>"
- 					+"<td>"+item.IS_IN+"</td>"
+ 					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
+ 					+"<td>"+item.INOUT_STARTDATE+"</td>"
  					+"<td>"+item.INOUT_ENDDATE+"</td>"
  					+"<td>"+item.WH_NAME+"</td>"
  					+"<td>"+item.STORE_NAME+"</td>"
@@ -180,8 +180,16 @@ function popupOpen(ACC_DT_CODE){
 		window.open(popUrl,"정보입력",popOption);
 
 	}
-		
+	
+/* function searchWh(){
+	var search = "<c:url value='/admin/warehouse/warehouseSearch.do'/>";	//팝업창에 출력될 페이지 URL
 
+	var searchOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+		window.open(search,"정보입력",searchOption);
+}
+		
+ */
 </script>
 <style type="text/css">
 
@@ -197,9 +205,13 @@ function popupOpen(ACC_DT_CODE){
 					class="ajax">
 				</select>
 				<label for="selSearchStoreName">매장</label>
-				<select style="max-height: 30px; width: 100px" name="StoreName"
-				data-placeholder="검색할 매장을 선택하세요" id="selSearchStore"
+				<select style="max-height: 30px; width: 100px" name="storeCode"
+				data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
 					class="ajax">
+				</select>
+				<label for="selSearchWareHouse">창고</label>
+				<input type="text" data-placeholder="검색할 창고를 선택하세요" id="selSearchWareHouse" readonly="readonly" name="whCode" value="wh3">
+<!-- 				<input type="text" data-placeholder="검색할 창고를 선택하세요" id="selSearchWareHouse" readonly="readonly" onclick="searchWh()"> -->
 				</select>
 				<label for="selSearchProducts">상품코드/명</label>
 				<select style="max-height: 30px; width: 100px" name="pdCode"

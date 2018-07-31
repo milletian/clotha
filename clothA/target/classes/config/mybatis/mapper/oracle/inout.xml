@@ -11,16 +11,16 @@
 			INOUT_STARTDATE>#{startDay} and INOUT_STARTDATE<to_date(#{endDay})+1
 			]]>
 		</if>
-		<if test="STORE_CODE!=null and store_code=''">
-			and store_code=#{storeCode}
+		<if test="storeCode!=null and storeCode!=''">
+			and STORE_CODE=#{storeCode}
 		</if>
-		<if test="acc_code!=null and acc_code=''">
+		<if test="accCode!=null and accCode!=''">
 			and acc_code=#{accCode}
 		</if>
-		<if test="wh_code!=null and wh_code=''">
+		<if test="whCode!=null and whCode!=''">
 			and wh_code=#{whCode}
 		</if>
-		<if test="pd_code!=null and pd_code=''">
+		<if test="pdCode!=null and pdCode!=''">
 			and pd_code=#{pdCode}
 		</if>
 	</where>

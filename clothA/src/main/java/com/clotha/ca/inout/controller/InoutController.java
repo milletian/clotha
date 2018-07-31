@@ -34,7 +34,7 @@ public class InoutController {
 			logger.info("입고 승인대기 페이지 보여주기");
 		}
 		
-		@RequestMapping(value="/ajaxinout_standby.do",  method=RequestMethod.GET)
+		@RequestMapping("/ajaxinout_standby.do")
 		@ResponseBody
 		public List<Map<String,Object>> productsList_post(@ModelAttribute InoutVO inoutVo,@RequestParam(required=false) String searchDateRange) {
 			logger.info("검색 조건 inoutVo={}",inoutVo);
@@ -50,10 +50,13 @@ public class InoutController {
 			for(Map<String,Object> map : list) {
 				SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");
 				Date date=(Date) map.get("INOUT_STARTDATE");
+				Date date2 = (Date) map.get("INOUT_ENDDATE");
 				String str=smf.format(date);
+				String str2=smf.format(date2);
 
 				map.put("INOUT_STARTDATE",str);
-				logger.info("INOUT_STARTDATE={}",str);
+				map.put("INOUT_ENDDATE", str2);
+				logger.info("INOUT_STARTDATE={},INOUT_ENDDATE={}",str,str2);
 			}
 			return list;
 			
