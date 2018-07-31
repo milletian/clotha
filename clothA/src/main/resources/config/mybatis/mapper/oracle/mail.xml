@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.mail">
+
 	<insert id="insertMail" parameterType="mailVo">
 			<selectKey order="BEFORE" keyProperty="mailNo" resultType="int"  >
 				select log_seq.nextval from dual
@@ -9,10 +10,32 @@
 		insert into mail(mail_no,sender,mail_content,mail_file,mail_name)
 		values(#{mailNo},#{sender},#{mailContent},#{mailFile},#{mailName})
 	</insert>
+	
 	<insert id="insertGet" parameterType="mailVo">
 		insert into get_mail(get_mail_pk,mail_no,emp_no)
 		values(get_mail_seq.nextval,#{mailNo},#{empNo})
 	</insert>
+	
+	<select id="selectGetMail" parameterType="string" resultType="mailVo">
+		select m.* , e.emp_name
+		from mailview m join employee e
+		on m.sender = e.emp_no
+		where m.emp_no = #{empNo}
+		order by m.mail_no desc
+	</select>
+	
+	<select id="selectDetail" parameterType="mailVo" resultType="mailVo" >
+		select m.* , e.emp_name
+		from mailview m join employee e
+		on m.sender = e.emp_no
+		where m.mail_no = #{mailNo} and m.emp_no = #{empNo}
+		order by m.mail_no desc
+	</select>
+	
+	<update id="mailRead" parameterType="mailVo">
+		update mailview set get_mail_read='Y' where emp_no = #{empNo} and mail_no = #{mailNo}
+	</update>
+	
 </mapper>
 
 

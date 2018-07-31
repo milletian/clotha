@@ -16,8 +16,14 @@ public class MailVO {
 	private String getMailSave;
 	private String getMailDel;
 	private String getMailRead;
+	private String empName;
 	
-	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	public int getGetMailPk() {
 		return getMailPk;
 	}
@@ -101,10 +107,8 @@ public class MailVO {
 		return "MailVO [mailNo=" + mailNo + ", sender=" + sender + ", mailContent=" + mailContent + ", mailFile="
 				+ mailFile + ", mailSave=" + mailSave + ", mailSenderDel=" + mailSenderDel + ", mailSdate=" + mailSdate
 				+ ", mailName=" + mailName + ", empNo=" + empNo + ", getMailPk=" + getMailPk + ", getMailSave="
-				+ getMailSave + ", getMailDel=" + getMailDel + ", getMailRead=" + getMailRead + "]";
+				+ getMailSave + ", getMailDel=" + getMailDel + ", getMailRead=" + getMailRead + ", empName=" + empName
+				+ "]";
 	}
-
-
-	
 	
 }

@@ -1,5 +1,7 @@
 package com.clotha.ca.mail.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,23 @@ public class MailServiceImpl implements MailService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<MailVO> selectGetMail(String empNo) {
+		return MailDao.selectGetMail(empNo);
+	}
+
+	@Override
+	public MailVO selectDetail(MailVO mailVo) {
+		int cnt = MailDao.mailRead(mailVo);
+		if(cnt>0) {
+			System.out.println("읽기 성공");
+		}else {
+			System.out.println("읽기 실패");
+		}
+		
+		return MailDao.selectDetail(mailVo);
 	}
 	
 	

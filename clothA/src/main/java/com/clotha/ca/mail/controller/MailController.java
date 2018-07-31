@@ -1,8 +1,6 @@
 package com.clotha.ca.mail.controller;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -76,19 +74,7 @@ public class MailController {
 		result = fileUploadUtil.multifileup(multi, path);
 		logger.info("{}",result);
 		vo.setMailFile(result); // 업로드 메서드 결과로 나온 이미지 파일들 이름 을 세팅
-		/*String fileName="";
-		try {
-			List<Map<String, Object>> list
-			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
-			for(Map<String, Object> map:list) {
-				fileName =(String) map.get("fileName");				
-			}
-			vo.setMailFile(fileName);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		
 		vo.setEmpNo(empNo);
 		int cnt = mailService.insertMail(vo);
 		
@@ -107,13 +93,51 @@ public class MailController {
 	}
 	
 	@RequestMapping(value="/getMail.do",method=RequestMethod.GET )
-	public String getMail_get() {
+	public String getMail_get(HttpServletRequest request, Model model) {
 		logger.info("받은쪽지");
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		
+		List<MailVO> list = mailService.selectGetMail(empNo);
+		logger.info("list.size={}",list.size());
+		for(MailVO vo : list) {
+			System.out.println(vo);
+		}
+		
+		model.addAttribute("list",list);
 		
 		return "mail/getMail";
 	}
+	
+	@RequestMapping(value="/mailDetail.do")
+	public String mailDetail(@RequestParam int mailNo,Model model,HttpServletRequest request) {
+		logger.info("쪽지 상세보기 , mailNo = {}",mailNo);
+		String empNo= (String) request.getSession().getAttribute("empNo");
+		MailVO vo = new MailVO();
+		vo.setMailNo(mailNo);
+		vo.setEmpNo(empNo);
+		vo  = mailService.selectDetail(vo);
+		logger.info("상세보기 vo={}",vo);
+		
+		model.addAttribute("vo",vo);
+		
+		return "mail/mailDetail";
+	}
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

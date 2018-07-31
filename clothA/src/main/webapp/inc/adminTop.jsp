@@ -213,7 +213,7 @@ footer{
 
 	<aside class="sidebar" >
 		<div class="logo" >
-			<a href="#" style="text-align: left;"><img alt="" src="<c:url value='/images/logo5.png'/>" style="width: 240px; height: 57px; "></a>
+			<a href="<c:url value='/test.do'/>" style="text-align: left;"><img alt="" src="<c:url value='/images/logo5.png'/>" style="width: 240px; height: 57px; "></a>
 		</div>
 		<div id="leftside-navigation" class="nano">
 			<ul class="nano-content">

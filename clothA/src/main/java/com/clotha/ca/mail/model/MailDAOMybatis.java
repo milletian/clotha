@@ -1,5 +1,7 @@
 package com.clotha.ca.mail.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +22,23 @@ public class MailDAOMybatis implements MailDAO {
 	public int insertGet(MailVO mailvo) {
 		return sqlSession.insert(namespace+"insertGet",mailvo);
 	}
+
+	@Override
+	public List<MailVO> selectGetMail(String empNo) {
+		return sqlSession.selectList(namespace+"selectGetMail",empNo);
+	}
+
+	@Override
+	public MailVO selectDetail(MailVO mailVo) {
+		return sqlSession.selectOne(namespace+"selectDetail",mailVo);
+	}
+
+	@Override
+	public int mailRead(MailVO vo) {
+		return sqlSession.update(namespace+"mailRead",vo);
+	}
+	
+	
 	
 	
 }
