@@ -25,6 +25,11 @@
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript"
 	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
+	
+<link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
+<script src="<c:url value='/js/FileSaver.js' />"></script>
+<script src="<c:url value='/js/xlsx.core.min.js' />"></script>
+<script src="<c:url value='/js/tableexport.js' /> "></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
 	rel="stylesheet" />
@@ -33,32 +38,21 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
-	$("table").tablesorter(); 
+	var liveTableData = $("#frmwarehousingtable").tableExport({
+	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
+	    fileName: "id",                    // (id, String), filename for the downloaded file
+	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
+	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
+	    ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
+	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+	});
 	
-	$.ajax({
-		type:"POST",
-    	url : "<c:url value='/admin/account/ajaxAccountList.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){
-    			$("#selSearchSupplier").html('');
-    			var option = "<option value=''>전체</option>";
-    			$("#selSearchSupplier").append(option);
-    			
-    			$.each(res,function(idx, item){
-    				var option2 = "<option value='"+item.accCode+"'>";
-    				option2 += item.accName;
-    				option2 += "</option>";
-        			$("#selSearchSupplier").append(option2);
-    			})
-    		}else{
-    			$("#selSearchSupplier").html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("sdsds");
-		}
-	});//ajax
+	$("#frmwarehousingtable").tablesorter(); 
+	
+	
 	
 	$.ajax({
 		type:"POST",
@@ -117,7 +111,7 @@ $(function() {
     	success:function(res){
     		alert(res.length);
     		if (res.length > 0) {
-    			$("table tbody").html('');
+    			$("#frmwarehousingtable tbody").html('');
  				$.each(res, function(idx, item) {
  					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
@@ -131,12 +125,12 @@ $(function() {
  					+"<td>"+item.COLOR_NAME+"</td>"
  					+"<td>"+item.INOUT_DETAIL_QTY+"</td>"
  					+"</tr>";
- 					 $("table tbody").append(inoutList);
+ 					 $("#frmwarehousingtable tbody").append(inoutList);
  					});
  				}else{
- 					$("table tbody").html('해당 입고내역이 없습니다.');
+ 					$("#frmwarehousingtable tbody").html('해당 입고내역이 없습니다.');
  				}
-    		 $("table").trigger("update"); 
+    		 $("#frmwarehousingtable").trigger("update"); 
              return false; 
     	 },
 		error: function(xhr, status, error){
@@ -171,25 +165,23 @@ $(function() {
 	      $(this).val('');
 	  });
 });// document
-function popupOpen(ACC_DT_CODE){
-
-	var popUrl = "<c:url value='/admin/products/productWrite.do '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
+function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			$('#inoutWritefrm #pdCode').val(reval.pdCode);
+			$('#inoutWritefrm #pdName').val(reval.pdName);
+			window.whView();
+			window.returnValue=null;
+		}
+	}else if(str=='store'){
+		if(reval!=null&& reval!=''){
+			$('#inoutWritefrm #storeName').val(reval.storeName);
+			$('#inoutWritefrm #areaEnd').val(reval.staCode);
+			window.returnValue=null;
+		}
 	}
-	
-/* function searchWh(){
-	var search = "<c:url value='/admin/warehouse/warehouseSearch.do'/>";	//팝업창에 출력될 페이지 URL
-
-	var searchOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(search,"정보입력",searchOption);
 }
-		
- */
 </script>
 <style type="text/css">
 
@@ -199,50 +191,32 @@ function popupOpen(ACC_DT_CODE){
 			<form name="frmwarehousingList" id="frmwarehousingList">
 				<label>기간</label><i class="fa fa-calendar"></i>
 				<input type="text" name="searchDateRange" id="searchDateRange">
-				<label for="selSearchSupplier">매입처</label>
-				<select style="max-height: 30px; width: 100px" name="accCode"
-				data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"
-					class="ajax">
-				</select>
+				
 				<label for="selSearchStoreName">매장</label>
-				<select style="max-height: 30px; width: 100px" name="storeCode"
+				<select style="max-height: 30px; width: 100px" name="areaEnd"
 				data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
 					class="ajax">
 				</select>
 				<label for="selSearchWareHouse">창고</label>
-				<input type="text" data-placeholder="검색할 창고를 선택하세요" id="selSearchWareHouse" readonly="readonly" name="whCode" value="wh3">
-<!-- 				<input type="text" data-placeholder="검색할 창고를 선택하세요" id="selSearchWareHouse" readonly="readonly" onclick="searchWh()"> -->
-				</select>
-				<label for="selSearchProducts">상품코드/명</label>
+				<input type="text" readonly="readonly" id="areaEnd" name="areaEnd">
+ 				
+ 				<label for="selSearchProducts">상품코드/명</label>
 				<select style="max-height: 30px; width: 100px" name="pdCode"
 					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
 					class="ajax">
 				</select>
-				<label for="selSearchColors">색상</label>
-				<select name="colorCode">
-					<option value="">선택</option>
-					<option value="69">navy</option>
-					<option value="89">black</option>
-					<option value="00">white</option>
-					<option value="04">pink</option>
-					<option value="32">beige</option>
-					<option value="67">blue</option>
-					<option value="05">red</option>
-					<option value="88">gray</option>
-					<option value="25">yellow</option>
-					<option value="99">gold</option>
-				</select>
+				
 				<button type="button" id="btnSearch">
-					<i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)
+					<i class="fa fa-lg fa-search"></i>&nbsp;조회(F2)
 				</button>
 			</form>
 		</div>
 		<div id="maincontent" class="box2">
-			<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a> <a
+			<a href="#"><i class="fas fa-edit"></i></a> <a
 				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
 				class="fas fa-trash-alt"></i></a>
 				<div id="content1">
-					<table cellspacing="1" class="tablesorter">
+					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
 								<th>작업구분</th>
@@ -264,4 +238,35 @@ function popupOpen(ACC_DT_CODE){
 				</div>
 			</form>
 		</div>
+</div>
+
+
+<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success"> 등록</span>
+</a>
+ 
+ 
+<div id="modal-inWrite" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:1000px">
+        <div class="modal-content">
+        	<%@include file="inoutWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../products/productsSearch.jsp" %>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal-searchStore" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../store/storeSearch.jsp" %>
+        </div>
+    </div>
 </div>

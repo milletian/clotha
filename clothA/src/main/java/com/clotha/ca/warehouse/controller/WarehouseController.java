@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,6 +106,15 @@ public class WarehouseController {
 	public List<WarehouseVO> ajaxWarehouseList(@ModelAttribute WarehouseVO warehouseVO) {
 		logger.info("{}",warehouseVO);
 		List<WarehouseVO> list = warehouseService.Searchwarehouse(warehouseVO);
+		logger.info("{}",list.size());
+		return list;
+	}
+	
+	@RequestMapping(value="/ajaxWarehouseListBypdQty.do")
+	@ResponseBody
+	public List<Map<String,Object>> ajaxWarehouseListBypdQty(@RequestParam(required=false) String pdCode) {
+		logger.info("{}",pdCode);
+		 List<Map<String,Object>> list = warehouseService.selectWhStockQty(pdCode);
 		logger.info("{}",list.size());
 		return list;
 	}

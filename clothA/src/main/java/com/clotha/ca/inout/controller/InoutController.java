@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.clotha.ca.inout.model.InoutService;
 import com.clotha.ca.inout.model.InoutVO;
 import com.clotha.ca.product.model.ProductsVO;
+import com.clotha.ca.stock.model.StockService;
+import com.clotha.ca.stock.model.StockVO;
 
 @Controller
 @RequestMapping("/admin/inout")
@@ -29,9 +31,44 @@ public class InoutController {
 		@Autowired
 		private InoutService inoutService;
 		
+		@Autowired
+		private StockService stockService;
+		
 		@RequestMapping(value="/inout_standby.do", method=RequestMethod.GET)
 		public void inoutList_get() {
 			logger.info("입고 승인대기 페이지 보여주기");
+		}
+		
+		@RequestMapping(value="/ajaxInOutWrite.do",produces = "application/text; charset=utf8")
+		public @ResponseBody String ajaxInOutWrite(@ModelAttribute InoutVO inoutVO) {
+			logger.info("ajaxInoutWrite= vo={}",inoutVO);
+			String msg = "등록실패";
+			int result = inoutService.insertInout(inoutVO);
+			result = inoutService.insertInoutDetail(inoutVO);
+			StockVO start = new StockVO(); // 출발지
+			StockVO end = new StockVO(); // 도착지
+			start.setStaCode(inoutVO.getAreaStart());
+			start.setPdCode(inoutVO.getPdCode());
+			start.setStockQty(-inoutVO.getInoutDetailQTY());
+			end.setStaCode(inoutVO.getAreaEnd());
+			end.setPdCode(inoutVO.getPdCode());
+			end.setStockQty(inoutVO.getInoutDetailQTY());
+			int endStock = stockService.selectBystaCodeandpdCode(end);
+			logger.info("result = {}",result);
+			if(endStock==0) {
+				//인서트
+				stockService.insertStock(end);
+			}else {
+				//업데이트
+				stockService.updateStockQty(end);
+				stockService.updateStockQty(start);
+			}
+			
+			if(result>0) {
+				msg="등록성공";
+			}
+			
+			return msg;
 		}
 		
 		@RequestMapping("/ajaxinout_standby.do")

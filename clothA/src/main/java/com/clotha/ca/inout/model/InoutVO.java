@@ -7,17 +7,12 @@ public class InoutVO extends DateSearchVO{
 	private String inoutCode;
 	private String inoutStartdate;
 	private String inoutEnddate;
-	private String whName;
-	private String whCode;
-	private String storeName;
-	private String storeCode;
-	private String accCode;
-	private String accName;
+	private String areaStart;
+	private String areaEnd;
+	private int inoutDetailQTY;
+	private String inoutStatus;
+	private String outDetail="";
 	private String pdCode;
-	private String pdName;
-	private String colorCode;
-	private String colorName;
-	private String inoutDetailQTY;
 	public String getIsIn() {
 		return isIn;
 	}
@@ -42,41 +37,35 @@ public class InoutVO extends DateSearchVO{
 	public void setInoutEnddate(String inoutEnddate) {
 		this.inoutEnddate = inoutEnddate;
 	}
-	public String getWhName() {
-		return whName;
+	public String getAreaStart() {
+		return areaStart;
 	}
-	public void setWhName(String whName) {
-		this.whName = whName;
+	public void setAreaStart(String areaStart) {
+		this.areaStart = areaStart;
 	}
-	public String getWhCode() {
-		return whCode;
+	public String getAreaEnd() {
+		return areaEnd;
 	}
-	public void setWhCode(String whCode) {
-		this.whCode = whCode;
+	public void setAreaEnd(String areaEnd) {
+		this.areaEnd = areaEnd;
 	}
-	public String getStoreName() {
-		return storeName;
+	public int getInoutDetailQTY() {
+		return inoutDetailQTY;
 	}
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
+	public void setInoutDetailQTY(int inoutDetailQTY) {
+		this.inoutDetailQTY = inoutDetailQTY;
 	}
-	public String getStoreCode() {
-		return storeCode;
+	public String getInoutStatus() {
+		return inoutStatus;
 	}
-	public void setStoreCode(String storeCode) {
-		this.storeCode = storeCode;
+	public void setInoutStatus(String inoutStatus) {
+		this.inoutStatus = inoutStatus;
 	}
-	public String getAccCode() {
-		return accCode;
+	public String getOutDetail() {
+		return outDetail;
 	}
-	public void setAccCode(String accCode) {
-		this.accCode = accCode;
-	}
-	public String getAccName() {
-		return accName;
-	}
-	public void setAccName(String accName) {
-		this.accName = accName;
+	public void setOutDetail(String outDetail) {
+		this.outDetail = outDetail;
 	}
 	public String getPdCode() {
 		return pdCode;
@@ -84,37 +73,12 @@ public class InoutVO extends DateSearchVO{
 	public void setPdCode(String pdCode) {
 		this.pdCode = pdCode;
 	}
-	public String getPdName() {
-		return pdName;
-	}
-	public void setPdName(String pdName) {
-		this.pdName = pdName;
-	}
-	public String getColorCode() {
-		return colorCode;
-	}
-	public void setColorCode(String colorCode) {
-		this.colorCode = colorCode;
-	}
-	public String getColorName() {
-		return colorName;
-	}
-	public void setColorName(String colorName) {
-		this.colorName = colorName;
-	}
-	public String getInoutDetailQTY() {
-		return inoutDetailQTY;
-	}
-	public void setInoutDetailQTY(String inoutDetailQTY) {
-		this.inoutDetailQTY = inoutDetailQTY;
-	}
 	@Override
 	public String toString() {
 		return "InoutVO [isIn=" + isIn + ", inoutCode=" + inoutCode + ", inoutStartdate=" + inoutStartdate
-				+ ", inoutEnddate=" + inoutEnddate + ", whName=" + whName + ", whCode=" + whCode + ", storeName="
-				+ storeName + ", storeCode=" + storeCode + ", accCode=" + accCode + ", accName=" + accName + ", pdCode="
-				+ pdCode + ", pdName=" + pdName + ", colorCode=" + colorCode + ", colorName=" + colorName
-				+ ", inoutDetailQTY=" + inoutDetailQTY + "]";
+				+ ", inoutEnddate=" + inoutEnddate + ", areaStart=" + areaStart + ", areaEnd=" + areaEnd
+				+ ", inoutDetailQTY=" + inoutDetailQTY + ", inoutStatus=" + inoutStatus + ", outDetail=" + outDetail
+				+ ", pdCode=" + pdCode + "]";
 	}
 	
 	

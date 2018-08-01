@@ -1,6 +1,7 @@
 package com.clotha.ca.warehouse.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,10 @@ public class WarehouseServiceImpl implements WarehouseService{
 	@Override
 	public int warehouseDel(String whCode) {
 		return warehouseDAO.warehouseDel(whCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectWhStockQty(String pdCode) {
+		return warehouseDAO.selectWhStockQty(pdCode);
 	}
 }

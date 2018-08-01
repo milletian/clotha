@@ -1,6 +1,7 @@
 package com.clotha.ca.warehouse.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,10 @@ private String namesapce="config.mybatis.mapper.oracle.warehouse.";
 	@Override
 	public int warehouseDel(String whCode) {
 		return sqlSession.update(namesapce+"warehouseDel", whCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectWhStockQty(String pdCode) {
+		return sqlSession.selectList(namesapce+"selectWhStockQty",pdCode);
 	}
 }

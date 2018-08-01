@@ -11,14 +11,11 @@
 			INOUT_STARTDATE>#{startDay} and INOUT_STARTDATE<to_date(#{endDay})+1
 			]]>
 		</if>
-		<if test="storeCode!=null and storeCode!=''">
-			and STORE_CODE=#{storeCode}
+		<if test="areaStart!=null and areaStart!=''">
+			and AREA_START=#{areaStart}
 		</if>
-		<if test="accCode!=null and accCode!=''">
-			and acc_code=#{accCode}
-		</if>
-		<if test="whCode!=null and whCode!=''">
-			and wh_code=#{whCode}
+		<if test="areaEnd!=null and areaEnd!=''">
+			and AREA_END=#{areaEnd}
 		</if>
 		<if test="pdCode!=null and pdCode!=''">
 			and pd_code=#{pdCode}
@@ -26,6 +23,18 @@
 	</where>
 	order by INOUT_STARTDATE desc
 	</select>
+	
+	<insert id="insertInout" parameterType="InoutVO">
+		insert into inout(inout_code,inout_startdate,inout_status,inout_enddate,area_start,area_end,IS_IN,OUT_DETAIL)
+		values(inout_seq.nextval,#{inoutStartdate},#{inoutStatus},#{inoutEnddate},#{areaStart},#{areaEnd},#{isIn},#{outDetail})
+	</insert>
+	
+	<insert id="insertInoutDetail" parameterType="InoutVO">
+		insert into inout_detail(INOUT_DETAIL_PK,INOUT_CODE,PD_CODE,INOUT_DETAIL_QTY)
+		<![CDATA[
+			values(inout_detail_seq.nextval,(select inout_code from ( select * from inout order by inout_code desc ) where rownum=1 ) ),#{pdCode},#{inoutDetailQTY})		
+		]]>
+	</insert>
 </mapper>
 
 

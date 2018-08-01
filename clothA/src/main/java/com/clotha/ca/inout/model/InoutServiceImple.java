@@ -17,4 +17,14 @@ public class InoutServiceImple implements InoutService{
 		return inoutDao.inoutSelectAll(inoutVo);
 	}
 
+	@Override
+	public int insertInout(InoutVO inoutVO) {
+		return inoutDao.insertInout(inoutVO);
+	}
+
+	@Override
+	public int insertInoutDetail(InoutVO inoutVO) {
+		return inoutDao.insertInoutDetail(inoutVO);
+	}
+
 }

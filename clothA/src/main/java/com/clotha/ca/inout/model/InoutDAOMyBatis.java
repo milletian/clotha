@@ -20,4 +20,14 @@ public class InoutDAOMyBatis implements InoutDAO{
 		return sqlsession.selectList(namespace+"inoutSelectAll", inoutVo);
 	}
 
+	@Override
+	public int insertInout(InoutVO inoutVO) {
+		return sqlsession.insert(namespace+"insertInout", inoutVO);
+	}
+
+	@Override
+	public int insertInoutDetail(InoutVO inoutVO) {
+		return sqlsession.insert(namespace+"insertInoutDetail", inoutVO);
+	}
+
 }

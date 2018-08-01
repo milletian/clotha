@@ -5,4 +5,7 @@ import java.util.Map;
 
 public interface InoutService {
 	public List<Map<String, Object>> inoutSelectAll(InoutVO inoutVo);
+	
+	public int insertInout(InoutVO inoutVO);
+	public int insertInoutDetail(InoutVO inoutVO);
 }

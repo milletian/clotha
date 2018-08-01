@@ -17,6 +17,15 @@
 		</where> 
 		order by wh_code
 	</select>
+	
+	<select id="selectWhStockQty" parameterType="string" resultType="map">
+		select sa.sta_code,wh.WH_NAME,s.STOCK_QTY from stock_area sa join stock s
+		on sa.STA_CODE = s.STA_CODE 
+		join warehouse wh
+		on sa.STA_CODE = wh.STA_CODE
+		where s.STOCK_QTY>0
+		and s.PD_CODE=#{pdCode}
+	</select>
 		
 	<select id="SearchWarehouseByCode" parameterType="string" resultType="WarehouseVO">
 		select * from Warehouse where wh_CODE=#{whCode}

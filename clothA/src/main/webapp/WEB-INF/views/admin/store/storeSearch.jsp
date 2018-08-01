@@ -8,38 +8,34 @@
 	<script type="text/javascript">
 	$(function() {
 		
-		$("#searchwhtable").tablesorter(); 
+		$("#searchstoretable").tablesorter(); 
 		
-		$('#btn').click(function() { 
+		
+		$('#storeSearchbtn').click(function() { 
 	    	$.ajax({
 	        	type:"POST",
-	        	url : "<c:url value='/admin/warehouse/ajaxWarehouseList.do' />",
-	        	data:$("#frmWarehouseList").serialize(),
+	        	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
+	        	data:$("#frmStoreList").serialize(),
 	        	dataType:'json',
 	        	success:function(res){
 	        		if (res.length > 0) {
-	        			$("#searchwhtable tbody").html('');
+	        			$("#searchstoretable tbody").html('');
 	     				$.each(res, function(idx, item) {
-	     					var dsd ="<tr ondblclick=popupWhText('"+item.whCode+"','"+item.staCode+"','"+item.whName+"')><td>"+item.whCode+"</td>"
+	     					var dsd ="<tr ondblclick=popupStoreText('"+item.storeCode+"','"+item.staCode+"','"+item.storeName+"','"+item.empNo+"')><td>"+item.storeCode+"</td>"
 	     					+"<td>"+item.staCode+"</td>"
-	     					+"<td>"+item.whName+"</td>"
-	     					+"<td>"+item.whZipcode+"</td>"
-	     					+"<td>"+item.whAddress+"</td>"
-	     					+"<td>"+item.whRegdate+"</td>"
-	     					+"<td>"
-	     					if(item.whDel!=null&&item.whDel!=''){
-	     						dsd+="미사용";
-	     					}else{
-	     						dsd+="사용중";
-	     					}
-	     					+"</td>";
-	     					 $("#searchwhtable tbody").append(dsd);
-	     					liveTableData.reset();
+	     					+"<td>"+item.empNo+"</td>"
+	     					+"<td>"+item.storeName+"</td>"
+	     					+"<td>"+item.storeZipcode+"</td>"
+	     					+"<td>"+item.storeAddress+"</td>"
+	     					+"<td>"+item.storeNo+"</td>"
+	     					+"<td>"+item.storeTel+"</td>"
+	     					+"<td>"+item.storeJoin+"</td>";
+	     					 $("#searchstoretable tbody").append(dsd);
 	     					});
 	     				}else{
-	     					$("#searchwhtable tbody").html('');
+	     					$("#searchstoretable tbody").html('');
 	     				}
-	        		 $("#searchwhtable").trigger("update"); 
+	        		 $("#searchstoretable").trigger("update"); 
 	                 return false; 
 	        	 },
 				error: function(xhr, status, error){
@@ -48,20 +44,21 @@
 	        
 	   		}); 
 		})
-		$('#searchwhtable tbody tr').on('click',function(){
+		$('#searchstoretable tbody tr').on('click',function(){
 			$(this).css('backgroundColor','skyblue');
 			whCode=$(this).find('td:first').text();
 		})
 	})
-	function popupWhText(whCode,staCode,whName){
+	function popupStoreText(storeCode,staCode,storeName,empNo){
 		var obj = new Object();
-		obj.whCode=whCode;
+		obj.storeCode=storeCode;
 		obj.staCode=staCode;
-		obj.whName=whName;
+		obj.storeName=storeName;
+		obj.empNo=empNo;
 		
 		window.returnValue = obj;
-		window.returnValueRead('wh');
-		$('#modal-searchWh #btnClose').trigger('click');
+		window.returnValueRead('store');
+		$('#modal-searchStore #btnClose').trigger('click');
 	}
 	/* function popupText(whCode,staCode,whName) {
 		var bool = true;
@@ -91,33 +88,33 @@
  
 <div class="modal-body">
 	<div id="wrap">
-		<form name="frmWarehouseList" id="frmWarehouseList">
-			<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
-			<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">사용중 </label>
-			<input type="radio" id="use" name="whDel" value="Y"><label for="use">미사용 </label>
+		<form name="frmStoreList" id="frmStoreList">
+			<input type="hidden" id="storeDel" name="storeDel" value="N">
 			검색조건
 			<select name="searchCondition"> 
-				<option value="wh_code">창고코드</option>
+				<option value="store_code">매장코드</option>
 				<option value="sta_code">재고위치코드</option>
 			</select>
 			
 			검색<input type="text" name="searchKeyword">
 			
-			<input type="button" id="btn" value="창고 조회">
+			<input type="button" id="storeSearchbtn" value="매장 조회">
 		</form>
 	</div>
 	<div id="maincontent">    
 		<div id="content1">
-			<table id="searchwhtable" cellspacing="1" class="tablesorter">             
+			<table id="searchstoretable" cellspacing="1" class="tablesorter">             
 			    <thead> 
 			        <tr> 
-			            <th>창고코드</th> 
+			            <th>매장코드</th> 
 			            <th>재고위치코드</th> 
-			            <th>창고이름</th> 
+			            <th>점주코드</th> 
+			            <th>매장이름</th> 
 			            <th>우편번호</th> 
 			            <th>주소</th> 
-			            <th>등록날짜</th>
-			            <th>사용여부</th>
+			            <th>법인번호</th>
+			            <th>전화번호</th>
+			            <th>등록일</th>
 			        </tr> 
 			    </thead> 
 			    <tbody> 
