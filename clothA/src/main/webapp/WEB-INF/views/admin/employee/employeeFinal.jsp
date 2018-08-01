@@ -1,90 +1,100 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<div class="modal-header">
 
-<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
-<script src="<c:url value='/js/jquery-3.3.1.min.js'/>"></script>
 <script type="text/javascript">
-	$(document).ready(function () {
+	$(document).ready(function() {
 		
-		$('.employeeApp').click(function () {
-			 var result = confirm('하시겠습니까?');
+		$('#employeeApp').click(function () {
+			if(confirm("승인 처리 하시겠습니까?")){
+				$.ajax({
+			    	type:"POST",
+			    	url : "<c:url value='/admin/employee/employeeApp.do'/>",
+			    	data:{"empNo":$('#empNo').val()},
+			    	dataType:'text',
+			    	success:function(res){
+			    	 	alert(res);
+			    	},
+					error: function(xhr, status, error){
+						alert("승인 실패");
+					}
+			    
+					}); 
+				}; 
 				
-				if(result){
-					 location.href="<c:url value='/admin/employee/employeeApp.do?empNo=${map.EMP_NO }'/> ";
-				}else{
-					return false;
+			});
+
+		
+		/* $('#employeeApp').click(function() {
+		var result = confirm('승인처리 하시겠습니까?');
+
+		if (result) {
+  			location.href = "<c:url value='/admin/employee/employeeApp.do?empNo=${map.EMP_NO }'/> ";
+		} else {
+			return false;
 				}
-		})
-	})//제이쿼리
-
+					}) */
+})//제이쿼리
 </script>
-<style type="text/css">
 
-</style>
-
-<div class="viewBody">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-label="Close" aria-hidden="true">×</button>
+	<h3 class="smaller lighter blue no-margin modal-title">인사등록 승인처리</h3>
+</div>
+<div class="modal-body">
 	<!-- Main content  -->
-		<div >
-			<div >
-				<div>
-					<input type="hidden" name="oldFileName" value="${map.EMP_FACE}">
-					<c:if test="${!empty map.EMP_FACE }">
-					<img alt="직원사진" src="<c:url value='/pd_images/${map.EMP_FACE}'/>" style="width: 150px;">
-					</c:if>
-					<c:if test="${empty map.EMP_FACE }">
-					<span>등록된 사진이 없습니다</span>
-					</c:if>
-				</div>
-				<div>
-					<label for="empNo">사원코드</label>
-					<span>${map.EMP_NO }</span>
-				</div>
-				<div>
-					<label for="deptNo" class="label-right">부서코드</label> 
-					<span>${map.DEPT_NAME }</span>
-				</div>
-				<div>
-						<label for="empName">이름</label> 
-						<span>${map.EMP_NAME }</span>
-				</div>
-				<div>
-					<label for="empZipcode">우편번호</label> 
-					<span>${map.EMP_ZIPCODE }</span><br>
-					<label for="empAddress">주소</label>
-					<c:set var="address" value="${map.EMP_ADDRESS.split('~') }"></c:set>
-					<span>${address[0] }</span><br>
-					<label for="addressDetail">상세주소</label>
-					<span>${address[1] }</span><br> 
-				</div>
-				<div>
-					<label for="empJumin">주민등록번호</label>
-					<c:set var="jumin" value="${map.EMP_JUMIN.split('-') }"></c:set>  
-					<span>${jumin[0] }-${jumin[1] }</span>
-				</div>
-				<div>
-					<label for="empTel" >핸드폰</label>
-					<span>${map.EMP_TEL }</span><br>
-				</div>
-				<div>
-					<label for="empEmail">이메일 주소</label> 
-					<c:set var="email" value="${map.EMP_EMAIL.split('@') }"></c:set>
-					<span>${email[0]}@${email[1]}</span>
-				</div>
-				<div>
-					<label for="empJob">담당업무</label> 
-					<span>${map.EMP_JOB }</span>
-				</div>
-				<div>
-					<label for="gradeCode">직급</label>
-					<span>${map.GRADE_NAME }</span>
-				</div>
-		</div>
-		<div>
-			<input type="button" value="승인" class="employeeApp">
-			<input type="reset" value="취소" >
-			<input type="text" name="empNo" value="${map.EMP_NO }">
-		 </div>
+	<div id="empFace">
+	</div>
+	<div>
+		<label for="empNo">사원코드</label>
+		<input type="text" name="empNo" id="empNo" readonly="readonly">
+	</div>
+	<div>
+		<label for="deptName" class="label-right">부서이름</label>
+		<input type="text" name="deptName" id="deptName" readonly="readonly">
+	</div>
+	<div>
+		<label for="empName">이름</label>
+		<input type="text" name="empName" id="empName" readonly="readonly">
+	</div>
+	<div>
+		<label for="empZipcode">우편번호</label>
+		<input type="text" name="empZipdcode" id="empZipcode" readonly="readonly"><br>
+		<label for="empAddress">주소</label>
+		<input type="text" name="empAddress" id="empAddress" readonly="readonly">
+	</div>
+	<div>
+		<label for="empJumin">주민등록번호</label>
+		<input type="text" name="empJumin" id="empJumin" readonly="readonly">
+	</div>
+	<div>
+		<label for="empTel">핸드폰</label>
+		<input type="text" name="empTel" id="empTel" readonly="readonly"><br>
+	</div>
+	<div>
+		<label for="empEmail">이메일 주소</label>
+		<input type="text" name="empEmail" id="empEmail" readonly="readonly"> 
+	</div>
+	<div>
+		<label for="empJob">담당업무</label>
+		<input type="text" name="empJob" id="empJob" readonly="readonly">
+	</div>
+	<div>
+		<label for="gradeName">직급</label>
+		<input type="text" name="gradeName" id="gradeName" readonly="readonly">
+	</div>
+	<div>
+		<input type="text" name="empDel" id="empDel">
+	</div>
+</div>
+<div class="modal-footer">
+	<div>
+	<span class="btn btn-sm btn-success" id="employeeApp">
+     	승인<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+    </span>
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeAppClose">
+        <i class="ace-icon fa fa-times"></i>닫기
+    </button>
+
 	</div>
 </div>

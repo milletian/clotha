@@ -258,44 +258,23 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("/employeeFinal.do")
-	public String empFinal(@RequestParam(required=false) String empNo, Model model) {
+	@ResponseBody
+	public Map<String, Object> empFinal(@RequestParam(required=false) String empNo) {
 		 logger.info("인사정보 상세페이지 empNo={}", empNo);
 		 
 		 Map<String, Object> map = employeeService.selectByEmpNo(empNo);
-		 logger.info("수정화면 map={}",map);
+		 logger.info("승인신청화면 map={}",map);
 		 
-		 model.addAttribute("map",map);
-		 
-		 return "admin/employee/employeeFinal";
+		 return map;
 	}
 	
 	//입사일 joindate 찍기
-			@RequestMapping("/employeeApp.do")
-			public void employeeApp(@ModelAttribute EmployeeVO employeeVo, Model model, HttpServletResponse response) throws IOException {
-			logger.info("입사일 찍기 employeeVo={}", employeeVo);
+	@RequestMapping(value="/employeeApp.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String employeeApp(@ModelAttribute EmployeeVO employeeVo) {
+	logger.info("입사일 찍기 employeeVo={}", employeeVo);
 
-			int cnt = employeeService.appConfirm(employeeVo); 
-
-			if(cnt>0) {
-				response.setContentType("text/html;charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script type='text/javascript'>");
-				out.println("alert('등록완료.');");
-				out.print("self.close();");
-				out.print("</script>");
-				
-				return ;
-			}else {
-				response.setContentType("text/html;charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script type='text/javascript'>");
-				out.println("alert('등록 실패.');");
-				out.print("history.back();");
-				out.print("</script>");
-				
-				return ;
-			}
-
+	int cnt = employeeService.appConfirm(employeeVo); 
+	return "승인";
 		}
 	@RequestMapping(value="/employeeSearch.do", method=RequestMethod.GET)
 	public void employeeSearch_get() {

@@ -36,10 +36,10 @@
 	});//ajax  
 	   //검색버튼
 	
-	$(".ajax").select2();
+	/* $(".ajax").select2(); */
 	
 	/* 인사정보리스트 */
-	$('#btnSearch').click(function() { 
+	$('#btnSearchEmp').click(function() { 
 		$.ajax({
 	    	type:"POST",
 	    	url : "<c:url value='/admin/employee/ajaxEmployeeSearch.do' />",
@@ -47,10 +47,10 @@
 	    	dataType:'json',
 	    	success:function(res){
 	    		if (res.length > 0) {
-	    			$("table tbody").html('');
+	    			$("#empTable tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
-	 					"<tr ondblclick=popupEmpText('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
+	 					"<tr ondblclick=popupEmpText('"+item.EMP_NO+"','"+item.EMP_NAME+"')><td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.DEPT_NAME+"</td>"
@@ -62,9 +62,9 @@
 	 					+"<td>"+item.EMP_JOB+"</td>"
 	 					+"<td>"+item.EMP_JOINDATE+"</td>"
 	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
-	 					 $("table tbody").append(empList);
+	 					 $("#empTable tbody").append(empList);
 	 					 //undefined 항목 빈칸으로 출력
-	 					$('tbody td').each(function (idx,item) {
+	 					$('#empTable td').each(function (idx,item) {
 	 					 var a = $(this).text();
 		 				if(a=='undefined'){
 		 					$(this).text('');
@@ -73,7 +73,7 @@
 	 					});
 	 				
 	 				}else{
-	 					$("table tbody").html('해당 내역이 없습니다.');
+	 					$("#empTable tbody").html('해당 내역이 없습니다.');
 	 				}
 	    		 $("table").trigger("update"); 
 	             return false; 
@@ -89,19 +89,10 @@
 	
 	})//제이쿼리
 
-	function popupPdText(empNo,deptNo,empZipcode,empAddress,empJumin,empTel,empFace,empJob,empJoindate,gradeCode,storeCode,empEmail){
+	function popupEmpText(empNo,empName){
 		var obj = new Object();
 		obj.empNo=empNo;
-		obj.deptNo=deptNo;
-		obj.empZipcode=empZipcode;
-		obj.empAddress=empAddress;
-		obj.empJumin=empJumin;
-		obj.empFace=empFace;
-		obj.empJob=empJob;
-		obj.empJoindate=empJoindate;
-		obj.gradeCode=gradeCode;
-		obj.storeCode=storeCode;
-		obj.empEmail=empEmail;
+		obj.empName=empName;
 		
 		window.returnValue = obj;
 		window.returnValueRead('Emp');
@@ -117,12 +108,12 @@
 	
 		<div class="box1" style="padding: 10px">
 			<form name=employeeList id="employeeList">
-				<button type="button" id="btnSearch">&nbsp;점장조회</button>
+				<button type="button" id="btnSearchEmp">&nbsp;점장조회</button>
 			</form>
 		</div>
 		<div class="box2">
 			<div id="content1">
-				<table cellspacing="1" class="tablesorter">
+				<table cellspacing="1" class="tablesorter" id="empTable">
 					<colgroup>
 						<col style="width:5%;" />
 						<col style="width:5%;" />
@@ -162,7 +153,7 @@
 	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnsearchPdClose">
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnsearchEmpClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
 </div>

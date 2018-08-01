@@ -2,10 +2,12 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<script src="<c:url value='/js/jquery-3.3.1.min.js'/>"></script>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -35,7 +37,7 @@ $(function() {
 	    			$("table tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
-	 					"<tr ondblclick=popupOpen2('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
+	 					"<tr ondblclick=popupOpen('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.DEPT_NAME+"</td>"
@@ -69,20 +71,55 @@ $(function() {
 	    
 			}); 
 		}); 
-	
 
-	
 })//제이쿼리
 
-function popupOpen2(empNo){
+function popupOpen(empNo){
 
-	var popUrl = "<c:url value='/admin/employee/employeeFinal.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=700, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
+	$.ajax({
+		url:"<c:url value='/admin/employee/employeeFinal.do' />",
+		data:{"empNo":empNo},
+		dataType:"json",
+		success:function(res){
+			$('#modal-EmpFinal #empFace img').remove();
+			$('#modal-EmpFinal #empFace').text("");
+			if(res.EMP_FACE!=null || res.EMP_FACE==""){
+			$('#modal-EmpFinal #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>'>"); 
+			}else{
+			$('#modal-EmpFinal #empFace').text("사진을 등록해주세요");
+			}
+			$('#modal-EmpFinal #empNo').val(res.EMP_NO);
+			$('#modal-EmpFinal #deptName').val(res.DEPT_NAME);
+			$('#modal-EmpFinal #empName').val(res.EMP_NAME);
+			$('#modal-EmpFinal #empZipcode').val(res.EMP_ZIPCODE);
+			$('#modal-EmpFinal #empAddress').val(res.EMP_ADDRESS);
+			$('#modal-EmpFinal #empJumin').val(res.EMP_JUMIN);
+			$('#modal-EmpFinal #empTel').val(res.EMP_TEL);
+			$('#modal-EmpFinal #empEmail').val(res.EMP_EMAIL);
+			$('#modal-EmpFinal #empJob').val(res.EMP_JOB);
+			$('#modal-EmpFinal #gradeName').val(res.GRADE_NAME);
+			$('#modal-EmpFinal #empDel').val(res.EMP_DEL);
+			
+			$('#openmodal').trigger('click');
+		},
+		error:function(x,e){ 
+			if(x.status==0){
+				alert('You are offline!!n Please Check Your Network.'); 
+			}else if(x.status==404){ 
+				alert('Requested URL not found.'); 
+			}else if(x.status==500){ 
+				alert('Internel Server Error.'); 
+			}else if(e=='parsererror'){ 
+				alert('Error.nParsing JSON Request failed.'); 
+			}else if(e=='timeout'){
+				alert('Request Time out.'); 
+			}else { 
+				alert('Unknow Error.n'+x.responseText); } 
+			}
+	})
 }
+
+
 
 
 
@@ -97,9 +134,9 @@ function popupOpen2(empNo){
 		</form>
 	</div>
 	<div class="box2">
-		<a href="#" onclick="popupOpen()"><i class="fas fa-edit"></i></a> 
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
-		<a href="#"><i class="fas fa-trash-alt"></i></a>
+	<a data-toggle="modal" data-target="#modal-EmpFinal"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i></a>
+	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
+	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>
@@ -140,6 +177,12 @@ function popupOpen2(empNo){
 	</div>
 </div>
 
-
+<div id="modal-EmpFinal" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="employeeFinal.jsp" %>
+        </div>
+    </div>
+</div>
 
 

@@ -79,7 +79,7 @@
 	<select id="selectByEmpNo" parameterType="String" resultType="map">
 		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
         EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, EMP_FACE,
-        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME  
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, EMP_DEL
 		from EMPLOYEE e join DEPT d
 		on e.DEPT_NO = d.DEPT_NO
 		join GRADE g
