@@ -37,6 +37,31 @@ public class MailDAOMybatis implements MailDAO {
 	public int mailRead(MailVO vo) {
 		return sqlSession.update(namespace+"mailRead",vo);
 	}
+
+	@Override
+	public int deleteMail(MailVO vo) {
+		return sqlSession.update(namespace+"deleteMail",vo);
+	}
+
+	@Override
+	public List<MailVO> selectSender(String empNo) {
+		return sqlSession.selectList(namespace+"selectSender",empNo);
+	}
+
+	@Override
+	public MailVO sendMailDetail(int mailNo) {
+		return sqlSession.selectOne(namespace+"sendMailDetail",mailNo);
+	}
+
+	@Override
+	public List<MailVO> sendEmpNO(int mailNo) {
+		return sqlSession.selectList(namespace+"sendEmpNO",mailNo);
+	}
+
+	@Override
+	public int sendDelete(int mailNo) {
+		return sqlSession.update(namespace+"sendDelete",mailNo);
+	}
 	
 	
 	

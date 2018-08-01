@@ -75,6 +75,7 @@ body h1{
 			<li><a href="#tabs-1">쪽지쓰기</a></li>
 			<li><a href="#tabs-2">받은쪽지</a></li>
 			<li><a href="#tabs-3">보낸쪽지</a></li>
+			<li><a href="#tabs-4">보관함</a></li>
 		</ul>
 		<div id="tabs-1">
 			<iframe src="<c:url value='/mail/mailWrite.do' />"style="width: 100%; height: 80%; border: none "></iframe>
@@ -84,6 +85,9 @@ body h1{
 		</div>
 		<div id="tabs-3">
 			<iframe src="<c:url value='/mail/sendMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
+		</div>
+		<div id="tabs-4">
+			<iframe src="<c:url value='/mail/saveMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
 		</div>
 	</div>
 </body>

@@ -47,6 +47,31 @@ public class MailServiceImpl implements MailService{
 		
 		return MailDao.selectDetail(mailVo);
 	}
+
+	@Override
+	public int deleteMail(MailVO vo) {
+		return MailDao.deleteMail(vo);
+	}
+
+	@Override
+	public List<MailVO> selectSender(String empNo) {
+		return MailDao.selectSender(empNo);
+	}
+
+	@Override
+	public MailVO sendMailDetail(int mailNo) {
+		return MailDao.sendMailDetail(mailNo);
+	}
+
+	@Override
+	public List<MailVO> sendEmpNO(int mailNo) {
+		return MailDao.sendEmpNO(mailNo);
+	}
+
+	@Override
+	public int sendDelete(int mailNo) {
+		return MailDao.sendDelete(mailNo);
+	}
 	
 	
 }

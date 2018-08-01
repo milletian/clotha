@@ -10,14 +10,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("input[name=list]").click(function(){
-			location.href="<c:url value='/mail/getMail.do'/>";
+			location.href="<c:url value='/mail/sendMail.do'/>";
 		});
 		
 		$("input[name=delete]").click(function(){
 			var result = confirm('정말 삭제하시겠습니다?');
 			
 			if(result){
-				location.href="<c:url value='/mail/mailDelete.do?mailNo=${vo.mailNo}'/> "; 
+				location.href="<c:url value='/mail/sendDelete.do?mailNo=${vo.mailNo}'/> "; 
 			}else{
 				return false;
 			}
@@ -34,12 +34,12 @@
 		margin-left: 395px;
 	}
 </style>
-<title>받은쪽지</title>
+<title>보낸쪽지</title>
 </head>
 <body>
 	<div>
 		<h3>제목 : ${vo.mailName }</h3>
-		<p>보낸이 : ${vo.empName }</p>
+		<p>받는 사람 : <c:forEach var="vo2" items="${list }" > ${vo2.empNo } </c:forEach> </p>
 		<p>보낸날짜 : <fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 		<c:if test="${!empty vo.mailFile }">
 			<p>첨부파일 : ${vo.mailFile }</p>

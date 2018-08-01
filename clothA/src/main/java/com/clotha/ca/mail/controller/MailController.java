@@ -1,6 +1,7 @@
 package com.clotha.ca.mail.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -121,6 +122,76 @@ public class MailController {
 		model.addAttribute("vo",vo);
 		
 		return "mail/mailDetail";
+	}
+	
+	@RequestMapping("/mailDelete.do")
+	public String mailDelete(@RequestParam int mailNo, HttpServletRequest request, Model model ) {
+		logger.info("쪽지 삭제 화면 , mailNo={}",mailNo);
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		MailVO vo = new MailVO();
+		vo.setEmpNo(empNo);
+		vo.setMailNo(mailNo);
+		
+		int cnt = mailService.deleteMail(vo); 
+		String msg = "삭제 실패하였습니다." , url = "/mail/mailDetail.do?mailNo="+mailNo;
+		if(cnt >0 ) {
+			url="/mail/getMail.do?empNo="+empNo;
+			msg="";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/sendMail.do")
+	public String sendMail( HttpServletRequest request, Model model ) {
+		logger.info("보낸 쪽지");
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		
+		List<MailVO> list = mailService.selectSender(empNo);
+		logger.info("selectSender 결과 list.size = {}" , list.size());
+		
+		model.addAttribute("list",list);
+		
+		return "mail/sendMail";
+	}
+	
+	@RequestMapping("/sendDetail.do")
+	public String sendDetail(@RequestParam int mailNo,Model model) {
+		logger.info("보낸쪽지 상세보기 mailNo={} ",mailNo);
+		
+		MailVO vo = mailService.sendMailDetail(mailNo);
+		logger.info("보낸쪽지 vo ={}",vo);
+		List<MailVO> list = mailService.sendEmpNO(mailNo);
+		logger.info("보낸쪽지 list . size = {} ", list.size());
+		
+		model.addAttribute("vo",vo);
+		model.addAttribute("list",list);
+		
+		return "mail/sendDetail";
+	}
+	
+	@RequestMapping("sendDelete.do")
+	public String sendDelete(@RequestParam int mailNo, Model model, HttpServletRequest request) {
+		logger.info("보낸쪽지 삭제하기 mailNo = {}",mailNo);
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		
+		int cnt = mailService.sendDelete(mailNo);
+		String msg="삭제 실패하였습니다.",url="/mail/sendDetail.do?mailNo="+mailNo;
+		
+		if(cnt>0) {
+			msg="";
+			url="/mail/sendMail.do?empNo="+empNo;
+		}
+		
+		model.addAttribute("url",url);
+		model.addAttribute("msg",msg);
+		
+		
+		return "common/message";
+		
 	}
 	
 	

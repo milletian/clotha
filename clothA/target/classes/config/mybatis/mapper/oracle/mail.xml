@@ -20,7 +20,7 @@
 		select m.* , e.emp_name
 		from mailview m join employee e
 		on m.sender = e.emp_no
-		where m.emp_no = #{empNo}
+		where m.emp_no = #{empNo} and m.get_mail_del = 'N'
 		order by m.mail_no desc
 	</select>
 	
@@ -35,6 +35,28 @@
 	<update id="mailRead" parameterType="mailVo">
 		update mailview set get_mail_read='Y' where emp_no = #{empNo} and mail_no = #{mailNo}
 	</update>
+	
+	<update id="deleteMail" parameterType="mailVo">
+		update get_mail set get_mail_del = 'Y' where mail_no=#{mailNo} and emp_no = #{empNo}
+	</update>
+	
+	<select id="selectSender" parameterType="String" resultType="mailVo" >
+		select * from mail where sender = #{empNo} and mail_senderdel = 'N'
+	</select>
+	
+	<select id="sendMailDetail" parameterType="int" resultType="mailVo" >
+		select * from mail where mail_no = #{mailNo}
+	</select>
+	
+	<select id="sendEmpNO" parameterType="int" resultType="mailVo" >
+		select * from get_mail where mail_no = #{mailNo}
+	</select>
+	
+	<update id="sendDelete" parameterType="int">
+		update mail set mail_senderdel = 'Y' where mail_no=#{mailNo}
+	</update>
+	
+	
 	
 </mapper>
 
