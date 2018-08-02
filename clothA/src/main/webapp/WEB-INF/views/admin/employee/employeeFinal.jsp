@@ -14,6 +14,7 @@
 			    	dataType:'text',
 			    	success:function(res){
 			    	 	alert(res);
+			    	 	$('#employeeAppClose').trigger('click');
 			    	},
 					error: function(xhr, status, error){
 						alert("승인 실패");

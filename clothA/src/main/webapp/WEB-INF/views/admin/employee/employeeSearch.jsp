@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-	
-	
+
+
 <div class="modal-header">
 	<script type="text/javascript">
 	$(function() {
@@ -103,59 +103,60 @@
 
 	</script>
 	<style type="text/css">
-	</style>
-	<div class="viewBody">
-	
-		<div class="box1" style="padding: 10px">
-			<form name=employeeList id="employeeList">
-				<button type="button" id="btnSearchEmp">&nbsp;점장조회</button>
-			</form>
-		</div>
-		<div class="box2">
-			<div id="content1">
-				<table cellspacing="1" class="tablesorter" id="empTable">
-					<colgroup>
-						<col style="width:5%;" />
-						<col style="width:5%;" />
-						<col style="width:5%;" />
-						<col style="width:5%;" />
-						<col style="width:5%;" />
-						<col style="width:15%;" />		
-						<col style="width:8%;" />		
-						<col style="width:5%;" />		
-						<col style="width:5%;" />		
-						<col style="width:5%;" />		
-						<col style="width:7%;" />		
-						<col style="width:5%;" />		
-					</colgroup>
-					<thead>
-						<tr>
-							<th scope="col">매장코드</th>
-							<th scope="col">매장이름</th>
-							<th scope="col">직원코드</th>
-							<th scope="col">고용형태</th>
-							<th scope="col">이름</th>
-							<th scope="col">주소</th>
-							<th scope="col">주민등록번호</th>
-							<th scope="col">전화번호</th>
-							<th scope="col">메일</th>
-							<th scope="col">담당업무</th>
-							<th scope="col">입사일</th>
-							<th scope="col">직급</th>
-						</tr>
-					</thead>
-					<tbody>
-	
-					</tbody>
-				</table>
-			</div>
+</style>
+</div>
+<div class="modal-body">
+
+	<div class="box1" style="padding: 10px">
+		<form name=employeeList id="employeeList">
+			<button type="button" id="btnSearchEmp">&nbsp;점장조회</button>
+		</form>
+	</div>
+	<div class="box2">
+		<div id="content1">
+			<table cellspacing="1" class="tablesorter" id="empTable">
+				<colgroup>
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 15%;" />
+					<col style="width: 8%;" />
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 5%;" />
+					<col style="width: 7%;" />
+					<col style="width: 5%;" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">매장코드</th>
+						<th scope="col">매장이름</th>
+						<th scope="col">직원코드</th>
+						<th scope="col">고용형태</th>
+						<th scope="col">이름</th>
+						<th scope="col">주소</th>
+						<th scope="col">주민등록번호</th>
+						<th scope="col">전화번호</th>
+						<th scope="col">메일</th>
+						<th scope="col">담당업무</th>
+						<th scope="col">입사일</th>
+						<th scope="col">직급</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnsearchEmpClose">
-        <i class="ace-icon fa fa-times"></i>닫기
-    </button>
+	<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal"
+		id="btnsearchEmpClose">
+		<i class="ace-icon fa fa-times"></i>닫기
+	</button>
 </div>
 
 

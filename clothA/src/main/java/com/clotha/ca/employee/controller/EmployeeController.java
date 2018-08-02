@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
+import com.clotha.ca.store.model.StoreVO;
 
 @Controller
 @RequestMapping("/admin/employee")
@@ -45,12 +47,64 @@ public class EmployeeController {
 	}
 	
 	/*인사등록*/
-	@RequestMapping(value="/employeeWrite.do", method=RequestMethod.POST)
-	public String employeeWrite(@ModelAttribute EmployeeVO employeeVo, 
-			@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
-			@RequestParam String empJumin1, @RequestParam String empJumin2, @RequestParam(required=false) String addressDetail, 
-			HttpServletRequest request,Model model ) {
-		//주민번호 셋팅
+	@RequestMapping(value="/ajaxemployeeWrite.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String employeeWrite(HttpServletRequest request) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+		EmployeeVO employeeVo = new EmployeeVO();
+	
+		employeeVo.setEmpNo(multi.getParameter("empNo"));
+		employeeVo.setDeptNo(multi.getParameter("deptNo"));
+		employeeVo.setEmpName(multi.getParameter("empName"));
+		employeeVo.setEmpPwd(multi.getParameter("empPwd"));
+		employeeVo.setEmpZipcode(multi.getParameter("empZipcode"));
+		employeeVo.setEmpAddress(multi.getParameter("empAddress")+"~"+multi.getParameter("addressDetail"));
+		employeeVo.setEmpJumin(multi.getParameter("empJumin1")+"-"+multi.getParameter("empJumin2"));
+		employeeVo.setEmpTel(multi.getParameter("empTel"));
+		employeeVo.setEmpFace(multi.getParameter("empFace"));
+		employeeVo.setEmpJob(multi.getParameter("empJob"));
+		employeeVo.setGradeCode(multi.getParameter("gradeCode"));
+		employeeVo.setStoreCode(multi.getParameter("storeCode"));
+		if(multi.getParameter("selectEmail").equals("self")) {
+			employeeVo.setEmpEmail(multi.getParameter("email1")+"@"+multi.getParameter("email2"));
+		}else {
+			employeeVo.setEmpEmail(multi.getParameter("email1")+"@"+multi.getParameter("selectEmail"));
+		}
+		
+		logger.info("employeeVo={}", employeeVo);
+		
+		//파일 업로드
+				String fileName="";
+				try {
+					List<Map<String, Object>> list
+					=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
+					for(Map<String, Object> map:list) {
+						fileName =(String) map.get("fileName");				
+					}
+					employeeVo.setEmpFace(fileName);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//db
+				int cnt=employeeService.insertEmployee(employeeVo);
+				logger.info("인사등록 결과 cnt={}", cnt);
+				
+				String msg="";
+				if(cnt>0) {
+					msg="등록 되었습니다.";
+				}else {
+					msg="등록 실패하였습니다.";
+				}
+				
+				return msg;
+				
+			}	// 조회 list ajax
+	
+		
+		
+		/*//주민번호 셋팅
 		employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
 		
 		//주소 셋팅
@@ -63,43 +117,7 @@ public class EmployeeController {
 		}else {
 			employeeVo.setEmpEmail(email1+"@"+selectEmail);
 			
-		}
-		
-		logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
-
-		
-		//파일 업로드
-		String fileName="";
-		try {
-			List<Map<String, Object>> list
-			=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
-			for(Map<String, Object> map:list) {
-				fileName =(String) map.get("fileName");				
-			}
-			employeeVo.setEmpFace(fileName);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//db
-		int cnt=employeeService.insertEmployee(employeeVo);
-		logger.info("인사등록 결과 cnt={}", cnt);
-		
-		String msg="", url="/admin/employee/register.do";
-		if(cnt>0) {
-			msg="등록 완료 되었습니다";
-		}else {
-			msg="등록에 실패 했습니다";
-		}
-		
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "common/message";
-		
-	}
+		}*/
 	
 	
 	@RequestMapping("/employeeList.do")
@@ -107,7 +125,6 @@ public class EmployeeController {
 		logger.info("직원리스트 화면보여주기");
 	}
 		
-		/* 조회 list ajax*/
 	@RequestMapping("/ajaxEmployeeList.do")
 	@ResponseBody
 	public List<Map<String, Object>> employeeList_post(@ModelAttribute EmployeeVO employeeVo) {
@@ -274,8 +291,9 @@ public class EmployeeController {
 	logger.info("입사일 찍기 employeeVo={}", employeeVo);
 
 	int cnt = employeeService.appConfirm(employeeVo); 
-	return "승인";
+	return "승인 완료";
 		}
+	
 	@RequestMapping(value="/employeeSearch.do", method=RequestMethod.GET)
 	public void employeeSearch_get() {
 		logger.info("직원 검색하기");

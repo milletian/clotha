@@ -14,6 +14,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" />
@@ -51,6 +52,7 @@ $(function() {
 	   //검색버튼
 	
 	$(".ajax").select2();
+	$(".ajax2").select2();
 	
 	/* 인사정보리스트 */
 	$('#btnSearch').click(function() { 
@@ -103,15 +105,7 @@ $(function() {
 	
 })//제이쿼리
 
-function popupOpen(){
 
-	var popUrl = "<c:url value='/admin/employee/employeeWrite.do'/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=500, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
-}
 function popupOpen2(empNo){
 
 	var popUrl = "<c:url value='/admin/employee/employeeDetail.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
@@ -131,11 +125,10 @@ function popupOpen2(empNo){
 
 	<div class="box1" style="padding: 10px">
 		<form name=employeeList id="employeeList">
-			<label for="searchStore">매장</label>
-			<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="검색할 매장을 선택하세요" id="searchStore" class="ajax"></select>
-			
+			<label for="storeCode">매장이름</label>
+			<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore" class="ajax"></select>
 			<label for="empName">이름</label>
-			<input type="text" name="empName" id="empName">
+			<input type="text" name="empName">
 			
 			<label for="searchDeptNo">고용형태</label>
 			<select name="deptNo">
@@ -157,7 +150,7 @@ function popupOpen2(empNo){
 		</form>
 	</div>
 	<div class="box2">
-		<a href="#" onclick="popupOpen()"><i class="fas fa-edit"></i></a> 
+		<a data-toggle="modal" data-target="#modal-employeeWrite" id="openmodal" role="button" data-backdrop="static"><i class="fas fa-edit"></i></a> 
 		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
 		<a href="#"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
@@ -200,6 +193,13 @@ function popupOpen2(empNo){
 	</div>
 </div>
 
+<div id="modal-employeeWrite" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="employeeWrite.jsp" %>
+        </div>
+    </div>
+</div>
 
 
 

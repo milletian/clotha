@@ -1,17 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	
+<div class="modal-header">
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		/* 매장코드로 매장이름 불러오기 */
+	 $(document).ready(function () {
+		 /* 매장코드로 매장이름 불러오기 */ 
 		$.ajax({
 			type:"POST",
 	    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
@@ -29,7 +23,7 @@
 	        			$("#storeCode").append(option2);
 	    			})
 	    		}else{
-	    			$("#storeName").html('');
+	    			$("#storeCode").html('');
 	    		}
 	    	},
 	    	error: function(xhr, status, error){
@@ -37,6 +31,7 @@
 			}
 		});//ajax
 		
+		$(".ajax2").select2();
 		
 		/* 맨처음 입력 포커싱 */
 		$('#storeCode').focus();
@@ -49,7 +44,7 @@
 		
 		
 		/* 빈칸 입력 막는 검사  */
-		$('form[name=employeeWrite]').submit(function(){
+		$('#employeeSubmit').click(function(){
 			
 			var bool = true;
 			
@@ -94,7 +89,37 @@
 				
 				}
 			}
-				return bool;
+		
+			if(bool){
+				var formData = new FormData($('#employeeWrite')[0]);
+				$.ajax({
+					type:"post",
+			    	url : "<c:url value='/admin/employee/ajaxemployeeWrite.do' />",
+			    	dataType:'text',
+			    	contentType: false,
+			    	processData: false,
+			    	data : formData,
+			    	success:function(res){
+			    		alert(res);
+			    		$('#employeeWriteClose').trigger('click');
+			    		
+			    	},
+			    	error:function(x,e){ 
+		                  if(x.status==0){
+		                     alert('You are offline!!n Please Check Your Network.'); 
+		                  }else if(x.status==404){ 
+		                     alert('Requested URL not found.'); 
+		                  }else if(x.status==500){ 
+		                     alert('Internel Server Error.'); 
+		                  }else if(e=='parsererror'){ 
+		                     alert('Error.nParsing JSON Request failed.'); 
+		                  }else if(e=='timeout'){
+		                     alert('Request Time out.'); 
+		                  }else { 
+		                     alert('Unknow Error.n'+x.responseText); } 
+		                  }
+				})
+			}
 				
 		});
 		
@@ -177,21 +202,17 @@
 </script>
 
 <style type="text/css">
-
 </style>
-
-<div class="viewBody">
+</div>
+<div class="modal-body">
 	<!-- Main content  -->
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
-
-		<div class="box3">
-			<div class="middle-box">
+	<form name="employeeWrite" id="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
 				<div>
 					<label for="storeCode">매장이름</label>
-						<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax"></select>
+					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax2"></select>
 				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
@@ -263,12 +284,15 @@
 						<option value="4">사원</option>
 					</select>
 				</div>
-				<input type="submit" value="등록"> 
-				<input type="reset"	value="취소">
-			</div>
-		</div>
 	</form>
 </div>
+<div class="modal-footer">
+	<span class="btn btn-sm btn-success" id="employeeSubmit">
+ 	등록<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+    </span>
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeWriteClose">
+        <i class="ace-icon fa fa-times"></i>닫기
+    </button></div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');

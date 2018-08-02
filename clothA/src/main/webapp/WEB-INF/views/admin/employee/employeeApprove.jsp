@@ -134,9 +134,8 @@ function popupOpen(empNo){
 		</form>
 	</div>
 	<div class="box2">
-	<a data-toggle="modal" data-target="#modal-EmpFinal"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+	<a data-toggle="modal" data-target="#modal-EmpFinal"  role="button" data-backdrop="static">
+	<input type="hidden" id="openmodal"></a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>
