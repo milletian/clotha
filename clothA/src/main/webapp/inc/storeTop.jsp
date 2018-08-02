@@ -214,15 +214,6 @@ footer{
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
-						class="fas fa-users"></i><span>회원관리</span><i
-						class="arrow fa fa-angle-right pull-right"></i></a>
-					<ul>
-						<li><a href="map-google.html">회원정보조회</a></li>
-						<li><a href="map-google.html">회원신규등록</a></li>
-						<li><a href="charts-morris.html">쿠폰현황</a></li>
-					</ul></li>
-				
-				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-wallet"></i><span>매출관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>

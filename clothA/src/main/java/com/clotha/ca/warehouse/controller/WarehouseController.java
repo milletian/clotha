@@ -126,9 +126,8 @@ public class WarehouseController {
 		return warehouseVO;
 	}
 	
-	@RequestMapping(value="/ajaxWarehouseDel.do", produces = "application/json; charset=utf8")
-	@ResponseBody
-	public String ajaxWarehouseDel(@RequestParam String whCode) {
+	@RequestMapping(value="/ajaxWarehouseDel.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String ajaxWarehouseDel(@RequestParam String whCode) {
 		logger.info("{}",whCode);
 		int result = warehouseService.warehouseDel(whCode);
 		if(result==0) {

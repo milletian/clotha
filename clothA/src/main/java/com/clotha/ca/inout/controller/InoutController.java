@@ -35,8 +35,12 @@ public class InoutController {
 		private StockService stockService;
 		
 		@RequestMapping(value="/inout_standby.do", method=RequestMethod.GET)
-		public void inoutList_get() {
-			logger.info("입고 승인대기 페이지 보여주기");
+		public void inout_standby() {
+			logger.info("입고현황 페이지 보여주기");
+		}
+		@RequestMapping(value="/inout_outOk.do", method=RequestMethod.GET)
+		public void inout_outOk() {
+			logger.info("반품 현황 페이지 보여주기");
 		}
 		
 		@RequestMapping(value="/ajaxInOutWrite.do",produces = "application/text; charset=utf8")

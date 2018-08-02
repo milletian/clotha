@@ -42,19 +42,26 @@ $(function() {
 	});
 	
 	$('#delbtn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountDetailDel.do' />",
-        	data:{'accDtCode':accDtCode},
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-			error: function(xhr, status, error){
-				alert("sdsds");
+		if(accDtCode!=undefined){
+			if(confirm('정말로 삭제하시겠습니까?')){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/admin/account/accountDetailDel.do' />",
+		        	data:{"accDtCode":accDtCode},
+		        	dataType:'json',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+					error: function(xhr, status, error){
+						alert("sdsds");
+					}
+		        
+		   		}); 
+				
 			}
-        
-   		}); 
+		}else{
+			alert('먼저 삭제할 행을 선택하십시오')
+		}
 	})
 	// select option 설정
 	$.ajax({
@@ -64,6 +71,8 @@ $(function() {
     	success:function(res){
     		if (res.length > 0){
     			$("#selSearchSupplier").html('');
+    			var option1 = "<option value=''>전체</option>";
+    			$("#selSearchSupplier").append(option1);
     			$.each(res,function(idx, item){
     				var option = "<option value='"+item.accCode+"'>";
     				option += item.accName;
@@ -139,9 +148,11 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-		$('#searchDetailtable tbody tr').on('click',function(){
-			$(this).css('backgroundColor','skyblue');
-			accDtCode=$(this).find('td:first').text();
+		
+	$(document ).on( "click" , "#searchDetailtable tbody tr", function() {              
+		$(this).css('backgroundColor','skyblue');
+		accDtCode=$(this).find('td:first').text();        
+	
 	})
 })
 // 팝업창 띄우기

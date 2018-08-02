@@ -34,21 +34,25 @@ $(function() {
 	$("table").tablesorter(); 
 	
 	$('#delbtn').click(function() { 
-		if(confirm(storeCode+'지점을 정말로 영업정지 시키시겠습니까?')){
-	    	$.ajax({
-	        	type:"POST",
-	        	url : "<c:url value='/admin/store/ajaxStoreDel.do' />",
-	        	data:{"storeCode":storeCode},
-	        	dataType:'json',
-	        	success:function(res){
-	        		alert(res);
-	        	},
-				error: function(xhr, status, error){
-					alert(JSON.stringify(error));
-				}
-	        
-	   		}); 
-			
+		if(storeCode!=undefined){
+			if(confirm(storeCode+'지점을 정말로 영업정지 시키시겠습니까?')){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/admin/store/ajaxStoreDel.do' />",
+		        	data:{"storeCode":storeCode},
+		        	dataType:'text',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+					error: function(xhr, status, error){
+						alert(JSON.stringify(error));
+					}
+		        
+		   		}); 
+				
+			}
+		}else{
+			alert('먼저 삭제할 행을 선택하십시오');
 		}
 	})
 	
@@ -94,13 +98,15 @@ $(function() {
         
    		}); 
 	})
-	$('table tbody tr').on('click',function(){
+	
+	$(document ).on( "click" , "table tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
-		storeCode=$(this).find('td:first').text();
+		storeCode=$(this).find('td:first').text();        
+	
 	})
-	
-	//
-	
+	$(document ).on( "hidden.bs.modal" , "#modal-storeWrite", function() {              
+		$(this).find('form')[0].reset();       
+	})
 })
 function popupOpen(storeCode) {
 	$.ajax({

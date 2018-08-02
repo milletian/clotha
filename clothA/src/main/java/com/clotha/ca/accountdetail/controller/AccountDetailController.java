@@ -88,9 +88,8 @@ public class AccountDetailController {
 		
 	}
 	
-	@RequestMapping(value="/accountDetailDel.do")
-	@ResponseBody
-	public String accountDetailDelete(@RequestParam String accDtCode){
+	@RequestMapping(value="/accountDetailDel.do",produces = "application/text; charset=utf8")
+	public @ResponseBody String accountDetailDelete(@RequestParam String accDtCode){
 		if(accDtCode!=null&&!accDtCode.isEmpty()) {
 			accDtService.deleteAccountDetail(accDtCode);
 			return "삭제되었습니다.";

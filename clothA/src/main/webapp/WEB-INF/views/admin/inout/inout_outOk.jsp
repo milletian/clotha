@@ -191,6 +191,7 @@ function returnValueRead(str) {
 			<form name="frmwarehousingList" id="frmwarehousingList">
 				<label>기간</label><i class="fa fa-calendar"></i>
 				<input type="text" name="searchDateRange" id="searchDateRange">
+				<input type="hidden" name="isIn" id="isIn" value="반품">
 				
 				<label for="selSearchStoreName">매장</label>
 				<select style="max-height: 30px; width: 100px" name="areaEnd"
@@ -238,35 +239,4 @@ function returnValueRead(str) {
 				</div>
 			</form>
 		</div>
-</div>
-
-
-<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success"> 등록</span>
-</a>
- 
- 
-<div id="modal-inWrite" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none; z-index: 1050;">
-    <div class="modal-dialog" style="width:1200px;height:1000px">
-        <div class="modal-content">
-        	<%@include file="inoutWrite.jsp" %>
-        </div>
-    </div>
-</div>
-
-<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
-    <div class="modal-dialog" style="width:1200px;height:700px">
-        <div class="modal-content">
-        	<%@include file="../products/productsSearch.jsp" %>
-        </div>
-    </div>
-</div>
-
-
-<div id="modal-searchStore" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
-    <div class="modal-dialog" style="width:1200px;height:700px">
-        <div class="modal-content">
-        	<%@include file="../store/storeSearch.jsp" %>
-        </div>
-    </div>
 </div>

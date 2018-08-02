@@ -78,21 +78,7 @@ $(function() {
 	});
 	$("table").tablesorter(); 
 	
-	$('#delbtn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountDel.do' />",
-        	data:accCode,
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-			error: function(xhr, status, error){
-				alert("sdsds");
-			}
-        
-   		}); 
-	})
+	
 	
 	$.ajax({
 		type:"POST",
@@ -101,6 +87,8 @@ $(function() {
     	success:function(res){
     		if (res.length > 0){
     			$("#selSearchSupplier").html('');
+    			var option1 = "<option value=''>전체</option>";
+    			$("#selSearchSupplier").append(option1);
     			$.each(res,function(idx, item){
     				var option = "<option value='"+item.accCode+"'>";
     				option += item.accName;

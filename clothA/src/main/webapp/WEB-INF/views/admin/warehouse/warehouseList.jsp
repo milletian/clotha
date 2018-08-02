@@ -34,25 +34,23 @@ $(function() {
 	$("table").tablesorter(); 
 	
 	$('#delbtn').click(function() { 
-		if(whCode==""){
+		if(whCode!=undefined){
+			if(confirm(whCode+'창고을 정말로 사용 중지 시키시겠습니까?')){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/admin/warehouse/ajaxWarehouseDel.do' />",
+		        	data:{"whCode":whCode},
+		        	dataType:'text',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+					error: function(xhr, status, error){
+						alert(JSON.stringify(error));
+					}
+		   		}); 	
+			}
+		}else{
 			alert('창고를 선택하셔야 합니다.');
-			return false;
-		}
-		if(confirm(whCode+'창고을 정말로 사용 중지 시키시겠습니까?')){
-	    	$.ajax({
-	        	type:"POST",
-	        	url : "<c:url value='/admin/warehouse/ajaxWarehouseDel.do' />",
-	        	data:{"whCode":whCode},
-	        	dataType:'json',
-	        	success:function(res){
-	        		alert(res);
-	        	},
-				error: function(xhr, status, error){
-					alert(JSON.stringify(error));
-				}
-	        
-	   		}); 
-			
 		}
 	})
 	
@@ -94,9 +92,14 @@ $(function() {
         
    		}); 
 	})
-	$('table tbody tr').on('click',function(){
+	
+	$(document ).on( "click" , "table tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
-		whCode=$(this).find('td:first').text();
+		whCode=$(this).find('td:first').text();        
+	
+	})
+	$(document ).on( "hidden.bs.modal" , "#modal-warehouseWrite", function() {              
+		$(this).find('form')[0].reset();       
 	})
 })
 function popupOpen(whCode) {

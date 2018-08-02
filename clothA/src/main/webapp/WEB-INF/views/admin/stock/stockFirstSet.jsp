@@ -62,19 +62,8 @@ $(function() {
 		storeOrwh = $("#selSearchSupplier").val();
 	})
 	
-	var liveTableData = $("table").tableExport({
-	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
-	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-	    formats: ["xlsx"],    // (String[]), filetypes for the export
-	    fileName: "id",                    // (id, String), filename for the downloaded file
-	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
-	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
-	    ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
-	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
-	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
-	});
 	
-	$("table").tablesorter(); 
+	$("#stockFirstSetTable").tablesorter(); 
 	
 	
 	$('#selSearchSupplier').change(function() { 
@@ -86,7 +75,7 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
-        			$("table tbody").html('');
+        			$("#stockFirstSetTable tbody").html('');
      				$.each(res, function(idx, item) {
      					var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+item.STA_CODE+"'></td>";
      					dsd+= "<td><input type='text' name='pdCode' readonly='readonly' value='"+item.PD_CODE+"' ></td>";
@@ -94,14 +83,14 @@ $(function() {
      					dsd+= "<td><input type='text' name='stockQty' value='"+item.STOCK_QTY+"' ></td>";
      					dsd+= "<input type='hidden' name='stockPk' value='"+item.STOCK_PK+"' ></tr>";
  
-     					$("table tbody").append(dsd);
+     					$("#stockFirstSetTable tbody").append(dsd);
      					liveTableData.reset();
      					renameForModelAttribute();
      				})	 
      			}else{
-     				$("table tbody").html('');
+     				$("#stockFirstSetTable tbody").html('');
      			}
-        		 $("table").trigger("update"); 
+        		 $("#stockFirstSetTable").trigger("update"); 
                  return false; 
         	 },
 			error: function(xhr, status, error){
@@ -152,12 +141,13 @@ function renameForModelAttribute() {
 }
 
 function newRecord() {
+	$('#pdCodeSearch').remove();
 	var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
-	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='...' onclick=popupOpen() /></td>";
+	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='..' onclick=popupOpen() /></td>";
 	dsd+= "<td><input type='text' readonly='readonly' ></td>";
 	dsd+= "<td><input type='number' name='stockQty' ></td>";
 	dsd+= "<input type='hidden' name='stockPk' ></tr>";
-	$("table tbody").append(dsd);
+	$("#stockFirstSetTable tbody").append(dsd);
 	renameForModelAttribute();
 }
 
@@ -196,7 +186,27 @@ function check(){
 		$("#excelUpForm").ajaxSubmit(options);
 	}
 }
-
+function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			var bool=true;
+			$('#stockFirstSetTable td:eq(1) input[type=text]').each(function() {
+				if($(this).val()==reval.pdCode){
+					alert('동일한 상품을 중복등록할수 없습니다.');
+					bool=false;
+					return false;
+				}
+			})
+			if(bool){
+				$('#stockFirstSetTable tr:last td:eq(1) input[type=text]').val(reval.pdCode);
+				$('#stockFirstSetTable tr:last td:eq(2) input[type=text]').val(reval.pdName);
+				newRecord();
+			}
+				window.returnValue=null;
+		}
+	}
+}
 /* function returnValueRead(str) {
 	var reval = window.returnValue;
 	if(str=='pd'){

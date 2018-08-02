@@ -20,6 +20,9 @@
 		<if test="pdCode!=null and pdCode!=''">
 			and pd_code=#{pdCode}
 		</if>
+		<if test="isIn!=null and isIn!=''">
+			and IS_IN = #{isIn}
+		</if>
 	</where>
 	order by INOUT_STARTDATE desc
 	</select>
@@ -32,7 +35,7 @@
 	<insert id="insertInoutDetail" parameterType="InoutVO">
 		insert into inout_detail(INOUT_DETAIL_PK,INOUT_CODE,PD_CODE,INOUT_DETAIL_QTY)
 		<![CDATA[
-			values(inout_detail_seq.nextval,(select inout_code from ( select * from inout order by inout_code desc ) where rownum=1 ) ),#{pdCode},#{inoutDetailQTY})		
+			values(inout_detail_seq.nextval,(select inout_code from ( select * from inout order by inout_code desc ) where rownum=1 ),#{pdCode},#{inoutDetailQTY})		
 		]]>
 	</insert>
 </mapper>

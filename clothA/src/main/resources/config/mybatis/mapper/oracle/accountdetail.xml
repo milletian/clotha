@@ -36,7 +36,7 @@
 		where acc_dt_code=#{accDtCode}
 	</update>
 	<delete id="deleteAccountDetail" parameterType="string">
-		delete ACCOUNT_DETAIL where acc_dt_code = ${accDtCode}
+		delete ACCOUNT_DETAIL where acc_dt_code = #{accDtCode}
 	</delete>
 	
 </mapper>

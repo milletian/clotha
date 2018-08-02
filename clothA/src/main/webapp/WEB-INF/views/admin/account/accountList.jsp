@@ -35,30 +35,37 @@ $(function() {
 	$("table").tablesorter(); 
 	
 	$('#delbtn').click(function() { 
-    	$.ajax({
-        	type:"POST",
-        	url : "<c:url value='/admin/account/accountDel.do' />",
-        	data:accCode,
-        	dataType:'json',
-        	success:function(res){
-        		alert(res);
-        	},
-        	error:function(x,e){ 
-				if(x.status==0){
-					alert('You are offline!!n Please Check Your Network.'); 
-				}else if(x.status==404){ 
-					alert('Requested URL not found.'); 
-				}else if(x.status==500){ 
-					alert('Internel Server Error.'); 
-				}else if(e=='parsererror'){ 
-					alert('Error.nParsing JSON Request failed.'); 
-				}else if(e=='timeout'){
-					alert('Request Time out.'); 
-				}else { 
-					alert('Unknow Error.n'+x.responseText); } 
-				}
-        
-   		}); 
+		if(accCode!=undefined){
+			if(confirm("정말로 거래처를 삭제 하시겠습니까?")){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/admin/account/accountDel.do' />",
+		        	data:{"accCode":accCode},
+		        	dataType:'text',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+		        	error:function(x,e){ 
+						if(x.status==0){
+							alert('You are offline!!n Please Check Your Network.'); 
+						}else if(x.status==404){ 
+							alert('Requested URL not found.'); 
+						}else if(x.status==500){ 
+							alert('Internel Server Error.'); 
+						}else if(e=='parsererror'){ 
+							alert('Error.nParsing JSON Request failed.'); 
+						}else if(e=='timeout'){
+							alert('Request Time out.'); 
+						}else { 
+							alert('Unknow Error.n'+x.responseText); } 
+						}
+		        
+		   		}); 
+				
+			}
+		}else{
+			alert('먼저 삭제할 거래처를 선택하세요');
+		}
 	})
 	
 	$('#btn').click(function() { 
@@ -111,11 +118,11 @@ $(function() {
    		}); 
 	})
 	
-	$('table tbody tr td').on('click',function(){
-		alert("dddd");
+	$(document ).on( "click" , "table tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
-		accCode=$(this).find('td:first').text();
-	})
+		accCode=$(this).find('td:first').text();        
+
+    });
 	
 	$('#modal-testNew').on('hidden.bs.modal', function (e) {
 	  $(this).find('form')[0].reset();

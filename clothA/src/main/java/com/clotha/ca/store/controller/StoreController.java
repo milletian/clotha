@@ -115,9 +115,8 @@ public class StoreController {
 		return storeVO;
 	}
 	
-	@RequestMapping(value="/ajaxStoreDel.do", produces = "application/json; charset=utf8")
-	@ResponseBody
-	public String ajaxStoreDel(@RequestParam String storeCode) {
+	@RequestMapping(value="/ajaxStoreDel.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String ajaxStoreDel(@RequestParam String storeCode) {
 		logger.info("{}",storeCode);
 		int result = storeService.storeDel(storeCode);
 		if(result==0) {

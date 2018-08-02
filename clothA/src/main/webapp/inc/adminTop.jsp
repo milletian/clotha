@@ -225,11 +225,10 @@ footer{
 					</a>
 					<ul>
 						<li>
-							<a href="<c:url value='/admin/account/accountList.do' />" target="if">재고 조회
+							<a href="<c:url value='/admin/stock/stockList.do' />" target="if">재고 조회
 							</a>
 						</li>
-						<li><a href="<c:url value='/admin/account/accountWrite.do' />" target="if">재고조정</a></li>
-						<li><a href="#">기초재고등록</a></li>
+						<li><a href="<c:url value='/admin/stock/stockFirstSet.do' />" target="if">재고등록/변경</a></li>
 					</ul></li>
 				<li class="sub-menu">
 					<a href="javascript:void(0);">
@@ -241,10 +240,11 @@ footer{
 						<li><a href="<c:url value='/admin/products/productsList.do'/>" target="if">상품 등록 / 조회</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
-						class="fas fa-home"></i><span>매장관리</span><i
+						class="fas fa-home"></i><span>매장/창고 관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
 						<li><a href="<c:url value='/admin/store/storeList.do' />" target="if">매장관리</a></li>
+						<li><a href="<c:url value='/admin/warehouse/warehouseList.do' />" target="if">창고관리</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="far fa-id-badge"></i><span>인사관리</span><i
@@ -257,17 +257,8 @@ footer{
 						class="far fa-building"></i><span>구매처관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처정보조회</a></li>
-						<li><a href="<c:url value='/admin/account/accountDetailList.do' />" target="if">구매현황조회</a></li>
-					</ul></li>
-				
-				<li class="sub-menu"><a href="javascript:void(0);"><i
-						class="fas fa-users"></i><span>회원관리</span><i
-						class="arrow fa fa-angle-right pull-right"></i></a>
-					<ul>
-						<li><a href="#">회원정보조회</a></li>
-						<li><a href="#">쿠폰등록</a></li>
-						<li><a href="#">쿠폰현황</a></li>
+						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처 정보 조회</a></li>
+						<li><a href="<c:url value='/admin/account/accountDetailList.do' />" target="if">구매 현황 조회</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
@@ -282,9 +273,8 @@ footer{
 						class="fas fa-truck"></i><span>입고/출고관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="#">매장입고 등록</a></li>
-						<li><a href="#">매장반품 승인</a></li>
-						<li><a href="#">매장입고/반품 현황</a></li>
+						<li><a href="<c:url value='/admin/inout/inout_standby.do' />" target="if">매장 입고 현황</a></li>
+						<li><a href="<c:url value='/admin/inout/inout_outOk.do' />" target="if">매장 반품 현황</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-comments"></i><span>공지사항</span><i
