@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<div class="modal-header">
+<div class="modal-header bg-primary" >
 	<script type="text/javascript">
 	$(function() {
 		
@@ -17,8 +17,8 @@
 			$('form[name=frmAccWrite] input[type=text]').each(function() {
 				if($(this).val().length<1){
 					bool = false;
-					$(this).prev().focus();
-					alert($(this).prev().text()+"는 필수 입력 항목입니다.");
+					$(this).parent().prev().focus();
+					alert($(this).parent().prev().text()+"는 필수 입력 항목입니다.");
 					return false;
 				}
 			})
@@ -153,6 +153,12 @@
 	}
 	 
 	</script>
+	
+	<style type="text/css">
+	.row {
+	        margin: 20px;
+	}
+	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
     <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
 </div>
@@ -163,19 +169,102 @@
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 	<form id="frmAccWrite" name="frmAccWrite" method="post">
-		<input type="hidden" id="accCode" name="accCode">  
-		<label for="accName">회사명 </label><input type="text" id="accName" name="accName"><br>
-		<label for="accIsdeal">사용여부 </label><input type="checkbox" id="accIsdeal" name="accIsdeal" checked="checked"><br>
-		<label for="accCeo">대표자명 </label><input type="text" id="accCeo" name="accCeo"><br>
-		<label for="accTel">대표전화 </label><input type="text" id="accTel" name="accTel" maxlength="13"><br>
-		<label for="accNo">법인번호 </label><input type="text" id="accNo" name="accNo" maxlength="13"><br>
-		<label for="accZipcode">우편번호</label> <input type="text" id="accZipcode" name="accZipcode" >
-		<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-		<label for="address">주소</label><input type="text" id="address" name="address"><br>
-		<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-		<label for="accUnique">특이사항</label><input type="text" id="accUnique" name="accUnique"><br>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accName" class="col-sm-4 control-label">회사명 </label>
+					<div class="col-sm-8">
+						<input type="text" id="accName" name="accName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accIsdeal" class="col-sm-4 control-label">사용여부 </label>
+					<div class="col-sm-8">
+						<input type="checkbox" id="accIsdeal" class="checkbox" name="accIsdeal" checked="checked">
+					</div>
+				</div>
+			</div>
+		</div>
 		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accCeo" class="col-sm-4 control-label">대표자명 </label>
+					<div class="col-sm-8">
+						<input type="text" id="accCeo" name="accCeo" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accTel" class="col-sm-4 control-label">대표전화 </label>
+					<div class="col-sm-8">
+						<input type="text" id="accTel" name="accTel" class="form-control" maxlength="13">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accNo" class="col-sm-4 control-label">법인번호 </label>
+					<div class="col-sm-8">
+						<input type="text" id="accNo" name="accNo"  class="form-control" maxlength="13">
+					</div>
+				</div>
+			</div>
+		</div>
 		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accZipcode" class="col-sm-4 control-label">우편번호</label>
+					<div class="col-sm-8">
+						 <input type="text" id="accZipcode" class="form-control" name="accZipcode" >
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<div class="col-sm-8">
+						 <input type="button" onclick="sample2_execDaumPostcode()" class="btn btn-primary" value="우편번호 찾기">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="address" class="col-sm-4 control-label">주소</label>
+					<div class="col-sm-8">
+						 <input type="text" id="address" class="form-control" name="address">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="addressDetail" class="col-sm-4 control-label">상세주소</label>
+					<div class="col-sm-8">
+						 <input type="text" id="addressDetail" class="form-control" name="addressDetail">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="accUnique" class="col-sm-4 control-label">특이사항</label>
+					<div class="col-sm-8">
+						<input type="text" id="accUnique" class="form-control" name="accUnique">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+			<input type="hidden" id="accCode" name="accCode">  
 	</form>
 		<script type="text/javascript">
 		// 우편번호 찾기 화면을 넣을 element
@@ -250,14 +339,14 @@
 	        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
 	    }
 		</script>
+	 
+	<div class="modal-footer">
+	    <span id="accountWrite" class="btn btn-sm btn-success" >
+	        저장<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110" ></i>
+	    </span>
+	    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
+	        <i class="ace-icon fa fa-times"></i>닫기
+	    </button>
+	</div>
      
-</div>
- 
-<div class="modal-footer">
-    <span id="accountWrite" class="btn btn-sm btn-success" >
-        저장<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110" ></i>
-    </span>
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
-        <i class="ace-icon fa fa-times"></i>닫기
-    </button>
 </div>

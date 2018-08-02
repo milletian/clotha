@@ -119,7 +119,7 @@ $(function() {
 	})
 	
 	$(document ).on( "click" , "table tbody tr", function() {              
-		$(this).css('backgroundColor','skyblue');
+		$(this).attr('class','success');
 		accCode=$(this).find('td:first').text();        
 
     });

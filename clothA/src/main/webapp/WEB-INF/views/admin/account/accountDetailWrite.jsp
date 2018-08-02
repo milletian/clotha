@@ -3,7 +3,7 @@
 
 
 
-<div class="modal-header">
+<div class="modal-header bg-primary">
 <script type="text/javascript">
 $(function() {
 	$("#WriteDetailtable").tablesorter(); 
@@ -107,6 +107,10 @@ function ajaxStockByStaCode() {
 	text-align: left;
 	padding: 15px;
 }
+	.row {
+	        margin: 10px;
+	}
+
 </style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
     <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
@@ -115,25 +119,120 @@ function ajaxStockByStaCode() {
 <div class="modal-body">
    <div id="wrap">
 	<form name="accDetailWritefrm" id="accDetailWritefrm" method="post" action="<c:url value='/admin/account/accountDetailWrite.do' />">
-		<label for="searchRegDate">주문일자</label><input type="text" class="searchDate" id="searchRegDate" name="accDtRegdate">
-		<label for="searchInDate">입고예정일</label><input type="text" class="searchDate" id="searchInDate" name="accDtIndate"><br>
-		<label for="whCode">입고될 창고</label><input type="text" id="whCode" name="whCode" readonly="readonly">
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="searchRegDate" class="col-sm-4 control-label">주문일자</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control searchDate" id="searchRegDate" name="accDtRegdate">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="searchInDate" class="col-sm-4 control-label">입고예정일</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control searchDate" id="searchInDate" name="accDtIndate">
+						</div>
+					</div>
+				</div>
+		</div>
+		
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="whCode" class="col-sm-4 control-label">입고될 창고</label>
+						<div class="col-sm-8">
+							<input type="text" id="whCode" class="form-control" name="whCode" readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="col-sm-8">
+							<input type="button" id="whcbtn" class="btn btn-primary" value="창고 검색">
+						</div>
+					</div>
+				</div>
+		</div>
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="pdCode" class="col-sm-4 control-label">상품코드</label>
+						<div class="col-sm-8">
+							<input type="text" id="pdCode" class="form-control" name="pdCode" readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="col-sm-8">
+							<input type="button" id="pdCbtn" class="btn btn-primary"  value="상품 검색">
+						</div>
+					</div>
+				</div>
+		</div>
+		
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="pdName"  class="col-sm-4 control-label">상품명</label>
+						<div class="col-sm-8">
+							<input type="text" id="pdName" name="pdName" class="form-control"  readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="accName" class="col-sm-4 control-label">매입처 이름</label>
+						<div class="col-sm-8">
+							<input type="text" id="accName" class="form-control" name="accName" readonly="readonly">
+						</div>
+					</div>
+				</div>
+		</div>
+		
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="accDtQty" class="col-sm-4 control-label">주문수량</label>
+						<div class="col-sm-8">
+							<input type="text" id="accDtQty" name="accDtQty" class="form-control">
+						</div>
+					</div>
+				</div>
+		</div>
+		
+	   <div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="pdOriginalprice" class="col-sm-4 control-label">개당 원가</label>
+						<div class="col-sm-8">
+							<input type="text" id="pdOriginalprice" name="pdOriginalprice" class="form-control" readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="pdSellprice" class="col-sm-4 control-label">개당 판매가</label>
+						<div class="col-sm-8">
+							<input type="text" id="pdSellprice" name="pdSellprice" class="form-control" readonly="readonly">
+						</div>
+					</div>
+				</div>
+		</div>
+		
+		
 		<input type="hidden" id="staCode" name="staCode" readonly="readonly">
-		<input type="button" id="whcbtn" value="창고 검색">
-		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode" readonly="readonly">
-		<input type="button" id="pdCbtn" value="상품 검색">
-		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName" readonly="readonly"><Br>
 		<input type="hidden" id="accCode" name="accCode">
-		<label for="accName">매입처 이름</label><input type="text" id="accName" name="accName" readonly="readonly">
-		<label for="accDtQty">주문수량</label><input type="text" id="accDtQty" name="accDtQty"><br>
-		<label for="pdOriginalprice">개당 원가</label><input type="text" id="pdOriginalprice" name="pdOriginalprice" readonly="readonly">
-		<label for="pdSellprice">개당 판매가</label><input type="text" id="pdSellprice" name="pdSellprice" readonly="readonly">
+		
+		<br>
+		
+		
 		
 	</form>
 	</div>
-	<div id="maincontent">    
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-		<a href="#"><i class="fas fa-trash-alt"></i></a>
+	<div id="maincontent">
 		<div id="content1">
 			<table id="WriteDetailtable" cellspacing="1" class="tablesorter">             
 			    <thead> 
