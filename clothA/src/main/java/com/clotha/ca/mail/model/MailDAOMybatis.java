@@ -1,6 +1,7 @@
 package com.clotha.ca.mail.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,16 @@ public class MailDAOMybatis implements MailDAO {
 	@Override
 	public int sendDelete(int mailNo) {
 		return sqlSession.update(namespace+"sendDelete",mailNo);
+	}
+
+	@Override
+	public int sendMulti(Map<String, String[]> map) {
+		return sqlSession.update(namespace+"sendMulti",map);
+	}
+
+	@Override
+	public int getMulti(Map<String, Object> map) {
+		return sqlSession.update(namespace+"getMulti",map);
 	}
 	
 	

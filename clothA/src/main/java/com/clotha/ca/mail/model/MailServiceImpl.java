@@ -1,6 +1,7 @@
 package com.clotha.ca.mail.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,16 @@ public class MailServiceImpl implements MailService{
 	@Override
 	public int sendDelete(int mailNo) {
 		return MailDao.sendDelete(mailNo);
+	}
+
+	@Override
+	public int sendMulti(Map<String, String[]> map) {
+		return MailDao.sendMulti(map);
+	}
+
+	@Override
+	public int getMulti(Map<String, Object> map) {
+		return MailDao.getMulti(map);
 	}
 	
 	

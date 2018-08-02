@@ -6,6 +6,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('form[name=chfrm]').submit(function(){
+			var count=0;
+			$('input[name=chk]').each(function(idx, item){
+				if($(this).is(':checked')){
+					count++;
+				}
+			});	
+			
+			if(count==0){
+				alert('삭제할 글을 체크하세요');
+				return false;
+			}
+		});
+		
+		
+	});
+	
+	
+	function allChecked(bool){
+		$('input[name=chk]').prop('checked', bool);
+	}
+</script>
 <style type="text/css">
 	table{
 		text-align: center;
@@ -31,31 +56,33 @@
 <body>
 	<div>
 		<h2>보낸쪽지</h2>
-		<table>
-			<tr>
-				<th><input type="checkbox" ></th>
-				<th>번호</th>
-				<th>제목</th>
-				<th>날짜</th>
-			</tr>
-			<c:if test="${empty list }">
+		<form action="<c:url value='/mail/sendMulti.do'/> " name="chfrm" method="post" >
+			<table>
 				<tr>
-					<td colspan="4">보낸 쪽지가 없습니다.</td>
+					<th><input type="checkbox" name="allchk" onclick="allChecked(this.checked)" ></th>
+					<th>번호</th>
+					<th>제목</th>
+					<th>날짜</th>
 				</tr>
-			</c:if>
-			<c:if test="${!empty list }">
-				<c:forEach var="vo" items="${list }" >
+				<c:if test="${empty list }">
 					<tr>
-						<td><input type="checkbox" ></td>
-						<td>${vo.mailNo }</td>
-						<td><a href="<c:url value='/mail/sendDetail.do?mailNo=${vo.mailNo }'/> " >${vo.mailName }</a></td>
-						<td><fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd" /> </td>
+						<td colspan="4">보낸 쪽지가 없습니다.</td>
 					</tr>
-				</c:forEach>
-			</c:if>
-		</table>
-		<input type="button" value="삭제" name="delete">
-		<input type="button" value="보관" name="save">
+				</c:if>
+				<c:if test="${!empty list }">
+					<c:forEach var="vo" items="${list }" >
+						<tr>
+							<td><input type="checkbox" name="chk" value="${vo.mailNo }" ></td>
+							<td>${vo.mailNo }</td>
+							<td><a href="<c:url value='/mail/sendDetail.do?mailNo=${vo.mailNo }'/> " >${vo.mailName }</a></td>
+							<td><fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd" /> </td>
+						</tr>
+					</c:forEach>
+				</c:if>
+			</table>
+			<input type="submit" value="삭제" name="delete">
+			<input type="button" value="보관" name="save">
+		</form>
 	</div>
 </body>
 </html>

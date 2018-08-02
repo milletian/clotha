@@ -57,6 +57,7 @@ public class StoreLoginController {
 					request.getSession().setAttribute("empNo", employeeVo.getEmpNo());
 					request.getSession().setAttribute("gradeCode", employeeVo.getGradeCode());
 					request.getSession().setAttribute("empName", employeeVo.getEmpName());
+					request.getSession().setAttribute("storeCode", employeeVo.getStoreCode());
 					
 					session.setMaxInactiveInterval(24*60*60);
 					

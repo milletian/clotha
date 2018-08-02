@@ -49,11 +49,33 @@
 	</select>
 	
 	<select id="sendEmpNO" parameterType="int" resultType="mailVo" >
-		select * from get_mail where mail_no = #{mailNo}
+		select g.*,e.EMP_NAME from 
+		get_mail g join employee e
+		on g.EMP_NO = e.EMP_NO 
+		where mail_no = #{mailNo}
+		order by mail_no desc
 	</select>
 	
 	<update id="sendDelete" parameterType="int">
 		update mail set mail_senderdel = 'Y' where mail_no=#{mailNo}
+	</update>
+	
+	<update id="sendMulti" parameterType="map">
+		update mail set mail_senderdel = 'Y'
+		where mail_no in 
+		<foreach item="mailNo" collection="nos" open="(" close=")" separator=","
+			index="index">
+			#{mailNo}
+		</foreach>
+	</update>
+	
+	<update id="getMulti" parameterType="map">
+		update get_mail set get_mail_del = 'Y'
+		where emp_no = #{empNo} and mail_no in 
+		<foreach item="mailNo" collection="nos" open="(" close=")" separator=","
+			index="index">
+			#{mailNo}
+		</foreach>
 	</update>
 	
 	

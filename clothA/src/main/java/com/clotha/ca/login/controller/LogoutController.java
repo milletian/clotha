@@ -28,10 +28,12 @@ public class LogoutController {
 			int cnt = logService.logoutUpdate(logPk);
 			logger.info("로그아웃 날짜 찍기결과 cnt={}",cnt);
 			
-			request.getSession().removeAttribute(empNo);
+			request.getSession().removeAttribute("empNo");
 			request.getSession().removeAttribute("logPk");
 			request.getSession().removeAttribute("gradeCode");
 			request.getSession().removeAttribute("empName");
+			request.getSession().removeAttribute("storeCode");
+			
 		}else {
 			logger.info("로그아웃 세션 날리기 실패");
 		}

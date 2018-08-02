@@ -1,5 +1,6 @@
 package com.clotha.ca.mail.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -192,6 +193,61 @@ public class MailController {
 		
 		return "common/message";
 		
+	}
+	
+	@RequestMapping("/sendMulti.do")
+	public String sendMulti(@RequestParam String[] chk, Model model) {
+		logger.info("보낸 쪽지 다중삭제 chk = {} ", chk);
+		
+		if(chk!=null) {
+			int i=0;
+			for(String no : chk) {
+				logger.info("{} : 파라미터 => {}", i++, no);
+			}
+		}//if
+		
+		Map<String, String[]> map = new HashMap<>();
+		map.put("nos", chk);
+		int cnt = mailService.sendMulti(map);
+		logger.info("보낸쪽지 다중삭제 결과 cnt = {} ",cnt);
+		String msg="삭제 실패하였습니다.", url ="/mail/sendMail.do";
+		if(cnt>0) {
+			msg="삭제되었습니다.";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/getMulti.do")
+	public String getMulti(@RequestParam String[] chk, Model model,HttpServletRequest request) {
+		logger.info("받은 쪽지 다중삭제 chk = {} ",chk);
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		if(chk!=null) {
+			int i=0;
+			for(String no : chk) {
+				logger.info("{} : 파라미터 => {}", i++, no);
+			}
+		}//if
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("nos", chk);
+		map.put("empNo", empNo);
+		
+		int cnt = mailService.getMulti(map);
+		logger.info("받은쪽지 삭제 결과 cnt = {} ",cnt);
+		
+		String msg = "삭제에 실패 하였습니다." , url = "/mail/getMail.do";
+		if(cnt > 0 ) {
+			msg="받은쪽지가 삭제 되었습니다.";
+		}
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("url",url);
+		
+		return"common/message";
 	}
 	
 	

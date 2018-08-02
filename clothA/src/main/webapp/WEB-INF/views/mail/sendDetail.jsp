@@ -39,7 +39,7 @@
 <body>
 	<div>
 		<h3>제목 : ${vo.mailName }</h3>
-		<p>받는 사람 : <c:forEach var="vo2" items="${list }" > ${vo2.empNo } </c:forEach> </p>
+		<p>받는 사람 : <c:forEach var="vo2" items="${list }" > ${vo2.empName } </c:forEach> </p>
 		<p>보낸날짜 : <fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 		<c:if test="${!empty vo.mailFile }">
 			<p>첨부파일 : ${vo.mailFile }</p>
