@@ -20,7 +20,7 @@
 		select m.* , e.emp_name
 		from mailview m join employee e
 		on m.sender = e.emp_no
-		where m.emp_no = #{empNo} and m.get_mail_del = 'N'
+		where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is null 
 		order by m.mail_no desc
 	</select>
 	
@@ -41,7 +41,8 @@
 	</update>
 	
 	<select id="selectSender" parameterType="String" resultType="mailVo" >
-		select * from mail where sender = #{empNo} and mail_senderdel = 'N'
+		select * from mail where sender = #{empNo} and mail_senderdel = 'N' and mail_save is null
+		order by mail_no desc
 	</select>
 	
 	<select id="sendMailDetail" parameterType="int" resultType="mailVo" >
@@ -52,8 +53,8 @@
 		select g.*,e.EMP_NAME from 
 		get_mail g join employee e
 		on g.EMP_NO = e.EMP_NO 
-		where mail_no = #{mailNo}
-		order by mail_no desc
+		where g.mail_no = #{mailNo}
+		order by g.mail_no desc
 	</select>
 	
 	<update id="sendDelete" parameterType="int">
@@ -78,7 +79,47 @@
 		</foreach>
 	</update>
 	
+	<select id="sendSave" parameterType="String" resultType="mailVo" >
+		select * from
+		(
+			select * from mail
+			where sender = #{sender} and mail_save is not null and mail_senderdel = 'N'
+			order by mail_no desc
+		<![CDATA[
+		) where rownum <=5
+		]]>
+	</select>
 	
+	<select id="getSave" parameterType="String" resultType="mailVo" >
+		select * from
+		(
+			select m.* , e.emp_name
+			from mailview m join employee e
+			on m.sender = e.emp_no
+			where m.emp_no = #{empNo} and m.get_mail_save is not null and m.get_mail_del = 'N'
+			order by m.mail_no desc
+		<![CDATA[	
+		) where rownum <=5
+		]]>
+	</select>
+	
+	<update id="getSaveUp" parameterType="map">
+		update get_mail set get_mail_save = 'YES'
+		where emp_no = #{empNo} and mail_no in
+		<foreach item="mailNo" collection="nos" open="(" close=")" separator=","
+			index="index">
+			#{mailNo}
+		</foreach>
+	</update>
+	
+	<update id="sendSaveUp" parameterType="map">
+		update mail set mail_save = 'YES'
+		where sender = #{sender} and mail_no in
+		<foreach item="mailNo" collection="nos" open="(" close=")" separator=","
+			index="index">
+			#{mailNo}
+		</foreach>
+	</update>
 	
 </mapper>
 

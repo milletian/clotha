@@ -73,6 +73,27 @@ public class MailDAOMybatis implements MailDAO {
 	public int getMulti(Map<String, Object> map) {
 		return sqlSession.update(namespace+"getMulti",map);
 	}
+
+	@Override
+	public List<MailVO> sendSave(String sender) {
+		return sqlSession.selectList(namespace+"sendSave",sender);
+	}
+
+	@Override
+	public List<MailVO> getSave(String empNo) {
+		return sqlSession.selectList(namespace+"getSave",empNo);
+	}
+
+	@Override
+	public int getSaveUp(Map<String, Object> map) {
+		return sqlSession.update(namespace+"getSaveUp",map);
+	}
+
+	@Override
+	public int sendSaveUp(Map<String, Object> map) {
+		return sqlSession.update(namespace+"sendSaveUp",map);
+		
+	}
 	
 	
 	
