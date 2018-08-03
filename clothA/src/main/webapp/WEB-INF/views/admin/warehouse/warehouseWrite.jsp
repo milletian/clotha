@@ -83,6 +83,11 @@
 	})
 	 
 	</script>
+	<style type="text/css">
+	.row{
+		margin: 15px;
+	}
+	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
     <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
 </div>
@@ -92,20 +97,78 @@
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 	<form name="frmWarehouseWrite" id="frmWarehouseWrite" enctype="multipart/form-data">
-		<input type="hidden" name="whCode" >
-		<c:if test="${empty param.whCode || param.whCode=='undefined'}">
-			<label for="areaCode">지역 </label>
-			<select id="areaCode" name="areaCode">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="whName" class="col-sm-4 control-label">창고 이름</label>
+					<div class="col-sm-8">
+						<input type="text" id="whName" name="whName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="areaCode" class="col-sm-3 control-label">지역 </label>
+					<div class="col-sm-4">
+						<select id="areaCode" class="form-control" name="areaCode">
 			
-			</select>
-		</c:if>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="whImage" class="col-sm-4 control-label">이미지</label>
+					<div class="col-sm-8">
+						<input type="file" name="file" id="whImage" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="whZipcode" class="col-sm-3 control-label">우편번호</label>
+					<div class="col-sm-5">
+						<input type="text" id="whZipcode" name="whZipcode" class="form-control">
+					</div>
+					<div class="col-sm-4">
+						<input type="button" onclick="sample2_execDaumPostcode()" class="btn btn-primary" value="우편번호 찾기">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="address" class="col-sm-3 control-label">주소</label>
+					<div class="col-sm-5">
+						<input type="text" id="address" name="address" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="addressDetail" class="col-sm-3 control-label">상세주소</label>
+					<div class="col-sm-5">
+						<input type="text" id="addressDetail" name="addressDetail" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="hidden" name="whCode" >
+		
 		<input type="hidden" name="oldfile" id="oldfile">
-		<label for="whImage">이미지</label><input multiple="multiple" type="file" name="file"><br>
-		<label for="whZipcode">우편번호</label> <input type="text" id="whZipcode" name="whZipcode" >
-		<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-		<label for="address">주소</label><input type="text" id="address" name="address"><br>
-		<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-		<label for="whName">창고 이름</label><input type="text" id="whName" name="whName"><br>
+		
 		
 	</form>
 		<script type="text/javascript">

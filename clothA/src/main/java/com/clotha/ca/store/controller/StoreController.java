@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.clotha.ca.common.FileUploadUtil;
+import com.clotha.ca.stock.model.StockService;
+import com.clotha.ca.stock.model.StockVO;
 import com.clotha.ca.stockarea.model.StockAreaService;
 import com.clotha.ca.store.model.StoreService;
 import com.clotha.ca.store.model.StoreVO;
@@ -34,6 +37,9 @@ public class StoreController {
 	
 	@Autowired
 	private StockAreaService stockAreaService;
+	
+	@Autowired
+	private StockService stockService;
 	
 	@Autowired
 	private FileUploadUtil fileupload;
@@ -124,5 +130,15 @@ public class StoreController {
 		}else {
 			return "영업정지 처분 성공";			
 		}
+	}
+	
+	@RequestMapping(value="/ajaxStoreSelectStock.do")
+	@ResponseBody
+	public List<Map<String,Object>> ajaxStoreSelectStock(@RequestParam String storeCode) {
+		StockVO stockVO = new StockVO();
+		StoreVO storeVO = storeService.SearchStoreByCode(storeCode);
+		stockVO.setStaCode(storeVO.getStaCode());
+		
+		return stockService.stockList(stockVO);
 	}
 }

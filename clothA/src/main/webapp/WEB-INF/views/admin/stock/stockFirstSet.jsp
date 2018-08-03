@@ -143,7 +143,7 @@ function renameForModelAttribute() {
 function newRecord() {
 	$('#pdCodeSearch').remove();
 	var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
-	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' value='..' onclick=popupOpen() /></td>";
+	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' data-toggle='modal' data-target='#modal-searchPd' role='button' data-backdrop='static' value='..' /></td>";
 	dsd+= "<td><input type='text' readonly='readonly' ></td>";
 	dsd+= "<td><input type='number' name='stockQty' ></td>";
 	dsd+= "<input type='hidden' name='stockPk' ></tr>";
@@ -230,16 +230,27 @@ function returnValueRead(str) {
 </style>
 <form name="frmStockFirstSet" id="frmStockFirstSet">
 	<div id="wrap">
-			<div>
-				<b>구분</b><input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
-				<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">구분</label>
+					<div class="col-sm-7">
+						<input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
+						<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+					</div>
+				</div>
 			</div>
-			<div id='selectwhorst'>
-				<b>선택</b>
-				<select name="staCode" id="selSearchSupplier">
-				
-				</select>
+			
+			<div class="col-sm-2">
+				<div class="form-group" id='selectwhorst'>
+					<label for="selSearchSupplier" class="col-sm-3 control-label">선택</label>
+					<div class="col-sm-7">
+						<select name="staCode" id="selSearchSupplier" class="form-control">
+						</select>
+					</div>
+				</div>
 			</div>
+		</div>
 		
 	</div>
 </form>
@@ -249,7 +260,8 @@ function returnValueRead(str) {
 </form>
 	<div id="maincontent">    
 
-		<a href="#" id="newRecord"><i class="fas fa-edit"></i></a>
+		<a class="btn btn-xs btn-success" href="#" id="newRecord"><i class="fas fa-edit"></i>새 재고 등록</a>
+		<a class="btn btn-xs btn-success" href="#" id="submit"><i class="fas fa-edit"></i>최종 등록</a>
 		<div id="content1">
 			<form name="frmStockFirstSetting" id="frmStockFirstSetting">
 			
@@ -269,11 +281,6 @@ function returnValueRead(str) {
 			</form>
 		</div>
 	</div>
-	
-<a data-toggle="modal" data-target="#modal-searchPd" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success">테스트 등록</span>
-</a>
- 
  
 <div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width:1200px;height:700px">

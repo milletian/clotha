@@ -92,18 +92,43 @@
 <div class="modal-body">
 	<div id="wrap">
 		<form name="frmWarehouseList" id="frmWarehouseList">
-			<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
-			<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">사용중 </label>
-			<input type="radio" id="use" name="whDel" value="Y"><label for="use">미사용 </label>
-			검색조건
-			<select name="searchCondition"> 
-				<option value="wh_code">창고코드</option>
-				<option value="sta_code">재고위치코드</option>
-			</select>
-			
-			검색<input type="text" name="searchKeyword">
-			
-			<input type="button" id="btn" value="창고 조회">
+			<div class="row">
+				<div class="col-sm-1">
+					<b>사용 여부</b>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
+							<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">사용중 </label>
+							<input type="radio" id="use" name="whDel" value="Y"><label for="use">미사용 </label>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+					<label for="searchCondition"  class="col-sm-5 control-label">검색조건</label>
+						<div class="col-sm-7">
+							<select id="searchCondition" class="form-control" name="searchCondition"> 
+								<option value="wh_code">창고코드</option>
+								<option value="sta_code">재고위치코드</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+					<label for="searchKeyword" class="col-sm-3 control-label">검색</label>
+						<div class="col-sm-5">
+							<input type="text" id="searchKeyword" class="form-control" name="searchKeyword">
+						</div>
+						<div class="col-sm-3">
+							<input type="button" id="btn"  class="btn btn-primary" value="창고 조회">
+						</div>
+					</div>
+				</div>
+			</div>
 		</form>
 	</div>
 	<div id="maincontent">    

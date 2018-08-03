@@ -3,8 +3,13 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.inout">
 	<select id="inoutSelectAll" parameterType="InoutVO" resultType="map">
-	select IS_IN,INOUT_CODE,INOUT_STARTDATE,INOUT_ENDDATE,WH_NAME,WH_CODE,STORE_NAME,STORE_CODE,ACC_CODE,ACC_NAME,PD_CODE,PD_NAME,COLOR_CODE,COLOR_NAME,INOUT_DETAIL_QTY
-	from warehousingview
+	select IS_IN,INOUT_CODE,INOUT_STARTDATE,INOUT_ENDDATE,WH_NAME,WH_CODE,STORE_NAME,OUT_DETAIL,STORE_CODE,ACC_CODE,ACC_NAME,PD_CODE,PD_NAME,COLOR_CODE,COLOR_NAME,INOUT_DETAIL_QTY
+	<if test="isIn=='입고'">
+		from warehousingview
+	</if>
+	<if test="isIn=='반품'">
+		from warehousingOutview
+	</if>
 	<where>
 		<if test="startDay!=null and startDay!=''">
 			<![CDATA[

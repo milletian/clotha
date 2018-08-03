@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
-	var liveTableData = $("#frmwarehousingtable").tableExport({
+	var liveTableData = $("#frmwarehousingtableOut").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
 	    formats: ["xlsx"],    // (String[]), filetypes for the export
@@ -50,7 +50,7 @@ $(function() {
 	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
 	});
 	
-	$("#frmwarehousingtable").tablesorter(); 
+	$("#frmwarehousingtableOut").tablesorter(); 
 	
 	
 	
@@ -78,29 +78,7 @@ $(function() {
 		} 
 	});//ajex
 	
-	$.ajax({
-		type:"POST",
-    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){
-    			$("#selSearchStoreName").html('');
-    			var option1 = "<option value=''>전체</option>";
-    			$("#selSearchStoreName").append(option1);
-    			$.each(res,function(idx, item){
-    				var option2 ="<option value='"+item.storeCode+"'>";
-    				option2 += item.storeName;
-    				option2 += "</option>";
-        			$("#selSearchStoreName").append(option2);
-    			})
-    		}else{
-    			$("#selSearchStoreName").html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("sdsds");
-		} 
-	});//ajex 매장
+	
 	
 	$('#btnSearch').click(function() { 
 	$.ajax({
@@ -111,7 +89,7 @@ $(function() {
     	success:function(res){
     		alert(res.length);
     		if (res.length > 0) {
-    			$("#frmwarehousingtable tbody").html('');
+    			$("#frmwarehousingtableOut tbody").html('');
  				$.each(res, function(idx, item) {
  					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
@@ -121,16 +99,15 @@ $(function() {
  					+"<td>"+item.ACC_NAME+"</td>"
  					+"<td>"+item.PD_CODE+"</td>" 
  					+"<td>"+item.PD_NAME+"</td>"
- 					+"<td>"+item.COLOR_CODE+"</td>"
- 					+"<td>"+item.COLOR_NAME+"</td>"
  					+"<td>"+item.INOUT_DETAIL_QTY+"</td>"
+ 					+"<td>"+item.OUT_DETAIL+"</td>"
  					+"</tr>";
- 					 $("#frmwarehousingtable tbody").append(inoutList);
+ 					 $("#frmwarehousingtableOut tbody").append(inoutList);
  					});
  				}else{
- 					$("#frmwarehousingtable tbody").html('해당 입고내역이 없습니다.');
+ 					$("#frmwarehousingtableOut tbody").html('해당 반품내역이 없습니다.');
  				}
-    		 $("#frmwarehousingtable").trigger("update"); 
+    		 $("#frmwarehousingtableOut").trigger("update"); 
              return false; 
     	 },
 		error: function(xhr, status, error){
@@ -167,16 +144,9 @@ $(function() {
 });// document
 function returnValueRead(str) {
 	var reval = window.returnValue;
-	if(str=='pd'){
+	if(str=='wh'){
 		if(reval!=null&& reval!=''){
-			$('#inoutWritefrm #pdCode').val(reval.pdCode);
-			$('#inoutWritefrm #pdName').val(reval.pdName);
-			window.whView();
-			window.returnValue=null;
-		}
-	}else if(str=='store'){
-		if(reval!=null&& reval!=''){
-			$('#inoutWritefrm #storeName').val(reval.storeName);
+			$('#inoutWritefrm #whName').val(reval.whName);
 			$('#inoutWritefrm #areaEnd').val(reval.staCode);
 			window.returnValue=null;
 		}
@@ -193,13 +163,6 @@ function returnValueRead(str) {
 				<input type="text" name="searchDateRange" id="searchDateRange">
 				<input type="hidden" name="isIn" id="isIn" value="반품">
 				
-				<label for="selSearchStoreName">매장</label>
-				<select style="max-height: 30px; width: 100px" name="areaEnd"
-				data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
-					class="ajax">
-				</select>
-				<label for="selSearchWareHouse">창고</label>
-				<input type="text" readonly="readonly" id="areaEnd" name="areaStart">
  				
  				<label for="selSearchProducts">상품코드/명</label>
 				<select style="max-height: 30px; width: 100px" name="pdCode"
@@ -217,20 +180,19 @@ function returnValueRead(str) {
 				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
 				class="fas fa-trash-alt"></i></a>
 				<div id="content1">
-					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
+					<table id="frmwarehousingtableOut" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
 								<th>작업구분</th>
-								<th>출고일자</th>
+								<th>반품일자</th>
 								<th>도착예정일</th>
 								<th>출발지</th>
 								<th>매장명</th>
 								<th>매입처</th>
 								<th>상품코드</th>
 								<th>상품명</th>
-								<th>칼라코드</th>
-								<th>칼라명</th>
 								<th>수량</th>
+								<th>반품사유</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -239,4 +201,34 @@ function returnValueRead(str) {
 				</div>
 			</form>
 		</div>
+</div>
+
+<a data-toggle="modal" data-target="#modal-outWrite" role="button" data-backdrop="static">
+ <span class="btn btn-xs btn-success">테스트 등록</span>
+</a>
+ 
+ 
+<div id="modal-outWrite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1050;" >
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="inoutWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../../admin/products/productsSearch.jsp" %>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal-searchWh" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../../admin/warehouse/warehouseSearch.jsp" %>
+        </div>
+    </div>
 </div>

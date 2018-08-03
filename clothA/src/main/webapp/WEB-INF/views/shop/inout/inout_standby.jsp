@@ -38,6 +38,20 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
+	var storeCode = '${storeCode}';
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/store/ajaxStoreOne.do' />",
+    	data:{"storeCode" : storeCode},
+    	dataType:'json',
+    	success:function(res){
+    		$('#areaEnd').val(res.staCode);
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		} 
+	});
+	
 	var liveTableData = $("#frmwarehousingtable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -78,29 +92,7 @@ $(function() {
 		} 
 	});//ajex
 	
-	$.ajax({
-		type:"POST",
-    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){
-    			$("#selSearchStoreName").html('');
-    			var option1 = "<option value=''>전체</option>";
-    			$("#selSearchStoreName").append(option1);
-    			$.each(res,function(idx, item){
-    				var option2 ="<option value='"+item.storeCode+"'>";
-    				option2 += item.storeName;
-    				option2 += "</option>";
-        			$("#selSearchStoreName").append(option2);
-    			})
-    		}else{
-    			$("#selSearchStoreName").html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("sdsds");
-		} 
-	});//ajex 매장
+	
 	
 	$('#btnSearch').click(function() { 
 	$.ajax({
@@ -191,15 +183,9 @@ function returnValueRead(str) {
 			<form name="frmwarehousingList" id="frmwarehousingList">
 				<label>기간</label><i class="fa fa-calendar"></i>
 				<input type="text" name="searchDateRange" id="searchDateRange">
-				
-				<label for="selSearchStoreName">매장</label>
-				<select style="max-height: 30px; width: 100px" name="areaEnd"
-				data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
-					class="ajax">
-				</select>
-				<label for="selSearchWareHouse">창고</label>
-				<input type="text" readonly="readonly" id="areaEnd" name="areaStart">
- 				
+				<input type="hidden" name="isIn" id="isIn" value="입고">
+				<input type="hidden" readonly="readonly" id="areaEnd" name="areaEnd">
+
  				<label for="selSearchProducts">상품코드/명</label>
 				<select style="max-height: 30px; width: 100px" name="pdCode"
 					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
@@ -240,33 +226,4 @@ function returnValueRead(str) {
 		</div>
 </div>
 
-
-<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success"> 등록</span>
-</a>
  
- 
-<div id="modal-inWrite" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none; z-index: 1050;">
-    <div class="modal-dialog" style="width:1200px;height:1000px">
-        <div class="modal-content">
-        	<%@include file="inoutWrite.jsp" %>
-        </div>
-    </div>
-</div>
-
-<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
-    <div class="modal-dialog" style="width:1200px;height:700px">
-        <div class="modal-content">
-        	<%@include file="../../admin/products/productsSearch.jsp" %>
-        </div>
-    </div>
-</div>
-
-
-<div id="modal-searchStore" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
-    <div class="modal-dialog" style="width:1200px;height:700px">
-        <div class="modal-content">
-        	<%@include file="../../admin/store/storeSearch.jsp" %>
-        </div>
-    </div>
-</div>

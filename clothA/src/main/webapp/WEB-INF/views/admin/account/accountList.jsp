@@ -119,9 +119,11 @@ $(function() {
 	})
 	
 	$(document ).on( "click" , "table tbody tr", function() {              
-		$(this).attr('class','success');
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
 		accCode=$(this).find('td:first').text();        
-
+		
+		
     });
 	
 	$('#modal-testNew').on('hidden.bs.modal', function (e) {
@@ -210,30 +212,58 @@ function mapview(address1,name,tel){
 }
 
 </script>
-
+<style type="text/css">
+	table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+	}
+</style>
 <div class="viewBody">
 	<div class="box1">
 		<form name="frmAccountList" id="frmAccountList">
-			<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="accIsdeal" value="전체"><label for="isall">전체 </label>
-			<input type="radio" id="use" name="accIsdeal" value="Y"><label for="use">사용 </label>
-			<input type="radio" id="noneuse" name="accIsdeal" value="N"><label for="noneuse">미사용 </label>
-			
-			검색조건
-			<select name="searchCondition"> 
-				<option value="acc_Code">구매처코드</option>
-				<option value="acc_No">법인등록번호</option>
-				<option value="acc_Name">회사명</option>
-			</select>
-			
-			검색<input type="text" name="searchKeyword">
-			
-			<input type="button" id="btn" value="거래처 조회">
+		<div class="row">
+			<div class="col-sm-1">
+				<b>사용 여부</b>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="radio" id="isall" class="checkbox-inline" checked="checked" name="accIsdeal" value="전체"><label for="isall">전체 </label>
+						<input type="radio" id="use" name="accIsdeal" class="checkbox-inline" value="Y"><label for="use">사용 </label>
+						<input type="radio" id="noneuse" name="accIsdeal" class="checkbox-inline" value="N"><label for="noneuse">미사용 </label>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+				<label for="searchCondition"  class="col-sm-5 control-label">검색조건</label>
+					<div class="col-sm-7">
+						<select id="searchCondition" class="form-control" name="searchCondition"> 
+							<option value="acc_Code">구매처코드</option>
+							<option value="acc_No">법인등록번호</option>
+							<option value="acc_Name">회사명</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+				<label for="searchKeyword" class="col-sm-2 control-label">검색</label>
+					<div class="col-sm-5">
+						<input type="text" id="searchKeyword" class="form-control" name="searchKeyword">
+					</div>
+					<div class="col-sm-5">
+						<input type="button" id="btn"  class="btn btn-primary" value="거래처 조회">
+					</div>
+				</div>
+			</div>
+		</div>
 		</form>
 	</div>
 	<div class="box2">    
-		<a href="#"><i class="fas fa-edit"></i></a>
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+		<a  data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
+		 	<span class="btn btn-xs btn-success" id="openmodal">구매처 등록</span>
+		</a>
+		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매처 삭제</a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">             
 			    <thead> 
@@ -257,9 +287,7 @@ function mapview(address1,name,tel){
 </div>
 
 
-<a  data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success" id="openmodal">구매처 등록</span>
-</a>
+
  
  
 <div id="modal-testNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">

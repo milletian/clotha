@@ -19,7 +19,7 @@
  
 <script type="text/javascript">
 $(function() {
-	var whCode="";
+	var whCode;
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -189,24 +189,48 @@ function mapview(address1,name,tel){
 </style>
 <div id="wrap">
 	<form name="frmWarehouseList" id="frmWarehouseList">
-		<b>사용 여부</b> <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
-		<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">정상영업 </label>
-		<input type="radio" id="use" name="whDel" value="Y"><label for="use">영업정지 </label>
-		검색조건
-		<select name="searchCondition"> 
-			<option value="wh_code">창고코드</option>
-			<option value="sta_code">재고위치코드</option>
-		</select>
-		
-		검색<input type="text" name="searchKeyword">
-		
-		<input type="button" id="btn" value="창고 조회">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+				<label class="col-sm-3 control-label">사용 여부</label>
+					<div class="col-sm-8">
+						 <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
+						<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">정상영업 </label>
+						<input type="radio" id="use" name="whDel" value="Y"><label for="use">영업정지 </label>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+				<label class="col-sm-5 control-label">검색조건</label>
+					<div class="col-sm-7">
+						<select name="searchCondition" class="form-control"> 
+							<option value="wh_code">창고코드</option>
+							<option value="sta_code">재고위치코드</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">검색</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="searchKeyword">
+					</div>
+					<div class="col-sm-2">
+						<input type="button" id="btn" class="btn btn-primary" value="창고 조회">
+					</div>
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 <div id="maincontent">    
-	<a href="#"><i class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+	<a data-toggle="modal" data-target="#modal-warehouseWrite" id="openWhWritemodal" role="button" data-backdrop="static">
+	 <span class="btn btn-xs btn-success">창고 등록</span>
+	</a>
+	<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>창고 사용 중지</a>
 	<div id="content1">
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 
@@ -228,9 +252,7 @@ function mapview(address1,name,tel){
 </div>
 
 
-<a data-toggle="modal" data-target="#modal-warehouseWrite" id="openWhWritemodal" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success">테스트 등록</span>
-</a>
+
  
  
 <div id="modal-warehouseWrite" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">

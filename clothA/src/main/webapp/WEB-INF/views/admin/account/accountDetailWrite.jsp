@@ -147,15 +147,15 @@ function ajaxStockByStaCode() {
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-2">
 					<div class="form-group">
 						<div class="col-sm-8">
-							<input type="button" id="whcbtn" class="btn btn-primary" value="창고 검색">
+							<a data-toggle="modal"  data-target="#modal-searchWh" role="button" data-backdrop="static">
+							 <span class="btn btn-primary">창고검색</span>
+							</a> 
 						</div>
 					</div>
 				</div>
-		</div>
-	   <div class="row">
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="pdCode" class="col-sm-4 control-label">상품코드</label>
@@ -164,10 +164,12 @@ function ajaxStockByStaCode() {
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-1">
 					<div class="form-group">
 						<div class="col-sm-8">
-							<input type="button" id="pdCbtn" class="btn btn-primary"  value="상품 검색">
+							<a data-toggle="modal"  data-target="#modal-searchPd" role="button" data-backdrop="static">
+							 <span class="btn btn-primary">상품검색</span>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -252,13 +254,9 @@ function ajaxStockByStaCode() {
 		</div>
 	</div>
 	
-	<a data-toggle="modal"  data-target="#modal-searchPd" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">상품검색</span>
-	</a>
 	
-	<a data-toggle="modal"  data-target="#modal-searchWh" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">창고검색</span>
-	</a>                     
+	
+	                    
 </div>
  
 <div class="modal-footer">

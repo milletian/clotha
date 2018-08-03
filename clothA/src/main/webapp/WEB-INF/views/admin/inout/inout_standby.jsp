@@ -189,26 +189,53 @@ function returnValueRead(str) {
 <div class="viewBody">
 		<div id="wrap" class="box1">
 			<form name="frmwarehousingList" id="frmwarehousingList">
-				<label>기간</label><i class="fa fa-calendar"></i>
-				<input type="text" name="searchDateRange" id="searchDateRange">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group">
+						<label for="searchDateRange" class="col-sm-3 control-label">기간<i class="fa fa-calendar"></i></label>
+							<div class="col-sm-9">
+								<input type="text" name="searchDateRange" class="form-control" id="searchDateRange">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+						<label for="selSearchStoreName" class="col-sm-5 control-label">매장</label>
+							<div class="col-sm-7">
+								<select style="max-height: 30px; width: 100px" name="areaEnd"
+										data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
+										class="ajax">
+								</select>		
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+						<label for="selSearchProducts" class="col-sm-5 control-label">상품코드/명</label>
+							<div class="col-sm-7">
+								<select style="max-height: 30px; width: 100px" name="pdCode"
+									data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
+									class="form-control">
+								</select>		
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<div class="col-sm-5">
+								<button type="button" id="btnSearch" class="btn btn-primary">
+									<i class="fa fa-lg fa-search"></i>&nbsp;조회(F2)
+								</button>							
+							</div>
+						</div>
+					</div>
+				</div>
 				
-				<label for="selSearchStoreName">매장</label>
-				<select style="max-height: 30px; width: 100px" name="areaEnd"
-				data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
-					class="ajax">
-				</select>
-				<label for="selSearchWareHouse">창고</label>
-				<input type="text" readonly="readonly" id="areaEnd" name="areaStart">
- 				
- 				<label for="selSearchProducts">상품코드/명</label>
-				<select style="max-height: 30px; width: 100px" name="pdCode"
-					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
-					class="ajax">
-				</select>
+				<input type="hidden" name="isIn" id="isIn" value="입고">
 				
-				<button type="button" id="btnSearch">
-					<i class="fa fa-lg fa-search"></i>&nbsp;조회(F2)
-				</button>
+				
 			</form>
 		</div>
 		<div id="maincontent" class="box2">

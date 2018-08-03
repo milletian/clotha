@@ -44,6 +44,7 @@ $(function() {
 	    				}
 	    				option += "</option>";
 	        			$("#selectwhorst").append(option);
+	        			$("#selectwhorst").select2();
 	    			})
 	    		}else{
 	    			$("#selectwhorst").html('');
@@ -166,36 +167,82 @@ function returnValueRead(str) {
 	text-align: left;
 	padding: 15px;
 }
+.row{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 </style>
 <div id="wrap">
 	<form name="frmStockList" id="frmStockList">
-		<label for="selSearchSupplier">매입처</label>
-		<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
-		<div>
-			<b>구분</b><input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
-			<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="form-group">
+				<label for="selSearchSupplier" class="col-sm-4 control-label">매입처</label>
+					<div class="col-sm-5">
+						<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">구분</label>
+					<div class="col-sm-7">
+						<input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
+						<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label for="selectwhorst" class="col-sm-3 control-label">선택</label>
+					<div class="col-sm-7">
+						<select name="staCode" id="selectwhorst">
+						</select>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			<b>선택</b>
-			<select name="staCode" id="selectwhorst">
-				
-			</select>
-		</div><br>
-		<label for="pdCode">상품 코드</label><input type="text" name="pdCode" id="pdCode">
-		<input type="button" id="pdbtn" value="상품코드 조회">
+		
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+				<label for="pdCode" class="col-sm-3 control-label">상품 코드</label>
+					<div class="col-sm-6">
+						<input class="form-control" type="text" name="pdCode" id="pdCode">
+					</div>
+					<div class="col-sm-3">
+						<a data-toggle="modal" data-target="#modal-searchPd" id="searchPdopen" role="button" data-backdrop="static">
+						 <span class="btn btn-primary">상품 조회</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="form-group">
+				<label class="col-sm-3 control-label">상품 사용 여부</label>
+					<div class="col-sm-4">
+						<input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
+						<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
+						<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
+					</div>
+					<div class="col-sm-3">
+						<input type="button" class="btn btn-primary" id="btn" value="재고현황 조회">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
 	
-		<b>상품 사용 여부</b> <input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
-		<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
-		<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
 		
 		
-		<input type="button" id="btn" value="재고현황 조회">
+		
+		
 	</form>
 </div>
 <div id="maincontent">    
-	<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
-	<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-	<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
 	<div id="content1">
 		<table cellspacing="1" class="tablesorter">             
 		    <thead> 
@@ -216,9 +263,7 @@ function returnValueRead(str) {
 </div>
 
 
-<a data-toggle="modal" data-target="#modal-searchPd" id="searchPdopen" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success">테스트 등록</span>
-</a>
+
  
  
 <div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">

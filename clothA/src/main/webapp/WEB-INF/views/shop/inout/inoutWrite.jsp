@@ -6,7 +6,20 @@
 <div class="modal-header">
 <script type="text/javascript">
 $(function() {
-	
+	var storeCode = '${storeCode}';
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/store/ajaxStoreOne.do' />",
+    	data:{"storeCode" : storeCode},
+    	dataType:'json',
+    	success:function(res){
+    		$('#storeName').val(res.storeName);
+    		$('#areaStart').val(res.staCode);
+    	},
+    	error: function(xhr, status, error){
+			alert("sdsds");
+		} 
+	});
 	
 	$('#inoutStartdate').daterangepicker({
 		singleDatePicker: true,
@@ -20,7 +33,7 @@ $(function() {
 	        format: "YYYY-MM-DD"
 	      }
 	});
-	$('#areaStart').change(function() {
+	$('#pdCode').change(function() {
 		changeLimit();
 	})
 	
@@ -79,6 +92,7 @@ $(function() {
 			
 		}
 	})
+	pdStockView();
 	
 })
 function changeLimit() {
@@ -103,27 +117,24 @@ function changeLimit() {
 		} 
 	});
 }
-function whView() {
-	var pdcode = $('#pdCode').val();
-	
+function pdStockView() {
 	$.ajax({
 		type:"POST",
-    	url : "<c:url value='/admin/warehouse/ajaxWarehouseListBypdQty.do' />",
-    	data:{"pdCode" : pdcode},
+    	url : "<c:url value='/admin/store/ajaxStoreSelectStock.do' />",
+    	data:{"storeCode" : '${storeCode}'},
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
-    			$("#areaStart").html('');
+    			$("#pdCode").html('');
     			$.each(res,function(idx, item){
-    				var option2 ="<option value='"+item.STA_CODE+"'>";
-    				option2 += item.WH_NAME+"- 남은수량 :"+item.STOCK_QTY;
+    				var option2 ="<option value='"+item.PD_CODE+"'>";
+    				option2 += item.PD_NAME+"- 남은수량 :"+item.STOCK_QTY;
     				option2 += "</option>";
-        			$("#areaStart").append(option2);
+        			$("#pdCode").append(option2);
     			})
     		}else{
-    			$("#areaStart").html('');
+    			$("#pdCode").html('');
     		}
-    		$('#areaStartDiv').css('display','');
     		changeLimit();
     	},
     	error: function(xhr, status, error){
@@ -150,37 +161,31 @@ function whView() {
    <div id="wrap">
 	<form name="inoutWritefrm" id="inoutWritefrm" method="post">
 		<label for="inoutStartdate">출발날짜</label><input type="text" class="searchDate" id="inoutStartdate" name="inoutStartdate">
-		<label for="inoutEnddate">입고예정일</label><input type="text" class="searchDate" id="inoutEnddate" name="inoutEnddate"><br>
-		<label for="storeName">입고될 매장</label><input type="text" id="storeName" name="storeName" readonly="readonly">
+		<label for="inoutEnddate">반품 도착일</label><input type="text" class="searchDate" id="inoutEnddate" name="inoutEnddate"><br>
+		<label for="whName">입고될 창고</label><input type="text" id="whName" name="whName" readonly="readonly">
 		
 		<input type="hidden" id="areaEnd" name="areaEnd">
 		
-		<input type="button" id="storecbtn" value="매장 검색">
-		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode" readonly="readonly">
-		<input type="button" id="pdCbtn" value="상품 검색"><Br>
-		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName" readonly="readonly">
-		<label for="inoutDetailQty">주문수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
-		<div id="areaStartDiv" style="display: none;">
-			<label for="areaStart">출발 창고</label>
-			<select id="areaStart" name="areaStart">
-			
-			</select>
-			<input type="hidden" id="limitQty">
-		</div>
-		<input type="hidden" id="inoutStatus" name="inoutStatus" value="승인">
-		<input type="hidden" id="isIn" name="isIn" value="입고">
+		<input type="button" id="whcbtn" value="창고 검색">
+		<label for="pdCode">반품 상품</label>
+		<select id="pdCode" name="pdCode">
+		
+		</select>
+		<label for="inoutDetailQty">반품수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
+		
+		<label for="storeName">출발 매장</label><input type="text" name="storeName" id="storeName">
+		<label for="outDetail">반품 사유</label><input type="text" name="outDetail" id="outDetail">
+		<input type="hidden" name="areaStart" id="areaStart">
+		<input type="hidden" id="limitQty">
+		
+		<input type="hidden" id="inoutStatus" name="inoutStatus" value="승인대기">
+		<input type="hidden" id="isIn" name="isIn" value="반품">
 		
 	</form>
 	</div>
-	
-	
-	<a data-toggle="modal"  data-target="#modal-searchPd" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">상품검색</span>
-	</a>
-	       
 	             
-	<a data-toggle="modal"  data-target="#modal-searchStore" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">매장검색</span>
+	<a data-toggle="modal"  data-target="#modal-searchWh" role="button" data-backdrop="static">
+	 <span class="btn btn-xs btn-success">창고검색</span>
 	</a>                     
 </div>
  

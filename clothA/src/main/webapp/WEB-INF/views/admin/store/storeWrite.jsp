@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<div class="modal-header">
+<div class="modal-header bg-primary">
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 	$(function() {
@@ -164,6 +164,11 @@
 	}
 	 
 	</script>
+	<style type="text/css">
+	.row{
+		margin: 15px;
+	}
+	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
     <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
 </div>
@@ -173,25 +178,105 @@
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 	<form id="frmStoreWrite" name="frmStoreWrite" enctype="multipart/form-data">
-		<input type="hidden" name="storeCode" >  
-		<label for="empNo">점장 </label><input type="text" id="empNo" name="empNo">
-		<input type="button" id="searchEmpNo" value="사원조회">
-		<label for="storeName">점포이름 </label><input type="text" id="storeName" name="storeName">
-		<c:if test="${empty param.storeCode || param.storeCode=='undefined'}">
-			<label for="areaCode">지역 </label>
-			<select id="areaCode" name="areaCode">
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="empNo" class="col-sm-3 control-label">점장 </label>
+					<div class="col-sm-4">
+						<input type="text" id="empNo" name="empNo" class="form-control">
+					</div>
+					<div class="col-sm-5">
+						<input type="button" class="btn btn-primary" id="searchEmpNo" value="사원조회">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="storeName" class="col-sm-4 control-label">점포이름 </label>
+					<div class="col-sm-8">
+						<input type="text" id="storeName" name="storeName" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="areaCode" class="col-sm-3 control-label">지역 </label>
+					<div class="col-sm-4">
+						<select id="areaCode" class="form-control" name="areaCode">
 			
-			</select>
-		</c:if>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="storeImage" class="col-sm-4 control-label">이미지</label>
+					<div class="col-sm-8">
+						<input type="file" name="file" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="storeZipcode" class="col-sm-3 control-label">우편번호</label>
+					<div class="col-sm-5">
+						<input type="text" id="storeZipcode" name="storeZipcode" class="form-control">
+					</div>
+					<div class="col-sm-4">
+						<input type="button" onclick="sample2_execDaumPostcode()" class="btn btn-primary" value="우편번호 찾기">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="address" class="col-sm-3 control-label">주소</label>
+					<div class="col-sm-5">
+						<input type="text" id="address" name="address" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="addressDetail" class="col-sm-3 control-label">상세주소</label>
+					<div class="col-sm-5">
+						<input type="text" id="addressDetail" name="addressDetail" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="form-group">
+					<label for="storeTel" class="col-sm-2 control-label">대표전화 </label>
+					<div class="col-sm-4">
+						<input type="text" id="storeTel" name="storeTel" maxlength="13" class="form-control">
+					</div>
+					<label for="storeNo" class="col-sm-2 control-label">법인번호 </label>
+					<div class="col-sm-4">
+						<input type="text" id="storeNo" name="storeNo"  maxlength="13" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="hidden" name="storeCode" >  
+		
 		<input type="hidden" name="oldfile">
-		<label for="storeImage">이미지</label><input type="file" name="file"><br>
-		<label for="storeZipcode">우편번호</label> <input type="text" id="storeZipcode" name="storeZipcode" >
-		<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-		<label for="address">주소</label><input type="text" id="address" name="address"><br>
-		<label for="addressDetail">상세주소</label><input type="text" id="addressDetail" name="addressDetail"><br>
-		<label for="storeTel">대표전화 </label><input type="text" id="storeTel" name="storeTel" maxlength="13"><br>
-		<label for="storeNo">법인번호 </label><input type="text" id="storeNo" name="storeNo"  maxlength="13"><br>
-	
 		
 	</form>
 		<script type="text/javascript">

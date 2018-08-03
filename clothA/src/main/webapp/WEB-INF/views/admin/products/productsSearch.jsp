@@ -155,15 +155,33 @@
 	<div class="viewBody">
 			<div id="wrap" class="box1">
 				<form name="frmProductsList" id="frmProductsList">
-					<label for="selSearchProducts">상품코드/명</label>
-					<select style="max-height: 30px; width: 100px" name="pdCode"
-						data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
-						class="ajax">
-					</select>
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="form-group">
+							<label for="selSearchProducts" class="col-sm-4 control-label">상품코드/명</label>
+								<div class="col-sm-5">
+									<select style="max-height: 30px; width: 100px" name="pdCode"
+										data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
+										class="ajax">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<div class="form-group">
+								
+								<div class="col-sm-3">
+									<button type="button" id="btnpdSearch" class="btn btn-primary">
+										<i class="fa fa-lg fa-search" ></i>&nbsp;상품조회(F2)
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
 					<input type="hidden" id="pdDel" value="Y" name="pdDel">
-					<button type="button" id="btnpdSearch">
-						<i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)
-					</button>
+					
 				</form>
 			</div>
 			<div id="maincontent" class="box2">

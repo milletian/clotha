@@ -193,16 +193,39 @@ function returnValueRead(str) {
 <div class="viewBody">
 	<div class="box1">
 		<form name="frmAccountDetailList" id="frmAccountDetailList">
-		<label>기간</label><i class="fa fa-calendar"></i><input type="text" name="searchDateRange" id="searchDateRange">
-			<label for="selSearchSupplier">매입처</label>
-			<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
-			<button type="button"id="btnSearch"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+				<label for="searchDateRange" class="col-sm-3 control-label">기간<i class="fa fa-calendar"></i></label>
+					<div class="col-sm-6">
+						<input type="text" name="searchDateRange" class="form-control" id="searchDateRange">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+				<label for="selSearchSupplier" class="col-sm-5 control-label">매입처</label>
+					<div class="col-sm-7">
+						<select style="max-height: 30px;width: 100px" name="accCode"  data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-5">
+						<button type="button"id="btnSearch" class="btn btn-primary"><i class="fa fa-lg fa-search"></i>&nbsp;주문장 조회</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		</form>
 	</div>
 	<div class="box2">    
-		<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a>
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a>
-		<a href="#" id="delbtn"><i class="fas fa-trash-alt"></i></a>
+		<a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
+		 	<span class="btn btn-xs btn-success">구매 등록</span>
+		</a>
+		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매 내역 삭제</a>
 		<div id="content1">
 			<table id="searchDetailtable" cellspacing="1" class="tablesorter">             
 			    <thead> 
@@ -225,9 +248,7 @@ function returnValueRead(str) {
 		</div>
 	</div>
 </div>
-<a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success">테스트 등록</span>
-</a>
+
  
 
 <div id="modal-accountDetailWrite" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
