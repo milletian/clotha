@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
+<div class="modal-header">
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		/* deptNo db값과 동일하게 선택된 상태 */
@@ -181,44 +174,32 @@
 
 </style>
 
-<div class="viewBody">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
+	<h3 class="smaller lighter blue no-margin modal-title">상세 인사정보</h3>
+</div>
+<div class="modal-body">
 	<!-- Main content  -->
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeEdit" method="post" enctype="multipart/form-data"
-		action="<c:url value='/admin/employee/employeeEdit.do'/>">
-
-		<div >
-			<div >
+	<form name="employeeEdit" id="employeeEdit" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeEdit.do'/>">
 				<div>
-					<input type="hidden" name="oldFileName" value="${map.EMP_FACE}">
-					<c:if test="${!empty map.EMP_FACE }">
-					<img alt="직원사진" src="<c:url value='/pd_images/${map.EMP_FACE}'/>" style="width: 150px;">
-					</c:if>
-					<c:if test="${empty map.EMP_FACE }">
-					<span>등록된 사진이 없습니다</span>
-					</c:if>
-				</div>
-				
-				<div>
-					<label for="empNo">사원코드</label>
-					<span>${map.EMP_NO }</span>
-					<input type="hidden" name="empNo" value="${map.EMP_NO }">
+					<label for="storeCode">매장이름</label>
+					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax2"></select>
 				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
-						<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
-							<option value="">선택하세요</option>
-							<option value="10">정직원</option>
-							<option value="20">계약직</option>
-							<option value="30">단기알바</option>
-						</select>
+					<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
+						<option value="">선택하세요</option>
+						<option value="10">정직원</option>
+						<option value="20">계약직</option>
+						<option value="30">단기알바</option>
+					</select>
 				</div>
-				<div>
+					<div>
 						<label for="empName">이름</label> 
-						<input type="text" name="empName" id="empName" class="valid" value="${map.EMP_NAME }">
-				</div>
+						<input type="text" name="empName" id="empName" class="valid">
+					</div>
 				<div>
 					<label for="empPwd">비밀번호</label> 
 					<input type="password" name="empPwd" id="empPwd" class="valid">
@@ -230,29 +211,25 @@
 				</div>
 				<div>
 					<label for="empZipcode">우편번호</label> 
-					<input type="text" id="empZipcode" name="empZipcode" value="${map.EMP_ZIPCODE }"><input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" id="empZipcode" name="empZipcode"><input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 					<label for="empAddress">주소</label>
-					
-					<c:set var="address" value="${map.EMP_ADDRESS.split('~') }"></c:set>
-					<input type="text" id="empAddress" name="empAddress" value="${address[0] }"><br>
+					<input type="text" id="empAddress" name="empAddress"><br>
 					<label for="addressDetail">상세주소</label>
-					<input type="text" id="addressDetail" name="addressDetail" value="${address[1] }"><br> 
+					<input type="text" id="addressDetail" name="addressDetail"><br> 
 				</div>
 				<div>
-					<label for="empJumin">주민등록번호</label>
-					<c:set var="jumin" value="${map.EMP_JUMIN.split('-') }"></c:set>  
-					<input type="text"	name="empJumin1" id="empJumin1" class="valid" onkeyup="jumin1Keyup(this)" maxlength="6" value="${jumin[0] }">-
-					<input type="text" name="empJumin2" id="empJumin2"	onkeyup="jumin2Keyup(this)" maxlength="7" value="${jumin[1] }">
+					<label for="empJumin">주민등록번호</label> 
+					<input type="text"	name="empJumin1" id="empJumin1" class="valid" onkeyup="jumin1Keyup(this)" maxlength="6">-
+					<input type="text" name="empJumin2" id="empJumin2"	onkeyup="jumin2Keyup(this)" maxlength="7">
 				</div>
 				<div>
 					<label for="empTel" >핸드폰</label>
-					<input type="text" id="empTel" name="empTel"  maxlength="13" class="valid" value="${map.EMP_TEL }"><br>
+					<input type="text" id="empTel" name="empTel"  maxlength="13" class="valid"><br>
 				</div>
 				<div>
 					<label for="empEmail">이메일 주소</label> 
-					<c:set var="email" value="${map.EMP_EMAIL.split('@') }"></c:set>
-					<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" class="valid" value='${email[0]}'>
-					@ <input type="text" name="email2" id="email2" title="이메일주소 뒷자리" disabled="disabled" value='${email[1]}'>
+					<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" class="valid">
+					@ <input type="text" name="email2" id="email2" title="이메일주소 뒷자리" disabled="disabled">
 					<select name="selectEmail" id="selectEmail" title="직접입력" >
 						<option value="">선택하세요</option>
 						<option value="naver.com">naver.com</option>
@@ -263,19 +240,16 @@
 					</select> 
 				</div>
 				<div>
-					<label for="changeFile">사진변경(image)</label><input type="file" name="changeFile">
-					<br>
-		            <c:if test="${!empty map.EMP_FACE}">
-		            	<span style="color:green;font-weight: bold">첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
-		            </c:if>
+					<label for="uploadFace">증명사진첨부(image)</label>
+					 <input type="file"	name="uploadFace" id="uploadFace">
 				</div>
 				<div>
-					<label for="empJob">담당업무</label> 
-					<input type="text" name="empJob" id="empJob" class="valid" value="${map.EMP_JOB }">
+					<label for="empJob">담당업무</label> <input type="text" name="empJob"
+						id="empJob" class="valid">
 				</div>
 				<div>
-					<label for="gradeCode">직급</label> 
-					<select name="gradeCode" id="gradeCode" title="직급" class="valid">
+					<label for="gradeCode">직급</label> <select name="gradeCode"
+						id="gradeCode" title="직급" class="valid">
 						<option value="">선택하세요</option>
 						<option value="1">마스터</option>
 						<option value="2">본사 관리자</option>
@@ -283,16 +257,16 @@
 						<option value="4">사원</option>
 					</select>
 				</div>
-				<input type="submit" value="수정"> 
-				<input type="reset"	value="취소">
-			</div>
-		</div>
 	</form>
-	<div>
-		<input type="button" value="삭제" class="employeeDel">
-		<input type="text" name="empNo" value="${map.EMP_NO }">
-	 </div>
 </div>
+<div class="modal-footer">
+	<span class="btn btn-sm btn-success" id="employeeSubmit">
+ 	등록<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+    </span>
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeDetailClose">
+        <i class="ace-icon fa fa-times"></i>닫기
+    </button></div>
+
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');

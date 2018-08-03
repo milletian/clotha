@@ -83,12 +83,13 @@ function popupOpen(empNo){
 		success:function(res){
 			$('#modal-EmpFinal #empFace img').remove();
 			$('#modal-EmpFinal #empFace').text("");
-			if(res.EMP_FACE!=null || res.EMP_FACE==""){
-			$('#modal-EmpFinal #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>'>"); 
+			if(res.EMP_FACE!=null && res.EMP_FACE!=""){
+			$('#modal-EmpFinal #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>width=150px;'>"); 
 			}else{
 			$('#modal-EmpFinal #empFace').text("사진을 등록해주세요");
 			}
 			$('#modal-EmpFinal #empNo').val(res.EMP_NO);
+			$('#modal-EmpFinal #storeCode').val(res.STORE_CODE);
 			$('#modal-EmpFinal #deptName').val(res.DEPT_NAME);
 			$('#modal-EmpFinal #empName').val(res.EMP_NAME);
 			$('#modal-EmpFinal #empZipcode').val(res.EMP_ZIPCODE);

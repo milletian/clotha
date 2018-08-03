@@ -5,6 +5,14 @@
 
 <script type="text/javascript">
 	 $(document).ready(function () {
+		if($('#photo').text()!=null || $('#photo').text()!=""){
+			/*$('#photo').css('display',''); */
+			$('#photo').show();
+		}else{
+			/* $('#photo').css('display','none'); */
+			$('#photo').hide();
+		}
+		 
 		 /* 매장코드로 매장이름 불러오기 */ 
 		$.ajax({
 			type:"POST",
@@ -203,6 +211,8 @@
 
 <style type="text/css">
 </style>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
+	<h3 class="smaller lighter blue no-margin modal-title">인사등록</h3>
 </div>
 <div class="modal-body">
 	<!-- Main content  -->
@@ -210,6 +220,8 @@
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 	<form name="employeeWrite" id="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
+				<div id="empFace">
+				</div>
 				<div>
 					<label for="storeCode">매장이름</label>
 					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax2"></select>

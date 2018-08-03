@@ -38,8 +38,7 @@
 })//제이쿼리
 </script>
 
-	<button type="button" class="close" data-dismiss="modal"
-		aria-label="Close" aria-hidden="true">×</button>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
 	<h3 class="smaller lighter blue no-margin modal-title">인사등록 승인처리</h3>
 </div>
 <div class="modal-body">

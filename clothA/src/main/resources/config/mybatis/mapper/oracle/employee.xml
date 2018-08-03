@@ -77,9 +77,9 @@
 		order by e.grade_code asc
 	</select>
 	<select id="selectByEmpNo" parameterType="String" resultType="map">
-		select STORE_CODE, EMP_NO, EMP_NAME, EMP_ZIPCODE, EMP_ADDRESS, EMP_JUMIN,
-        EMP_TEL, EMP_EMAIL, EMP_JOB, EMP_JOINDATE, EMP_OUTDATE, EMP_FACE,
-        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, EMP_DEL
+		select e.STORE_CODE, e.EMP_NO, e.EMP_NAME, e.EMP_ZIPCODE, e.EMP_ADDRESS, e.EMP_JUMIN,
+        e.EMP_TEL, e.EMP_EMAIL, e.EMP_JOB, e.EMP_JOINDATE, e.EMP_OUTDATE, e.EMP_FACE,
+        e.GRADE_CODE, e.DEPT_NO, d.DEPT_NAME, g.GRADE_NAME, e.EMP_DEL
 		from EMPLOYEE e join DEPT d
 		on e.DEPT_NO = d.DEPT_NO
 		join GRADE g

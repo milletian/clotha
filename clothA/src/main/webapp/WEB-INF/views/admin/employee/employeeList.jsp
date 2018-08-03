@@ -66,7 +66,7 @@ $(function() {
 	    			$("table tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
-	 					"<tr ondblclick=popupOpen2('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
+	 					"<tr ondblclick=popupOpen('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.STORE_NAME+"</td>"
 	 					+"<td>"+item.EMP_NO+"</td>"
 	 					+"<td>"+item.DEPT_NAME+"</td>"
@@ -106,18 +106,57 @@ $(function() {
 })//제이쿼리
 
 
-function popupOpen2(empNo){
+function popupOpen(empNo){
 
-	var popUrl = "<c:url value='/admin/employee/employeeDetail.do?empNo="+empNo+" '/>";	//팝업창에 출력될 페이지 URL
-
-	var popOption = "width=800, height=700, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-
-		window.open(popUrl,"정보입력",popOption);
-
+	$.ajax({
+		url:"<c:url value='/admin/employee/employeeDetail.do' />",
+		data:{"empNo":empNo},
+		dataType:"json",
+		success:function(res){
+			var juminArr=res.EMP_JUMIN.split('-');
+			var addressArr=res.EMP_ADDRESS.split('~');
+			var emailArr=res.EMP_EMAIL.split('@');
+			
+			$('#employeeWrite #empFace img').remove();
+			$('#employeeWrite #empFace').text("");
+			if(res.EMP_FACE!=null && res.EMP_FACE!=""){
+			$('#employeeWrite #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
+			}else{
+			$('#employeeWrite #empFace').text("사진을 등록해주세요");
+			}
+			$('#employeeWrite #storeCode').val(res.STORE_CODE);
+			$('#employeeWrite #empNo').val(res.EMP_NO);
+			$('#employeeWrite #deptNo').val(res.DEPT_NO);
+			$('#employeeWrite #empName').val(res.EMP_NAME);
+			$('#employeeWrite #empZipcode').val(res.EMP_ZIPCODE);
+			$('#employeeWrite #empAddress').val(addressArr[0]);
+			$('#employeeWrite #addressDetail').val(addressArr[1]);
+			$('#employeeWrite #empJumin1').val(juminArr[0]);
+			$('#employeeWrite #empJumin2').val(juminArr[1]);
+			$('#employeeWrite #empTel').val(res.EMP_TEL);
+			$('#employeeWrite #Email1').val(emailArr[0]);
+			$('#employeeWrite #Email2').val(emailArr[1]);
+			$('#employeeWrite #empJob').val(res.EMP_JOB);
+			$('#employeeWrite #gradeCode').val(res.GRADE_CODE);
+			
+			$('#openmodal').trigger('click');
+		},
+		error:function(x,e){ 
+			if(x.status==0){
+				alert('You are offline!!n Please Check Your Network.'); 
+			}else if(x.status==404){ 
+				alert('Requested URL not found.'); 
+			}else if(x.status==500){ 
+				alert('Internel Server Error.'); 
+			}else if(e=='parsererror'){ 
+				alert('Error.nParsing JSON Request failed.'); 
+			}else if(e=='timeout'){
+				alert('Request Time out.'); 
+			}else { 
+				alert('Unknow Error.n'+x.responseText); } 
+			}
+	})
 }
-
-
-
 </script>
 <style type="text/css">
 </style>
@@ -150,7 +189,7 @@ function popupOpen2(empNo){
 		</form>
 	</div>
 	<div class="box2">
-		<a data-toggle="modal" data-target="#modal-employeeWrite" id="openmodal" role="button" data-backdrop="static"><i class="fas fa-edit"></i></a> 
+		<a data-toggle="modal" data-target="#modal-employeeWrite"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i></a> 
 		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
 		<a href="#"><i class="fas fa-trash-alt"></i></a>
 		<div id="content1">
@@ -200,6 +239,3 @@ function popupOpen2(empNo){
         </div>
     </div>
 </div>
-
-
-
