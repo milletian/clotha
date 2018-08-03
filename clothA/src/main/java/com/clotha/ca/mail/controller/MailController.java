@@ -174,7 +174,7 @@ public class MailController {
 		return "mail/sendDetail";
 	}
 	
-	@RequestMapping("/sendDelete.do")
+	@RequestMapping("sendDelete.do")
 	public String sendDelete(@RequestParam int mailNo, Model model, HttpServletRequest request) {
 		logger.info("보낸쪽지 삭제하기 mailNo = {}",mailNo);
 		String empNo = (String) request.getSession().getAttribute("empNo");
@@ -250,79 +250,6 @@ public class MailController {
 		return"common/message";
 	}
 	
-	@RequestMapping("/saveMail.do")
-	public String saveMail(HttpServletRequest request, Model model) {
-		logger.info("보관함 페이지");
-		String empNo = (String) request.getSession().getAttribute("empNo");
-		String sender = (String) request.getSession().getAttribute("empNo");
-		
-		List<MailVO> sendList = mailService.sendSave(sender);
-		logger.info("보낸쪽지 보관함 결과 sendList.size = {} " , sendList.size());
-		List<MailVO> getList = mailService.getSave(empNo);
-		logger.info("보낸쪽지 보관함 결과 getList.size = {} " , getList.size());
-		
-		model.addAttribute("sendList",sendList);
-		model.addAttribute("getList",getList);
-		
-		
-		return "mail/saveMail";
-	}
-	
-	@RequestMapping("/getSave.do")
-	public String getSave(@RequestParam String[] chk , Model model, HttpServletRequest request) {
-		String empNo = (String) request.getSession().getAttribute("empNo");
-		logger.info("받은 쪽지 보관하기 empNo = {} ",empNo);
-		if(chk!=null) {
-			int i=0;
-			for(String no : chk) {
-				logger.info("받은 쪽지 보관하기 인덱스 = {} : 파라미터 => {}", i++, no);
-			}
-		}//if
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("nos", chk);
-		map.put("empNo", empNo);
-		int cnt = mailService.getSaveUp(map);
-		logger.info("보관하기 결과 cnt = {} ", cnt );
-		String msg = "보관하기에 실패하였습니다." , url = "/mail/getMail.do";
-		if(cnt > 0) {
-			msg="보관하였습니다. 받은쪽지에서는 없어집니다.";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		
-		return "common/message";
-	}
-	
-	@RequestMapping("/sendSave.do")
-	public String sendSaveUp(@RequestParam String[] chk , Model model, HttpServletRequest request) {
-		String sender = (String) request.getSession().getAttribute("empNo");
-		logger.info("보낸 쪽지 보관하기 empNo = {} ",sender);
-		if(chk!=null) {
-			int i=0;
-			for(String no : chk) {
-				logger.info("보낸 쪽지 보관하기 인덱스 = {} : 파라미터 => {}", i++, no);
-			}
-		}//if
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("nos", chk);
-		map.put("sender", sender);
-		int cnt = mailService.sendSaveUp(map);
-		logger.info("보관하기 결과 cnt = {} ", cnt );
-		String msg = "보관하기에 실패하였습니다." , url = "/mail/sendMail.do";
-		if(cnt > 0) {
-			msg="보관하였습니다. 보낸쪽지에서는 없어집니다.";
-		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		
-		return "common/message";
-	}
 	
 
 }

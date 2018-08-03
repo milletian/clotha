@@ -29,11 +29,6 @@
 			}
 		});
 		
-		$('input[type=button]').click(function(){
-			$('form[name=chfrm]').attr("action","<c:url value='/mail/getSave.do'/>").submit();
-			
-		});
-		
 		
 	});
 	
@@ -79,7 +74,7 @@
 				</tr>
 				<c:if test="${empty list }">
 					<tr>
-						<td colspan="5">받은 쪽지가 없습니다.</td>
+						<td colspan="5">받은 메세지가 없습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${!empty list }">

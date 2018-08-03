@@ -58,7 +58,7 @@ public class ForgetPasswordController {
 				if(result==1) {
 					
 					String subject = "ClothA 임시비밀번호 발송";
-					String content = "임시 비밀번호 : "+change+" 입니다. \n 비밀번호 변경해주시기 바랍니다.";
+					String content = "임시 비밀번호 : "+change+" 입니다. 비밀번호 변경해주시기 바랍니다.";
 					String to = employeeVo.getEmpEmail();
 					String from = "ClothA@clothacompany.com";
 					

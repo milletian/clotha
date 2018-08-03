@@ -23,10 +23,6 @@
 			}
 		});
 		
-		$('input[name=save]').click(function(){
-			$('form[name=chfrm]').attr("action","<c:url value='/mail/sendSave.do'/>").submit();
-			
-		});
 		
 	});
 	
@@ -34,8 +30,6 @@
 	function allChecked(bool){
 		$('input[name=chk]').prop('checked', bool);
 	}
-	
-	
 </script>
 <style type="text/css">
 	table{

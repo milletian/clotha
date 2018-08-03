@@ -16,9 +16,5 @@ public interface MailDAO {
 	public int sendDelete(int mailNo);	//sendDelete
 	public int sendMulti(Map<String, String[]> map);	//sendMulti
 	public int getMulti(Map<String, Object> map);	//getMulti
-	public List<MailVO> sendSave(String sender);	//sendSave
-	public List<MailVO> getSave(String empNo);	//getSave
-	public int getSaveUp(Map<String, Object> map);	//getSaveUp
-	public int sendSaveUp(Map<String, Object> map);	//sendSaveUp
 
 }
