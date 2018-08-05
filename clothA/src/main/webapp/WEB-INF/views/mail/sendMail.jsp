@@ -29,6 +29,11 @@
 		});
 	});
 	
+	function pageFunc(curPage){
+		document.frmPage.currentPage.value=curPage;
+		frmPage.submit();
+	}
+	
 	
 	function allChecked(bool){
 		$('input[name=chk]').prop('checked', bool);
@@ -53,12 +58,21 @@
 		color: black;
 		text-decoration: none;
 	}
+	.divPage, .divSearch{
+		text-align: center;
+	}
 </style>
 <title>보낸쪽지</title>
 </head>
 <body>
 	<div>
 		<h2>보낸쪽지</h2>
+		<form name="frmPage" method="post"
+			action="<c:url value='/mail/sendMail.do'/>">
+			<input type="hidden" name="currentPage" >
+			<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
+			<input type="hidden" name="searchCondition" value="${param.searchCondition}">	
+		</form>
 		<form action="<c:url value='/mail/sendMulti.do'/> " name="chfrm" method="post" >
 			<table>
 				<tr>
@@ -86,6 +100,60 @@
 			<input type="submit" value="삭제" name="delete">
 			<input type="button" value="보관" name="save">
 		</form>
+	</div>
+	<div class="divPage">
+		<!-- 페이지 번호 추가 -->		
+		<!-- 이전 블럭으로 이동 -->
+		<c:if test="${pageVo.firstPage>1 }">
+			<a href="#" onclick="pageFunc(${pageVo.firstPage-1})">
+				<img alt="이전 블럭으로 이동" src="<c:url value='../images/first.JPG'/> ">
+			</a>		
+		</c:if>
+		
+		<!-- [1][2][3][4][5][6][7][8][9][10] -->
+		<c:forEach var="i" begin="${pageVo.firstPage }" end="${pageVo.lastPage}">
+			<c:if test="${i==pageVo.currentPage }">
+				<span style="color: blue;font-weight: bold;font-size:1.0em">
+					${i}</span>
+			</c:if>
+			<c:if test="${i!=pageVo.currentPage }">
+				<a href="#" onclick="pageFunc(${i})">
+				[${i }]</a>
+			</c:if>
+		</c:forEach>
+			
+		<!-- 다음 블럭으로 이동 -->
+		<c:if test="${pageVo.lastPage<pageVo.totalPage }">
+			<a href="#" onclick="pageFunc(${pageVo.lastPage+1})">
+				<img alt="다음 블럭으로 이동" src="<c:url value='/images/last.JPG'/> ">
+			</a>	
+		</c:if>
+		<!--  페이지 번호 끝 -->
+	</div>
+	<div class="divSearch">
+	   	<form name="frmSearch" method="post" 
+	   		action='<c:url value="/mail/sendMail.do"/>'>
+	        <select name="searchCondition">        	
+	            <option value="mail_name"
+	            	<c:if test="${param.searchCondition=='mail_name'}">
+	            		selected="selected"
+	            	</c:if>
+	            >제목</option>
+	            <option value="mail_content"
+	            	<c:if test="${param.searchCondition=='mail_content'}">
+	            		selected="selected"
+	            	</c:if>
+	            >내용</option>
+	            <option value="emp_no"
+	            	<c:if test="${param.searchCondition=='emp_name'}">
+	            		selected="selected"
+	            	</c:if>	 
+	            >받는이</option>
+	        </select>   
+	        <input type="text" name="searchKeyword" title="검색어 입력"
+	        	value="${param.searchKeyword}">   
+			<input type="submit" value="검색">
+	    </form>
 	</div>
 </body>
 </html>

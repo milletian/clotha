@@ -33,8 +33,8 @@ public class MailServiceImpl implements MailService{
 	}
 
 	@Override
-	public List<MailVO> selectGetMail(String empNo) {
-		return MailDao.selectGetMail(empNo);
+	public List<MailVO> selectGetMail(Map<String, Object> map) {
+		return MailDao.selectGetMail(map);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public class MailServiceImpl implements MailService{
 	}
 
 	@Override
-	public List<MailVO> selectSender(String empNo) {
-		return MailDao.selectSender(empNo);
+	public List<MailVO> selectSender(Map<String, Object> map) {
+		return MailDao.selectSender(map);
 	}
 
 	@Override
@@ -99,6 +99,16 @@ public class MailServiceImpl implements MailService{
  	@Override
 	public int sendSaveUp(Map<String, Object> map) {
 		return MailDao.sendSaveUp(map);
+	}
+
+	@Override
+	public int getTotalRecord(Map<String, Object> map) {
+		return MailDao.getTotalRecord(map);
+	}
+
+	@Override
+	public int sendTotalRecord(Map<String, Object> map) {
+		return MailDao.sendTotalRecord(map);
 	}
 	
 	

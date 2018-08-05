@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Utility {
 	public static final int BLOCK_SIZE = 10;
 	public static final int RECORD_COUNT_PER_PAGE = 5; // 게시판 한 페이지에 보여줄 레코드 개수
+	public static final int RECORD_COUNT_PER_PAGE10 = 10; // 게시판 한 페이지에 보여줄 레코드 개수
 	public static final int RECORD_COUNT = 13; // 우편번호 한 페이지에 보여줄 레코드 개수
 	public static final int NOTICE_RECORD = 6; // 공지사항
 	

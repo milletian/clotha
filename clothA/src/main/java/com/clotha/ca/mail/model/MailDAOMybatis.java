@@ -25,8 +25,8 @@ public class MailDAOMybatis implements MailDAO {
 	}
 
 	@Override
-	public List<MailVO> selectGetMail(String empNo) {
-		return sqlSession.selectList(namespace+"selectGetMail",empNo);
+	public List<MailVO> selectGetMail(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"selectGetMail",map);
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class MailDAOMybatis implements MailDAO {
 	}
 
 	@Override
-	public List<MailVO> selectSender(String empNo) {
-		return sqlSession.selectList(namespace+"selectSender",empNo);
+	public List<MailVO> selectSender(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"selectSender",map);
 	}
 
 	@Override
@@ -90,6 +90,16 @@ public class MailDAOMybatis implements MailDAO {
 	public int sendSaveUp(Map<String, Object> map) {
 		return sqlSession.update(namespace+"sendSaveUp",map);
 		
+	}
+
+	@Override
+	public int getTotalRecord(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"getTotalRecord",map);
+	}
+
+	@Override
+	public int sendTotalRecord(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"sendTotalRecord",map);
 	}
 
 	

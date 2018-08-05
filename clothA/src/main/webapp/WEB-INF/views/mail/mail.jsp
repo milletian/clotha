@@ -13,6 +13,13 @@
 		$("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
 		$("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
 		
+		$('#tabs a').click(function(){
+			
+			var id = $(this).attr('href');
+			var src = $(id).find("iframe").attr("src");
+			$(id).find("iframe").attr("src",src);
+			
+		});
 		
 	});
 </script>
@@ -79,16 +86,16 @@ body h1{
 			<li><a href="#tabs-4">보관함</a></li>
 		</ul>
 		<div id="tabs-1">
-			<iframe src="<c:url value='/mail/mailWrite.do' />"style="width: 100%; height: 80%; border: none "></iframe>
+			<iframe id="iframee" src="<c:url value='/mail/mailWrite.do' />"style="width: 100%; height: 80%; border: none "></iframe>
 		</div>
 		<div id="tabs-2">
-			<iframe src="<c:url value='/mail/getMail.do' />"style="width: 100%; height: 80%; border: none "></iframe>
+			<iframe id="iframee" src="<c:url value='/mail/getMail.do' />"style="width: 100%; height: 80%; border: none "></iframe>
 		</div>
 		<div id="tabs-3">
-			<iframe src="<c:url value='/mail/sendMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
+			<iframe id="iframee" src="<c:url value='/mail/sendMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
 		</div>
 		<div id="tabs-4">
-			<iframe src="<c:url value='/mail/saveMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
+			<iframe id="iframee" src="<c:url value='/mail/saveMail.do' />"style="width: 100%; height: 80%; border: none"></iframe>
 		</div>
 	</div>
 </body>

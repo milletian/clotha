@@ -3,6 +3,13 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.mail">
 
+	<sql id="searchWhere">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+		</if>
+	</sql>
+	
+	
 	<insert id="insertMail" parameterType="mailVo">
 			<selectKey order="BEFORE" keyProperty="mailNo" resultType="int"  >
 				select log_seq.nextval from dual
@@ -16,12 +23,24 @@
 		values(get_mail_seq.nextval,#{mailNo},#{empNo})
 	</insert>
 	
-	<select id="selectGetMail" parameterType="string" resultType="mailVo">
-		select m.* , e.emp_name
-		from mailview m join employee e
-		on m.sender = e.emp_no
-		where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is null 
-		order by m.mail_no desc
+	<select id="selectGetMail" parameterType="SearchVO" resultType="mailVo">
+		select *
+		from
+		(
+			select rownum as RNUM, list.*
+		    from (
+				select m.* , e.emp_name
+				from mailview m join employee e
+				on m.sender = e.emp_no
+				where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is null 
+				<include refid="searchWhere"></include>
+				order by m.mail_no desc
+			)list
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
 	</select>
 	
 	<select id="selectDetail" parameterType="mailVo" resultType="mailVo" >
@@ -40,9 +59,21 @@
 		update get_mail set get_mail_del = 'Y' where mail_no=#{mailNo} and emp_no = #{empNo}
 	</update>
 	
-	<select id="selectSender" parameterType="String" resultType="mailVo" >
-		select * from mail where sender = #{empNo} and mail_senderdel = 'N' and mail_save is null
-		order by mail_no desc
+	<select id="selectSender" parameterType="map" resultType="mailVo" >
+		select *
+		from
+		(
+			select rownum as RNUM, list.*
+		    from (
+				select * from mail
+				where sender = #{empNo} and mail_save is null and mail_senderdel = 'N'
+				<include refid="searchWhere"></include>
+			)list
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
 	</select>
 	
 	<select id="sendMailDetail" parameterType="int" resultType="mailVo" >
@@ -120,6 +151,27 @@
 			#{mailNo}
 		</foreach>
 	</update>
+	
+	<select id="getTotalRecord" parameterType="map" resultType="int">
+		select count(*)
+		from mailview m join employee e
+		on m.sender = e.emp_no
+		where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is null 
+		<include refid="searchWhere"></include>
+		order by m.mail_no desc		
+	</select>
+	
+	<select id="sendTotalRecord" parameterType="map" resultType="int">
+		select count(*) 
+		from mailview m
+			<if test="searchKeyword !=null and searchKeyword !=''">
+				join employee e 
+				on m.emp_no = e.emp_no
+			</if>
+		where m.sender = #{empNo} and m.mail_senderdel = 'N' and m.mail_save is null
+		<include refid="searchWhere"></include>
+		order by mail_no desc
+	</select>
 	
 	
 </mapper>
