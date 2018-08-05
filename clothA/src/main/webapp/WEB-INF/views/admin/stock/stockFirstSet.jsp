@@ -40,9 +40,9 @@ $(function() {
 	    			$.each(res,function(idx, item){
 	    				var option = "<option value='"+item.staCode+"'>";
 	    				if(whorst=="store"){
-	    					option += item.storeCode;
+	    					option += item.storeName;
 	    				}else{
-	    					option += item.whCode;
+	    					option += item.whName;
 	    				}
 	    				option += "</option>";
 	        			$("#selSearchSupplier").append(option);
@@ -75,18 +75,21 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
+        			alert(res.length);
         			$("#stockFirstSetTable tbody").html('');
+        			var dsd ="";
      				$.each(res, function(idx, item) {
-     					var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+item.STA_CODE+"'></td>";
+     					dsd += "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+item.STA_CODE+"'></td>";
      					dsd+= "<td><input type='text' name='pdCode' readonly='readonly' value='"+item.PD_CODE+"' ></td>";
      					dsd+= "<td><input type='text' readonly='readonly' value='"+item.PD_NAME+"' ></td>";
      					dsd+= "<td><input type='text' name='stockQty' value='"+item.STOCK_QTY+"' ></td>";
      					dsd+= "<input type='hidden' name='stockPk' value='"+item.STOCK_PK+"' ></tr>";
  
-     					$("#stockFirstSetTable tbody").append(dsd);
-     					liveTableData.reset();
-     					renameForModelAttribute();
+     					
      				})	 
+     				$("#stockFirstSetTable tbody").append(dsd);
+ 					liveTableData.reset();
+ 					renameForModelAttribute();
      			}else{
      				$("#stockFirstSetTable tbody").html('');
      			}
@@ -127,7 +130,9 @@ $(function() {
 	/* $('#pdCodeSearch')on('click',function(){
 		
 	}) */
-	
+	$('#submit').click(function() {
+		
+	})
 	storeOrwh = $('#selSearchSupplier').val();
 })
 

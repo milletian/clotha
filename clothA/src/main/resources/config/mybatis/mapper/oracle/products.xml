@@ -18,7 +18,7 @@
 			pd_regdate>#{startDay} and pd_regdate<to_date(#{endDay})+1
 			]]>
 			</if>
-			<if test="pdDel!='전체' and pdDel!=null and pdDel!=''">
+			<if test="pdDel!=null and pdDel!='전체' and pdDel!=''">
 				and pd_del=#{pdDel}
 			</if>
 			<if test="accCode!=null and accCode!=''">
@@ -62,6 +62,13 @@
 	#{pdCode}
 	</foreach> 
 	</delete>
+	
+	<insert id="insertExcelProducts" parameterType="StockVO">
+		insert into
+		products(PD_CODE,PD_NAME,PD_ORIGINALPRICE,PD_SELLPRICE,STYLE_CODE,COLOR_CODE,SEASON_CODE,SIZE_CODE,ACC_CODE,GENDER_CODE,PD_EXPLANATION,PD_WARNING)
+		values(#{styleCode}||#{sizeCode}||#{genderCode}||#{colorCode}||products_seq.nextval||'-'||#{seasonCode},
+		#{pdName},#{pdOriginalPrice},#{pdSellPrice},#{styleCode},#{colorCode},#{seasonCode},#{sizeCode},#{accCode},#{genderCode},#{pdExplanation},#{pdWarning})
+	</insert>
 </mapper>
 
 

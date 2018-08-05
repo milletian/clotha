@@ -30,6 +30,8 @@
 	rel="stylesheet" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	
+<script src="<c:url value='/js/jquery.form.min.js' /> "></script>
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
@@ -180,7 +182,40 @@ function detail(PD_CODE){
 	window.location.href= "/ca/admin/products/productsDetail.do?pdCode="+PD_CODE;
 }
 	
+function checkFileType(filePath){
+	var fileFormat = filePath.split(".");
+	if(fileFormat.indexOf("xls") > -1){
+		return true;
+	}else if(fileFormat.indexOf("xlsx") > -1){
+		return true;
+	}else{
+		return false;
+	}
+}
 
+function check(){
+	var file = $("#excel").val();
+	if(file == "" || file == null){
+		alert("파일을 선택");
+		return false;
+	}else if(!checkFileType(file)){
+		alert("엑셀 파일만 업로드");
+		return false;
+	}
+	var fileFormat = file.split(".");
+	var fileType = fileFormat[1];
+	if(confirm("업로드 하시겠습니까?")){
+		$("#excelUpForm").attr("action","<c:url value='/admin/products/ajaxProductsExcelUpload.do' />");
+		var options = {
+			success:function(data){
+				alert("업로드 완료");
+			},
+			type: "POST",
+			data : {"excelType" : fileType}
+		};
+		$("#excelUpForm").ajaxSubmit(options);
+	}
+}
 </script>
 <style type="text/css">
 
@@ -246,6 +281,10 @@ function detail(PD_CODE){
 			</form>
 		</div>
 		<div id="maincontent" class="box2">
+			<form id="excelUpForm" method="post" action="" role="form" enctype="multipart/form-data">
+				<input id="excel" name="excel" class="file" type="file" multiple data-show-upload="false" data-show-caption="true">
+				<button type="button" id="excelUp" onclick="check()">등록</button>
+			</form>
 			<a href="#" onclick=popupOpen()><i class="fas fa-edit"></i></a> <a
 				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
 				class="fas fa-trash-alt"></i></a>

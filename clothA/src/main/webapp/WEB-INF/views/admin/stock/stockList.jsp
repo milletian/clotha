@@ -38,9 +38,9 @@ $(function() {
 	    			$.each(res,function(idx, item){
 	    				var option = "<option value='"+item.staCode+"'>";
 	    				if(whorst=="store"){
-	    					option += item.storeCode;
+	    					option += item.storeName;
 	    				}else{
-	    					option += item.whCode;
+	    					option += item.whName;
 	    				}
 	    				option += "</option>";
 	        			$("#selectwhorst").append(option);
@@ -66,7 +66,7 @@ $(function() {
 		
 	})
 	
-	var liveTableData = $("table").tableExport({
+	var liveTableData = $("#stockListTable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
 	    formats: ["xlsx"],    // (String[]), filetypes for the export
@@ -77,7 +77,7 @@ $(function() {
 	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
 	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
 	});
-	$("table").tablesorter(); 
+	$("#stockListTable").tablesorter(); 
 	
 	
 	
@@ -115,7 +115,7 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
-        			$("table tbody").html('');
+        			$("#stockListTable tbody").html('');
      				$.each(res, function(idx, item) {
      					var dsd ="<tr><td>"+item.PD_CODE+"</td>"
      					+"<td>"+item.PD_NAME+"</td>"
@@ -129,11 +129,11 @@ $(function() {
      						dsd+="미사용";
      					}
      					+"</td>";
-     					 $("table tbody").append(dsd);
+     					 $("#stockListTable tbody").append(dsd);
      					liveTableData.reset();
      					});
      				}else{
-     					$("table tbody").html('');
+     					$("#stockListTable tbody").html('');
      				}
         		 $("table").trigger("update"); 
                  return false; 
@@ -244,7 +244,7 @@ function returnValueRead(str) {
 </div>
 <div id="maincontent">    
 	<div id="content1">
-		<table cellspacing="1" class="tablesorter">             
+		<table id="stockListTable" cellspacing="1" class="tablesorter">             
 		    <thead> 
 		        <tr> 
 		            <th>상품코드</th> 

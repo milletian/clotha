@@ -3,6 +3,8 @@ package com.clotha.ca.product.model;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 public interface ProductsService {
 
 	public int insertProducts(ProductsVO productsVo);
@@ -11,4 +13,6 @@ public interface ProductsService {
 	public ProductsVO selectByPdCode(String pdCode);
 	public int updatePdDetail(ProductsVO productsVo);
 	public int deleteProducts(Map<String, String[]> map);
+	public List<ProductsVO> xlsExcelReader(MultipartHttpServletRequest req);
+	public List<ProductsVO> xlsxExcelReader(MultipartHttpServletRequest req);
 } 

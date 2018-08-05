@@ -1,4 +1,4 @@
-create view AccProductsView
+create or replace view AccProductsView
 as
 select a.ACC_NAME, p.*
 from products p  join account a

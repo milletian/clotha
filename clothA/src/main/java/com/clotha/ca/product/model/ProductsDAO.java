@@ -6,6 +6,7 @@ import java.util.Map;
 public interface ProductsDAO {
 
 	public int insertProducts(ProductsVO productsVo);
+	public int insertExcelProducts(ProductsVO productsVo);
 	public List<Map<String, Object>> selectProduct(ProductsVO productsVo);
 	public List<ProductsVO> selectAll();
 	public ProductsVO selectByPdCode(String pdCode);

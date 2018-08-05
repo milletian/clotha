@@ -37,6 +37,10 @@ public class StockController {
 		return "/admin/stock/stockList";
 	}
 	
+	@RequestMapping("/stockChart.do")
+	public void stockChart() {
+	}
+	
 	@RequestMapping("/ajaxStockList.do")
 	@ResponseBody
 	public List<Map<String,Object>> stockList(@ModelAttribute StockVO stockVO) {

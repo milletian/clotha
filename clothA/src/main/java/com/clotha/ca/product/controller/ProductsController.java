@@ -3,6 +3,7 @@ package com.clotha.ca.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.clotha.ca.account.model.AccountVO;
 import com.clotha.ca.accountdetail.model.AccountDetailVO;
@@ -28,6 +30,7 @@ import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.common.Utility;
 import com.clotha.ca.product.model.ProductsService;
 import com.clotha.ca.product.model.ProductsVO;
+import com.clotha.ca.stock.model.StockVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -233,5 +236,19 @@ public class ProductsController {
 	@RequestMapping(value="/products/productsSearch.do", method=RequestMethod.GET)
 	public void productSearch() {
 		logger.info("검색화면 보여주기");
+	}
+	
+	@RequestMapping("/products/ajaxProductsExcelUpload.do")
+	@ResponseBody
+	public List<ProductsVO> ajaxProductsExcelUpload(MultipartHttpServletRequest req) {
+		String excelType = req.getParameter("excelType");
+		List<ProductsVO> list = new ArrayList<>();
+		logger.info("ajaxStockExcelUpload : excelType={}",excelType);
+		if(excelType.equals("xlsx")) {
+			return productsService.xlsxExcelReader(req);
+		}else if(excelType.equals("xls")) {
+			return productsService.xlsExcelReader(req);
+		}
+		return list;
 	}
 }

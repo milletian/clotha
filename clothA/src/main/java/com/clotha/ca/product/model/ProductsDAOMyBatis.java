@@ -47,4 +47,9 @@ public class ProductsDAOMyBatis implements ProductsDAO {
 		return sqlSession.delete(namesapce+"deleteProducts", map);
 	}
 
+	@Override
+	public int insertExcelProducts(ProductsVO productsVo) {
+		return sqlSession.insert(namesapce+"insertExcelProducts", productsVo);
+	}
+
 }
