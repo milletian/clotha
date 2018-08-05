@@ -23,7 +23,10 @@
 			}
 		});
 		
-		
+		$('input[name=save]').click(function(){
+			$('form[name=chfrm]').attr("action","<c:url value='/mail/sendSave.do'/>").submit();
+			
+		});
 	});
 	
 	

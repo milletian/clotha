@@ -84,5 +84,22 @@ public class MailServiceImpl implements MailService{
 		return MailDao.getMulti(map);
 	}
 	
+	@Override
+	public List<MailVO> sendSave(String sender) {
+		return MailDao.sendSave(sender);
+	}
+ 	@Override
+	public List<MailVO> getSave(String empNo) {
+		return MailDao.getSave(empNo);
+	}
+ 	@Override
+	public int getSaveUp(Map<String, Object> map) {
+		return MailDao.getSaveUp(map);
+	}
+ 	@Override
+	public int sendSaveUp(Map<String, Object> map) {
+		return MailDao.sendSaveUp(map);
+	}
+	
 	
 }

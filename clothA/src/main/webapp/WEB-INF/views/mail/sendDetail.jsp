@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("input[name=list]").click(function(){
-			location.href="<c:url value='/mail/sendMail.do'/>";
+			history.back();
 		});
 		
 		$("input[name=delete]").click(function(){
