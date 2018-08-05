@@ -59,7 +59,7 @@ start with 1
 nocache;
 
 -- 시퀀스증가
-create sequence stock_area
+create sequence stock_area_seq
 increment by 1
 start with 1
 nocache;

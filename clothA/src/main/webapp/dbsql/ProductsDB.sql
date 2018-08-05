@@ -103,8 +103,8 @@ values('acc'||account_seq.nextval,'È«±æµ¿_ÁÖ','1111','¼­¿ï ½Ã','02-777-7777','È«
 --products Å×ÀÌºí
 
 
-insert into products(pd_code,pd_name,pd_originalprice,pd_sellprice,style_code,color_code,season_code,size_code,acc_code,gender_code,pd_del)
-values('SXS0269'||products_seq.nextval||'-SS','¸°³Ù¼ÅÃ÷','5000','59800','S','69','SS','XS','acc1','F','Y');
+insert into products(pd_code,pd_name,pd_originalprice,pd_sellprice,style_code,color_code,season_code,size_code,acc_code,gender_code)
+values('SXS0269'||products_seq.nextval||'-SS','¸°³Ù¼ÅÃ÷','5000','59800','S','69','SS','XS','acc1','F');
 
 commit;
 

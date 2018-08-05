@@ -209,15 +209,7 @@ ALTER TABLE "STOCK_AREA"
 			"AREA_CODE" -- 시즌코드
 		);
 
-ALTER TABLE "AREA"
-	ADD
-		CONSTRAINT "FK_EMPLOYEE_TO_AREA" -- 시즌 -> 의류상품
-		FOREIGN KEY (
-			"EMP_NO" -- 시즌코드
-		)
-		REFERENCES "EMPLOYEE" ( -- 시즌
-			"EMP_NO" -- 시즌코드
-		);
+
 		
 		
 -- 재고위치 기본키
@@ -1083,3 +1075,5 @@ ALTER TABLE "GET_MAIL"
 		REFERENCES "EMPLOYEE" ( -- 사원
 			"EMP_NO" -- 사원코드
 		);
+		
+		
