@@ -18,8 +18,28 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" />
+<script src="<c:url value='/js/FileSaver.js' />"></script><!-- 엑셀 플러그인 -->
+<script src="<c:url value='/js/xlsx.core.min.js' />"></script><!-- 엑셀 플러그인 -->
+<script src="<c:url value='/js/tableexport.js' /> "></script><!-- 엑셀 플러그인 -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><!-- 부트스트랩 -->
+<script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> <!-- 테이블 플러그인 -->
+<link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet"><!-- 테이블 플러그인 -->
+
 <script type="text/javascript">
 $(function() {
+	
+	var storeCode;
+	var liveTableData = $("table").tableExport({
+	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+	    formats: ["xlsx"],    // (String[]), filetypes for the export
+	    fileName: "id",                    // (id, String), filename for the downloaded file
+	    bootstrap: true,                   // (Boolean), style buttons using bootstrap
+	    position: "bottom",                 // (top, bottom), position of the caption element relative to table
+	    ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file
+	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
+	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
+	});
 	
 	/* 테이블 정렬 */
 	$("table").tablesorter(); 
@@ -53,6 +73,7 @@ $(function() {
 	
 	$(".ajax").select2();
 	$(".ajax2").select2();
+	$(".ajax3").select2();
 	
 	/* 인사정보리스트 */
 	$('#btnSearch').click(function() { 
@@ -84,6 +105,7 @@ $(function() {
 	 					 var a = $(this).text();
 		 				if(a=='undefined'){
 		 					$(this).text('');
+		 					liveTableData.reset();
 							}
 		 				})
 	 					});
@@ -116,30 +138,31 @@ function popupOpen(empNo){
 			var juminArr=res.EMP_JUMIN.split('-');
 			var addressArr=res.EMP_ADDRESS.split('~');
 			var emailArr=res.EMP_EMAIL.split('@');
-			
-			$('#employeeWrite #empFace img').remove();
-			$('#employeeWrite #empFace').text("");
+
+			$('#employeeDetail #empFace img').remove();
+			$('#employeeDetail #empFace').text("");
 			if(res.EMP_FACE!=null && res.EMP_FACE!=""){
-			$('#employeeWrite #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
+			$('#employeeDetail #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
+			$('#employeeDetail #oldFileName').val(res.EMP_FACE); 
 			}else{
-			$('#employeeWrite #empFace').text("사진을 등록해주세요");
+			$('#employeeDetail #empFace').text("사진을 등록해주세요");
 			}
-			$('#employeeWrite #storeCode').val(res.STORE_CODE);
-			$('#employeeWrite #empNo').val(res.EMP_NO);
-			$('#employeeWrite #deptNo').val(res.DEPT_NO);
-			$('#employeeWrite #empName').val(res.EMP_NAME);
-			$('#employeeWrite #empZipcode').val(res.EMP_ZIPCODE);
-			$('#employeeWrite #empAddress').val(addressArr[0]);
-			$('#employeeWrite #addressDetail').val(addressArr[1]);
-			$('#employeeWrite #empJumin1').val(juminArr[0]);
-			$('#employeeWrite #empJumin2').val(juminArr[1]);
-			$('#employeeWrite #empTel').val(res.EMP_TEL);
-			$('#employeeWrite #Email1').val(emailArr[0]);
-			$('#employeeWrite #Email2').val(emailArr[1]);
-			$('#employeeWrite #empJob').val(res.EMP_JOB);
-			$('#employeeWrite #gradeCode').val(res.GRADE_CODE);
+			$('#employeeDetail #storeCode2').val(res.STORE_CODE);
+			$('#employeeDetail #empNo2').val(res.EMP_NO);
+			$('#employeeDetail #deptNo2').val(res.DEPT_NO);
+			$('#employeeDetail #empName2').val(res.EMP_NAME);
+			$('#employeeDetail #empZipcode2').val(res.EMP_ZIPCODE);
+			$('#employeeDetail #empAddress2').val(addressArr[0]);
+			$('#employeeDetail #addressDetail2').val(addressArr[1]);
+			$('#employeeDetail #empJumin3').val(juminArr[0]);
+			$('#employeeDetail #empJumin4').val(juminArr[1]);
+			$('#employeeDetail #empTel2').val(res.EMP_TEL);
+			$('#employeeDetail #Email3').val(emailArr[0]);
+			$('#employeeDetail #Email4').val(emailArr[1]);
+			$('#employeeDetail #empJob2').val(res.EMP_JOB);
+			$('#employeeDetail #gradeCode2').val(res.GRADE_CODE);
 			
-			$('#openmodal').trigger('click');
+			$('#openmodal2').trigger('click');
 		},
 		error:function(x,e){ 
 			if(x.status==0){
@@ -189,9 +212,7 @@ function popupOpen(empNo){
 		</form>
 	</div>
 	<div class="box2">
-		<a data-toggle="modal" data-target="#modal-employeeWrite"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i></a> 
-		<a href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> 
-		<a href="#"><i class="fas fa-trash-alt"></i></a>
+		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeWrite"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i>인사등록</a>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>
@@ -236,6 +257,14 @@ function popupOpen(empNo){
     <div class="modal-dialog" style="width:1200px;height:700px">
         <div class="modal-content">
         	<%@include file="employeeWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-employeeDetail" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="employeeDetail.jsp" %>
         </div>
     </div>
 </div>

@@ -84,8 +84,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int appConfirm(EmployeeVO employeeVo) {
-		return employeeDao.appConfirm(employeeVo);
+	public int appConfirm(String empNo) {
+		return employeeDao.appConfirm(empNo);
 	}
 
 	@Override

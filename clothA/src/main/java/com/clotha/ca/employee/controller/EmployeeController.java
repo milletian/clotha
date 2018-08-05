@@ -89,24 +89,10 @@ public class EmployeeController {
 					e.printStackTrace();
 				}
 				
-				//기존에 있던 파일 삭제
-				if(fileName!=null && !fileName.isEmpty()) {
-					File oldFile
-					= new File(fileUploadUtil.getUploadPath(request, fileUploadUtil.PATH_FLAG_IMAGE),oldFileName);
-					if(oldFile.exists()) {
-						boolean bool = oldFile.delete();
-						logger.info("기존 파일 삭제여부:{}",bool);
-					}
-				}//기존 파일 삭제 if
-				
 				//db
 				String empNo=employeeVo.getEmpNo();
-				int cnt = 0;
-				if(empNo!=null&&!empNo.isEmpty()) {
-					cnt=employeeService.updateEmp(employeeVo);
-				}else {
-					cnt=employeeService.insertEmployee(employeeVo);
-				}
+				int cnt = employeeService.insertEmployee(employeeVo);
+				
 				logger.info("인사등록 결과 cnt={}", cnt);
 				
 				String msg="";
@@ -136,16 +122,6 @@ public class EmployeeController {
 		logger.info("list.size={}", list.size());
 		logger.info("list={}", list);
 		return list;
-		//날짜 yyyy-MM-dd 찍어주기
-		/*for(Map<String,Object> map : list) {
-			String str=Utility.convertDate(map.get("EMP_OUTDATE"));
-			map.put("EMP_OUTDATE",str);
-		
-			String str2=Utility.convertDate(map.get("EMP_JOINDATE"));
-			map.put("EMP_JOINDATE",str2);
-			
-			logger.info("map={}",map);
-		}*/
 	}
 	
 	@RequestMapping("/employeeDetail.do")
@@ -159,91 +135,82 @@ public class EmployeeController {
 		 return map;
 	}
 	
-	/*@RequestMapping("/employeeEdit.do")
-	public String employeeEdit(@ModelAttribute EmployeeVO employeeVo, Model model,
-			HttpServletRequest request, @RequestParam String oldFileName,
-			@RequestParam String email1, @RequestParam String selectEmail, @RequestParam(required=false) String email2, 
-			@RequestParam String empJumin1, @RequestParam String empJumin2, @RequestParam(required=false) String addressDetail) {
-		logger.info("인사정보 수정 employeeVo={}, 파일정보", employeeVo);
-		logger.info("empNo={}",employeeVo.getEmpNo());
+	/*인사정보 수정*/
+	@RequestMapping(value="/ajaxEmployeeEdit.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String employeeEdit(HttpServletRequest request) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+		EmployeeVO employeeVo = new EmployeeVO();
+	
+		employeeVo.setEmpNo(multi.getParameter("empNo"));
+		employeeVo.setDeptNo(multi.getParameter("deptNo"));
+		employeeVo.setEmpName(multi.getParameter("empName"));
+		employeeVo.setEmpPwd(multi.getParameter("empPwd"));
+		employeeVo.setEmpZipcode(multi.getParameter("empZipcode"));
+		employeeVo.setEmpAddress(multi.getParameter("empAddress")+"~"+multi.getParameter("addressDetail"));
+		employeeVo.setEmpJumin(multi.getParameter("empJumin1")+"-"+multi.getParameter("empJumin2"));
+		employeeVo.setEmpTel(multi.getParameter("empTel"));
+		employeeVo.setEmpFace(multi.getParameter("empFace"));
+		employeeVo.setEmpJob(multi.getParameter("empJob"));
+		employeeVo.setGradeCode(multi.getParameter("gradeCode"));
+		employeeVo.setStoreCode(multi.getParameter("storeCode"));
 		
-		//주민번호 셋팅
-		employeeVo.setEmpJumin(empJumin1+"-"+empJumin2);
-		
-		//주소 셋팅
-		employeeVo.setEmpAddress(employeeVo.getEmpAddress()+"~"+addressDetail);
-		
-		//이메일 주소 셋팅
-		if(selectEmail.equals("self")) {
-			employeeVo.setEmpEmail(email1+"@"+email2);
-			
+		if(multi.getParameter("selectEmail").equals("self")) {
+			employeeVo.setEmpEmail(multi.getParameter("email1")+"@"+multi.getParameter("email2"));
 		}else {
-			employeeVo.setEmpEmail(email1+"@"+selectEmail);
-			
+			employeeVo.setEmpEmail(multi.getParameter("email1")+"@"+multi.getParameter("selectEmail"));
 		}
 		
-		logger.info("인사등록 처리 파라메타 vo={}," , employeeVo);
+		logger.info("employeeVo={}", employeeVo);
 		
-		
-		
-		//파일 업로드처리
-		String fileName="";
-		try {
-			List<Map<String, Object>> list = fileUploadUtil.fileUpload(request,FileUploadUtil.PATH_FLAG_IMAGE);
-			
-			for(Map<String, Object> map : list) {
-			fileName =(String)map.get("fileName");
+		//파일 업로드
+				String oldFileName=multi.getParameter("oldFileName");
+				String fileName="";
+				try {
+					List<Map<String, Object>> list
+					=fileUploadUtil.fileUpload(request, FileUploadUtil.PATH_FLAG_IMAGE);
+					for(Map<String, Object> map:list) {
+						fileName =(String) map.get("fileName");				
+					}
+					employeeVo.setEmpFace(fileName);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//기존에 있던 파일 삭제
+				if(fileName!=null && !fileName.isEmpty()) {
+					File oldFile
+					= new File(fileUploadUtil.getUploadPath(request, fileUploadUtil.PATH_FLAG_IMAGE),oldFileName);
+					if(oldFile.exists()) {
+						boolean bool = oldFile.delete();
+						logger.info("기존 파일 삭제여부:{}",bool);
+					}
+				}//기존 파일 삭제 if
+				
+				//db
+				/*String empNo=employeeVo.getEmpNo();*/
+				int cnt = employeeService.updateEmp(employeeVo);
+				logger.info("인사정보 수정 결과 cnt={}", cnt);
+				
+				String msg="";
+				if(cnt>0) {
+					msg="수정 되었습니다.";
+				}else {
+					msg="수정 실패하였습니다.";
+				}
+				
+				return msg;
+				
 			}
-		//파일정보 셋팅
-			employeeVo.setEmpFace(fileName);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		int cnt = employeeService.updateEmp(employeeVo);
-		String msg="", url="/admin/employee/employeeEdit";
-		if(cnt>0) {
-			msg="수정에 성공하셨습니다.";
-			url="/admin/employee/employeeDetail.do?empNo="+employeeVo.getEmpNo();
-		}else {
-			msg="수정에 실패하셨습니다!!";
-		}
-		
-		
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
-	}*/
 
 	//퇴사처리 outdate 찍기
-	@RequestMapping("/employeeDel.do")
-	public void employeeDel(@RequestParam String empNo, Model model, HttpServletResponse response) throws IOException {
+	@RequestMapping(value="/ajaxEmployeeDel.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String employeeDel(@RequestParam String empNo)  {
 	logger.info("퇴사일 찍기 empNo={}", empNo);
 
 	int cnt = employeeService.delConfirm(empNo);
-	if(cnt>0) {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script type='text/javascript'>");
-		out.println("alert('삭제완료.');");
-		out.print("self.close();");
-		out.print("</script>");
-		
-		return ;
-	}else {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script type='text/javascript'>");
-		out.println("alert('삭제 실패.');");
-		out.print("history.back();");
-		out.print("</script>");
-		
-		return ;
-	}
+	return "삭제 완료";
 
 }
 	
@@ -279,10 +246,10 @@ public class EmployeeController {
 	
 	//입사일 joindate 찍기
 	@RequestMapping(value="/employeeApp.do", produces = "application/text; charset=utf8")
-	public @ResponseBody String employeeApp(@ModelAttribute EmployeeVO employeeVo) {
-	logger.info("입사일 찍기 employeeVo={}", employeeVo);
+	public @ResponseBody String employeeApp(@RequestParam String empNo) {
+	logger.info("입사일 찍기 employeeVo={}", empNo);
 
-	int cnt = employeeService.appConfirm(employeeVo); 
+	int cnt = employeeService.appConfirm(empNo); 
 	return "승인 완료";
 		}
 	

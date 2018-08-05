@@ -1,38 +1,72 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
 <div class="modal-header">
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		/* deptNo db값과 동일하게 선택된 상태 */
-		$('#deptNo option').each(function() {
-			if($(this).val()=='${map.DEPT_NO}'){
-				$(this).attr('selected','selected');
+	 $(document).ready(function () {
+		 
+		 /* 매장코드로 매장이름 불러오기 */ 
+		$.ajax({
+			type:"POST",
+	    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
+	    	dataType:'json',
+	    	success:function(res){
+	    		if (res.length > 0){
+	    			$("#searchStore3").html('');
+	    				var option1 = "<option value=''>선택하세요</option>";
+	    				$("#searchStore3").append(option1);
+	    			$.each(res,function(idx, item){
+	    				var option2 =
+	   					"<option value='"+item.storeCode+"'>";
+	    				option2 += item.storeName;
+	    				option2 += "</option>";
+	        			$("#searchStore3").append(option2);
+	    			})
+	    		}else{
+	    			$("#searchStore3").html('');
+	    		}
+	    	},
+	    	error: function(xhr, status, error){
+				alert("등록된 매장을 선택해주세요");
 			}
-		})
-		/* gradecode db값과 동일하게 선택된 상태 */
-		$('#gradeCode option').each(function() {
-			if($(this).val()=='${map.GRADE_CODE}'){
-				$(this).attr('selected','selected');
-			}
-		})
+		});//ajax
 		
-		/* 맨처음 입력 포커싱 */
-		$('#deptNo').focus();
+		$(".ajax2").select2();
 		
 		/* 휴대폰번호 자동 하이픈  */
-		$("#empTel").keyup(function() {
+		$("#empTel2").keyup(function() {
 			var x = $(this).val();
 			$(this).val(autoHypenPhone(x));
 		});
 		
 		
+		/* 삭제 버튼 */
+		$('#employeeDel').click(function () {
+			if(confirm("삭제 하시겠습니까?")){
+				$.ajax({
+			    	type:"POST",
+			    	url : "<c:url value='/admin/employee/ajaxEmployeeDel.do'/>",
+			    	data:{"empNo":$('#empNo2').val()},
+			    	dataType:'text',
+			    	success:function(res){
+			    	 	alert(res);
+			    	 	$('#employeeDetailClose').trigger('click');
+			    	},
+					error: function(xhr, status, error){
+						alert("삭제 실패");
+					}
+			    
+					}); 
+				}; 
+				
+			});
 		/* 빈칸 입력 막는 검사  */
-		$('form[name=employeeEdit]').submit(function(){
+		$('#employeeEdit').click(function(){
 			
 			var bool = true;
 			
-			$('.valid').each(function(idx,item){
+			$('.valid2').each(function(idx,item){
 				if($(this).val().length<1){
 					alert($(this).prev().text()+"을 입력하세요.");
 					$(this).focus();
@@ -42,38 +76,68 @@
 			});
 			/*입력한 비밀번호 1과 확인 비밀번호 2의 일치여부 검사 */
 			if(bool){
-				if($('#empPwd').val()!=$('#empPwd2').val()){
+				if($('#empPwd3').val()!=$('#empPwd4').val()){
 					alert('비밀번호가 일치하지 않습니다.');
-					$('#empPwd2').focus();
+					$('#empPwd3').focus();
 					bool= false;
 					return false;
 			/*비밀번호 8자 이상 입력*/
-				 } else if($('#empPwd').val().length<8 || $('#empPwd').val().length > 16){
+				 } else if($('#empPwd3').val().length<8 || $('#empPwd3').val().length > 16){
 					alert('비밀번호는 8자 이상, 16자리 이하로 입력해 주세요');
 					bool= false;
 					return false; 
 			/*비밀번호 특수문자  */					
-				} else if($('#empPwd').val().match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~]) && ([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/)){
+				} else if($('#empPwd3').val().match(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~]) && ([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/)){
 					alert("비밀번호는 영문,숫자,특수문자의 조합으로 입력해주세요. 영문은 대소문자를 구분합니다.");
 					bool=false;
 					return false;
 					
 			/* 주민번호 자릿수 맞게 입력했는지 확인 */
-				} else if($('#empJumin1').val().length<6){
+				} else if($('#empJumin3').val().length<6){
 					alert('올바른 주민등록 번호를 입력헤 주세요');
-					$('#empJumin1').focus();
+					$('#empJumin3').focus();
 					bool= false;
 					return false;
 					
-				}else if($('#empJumin2').val().length<7){
+				}else if($('#empJumin4').val().length<7){
 					alert('올바른 주민등록 번호를 입력헤 주세요');
-					$('#empJumin2').focus();
+					$('#empJumin4').focus();
 					bool= false;
 					return false;
 				
 				}
 			}
-				return bool;
+		
+			if(bool){
+				var formData = new FormData($('#employeeDetail')[0]);
+				$.ajax({
+					type:"post",
+			    	url : "<c:url value='/admin/employee/ajaxEmployeeEdit.do' />",
+			    	dataType:'text',
+			    	contentType: false,
+			    	processData: false,
+			    	data : formData,
+			    	success:function(res){
+			    		alert(res);
+			    		$('#employeeDetailClose').trigger('click');
+			    		
+			    	},
+			    	error:function(x,e){ 
+		                  if(x.status==0){
+		                     alert('You are offline!!n Please Check Your Network.'); 
+		                  }else if(x.status==404){ 
+		                     alert('Requested URL not found.'); 
+		                  }else if(x.status==500){ 
+		                     alert('Internel Server Error.'); 
+		                  }else if(e=='parsererror'){ 
+		                     alert('Error.nParsing JSON Request failed.'); 
+		                  }else if(e=='timeout'){
+		                     alert('Request Time out.'); 
+		                  }else { 
+		                     alert('Unknow Error.n'+x.responseText); } 
+		                  }
+				})
+			}
 				
 		});
 		
@@ -93,20 +157,12 @@
 
 				}
 		});
-		 /* 인사정보 삭제처리 outdate 입력  */
-		 $('.employeeDel').click(function () {
-			 var result = confirm('정말 삭제하시겠습니까?');
-				
-				if(result){
-					 location.href="<c:url value='/admin/employee/employeeDel.do?empNo=${map.EMP_NO }'/> ";
-				}else{
-					return false;
-				}
-		})
-		 
-	})//제이쿼리
-	
-/*주민등록번호 유효성체크 */
+		
+		
+
+	});//jQuery
+
+	/*주민등록번호 유효성체크 */
 	
 	/* 숫자만입력하도록  */
 	function jumin1Keyup(empJumin1) {
@@ -128,6 +184,7 @@
 			return false;
 		}
 	}
+
     
   //핸드폰번호 자동 하이픈
     function autoHypenPhone(str){
@@ -157,39 +214,35 @@
       }
       return str;
     }
-  
-/* 	function delconfirm(){
-		var delconfirm = confirm('삭제하시겠습니까?');
-    	
-    	if(delconfirm){
-    		alert('삭제 되었습니다.');
-    	}else{
-    		alert('삭제가 취소되었습니다.');
-    		return false;
-    	}
-    } */
+
+ 
 
 </script>
-<style type="text/css">
-
-</style>
 
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-	<h3 class="smaller lighter blue no-margin modal-title">상세 인사정보</h3>
+	<h3 class="smaller lighter blue no-margin modal-title">인사 상세정보 수정 / 삭제</h3>
 </div>
 <div class="modal-body">
 	<!-- Main content  -->
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeEdit" id="employeeEdit" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeEdit.do'/>">
+	<form name="employeeDetail" id="employeeDetail" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeDetail.do'/>">
+				<div>
+					<label for="empNo">사원코드</label>
+					<input type="hidden" name="empNo" id="empNo2" >
+				</div>
+				
+				<div id="empFace">
+				</div>
+				<input type="hidden" name="oldFileName" id="oldFileName">
 				<div>
 					<label for="storeCode">매장이름</label>
-					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="storeCode" class="ajax2"></select>
+					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore3" class="ajax3"></select>
 				</div>
 				<div>
 					<label for="deptNo" class="label-right">부서코드</label> 
-					<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
+					<select	name="deptNo" id="deptNo2" title="부서코드" class="valid2">
 						<option value="">선택하세요</option>
 						<option value="10">정직원</option>
 						<option value="20">계약직</option>
@@ -198,39 +251,39 @@
 				</div>
 					<div>
 						<label for="empName">이름</label> 
-						<input type="text" name="empName" id="empName" class="valid">
+						<input type="text" name="empName" id="empName2" class="valid2">
 					</div>
 				<div>
 					<label for="empPwd">비밀번호</label> 
-					<input type="password" name="empPwd" id="empPwd" class="valid">
+					<input type="password" name="empPwd" id="empPwd3" class="valid2">
 					* 비밀번호는 8자리 이상, 특수문자를 포함하여 입력해주세요
 				</div>
 				<div>
 					<label for="empPwd2">비밀번호 확인</label> 
-					<input type="password" name="empPwd2" id="empPwd2" class="valid">
+					<input type="password" name="empPwd2" id="empPwd4" class="valid2">
 				</div>
 				<div>
 					<label for="empZipcode">우편번호</label> 
-					<input type="text" id="empZipcode" name="empZipcode"><input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
+					<input type="text" id="empZipcode2" name="empZipcode"><input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
 					<label for="empAddress">주소</label>
-					<input type="text" id="empAddress" name="empAddress"><br>
+					<input type="text" id="empAddress2" name="empAddress"><br>
 					<label for="addressDetail">상세주소</label>
-					<input type="text" id="addressDetail" name="addressDetail"><br> 
+					<input type="text" id="addressDetail2" name="addressDetail"><br> 
 				</div>
 				<div>
 					<label for="empJumin">주민등록번호</label> 
-					<input type="text"	name="empJumin1" id="empJumin1" class="valid" onkeyup="jumin1Keyup(this)" maxlength="6">-
-					<input type="text" name="empJumin2" id="empJumin2"	onkeyup="jumin2Keyup(this)" maxlength="7">
+					<input type="text"	name="empJumin1" id="empJumin3" class="valid2" onkeyup="jumin1Keyup(this)" maxlength="6">-
+					<input type="text" name="empJumin2" id="empJumin4"	onkeyup="jumin2Keyup(this)" maxlength="7">
 				</div>
 				<div>
 					<label for="empTel" >핸드폰</label>
-					<input type="text" id="empTel" name="empTel"  maxlength="13" class="valid"><br>
+					<input type="text" id="empTel2" name="empTel"  maxlength="13" class="valid2"><br>
 				</div>
 				<div>
 					<label for="empEmail">이메일 주소</label> 
-					<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" class="valid">
-					@ <input type="text" name="email2" id="email2" title="이메일주소 뒷자리" disabled="disabled">
-					<select name="selectEmail" id="selectEmail" title="직접입력" >
+					<input type="text"	name="email1" id="email3" title="이메일주소 앞자리" class="valid2">
+					@ <input type="text" name="email2" id="email4" title="이메일주소 뒷자리" disabled="disabled">
+					<select name="selectEmail" id="selectEmail2" title="직접입력" >
 						<option value="">선택하세요</option>
 						<option value="naver.com">naver.com</option>
 						<option value="hanmail.net">hanmail.net</option>
@@ -241,15 +294,17 @@
 				</div>
 				<div>
 					<label for="uploadFace">증명사진첨부(image)</label>
-					 <input type="file"	name="uploadFace" id="uploadFace">
+					 <input type="file"	name="uploadFace" id="uploadFace2">
+					 <span style="color:green;font-weight: bold">
+            		첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
 				</div>
 				<div>
 					<label for="empJob">담당업무</label> <input type="text" name="empJob"
-						id="empJob" class="valid">
+						id="empJob2" class="valid2">
 				</div>
 				<div>
 					<label for="gradeCode">직급</label> <select name="gradeCode"
-						id="gradeCode" title="직급" class="valid">
+						id="gradeCode2" title="직급" class="valid2">
 						<option value="">선택하세요</option>
 						<option value="1">마스터</option>
 						<option value="2">본사 관리자</option>
@@ -260,13 +315,16 @@
 	</form>
 </div>
 <div class="modal-footer">
-	<span class="btn btn-sm btn-success" id="employeeSubmit">
- 	등록<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+	<span class="btn btn-sm btn-success" id="employeeEdit">
+ 	수정<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+    </span>
+	<span class="btn btn-sm btn-danger pull-right" id="employeeDel">
+ 	삭제<i class="ace-icon fa fa-arrow-right ace-icon fa fa-times"></i>
     </span>
     <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeDetailClose">
         <i class="ace-icon fa fa-times"></i>닫기
-    </button></div>
-
+    </button>
+</div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');

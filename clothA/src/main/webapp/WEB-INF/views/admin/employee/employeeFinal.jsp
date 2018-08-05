@@ -83,9 +83,6 @@
 		<label for="gradeName">직급</label>
 		<input type="text" name="gradeName" id="gradeName" readonly="readonly">
 	</div>
-	<div>
-		<input type="text" name="empDel" id="empDel">
-	</div>
 </div>
 <div class="modal-footer">
 	<div>

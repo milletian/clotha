@@ -88,8 +88,8 @@ public class EmployeeDAOMybatis implements EmployeeDAO {
 	}
 
 	@Override
-	public int appConfirm(EmployeeVO employeeVo) {
-		return sqlSession.update(namespace+"appConfirm", employeeVo);
+	public int appConfirm(String empNo) {
+		return sqlSession.update(namespace+"appConfirm", empNo);
 	}
 
 	@Override

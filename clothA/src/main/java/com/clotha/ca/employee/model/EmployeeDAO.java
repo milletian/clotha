@@ -21,6 +21,6 @@ public interface EmployeeDAO {
 	public int updateEmp(EmployeeVO employeeVo);
 	public int delConfirm(String empNo);
 	public List<Map<String, Object>> empApprove(String empDel);
-	public int appConfirm(EmployeeVO employeeVo);
+	public int appConfirm(String empNo);
 	public List<Map<String, Object>> empSearch(EmployeeVO employeeVo);
 }
