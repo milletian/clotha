@@ -148,10 +148,10 @@ function popupOpen(empNo){
 			$('#employeeDetail #empFace img').remove();
 			$('#employeeDetail #empFace').text("");
 			if(res.EMP_FACE!=null && res.EMP_FACE!=""){
-			$('#employeeDetail #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
-			$('#employeeDetail #oldFileName').val(res.EMP_FACE); 
+				$('#employeeDetail #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
+				$('#employeeDetail #oldFileName').val(res.EMP_FACE); 
 			}else{
-			$('#employeeDetail #empFace').text("사진을 등록해주세요");
+				$('#employeeDetail #empFace').text("사진을 등록해주세요");
 			}
 			$('#employeeDetail #storeCode2').val(res.STORE_CODE);
 			$('#employeeDetail #empNo2').val(res.EMP_NO);
@@ -191,6 +191,9 @@ function popupOpen(empNo){
 table.tablesorter tbody td.successsss{
 		background-color: skyblue;
 	}
+
+
+ 
 </style>
 <div class="viewBody">
 

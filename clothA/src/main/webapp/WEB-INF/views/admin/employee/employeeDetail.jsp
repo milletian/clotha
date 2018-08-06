@@ -68,7 +68,7 @@
 			
 			$('.valid2').each(function(idx,item){
 				if($(this).val().length<1){
-					alert($(this).prev().text()+"을 입력하세요.");
+					alert($(this).parent().prev().text()+"을 입력하세요.");
 					$(this).focus();
 					bool = false;
 					return false;

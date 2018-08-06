@@ -91,9 +91,10 @@ function popupOpen(empNo){
 			$('#modal-EmpFinal #empFace img').remove();
 			$('#modal-EmpFinal #empFace').text("");
 			if(res.EMP_FACE!=null && res.EMP_FACE!=""){
-			$('#modal-EmpFinal #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>width=150px;'>"); 
+				$('#modal-EmpFinal #empFace').append("<img src='<c:url value='/pd_images/"+res.EMP_FACE+"'/>' width=150px;>"); 
+				$('#modal-EmpFinal #oldFileName').val(res.EMP_FACE); 
 			}else{
-			$('#modal-EmpFinal #empFace').text("사진을 등록해주세요");
+				$('#modal-EmpFinal #empFace').text("사진을 등록해주세요");
 			}
 			$('#modal-EmpFinal #empNo').val(res.EMP_NO);
 			$('#modal-EmpFinal #storeCode').val(res.STORE_CODE);
@@ -141,7 +142,7 @@ table.tablesorter tbody td.successsss{
 
 	<div class="box1" style="padding: 10px">
 		<form name=empApprove id="empApprove">
-			<button type="button" id="btnSearch">&nbsp;조회</button>
+			<button type="button" id="btnSearch" class="btn btn-primary">조회</button>
 		</form>
 	</div>
 	<div class="box2">

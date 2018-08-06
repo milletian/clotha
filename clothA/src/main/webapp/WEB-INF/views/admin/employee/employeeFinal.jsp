@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<div class="modal-header">
+<div class="modal-header bg-primary">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -37,51 +37,123 @@
 					}) */
 })//제이쿼리
 </script>
-
+<style type="text/css">
+.row{
+		margin: 15px;
+	}
+</style>
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
 	<h3 class="smaller lighter blue no-margin modal-title">인사등록 승인처리</h3>
 </div>
 <div class="modal-body">
 	<!-- Main content  -->
-	<div id="empFace">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<div id="empFace">
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empNo" class="col-sm-2 control-label">사원코드</label>
+				<div class="col-sm-3">
+					<input type="text" name="empNo" id="empNo" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empNo">사원코드</label>
-		<input type="text" name="empNo" id="empNo" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="deptName" class="col-sm-2 control-label">부서이름</label>
+				<div class="col-sm-3">
+					<input type="text" name="deptName" id="deptName" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="deptName" class="label-right">부서이름</label>
-		<input type="text" name="deptName" id="deptName" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empName" class="col-sm-2 control-label">이름</label>
+				<div class="col-sm-3">
+					<input type="text" name="empName" id="empName" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empName">이름</label>
-		<input type="text" name="empName" id="empName" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empZipcode" class="col-sm-2 control-label">우편번호</label>
+				<div class="col-sm-3">
+					<input type="text" name="empZipdcode" id="empZipcode" readonly="readonly" class="valid2 form-control"><br>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empZipcode">우편번호</label>
-		<input type="text" name="empZipdcode" id="empZipcode" readonly="readonly"><br>
-		<label for="empAddress">주소</label>
-		<input type="text" name="empAddress" id="empAddress" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empAddress" class="col-sm-2 control-label">주소</label>
+				<div class="col-sm-3">
+					<input type="text" name="empAddress" id="empAddress" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empJumin">주민등록번호</label>
-		<input type="text" name="empJumin" id="empJumin" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empJumin" class="col-sm-2 control-label">주민등록번호</label>
+				<div class="col-sm-3">
+					<input type="text" name="empJumin" id="empJumin" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empTel">핸드폰</label>
-		<input type="text" name="empTel" id="empTel" readonly="readonly"><br>
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empTel" class="col-sm-2 control-label">핸드폰</label>
+				<div class="col-sm-3">
+					<input type="text" name="empTel" id="empTel" readonly="readonly" class="valid2 form-control"><br>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empEmail">이메일 주소</label>
-		<input type="text" name="empEmail" id="empEmail" readonly="readonly"> 
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empEmail" class="col-sm-2 control-label">이메일 주소</label>
+				<div class="col-sm-3">
+					<input type="text" name="empEmail" id="empEmail" readonly="readonly" class="valid2 form-control"> 
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="empJob">담당업무</label>
-		<input type="text" name="empJob" id="empJob" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="empJob" class="col-sm-2 control-label">담당업무</label>
+				<div class="col-sm-3">
+					<input type="text" name="empJob" id="empJob" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label for="gradeName">직급</label>
-		<input type="text" name="gradeName" id="gradeName" readonly="readonly">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="form-group">
+				<label for="gradeName" class="col-sm-2 control-label">직급</label>
+				<div class="col-sm-3">
+					<input type="text" name="gradeName" id="gradeName" readonly="readonly" class="valid2 form-control">
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="modal-footer">
