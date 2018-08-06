@@ -27,6 +27,6 @@ public interface MailDAO {
 	public List<MailVO> saveSendL(Map<String, Object> map);	//saveSendList
 	public List<MailVO> searchName1(Map<String, Object> map);	//searchName
 	public int sendTotalRecord1(Map<String, Object> map);	//saveSendTR
-	public int getTotalRecord1(Map<String, Object> map);	//saveSendTR
+	public int getTotalRecord1(Map<String, Object> map);	//saveGetTR
 
 }
