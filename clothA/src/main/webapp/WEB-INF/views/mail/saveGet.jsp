@@ -111,7 +111,7 @@
 			</a>		
 		</c:if>
 		
-		<!-- [1][2][3][4][5][6][7][8][9][10] -->
+		<!-- [1][2][3][4][5][6][7][8][9][10] --> 
 		<c:forEach var="i" begin="${pageVo.firstPage }" end="${pageVo.lastPage}">
 			<c:if test="${i==pageVo.currentPage }">
 				<span style="color: blue;font-weight: bold;font-size:1.0em">

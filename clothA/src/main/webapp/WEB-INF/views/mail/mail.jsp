@@ -29,7 +29,7 @@
 	background: #fff;
 }
 
-.ui-widget-content, .ui-widget.ui-widget-content {
+.ui-widget-content, .ui-widget.ui-widget-content { 
 	border: none;
 }
 

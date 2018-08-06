@@ -64,7 +64,7 @@
 </style>
 <title>보낸쪽지</title>
 </head>
-<body>
+<body> 
 	<div>
 		<h2>보낸쪽지</h2>
 		<form name="frmPage" method="post"

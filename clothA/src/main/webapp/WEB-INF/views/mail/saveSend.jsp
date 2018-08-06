@@ -146,7 +146,7 @@
 	            >받는이</option>
 	        </select>   
 	        <input type="text" name="searchKeyword" title="검색어 입력"
-	        	value="${param.searchKeyword}">
+	        	value="${param.searchKeyword}"> 
 			<input type="submit" value="검색">
 	    </form>
 	</div>

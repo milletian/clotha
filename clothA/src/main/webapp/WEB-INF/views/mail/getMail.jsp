@@ -157,7 +157,7 @@
 	            	</c:if>
 	            >내용</option>
 	            <option value="emp_name"
-	            	<c:if test="${param.searchCondition=='emp_name'}">
+	            	<c:if test="${param.searchCondition=='emp_name'}"> 
 	            		selected="selected"
 	            	</c:if>	 
 	            >보낸이</option> 

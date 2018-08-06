@@ -26,7 +26,7 @@
 	});
 </script>
 <style type="text/css">
-	div div{
+	div div{ 
 		width: 100%;
     	height: 290px;
 	}

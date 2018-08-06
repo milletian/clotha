@@ -184,7 +184,7 @@
 		order by mail_no desc
 	</select>
 	
-	<select id="sendTotalRecord1" parameterType="map" resultType="int">
+	<select id="sendTotalRecord1" parameterType="map" resultType="int"> 
 		select count(*) 
 		from mailview m
 			<if test="searchKeyword !=null and searchKeyword !=''">

@@ -3,7 +3,7 @@ package com.clotha.ca.mail.model;
 import java.util.List;
 import java.util.Map;
 
-public interface MailDAO {
+public interface MailDAO { 
 	public int insertMail(MailVO vo);	//mail
 	public int insertGet(MailVO mailvo);	//mail
 	public List<MailVO> selectGetMail(Map<String, Object> map);	//getmail

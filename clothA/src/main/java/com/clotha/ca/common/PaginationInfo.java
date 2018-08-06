@@ -11,7 +11,7 @@ public class PaginationInfo {
 	private int currentPage; //현재 페이지
 	private int recordCountPerPage;  //pageSize 페이지당 보여질 레코드수
 	private int blockSize; //블럭당 보여질 페이지 수
-	private int totalRecord; //총 레코드 수
+	private int totalRecord; //총 레코드 수 
 	
 	
 

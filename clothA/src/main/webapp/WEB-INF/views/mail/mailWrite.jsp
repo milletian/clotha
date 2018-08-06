@@ -28,7 +28,7 @@ $(function() {
 							option2 += item.empName;
 							option2 += "</option>";
 							option2 += "</optgroup>";
-							$("#getMail").append(option2);
+							$("#getMail").append(option2); 
 	    				}else{
 		    				var option3 = "<option value='"+item.empNo+"'>";
 		    				option3 += item.empName;

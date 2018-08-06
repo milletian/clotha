@@ -26,5 +26,5 @@ public interface MailService {
 	public List<MailVO> searchName1(Map<String, Object> map);	//searchName
 	public int sendTotalRecord1(Map<String, Object> map);	//saveSendTR
 	public int getTotalRecord1(Map<String, Object> map);	//saveGetTR
-	
+	 
 }

@@ -11,7 +11,7 @@ public class SearchVO {
 	private String searchCondition = "";
 	
 	/** 검색키워드 */
-	private String searchKeyword = "";
+	private String searchKeyword = ""; 
     
 	/** 검색 사용여부 */
 	private String searchUseYn = "";

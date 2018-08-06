@@ -474,7 +474,7 @@ public class MailController {
 		
 		
 		return "mail/saveSend";
-	}
+	} 
 	
 	
 

@@ -137,7 +137,7 @@ public class MailServiceImpl implements MailService{
 	}
 
 	@Override
-	public int getTotalRecord1(Map<String, Object> map) {
+	public int getTotalRecord1(Map<String, Object> map) { 
 		return MailDao.getTotalRecord1(map);
 	}
 

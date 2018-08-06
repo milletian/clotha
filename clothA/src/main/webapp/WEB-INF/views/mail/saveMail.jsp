@@ -32,7 +32,7 @@
 			});	
 			
 			if(count==0){
-				alert('삭제할 글을 체크하세요');
+				alert('삭제할 글을 체크하세요'); 
 				return false;
 			}
 		});
