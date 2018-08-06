@@ -50,7 +50,8 @@ public class StockController {
 	
 	@RequestMapping("/ajaxSearchStockList.do")
 	@ResponseBody
-	public List<Map<String,Object>> ajaxStockSearchList(@ModelAttribute StockVO stockVO,@RequestParam(required=false) String accCode,@RequestParam(required=false) String pdDel) {
+	public List<Map<String,Object>> ajaxStockSearchList(@ModelAttribute StockVO stockVO,@RequestParam(required=false) String accCode,@RequestParam(required=false) String pdDel
+			,@RequestParam(required=false) String colorCode,@RequestParam(required=false) String styleCode,@RequestParam(required=false) String sizeCode) {
 		logger.info("search!!!!stock = {}, accCode= {}",stockVO,accCode);
 		logger.info("search2!!!!,pdDel={}",pdDel);
 		Map<String,String> map = new HashMap<>();
@@ -58,6 +59,9 @@ public class StockController {
 		map.put("staCode",stockVO.getStaCode());
 		map.put("accCode",accCode);
 		map.put("pdDel",pdDel);
+		map.put("colorCode",colorCode);
+		map.put("styleCode",styleCode);
+		map.put("sizeCode",sizeCode);
 		
 		return stockService.stockSearchList(map);
 	}
