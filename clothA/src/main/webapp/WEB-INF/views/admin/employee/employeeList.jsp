@@ -123,7 +123,13 @@ $(function() {
 			}); 
 		}); 
 	
-
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();        
+		
+		
+    });
 	
 })//제이쿼리
 
@@ -182,37 +188,55 @@ function popupOpen(empNo){
 }
 </script>
 <style type="text/css">
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+	}
 </style>
 <div class="viewBody">
 
 	<div class="box1" style="padding: 10px">
 		<form name=employeeList id="employeeList">
-			<label for="storeCode">매장이름</label>
-			<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore" class="ajax"></select>
-			<label for="empName">이름</label>
-			<input type="text" name="empName">
-			
-			<label for="searchDeptNo">고용형태</label>
-			<select name="deptNo">
-				<option value="">선택하세요</option>
-				<option value="10">정직원</option>
-				<option value="20">계약직</option>
-				<option value="30">단기알바</option>
-			</select>
-			
-			<label for="searchGrade">직급</label>
-			<select name="gradeCode">
-				<option value="">선택하세요</option>
-				<option value="1">마스터</option>
-				<option value="2">본사관리자</option>
-				<option value="3">점장</option>
-				<option value="4">사원</option>
-			</select>
-			<button type="button" id="btnSearch">&nbsp;조회</button>
+			<div class="row">
+				<div class="col-sm-11">
+					<div class="form-group">
+							<label for="storeCode" class="col-sm-1 control-label">매장이름</label>
+							<div class="col-sm-2">
+								<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore" class="ajax form-control"></select>
+							</div>
+							<label for="empName" class="col-sm-1 control-label">이름</label>
+							<div class="col-sm-1">
+								<input type="text" name="empName" class="form-control">
+							</div>
+							<label for="searchDeptNo" class="col-sm-1 control-label">고용형태</label>
+							<div class="col-sm-2">
+								<select name="deptNo" class="form-control">
+									<option value="">선택하세요</option>
+									<option value="10">정직원</option>
+									<option value="20">계약직</option>
+									<option value="30">단기알바</option>
+								</select>
+							</div>
+							<label for="searchGrade" class="col-sm-1 control-label">직급</label>
+							<div class="col-sm-2">
+								<select name="gradeCode" class="form-control">
+									<option value="">선택하세요</option>
+									<option value="1">마스터</option>
+									<option value="2">본사관리자</option>
+									<option value="3">점장</option>
+									<option value="4">사원</option>
+								</select>
+							</div>
+							<button type="button" id="btnSearch" class="btn btn-primary">조회</button>
+					</div>
+				</div>
+			</div>
 		</form>
 	</div>
 	<div class="box2">
 		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeWrite"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i>인사등록</a>
+	<div style="display: none;">
+		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeDetail"  role="button" data-backdrop="static"><i id="openmodal2" class="fas fa-edit"></i>인사수정</a>
+	</div>
 		<div id="content1">
 			<table cellspacing="1" class="tablesorter">
 				<colgroup>

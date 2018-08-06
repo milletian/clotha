@@ -71,7 +71,14 @@ $(function() {
 	    
 			}); 
 		}); 
-
+	//클릭 이벤트
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();        
+		
+		
+    });
 })//제이쿼리
 
 function popupOpen(empNo){
@@ -126,6 +133,9 @@ function popupOpen(empNo){
 
 </script>
 <style type="text/css">
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+	}
 </style>
 <div class="viewBody">
 

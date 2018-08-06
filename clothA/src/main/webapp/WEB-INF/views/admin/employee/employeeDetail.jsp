@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	
-<div class="modal-header">
+<div class="modal-header bg-primary">
 
 <script type="text/javascript">
 	 $(document).ready(function () {
@@ -218,100 +218,229 @@
  
 
 </script>
+<style type="text/css">
+.row{
+		margin: 15px;
+	}
+</style>
 
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
 	<h3 class="smaller lighter blue no-margin modal-title">인사 상세정보 수정 / 삭제</h3>
 </div>
 <div class="modal-body">
 	<!-- Main content  -->
-	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+	<div id="layer2" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
 	<form name="employeeDetail" id="employeeDetail" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeDetail.do'/>">
-				<div>
-					<label for="empNo">사원코드</label>
-					<input type="hidden" name="empNo" id="empNo2" >
-				</div>
-				
-				<div id="empFace">
-				</div>
-				<input type="hidden" name="oldFileName" id="oldFileName">
-				<div>
-					<label for="storeCode">매장이름</label>
-					<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore3" class="ajax3"></select>
-				</div>
-				<div>
-					<label for="deptNo" class="label-right">부서코드</label> 
-					<select	name="deptNo" id="deptNo2" title="부서코드" class="valid2">
-						<option value="">선택하세요</option>
-						<option value="10">정직원</option>
-						<option value="20">계약직</option>
-						<option value="30">단기알바</option>
-					</select>
-				</div>
-					<div>
-						<label for="empName">이름</label> 
-						<input type="text" name="empName" id="empName2" class="valid2">
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<div id="empFace">
 					</div>
-				<div>
-					<label for="empPwd">비밀번호</label> 
-					<input type="password" name="empPwd" id="empPwd3" class="valid2">
+				</div>
+			</div>
+		</div>			
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empNo" class="col-sm-2 control-label">사원코드</label>
+					<div class="col-sm-3">
+					<input type="text" name="empNo" id="empNo2" readonly="readonly">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<input type="hidden" name="oldFileName" id="oldFileName">
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="storeCode" class="col-sm-2 control-label">매장이름</label>
+					<div class="col-sm-3">
+						<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore3" class="ajax3"></select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="deptNo" class="col-sm-2 label-right">부서코드</label> 
+					<div class="col-sm-3">
+						<select	name="deptNo" id="deptNo2" title="부서코드" class="valid2 form-control">
+							<option value="">선택하세요</option>
+							<option value="10">정직원</option>
+							<option value="20">계약직</option>
+							<option value="30">단기알바</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empName" class="col-sm-2 label-right">이름</label> 
+					<div class="col-sm-3">
+						<input type="text" name="empName" id="empName2" class="valid2 form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empPwd" class="col-sm-2 control-label">비밀번호</label> 
+					<div class="col-sm-3">
+					<input type="password" name="empPwd" id="empPwd3" class="valid2 form-control">
+					</div>
 					* 비밀번호는 8자리 이상, 특수문자를 포함하여 입력해주세요
 				</div>
-				<div>
-					<label for="empPwd2">비밀번호 확인</label> 
-					<input type="password" name="empPwd2" id="empPwd4" class="valid2">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empPwd2" class="col-sm-2 control-label">비밀번호 확인</label> 
+					<div class="col-sm-3">
+						<input type="password" name="empPwd2" id="empPwd4" class="valid2 form-control">
+					</div>
 				</div>
-				<div>
-					<label for="empZipcode">우편번호</label> 
-					<input type="text" id="empZipcode2" name="empZipcode"><input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-					<label for="empAddress">주소</label>
-					<input type="text" id="empAddress2" name="empAddress"><br>
-					<label for="addressDetail">상세주소</label>
-					<input type="text" id="addressDetail2" name="addressDetail"><br> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empZipcode" class="col-sm-2 control-label">우편번호</label> 
+					<div class="col-sm-3">
+						<input type="text" id="empZipcode2" name="empZipcode" class="form-control">
+					</div>
+					<div class="col-sm-3">
+						<input type="button" onclick="sample2_execDaumPostcode2()" value="우편번호 찾기" class="btn btn-primary"><br>
+					</div>			
 				</div>
-				<div>
-					<label for="empJumin">주민등록번호</label> 
-					<input type="text"	name="empJumin1" id="empJumin3" class="valid2" onkeyup="jumin1Keyup(this)" maxlength="6">-
-					<input type="text" name="empJumin2" id="empJumin4"	onkeyup="jumin2Keyup(this)" maxlength="7">
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empAddress" class="col-sm-2 control-label">주소</label>
+					<div class="col-sm-3">
+						<input type="text" id="empAddress2" name="empAddress" class="form-control"><br>
+					</div>
 				</div>
-				<div>
-					<label for="empTel" >핸드폰</label>
-					<input type="text" id="empTel2" name="empTel"  maxlength="13" class="valid2"><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for="addressDetail" class="col-sm-2 control-label">상세주소</label>
+					<div class="col-sm-3">
+						<input type="text" id="addressDetail2" name="addressDetail" class="form-control"><br> 
+					</div>
 				</div>
-				<div>
-					<label for="empEmail">이메일 주소</label> 
-					<input type="text"	name="email1" id="email3" title="이메일주소 앞자리" class="valid2">
-					@ <input type="text" name="email2" id="email4" title="이메일주소 뒷자리" disabled="disabled">
-					<select name="selectEmail" id="selectEmail2" title="직접입력" >
-						<option value="">선택하세요</option>
-						<option value="naver.com">naver.com</option>
-						<option value="hanmail.net">hanmail.net</option>
-						<option value="nate.com">nate.com</option>
-						<option value="gmail.com">gmail.com</option>
-						<option value="self">직접입력</option>
-					</select> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for="empJumin" class="col-sm-2 control-label">주민등록번호</label> 
+					<div class="col-sm-3">
+						<input type="text"	name="empJumin1" id="empJumin3" class="valid2 form-control" onkeyup="jumin1Keyup(this)" maxlength="6">
+					</div>
+					<div style="float: left;">
+						-
+					</div>
+					<div class="col-sm-3">
+						<input type="text" name="empJumin2" id="empJumin4" class="form-control" onkeyup="jumin2Keyup(this)" maxlength="7">
+					</div>
 				</div>
-				<div>
-					<label for="uploadFace">증명사진첨부(image)</label>
-					 <input type="file"	name="uploadFace" id="uploadFace2">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for="empTel" class="col-sm-2 control-label" >핸드폰</label>
+					<div class="col-sm-3">
+						<input type="text" id="empTel2" name="empTel"  maxlength="13" class="valid2 form-control"><br>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for="empEmail" class="col-sm-2 control-label">이메일 주소</label> 
+					<div class="col-sm-3">
+						<input type="text"	name="email1" id="email3" title="이메일주소 앞자리" class="valid2 form-control">
+					</div>
+					<div style="float: left;">
+						@
+					</div>
+					<div class="col-sm-3">
+						<input type="text" name="email2" id="email4" title="이메일주소 뒷자리" class="form-control" disabled="disabled">
+					</div>
+					<div class="col-sm-3">
+						<select name="selectEmail" id="selectEmail2" title="직접입력" class="form-control">
+							<option value="">선택하세요</option>
+							<option value="naver.com">naver.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							<option value="nate.com">nate.com</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="self">직접입력</option>
+						</select> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for="uploadFace" class="col-sm-2 control-label">증명사진첨부(image)</label>
+					<div class="col-sm-3">
+						 <input type="file"	name="uploadFace" id="uploadFace2">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label  class="col-sm-2 control-label"></label>
+					<div class="col-sm-6">
 					 <span style="color:green;font-weight: bold">
-            		첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
-				</div>
-				<div>
-					<label for="empJob">담당업무</label> <input type="text" name="empJob"
-						id="empJob2" class="valid2">
-				</div>
-				<div>
-					<label for="gradeCode">직급</label> <select name="gradeCode"
-						id="gradeCode2" title="직급" class="valid2">
-						<option value="">선택하세요</option>
-						<option value="1">마스터</option>
-						<option value="2">본사 관리자</option>
-						<option value="3">점장</option>
-						<option value="4">사원</option>
-					</select>
-				</div>
+					첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
+					</div>
+		 		</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empJob" class="col-sm-2 control-label">담당업무</label> 
+					<div class="col-sm-3">
+						<input type="text" name="empJob" id="empJob2" class="valid2 form-control">
+					</div>
+		 		</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="gradeCode" class="col-sm-2 control-label">직급</label> 
+					<div class="col-sm-3">
+						<select name="gradeCode" id="gradeCode2" title="직급" class="valid2 form-control">
+							<option value="">선택하세요</option>
+							<option value="1">마스터</option>
+							<option value="2">본사 관리자</option>
+							<option value="3">점장</option>
+							<option value="4">사원</option>
+						</select>
+					</div>
+		 		</div>
+			</div>
+		</div>
 	</form>
 </div>
 <div class="modal-footer">
@@ -327,14 +456,14 @@
 </div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element
-    var element_layer = document.getElementById('layer');
+    var element_layer2 = document.getElementById('layer2');
 
     function closeDaumPostcode() {
         // iframe을 넣은 element를 안보이게 한다.
-        element_layer.style.display = 'none';
+        element_layer2.style.display = 'none';
     }
 
-    function sample2_execDaumPostcode() {
+    function sample2_execDaumPostcode2() {
     	 
         new daum.Postcode({
             oncomplete: function(data) {
@@ -360,42 +489,42 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('empZipcode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('empAddress').value = fullAddr;
-                $('#empZipcode').attr('readonly','readonly');
-                $('#empAddress').attr('readonly','readonly');
+                document.getElementById('empZipcode2').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('empAddress2').value = fullAddr;
+                $('#empZipcode2').attr('readonly','readonly');
+                $('#empAddress2').attr('readonly','readonly');
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_layer.style.display = 'none';
+                element_layer2.style.display = 'none';
             },
             width : '100%',
             height : '100%',
             maxSuggestItems : 5
-        }).embed(element_layer);
+        }).embed(element_layer2);
 
         // iframe을 넣은 element를 보이게 한다.
-        element_layer.style.display = 'block';
+        element_layer2.style.display = 'block';
 
         // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        initLayerPosition();
+        initLayerPosition2();
     }
 
     // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
     // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
     // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
-    function initLayerPosition(){
+    function initLayerPosition2(){
         var width = 300; //우편번호서비스가 들어갈 element의 width
         var height = 400; //우편번호서비스가 들어갈 element의 height
         var borderWidth = 5; //샘플에서 사용하는 border의 두께
 
         // 위에서 선언한 값들을 실제 element에 넣는다.
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
+        element_layer2.style.width = width + 'px';
+        element_layer2.style.height = height + 'px';
+        element_layer2.style.border = borderWidth + 'px solid';
         // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+        element_layer2.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer2.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
 	</script>
 

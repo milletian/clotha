@@ -224,12 +224,10 @@
 	</div>
 	<form name="employeeWrite" id="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-10">
 				<div class="form-group">
-					<div class="col-sm-4">
-						<label for="storeCode">매장이름</label>
-					</div>
-					<div class="col-sm-4">
+						<label for="storeCode" class="col-sm-2 control-label">매장이름</label>
+					<div class="col-sm-3">
 						<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore2" class="ajax2"></select>
 					</div>
 				</div>
@@ -237,12 +235,10 @@
 		</div>
 		<div class="row">
 			<div class="form-group">
-				<div class="col-sm-5">
-					<div class="col-sm-4">
-						<label for="deptNo" class="label-right">부서코드</label>
-					</div> 
-					<div class="col-sm-4">
-						<select	name="deptNo" id="deptNo" title="부서코드" class="valid">
+				<div class="col-sm-10">
+						<label for="deptNo" class="col-sm-2 control-label">부서코드</label>
+					<div class="col-sm-3">
+						<select	name="deptNo" id="deptNo" title="부서코드" class="valid form-control">
 							<option value="">선택하세요</option>
 							<option value="10">정직원</option>
 							<option value="20">계약직</option>
@@ -253,116 +249,154 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-10">
 				<div class="form-group">
-						<label for="empName" class="col-sm-4 control-label">이름</label>
-					 <div class="col-sm-4">
-						<input type="text" name="empName" id="empName" class="valid">
+						<label for="empName" class="col-sm-2 control-label">이름</label>
+					 <div class="col-sm-3">
+						<input type="text" name="empName" id="empName" class="valid form-control" >
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-10">
 				<div class="form-group">
-					<label for="empPwd" class="col-sm-4 control-label">비밀번호</label> 
-				<div class="col-sm-5">
-					<input type="password" name="empPwd" id="empPwd" class="valid">
-				</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-5">
+						<label for="empPwd" class="col-sm-2 control-label">비밀번호</label> 
+					<div class="col-sm-3">
+						<input type="password" name="empPwd" id="empPwd" class="valid form-control">
+					</div>
 				<span>* 비밀번호는 8자리 이상, 특수문자를 포함하여 입력해주세요</span>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-10">
 				<div class="form-group">
-						<label for="empPwd2" class="col-sm-4 control-label">비밀번호 확인</label> 
-					<div class="col-sm-4">
-						<input type="password" name="empPwd2" id="empPwd2" class="valid">
+						<label for="empPwd2" class="col-sm-2 control-label">비밀번호 확인</label> 
+					<div class="col-sm-3">
+						<input type="password" name="empPwd2" id="empPwd2" class="valid form-control">
 					</div>
 				</div>	
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-10">
 				<div class="form-group">
-						<label for="empZipcode" class="col-sm-3 control-label">우편번호</label> 
-					<div class="col-sm-5">
-						<input type="text" id="empZipcode" name="empZipcode">
+					<label for="empZipcode" class="col-sm-2 control-label">우편번호</label> 
+					<div class="col-sm-3">
+						<input type="text" id="empZipcode" name="empZipcode" class="form-control">
 					</div>
-				<div class="form-group">
-					<div>
+					<div class="col-sm-3">
 						<input type="button" onclick="sample2_execDaumPostcode()" class="btn btn-primary" value="우편번호 찾기"><br>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="empAddress" class="col-sm-2 control-label">주소</label>
+					<div class="col-sm-3">
+						<input type="text" id="empAddress" name="empAddress" class="form-control"><br>
+					</div>
 				</div>
 			</div>
 		</div>
-				
-					<div class="col-sm-4">
-						<label for="empAddress">주소</label>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="addressDetail" class="col-sm-2 control-label">상세주소</label>
+					<div class="col-sm-3">
+						<input type="text" id="addressDetail" name="addressDetail" class="form-control"><br> 
 					</div>
-					<div class="col-sm-4">
-						<input type="text" id="empAddress" name="empAddress"><br>
+				</div>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="empJumin" class="col-sm-2 control-label">주민등록번호</label> 
+					<div class="col-sm-3">
+						<input type="text"	name="empJumin1" id="empJumin1" class="valid form-control" onkeyup="jumin1Keyup(this)" maxlength="6">
 					</div>
-					<div class="col-sm-4">
-						<label for="addressDetail">상세주소</label>
+					<div style="float: left;">
+					-
 					</div>
-						<input type="text" id="addressDetail" name="addressDetail"><br> 
-		<div class="row">
-			<div>
-				<label for="empJumin">주민등록번호</label> 
-				<input type="text"	name="empJumin1" id="empJumin1" class="valid" onkeyup="jumin1Keyup(this)" maxlength="6">-
-				<input type="text" name="empJumin2" id="empJumin2"	onkeyup="jumin2Keyup(this)" maxlength="7">
+					<div class="col-sm-3">
+						<input type="text" name="empJumin2" id="empJumin2"	class="form-control" onkeyup="jumin2Keyup(this)" maxlength="7">
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				<label for="empTel" >핸드폰</label>
-				<input type="text" id="empTel" name="empTel"  maxlength="13" class="valid"><br>
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="empTel" class="col-sm-2 control-label" >핸드폰</label>
+					<div class="col-sm-3">
+					<input type="text" id="empTel" name="empTel"  maxlength="13" class="valid form-control"><br>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				<label for="empEmail">이메일 주소</label> 
-				<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" class="valid">
-				@ <input type="text" name="email2" id="email2" title="이메일주소 뒷자리" disabled="disabled">
-				<select name="selectEmail" id="selectEmail" title="직접입력" >
-					<option value="">선택하세요</option>
-					<option value="naver.com">naver.com</option>
-					<option value="hanmail.net">hanmail.net</option>
-					<option value="nate.com">nate.com</option>
-					<option value="gmail.com">gmail.com</option>
-					<option value="self">직접입력</option>
-				</select> 
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="empEmail" class="col-sm-2 control-label">이메일 주소</label> 
+					<div class="col-sm-3">
+						<input type="text"	name="email1" id="email1" title="이메일주소 앞자리" class="valid form-control">
+					</div>
+					<div style="float: left;">@</div>
+					<div class="col-sm-3">
+						<input type="text" name="email2" id="email2" title="이메일주소 뒷자리" disabled="disabled" class="form-control">
+					</div>
+					<div class="col-sm-2">
+						<select name="selectEmail" id="selectEmail" title="직접입력" class="form-control">
+							<option value="">선택하세요</option>
+							<option value="naver.com">naver.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							<option value="nate.com">nate.com</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="self">직접입력</option>
+						</select>
+					</div> 
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				<label for="uploadFace">증명사진첨부(image)</label>
-				 <input type="file"	name="uploadFace" id="uploadFace">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="uploadFace" class="col-sm-2 control-label">증명사진첨부(image)</label>
+					<div class="col-sm-3">
+					 <input type="file"	name="uploadFace" id="uploadFace">
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				<label for="empJob">담당업무</label> <input type="text" name="empJob"
-					id="empJob" class="valid">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="empJob" class="col-sm-2 control-label">담당업무</label> 
+					<div class="col-sm-3">
+					<input type="text" name="empJob" id="empJob" class="valid form-control">
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				<label for="gradeCode">직급</label> <select name="gradeCode"
-					id="gradeCode" title="직급" class="valid">
-					<option value="">선택하세요</option>
-					<option value="1">마스터</option>
-					<option value="2">본사 관리자</option>
-					<option value="3">점장</option>
-					<option value="4">사원</option>
-				</select>
+			<div class="form-group">
+				<div class="col-sm-10">
+					<label for="gradeCode" class="col-sm-2 control-label">직급</label>
+					<div class="col-sm-3">
+						<select name="gradeCode" id="gradeCode" title="직급" class="valid form-control">
+							<option value="">선택하세요</option>
+							<option value="1">마스터</option>
+							<option value="2">본사 관리자</option>
+							<option value="3">점장</option>
+							<option value="4">사원</option>
+						</select>
+					</div>
+				</div>
 			</div>
 		</div>
 	</form>
