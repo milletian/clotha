@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
+	var inoutCode;
 	var liveTableData = $("#frmwarehousingtableOut").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -73,9 +74,20 @@ $(function() {
     			$("#selSearchProducts").html('');
     		}
     	},
-    	error: function(xhr, status, error){
-			alert("sdsds");
-		} 
+    	error:function(x,e){ 
+            if(x.status==0){
+               alert('You are offline!!n Please Check Your Network.'); 
+            }else if(x.status==404){ 
+               alert('Requested URL not found.'); 
+            }else if(x.status==500){ 
+               alert('Internel Server Error.'); 
+            }else if(e=='parsererror'){ 
+               alert('Error.nParsing JSON Request failed.'); 
+            }else if(e=='timeout'){
+               alert('Request Time out.'); 
+            }else { 
+               alert('Unknow Error.n'+x.responseText); } 
+            }
 	});//ajex
 	
 	
@@ -91,7 +103,8 @@ $(function() {
     		if (res.length > 0) {
     			$("#frmwarehousingtableOut tbody").html('');
  				$.each(res, function(idx, item) {
- 					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
+ 					var inoutList ="<tr class='center'><td>"+item.INOUT_CODE+"</td>"
+ 					+"<td>"+item.IS_IN+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
  					+"<td>"+item.INOUT_ENDDATE+"</td>"
  					+"<td>"+item.WH_NAME+"</td>"
@@ -110,9 +123,20 @@ $(function() {
     		 $("#frmwarehousingtableOut").trigger("update"); 
              return false; 
     	 },
-		error: function(xhr, status, error){
-			alert("sdsds");
-		}
+    	 error:function(x,e){ 
+             if(x.status==0){
+                alert('You are offline!!n Please Check Your Network.'); 
+             }else if(x.status==404){ 
+                alert('Requested URL not found.'); 
+             }else if(x.status==500){ 
+                alert('Internel Server Error.'); 
+             }else if(e=='parsererror'){ 
+                alert('Error.nParsing JSON Request failed.'); 
+             }else if(e=='timeout'){
+                alert('Request Time out.'); 
+             }else { 
+                alert('Unknow Error.n'+x.responseText); } 
+             }
     
 		}); 
 	}); 
@@ -141,6 +165,14 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
+	  
+	  $(document ).on( "click" , "#frmwarehousingtableOut tbody tr", function() {              
+			$('#frmwarehousingtableOut tbody tr td').removeClass('bg-primary');
+			$(this).find('td').addClass('bg-primary');
+			inoutCode=$(this).find('td:first').text();        
+			
+			
+	    });
 });// document
 function returnValueRead(str) {
 	var reval = window.returnValue;
@@ -154,7 +186,9 @@ function returnValueRead(str) {
 }
 </script>
 <style type="text/css">
-
+table.tablesorter tbody td.bg-primary{
+		background-color: skyblue;
+	}
 </style>
 <div class="viewBody">
 		<div id="wrap" class="box1">
@@ -175,14 +209,16 @@ function returnValueRead(str) {
 				</button>
 			</form>
 		</div>
-		<div id="maincontent" class="box2">
-			<a href="#"><i class="fas fa-edit"></i></a> <a
-				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a>
+		<div id="maincontent" class="box2"> 
+		<a data-toggle="modal" data-target="#modal-outWrite" role="button" data-backdrop="static">
+		 <span class="btn btn-xs btn-success">반품 신청 등록</span>
+		</a>
+		<a href="#" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>삭제</a>
 				<div id="content1">
 					<table id="frmwarehousingtableOut" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
+								<th>번호</th>
 								<th>작업구분</th>
 								<th>반품일자</th>
 								<th>도착예정일</th>
@@ -203,9 +239,7 @@ function returnValueRead(str) {
 		</div>
 </div>
 
-<a data-toggle="modal" data-target="#modal-outWrite" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success">테스트 등록</span>
-</a>
+
  
  
 <div id="modal-outWrite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1050;" >

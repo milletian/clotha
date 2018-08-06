@@ -21,17 +21,19 @@
 	        		if (res.length > 0) {
 	        			$("#searchstoretable tbody").html('');
 	     				$.each(res, function(idx, item) {
-	     					var dsd ="<tr ondblclick=popupStoreText('"+item.storeCode+"','"+item.staCode+"','"+item.storeName+"','"+item.empNo+"')><td>"+item.storeCode+"</td>"
-	     					+"<td>"+item.staCode+"</td>"
-	     					+"<td>"+item.empNo+"</td>"
-	     					+"<td>"+item.storeName+"</td>"
-	     					+"<td>"+item.storeZipcode+"</td>"
-	     					+"<td>"+item.storeAddress+"</td>"
-	     					+"<td>"+item.storeNo+"</td>"
-	     					+"<td>"+item.storeTel+"</td>"
-	     					+"<td>"+item.storeJoin+"</td>";
-	     					 $("#searchstoretable tbody").append(dsd);
-	     					});
+	     					if(item.storeCode!='${storeCode}'){	     						
+		     					var dsd ="<tr ondblclick=popupStoreText('"+item.storeCode+"','"+item.staCode+"','"+item.storeName+"','"+item.empNo+"')><td>"+item.storeCode+"</td>"
+		     					+"<td>"+item.staCode+"</td>"
+		     					+"<td>"+item.empNo+"</td>"
+		     					+"<td>"+item.storeName+"</td>"
+		     					+"<td>"+item.storeZipcode+"</td>"
+		     					+"<td>"+item.storeAddress+"</td>"
+		     					+"<td>"+item.storeNo+"</td>"
+		     					+"<td>"+item.storeTel+"</td>"
+		     					+"<td>"+item.storeJoin+"</td>";
+		     					 $("#searchstoretable tbody").append(dsd);
+		     					};
+	     					})
 	     				}else{
 	     					$("#searchstoretable tbody").html('');
 	     				}

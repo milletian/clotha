@@ -13,8 +13,8 @@ $(function() {
     	data:{"storeCode" : storeCode},
     	dataType:'json',
     	success:function(res){
-    		$('#storeName').val(res.storeName);
-    		$('#areaStart').val(res.staCode);
+    		$('#transportWritefrm #storeName2').val(res.storeName);
+    		$('#transportWritefrm #storeCode2').val(res.storeCode);
     	},
     	error:function(x,e){ 
             if(x.status==0){
@@ -32,18 +32,7 @@ $(function() {
             }
 	});
 	
-	$('#inoutStartdate').daterangepicker({
-		singleDatePicker: true,
-	      locale: {
-	        format: "YYYY-MM-DD"
-	      }
-	});
-	$('#inoutEnddate').daterangepicker({
-		singleDatePicker: true,
-	      locale: {
-	        format: "YYYY-MM-DD"
-	      }
-	});
+	
 	$('#pdCode').change(function() {
 		changeLimit();
 	})
@@ -51,7 +40,7 @@ $(function() {
 	$('#submit').click(function() {
 		var bool =true;
 		if(bool){
-			$('#inoutWritefrm input[type=text]').each(function() {
+			$('#transportWritefrm input[type=text]').each(function() {
 				if($(this).val().replace(/ /gi, "")==''){
 					bool=false;
 					alert($(this).prev().text()+"는 필수 입력사항입니다.");
@@ -79,11 +68,11 @@ $(function() {
 					"isIn":$('#isIn').val(),
 					"inoutDetailQTY":$('#inoutDetailQty').val()
 					}, */
-				data:$("#inoutWritefrm").serialize(),
+				data:$("#transportWritefrm").serialize(),
 				dataType:"text",
 				success:function(res){
 					alert(res);
-					$('#btnInoutWriteClose').trigger('click');
+					$('#btntransportWriteClose').trigger('click');
 				},
 				error:function(x,e){ 
 	                if(x.status==0){
@@ -103,15 +92,13 @@ $(function() {
 			
 		}
 	})
-	pdStockView();
-	
 })
 function changeLimit() {
 	$.ajax({
 		type:"POST",
     	url : "<c:url value='/admin/stock/ajaxStockList.do' />",
     	data:{"pdCode" : $('#pdCode').val(),
-    		  "staCode" : $('#areaStart').val()},
+    		  "staCode" : $('#staCode').val()},
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -139,11 +126,11 @@ function changeLimit() {
             }
 	});
 }
-function pdStockView() {
+function pdStockView(storecode) {
 	$.ajax({
 		type:"POST",
     	url : "<c:url value='/admin/store/ajaxStoreSelectStock.do' />",
-    	data:{"storeCode" : '${storeCode}'},
+    	data:{"storeCode" : storecode},
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
@@ -187,38 +174,33 @@ function pdStockView() {
 }
 </style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">반품 신청</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">간단 점간이동 신청</h3>
 </div>
  
 <div class="modal-body">
    <div id="wrap">
-	<form name="inoutWritefrm" id="inoutWritefrm" method="post">
-		<label for="inoutStartdate">출발날짜</label><input type="text" class="searchDate" id="inoutStartdate" name="inoutStartdate">
-		<label for="inoutEnddate">반품 도착일</label><input type="text" class="searchDate" id="inoutEnddate" name="inoutEnddate"><br>
-		<label for="whName">입고될 창고</label><input type="text" id="whName" name="whName" readonly="readonly">
+	<form name="transportWritefrm" id="transportWritefrm" method="post">
+		<label for="storeName">요청할 매장</label><input type="text" id="storeName" name="storeName" readonly="readonly">
 		
-		<input type="hidden" id="areaEnd" name="areaEnd">
+		<input type="hidden" id="storeCode" name="storeCode">
+		<input type="hidden" id="staCode" name="staCode">
 		
-		<input type="button" id="whcbtn" value="창고 검색">
-		<label for="pdCode">반품 상품</label>
+		<input type="button" id="storecbtn" value="매장 검색">
+		<label for="pdCode">요청 상품</label>
 		<select id="pdCode" name="pdCode">
 		
 		</select>
-		<label for="inoutDetailQty">반품수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
+		<label for="quantity">수량</label><input type="text" id="quantity" name="quantity"><br>
 		
-		<label for="storeName">출발 매장</label><input type="text" name="storeName" id="storeName">
-		<label for="outDetail">반품 사유</label><input type="text" name="outDetail" id="outDetail">
-		<input type="hidden" name="areaStart" id="areaStart">
+		<label for="storeName2">요청 매장</label><input type="text" name="storeName2" id="storeName2">
+		<input type="hidden" name="storeCode2" id="storeCode2">
 		<input type="hidden" id="limitQty">
-		
-		<input type="hidden" id="inoutStatus" name="inoutStatus" value="승인대기">
-		<input type="hidden" id="isIn" name="isIn" value="반품">
 		
 	</form>
 	</div>
 	             
-	<a data-toggle="modal"  data-target="#modal-searchWh" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">창고검색</span>
+	<a data-toggle="modal"  data-target="#modal-searchStore" role="button" data-backdrop="static">
+	 <span class="btn btn-xs btn-success">검색</span>
 	</a>                     
 </div>
  
@@ -226,7 +208,7 @@ function pdStockView() {
     <span class="btn btn-sm btn-success" id="submit">
         저장<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
     </span>
-    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnInoutWriteClose">
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btntransportWriteClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
 </div>

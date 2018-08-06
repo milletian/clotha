@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.transport">
+	<select id="transportSearchtList" parameterType="TransportVO" resultType="map">
+		select * from transportlistview
+			<where>
+				store_code = #{userStoreCode} or store_code2 =#{userStoreCode}
+				<if test="startDay!=null and startDay!=''">
+				<![CDATA[
+					and TP_REGDATE >#{startDay} and TP_REGDATE <to_date(#{endDay})+1
+				]]>
+				</if>
+				
+				<if test="tpIsagree!=null and tpIsagree!=''">
+					and TP_ISAGREE =#{tpIsagree} 
+				</if>
+				
+			</where>
+			order by TP_CODE DESC
+	</select>
+</mapper>
+
+
+
+
+
+
+
+

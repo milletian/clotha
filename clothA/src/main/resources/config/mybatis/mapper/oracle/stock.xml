@@ -19,6 +19,15 @@
 			<if test="pdCode!=null and pdCode!=''">
 				pd.pd_code=#{pdCode}		
 			</if>
+			<if test="styleCode!=null and styleCode!=''">
+				and pd.STYLE_CODE=#{styleCode}		
+			</if>
+			<if test="colorCode!=null and colorCode!=''">
+				and pd.COLOR_CODE=#{colorCode}		
+			</if>
+			<if test="sizeCode!=null and sizeCode!=''">
+				and pd.size_CODE=#{sizeCode}		
+			</if>
 			<if test="accCode!=null and accCode!=''">
 				and acc_code =#{accCode}
 			</if>

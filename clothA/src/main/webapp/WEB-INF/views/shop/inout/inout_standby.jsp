@@ -47,6 +47,29 @@ $(function() {
     	success:function(res){
     		$('#areaEnd').val(res.staCode);
     	},
+    	error:function(x,e){ 
+            if(x.status==0){
+               alert('You are offline!!n Please Check Your Network.'); 
+            }else if(x.status==404){ 
+               alert('Requested URL not found.'); 
+            }else if(x.status==500){ 
+               alert('Internel Server Error.'); 
+            }else if(e=='parsererror'){ 
+               alert('Error.nParsing JSON Request failed.'); 
+            }else if(e=='timeout'){
+               alert('Request Time out.'); 
+            }else { 
+               alert('Unknow Error.n'+x.responseText); } 
+            }
+	});
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/store/ajaxStoreOne.do' />",
+    	data:{"storeCode" : storeCode},
+    	dataType:'json',
+    	success:function(res){
+    		$('#areaEnd').val(res.staCode);
+    	},
     	error: function(xhr, status, error){
 			alert("sdsds");
 		} 
@@ -157,23 +180,7 @@ $(function() {
 	      $(this).val('');
 	  });
 });// document
-function returnValueRead(str) {
-	var reval = window.returnValue;
-	if(str=='pd'){
-		if(reval!=null&& reval!=''){
-			$('#inoutWritefrm #pdCode').val(reval.pdCode);
-			$('#inoutWritefrm #pdName').val(reval.pdName);
-			window.whView();
-			window.returnValue=null;
-		}
-	}else if(str=='store'){
-		if(reval!=null&& reval!=''){
-			$('#inoutWritefrm #storeName').val(reval.storeName);
-			$('#inoutWritefrm #areaEnd').val(reval.staCode);
-			window.returnValue=null;
-		}
-	}
-}
+
 </script>
 <style type="text/css">
 
@@ -198,9 +205,6 @@ function returnValueRead(str) {
 			</form>
 		</div>
 		<div id="maincontent" class="box2">
-			<a href="#"><i class="fas fa-edit"></i></a> <a
-				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a>
 				<div id="content1">
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>

@@ -47,3 +47,14 @@ create or replace view inoutview
 as
 select i.*,id.PD_CODE,id.INOUT_DETAIL_QTY from inout i join inout_detail id 
 on i.INOUT_CODE = id.INOUT_CODE ;
+
+create or replace view transportlistview
+as
+select t.*,s2.STORE_NAME as "END_STORE_NAME", s.STORE_NAME as "START_STORE_NAME",td.PD_CODE,p.PD_NAME,td.QUANTITY from transport t join store s 
+on t.STORE_CODE2= s.STORE_CODE
+join store s2 
+on t.STORE_CODE = s.STORE_CODE
+join transport_detail td
+on t.TP_CODE = td.TP_CODE
+join products p 
+on td.PD_CODE = p.PD_CODE;
