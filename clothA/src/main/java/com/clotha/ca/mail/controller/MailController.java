@@ -178,6 +178,7 @@ public class MailController {
 		logger.info("보낸 쪽지");
 		String empNo = (String) request.getSession().getAttribute("empNo");
 		//[1] PaginationInfo 생성
+		
 		PaginationInfo pagingInfo = new PaginationInfo();
 		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
 		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
@@ -189,13 +190,24 @@ public class MailController {
 		logger.info("setting 후 searchVo={}", searchVo);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("empNo", empNo);
-		map.put("searchCondition", searchVo.getSearchCondition());
-		map.put("searchKeyword", searchVo.getSearchKeyword());
-		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
-		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
-		
-		List<MailVO> list = mailService.selectSender(map);
+		List<MailVO> list = null; 
+		if(searchVo.getSearchCondition().equals("emp_name")) {
+			map.put("empNo", empNo);
+			map.put("searchCondition", searchVo.getSearchCondition());
+			map.put("searchKeyword", searchVo.getSearchKeyword());
+			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+			
+			list = mailService.searchName(map);
+		}else {
+			map.put("empNo", empNo);
+			map.put("searchCondition", searchVo.getSearchCondition());
+			map.put("searchKeyword", searchVo.getSearchKeyword());
+			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+			
+			list = mailService.selectSender(map);
+		}
 		logger.info("selectSender 결과 list.size = {}" , list.size());
 		
 		//전체 레코드 개수 조회
@@ -305,7 +317,7 @@ public class MailController {
 		logger.info("보관함 페이지");
 		String empNo = (String) request.getSession().getAttribute("empNo");
 		String sender = (String) request.getSession().getAttribute("empNo");
-		
+
 		List<MailVO> sendList = mailService.sendSave(sender);
 		logger.info("보낸쪽지 보관함 결과 sendList.size = {} " , sendList.size());
 		List<MailVO> getList = mailService.getSave(empNo);
@@ -373,6 +385,98 @@ public class MailController {
 		
 		return "common/message";
 	}
+	
+	
+	@RequestMapping("/saveGet.do")
+	public String saveGet(@ModelAttribute SearchVO searchVo ,HttpServletRequest request, Model model) {
+		logger.info("받은쪽지 보관함 더보기 목록");
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		
+		//[1] PaginationInfo 생성
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		
+		//[2] SearchVO 에 값 셋팅
+		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("setting 후 searchVo={}", searchVo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("empNo", empNo);
+		map.put("searchCondition", searchVo.getSearchCondition());
+		map.put("searchKeyword", searchVo.getSearchKeyword());
+		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+		
+		List<MailVO> list = mailService.selectGetMail(map);
+		
+		logger.info("list.size={}",list.size());
+		for(MailVO vo : list) {
+			System.out.println(vo);
+		}
+		
+		//전체 레코드 개수 조회
+		int totalRecord=mailService.getTotalRecord1(map);
+		pagingInfo.setTotalRecord(totalRecord);
+		logger.info("전체 레코드 개수={}", totalRecord);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pageVo", pagingInfo);
+		
+		return "mail/saveGet";
+	}
+	
+	@RequestMapping("/saveSend.do")
+	public String saveSend(@ModelAttribute SearchVO searchVo,HttpServletRequest request, Model model) {
+		logger.info("보낸쪽지 보관함 더보기 목록");
+		String empNo = (String) request.getSession().getAttribute("empNo");
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
+		
+		//[2] SearchVO 에 값 셋팅
+		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("setting 후 searchVo={}", searchVo);
+		
+		Map<String, Object> map = new HashMap<>();
+		List<MailVO> list = null; 
+		if(searchVo.getSearchCondition().equals("emp_name")) {
+			map.put("empNo", empNo);
+			map.put("searchCondition", searchVo.getSearchCondition());
+			map.put("searchKeyword", searchVo.getSearchKeyword());
+			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+			
+			list = mailService.searchName1(map);
+		}else {
+			map.put("empNo", empNo);
+			map.put("searchCondition", searchVo.getSearchCondition());
+			map.put("searchKeyword", searchVo.getSearchKeyword());
+			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
+			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
+			
+			list = mailService.selectSender(map);
+		}
+		logger.info("selectSender 결과 list.size = {}" , list.size());
+		
+		//전체 레코드 개수 조회
+		int totalRecord=mailService.sendTotalRecord1(map);
+		pagingInfo.setTotalRecord(totalRecord);
+		logger.info("전체 레코드 개수={}", totalRecord);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pageVo", pagingInfo);
+		
+		
+		
+		return "mail/saveSend";
+	}
+	
+	
 
 }
 

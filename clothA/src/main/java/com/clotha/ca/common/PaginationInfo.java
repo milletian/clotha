@@ -13,6 +13,8 @@ public class PaginationInfo {
 	private int blockSize; //블럭당 보여질 페이지 수
 	private int totalRecord; //총 레코드 수
 	
+	
+
 	public int getRecordCountPerPage() {
 		return recordCountPerPage;
 	}

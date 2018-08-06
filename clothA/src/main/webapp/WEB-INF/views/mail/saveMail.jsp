@@ -48,11 +48,14 @@
 		$('input[name=chk1]').prop('checked', bool);
 	}
 	
+	
 </script>
 <style type="text/css">
 	table{
 		text-align: center;
-		font-weight: bold;
+	}
+	h3{
+		margin: 0px;
 	}
 	.d2 table tr th:nth-of-type(3){
 		width: 290px;
@@ -74,13 +77,18 @@
 		color: black;
 		text-decoration: none;
 	}
+	.savee{
+    	margin-left: 85%;
+    	font-weight: bold;
+	}
 </style>
 <title>보관함</title>
 </head>
 <body>
 	<div>
 		<div class="d1">
-			<h2>받은쪽지 보관함</h2>
+			<h3>받은쪽지 보관함</h3>
+			<div class="savee"><a href="<c:url value='/mail/saveGet.do'/>">더보기</a></div>
 			<form action="<c:url value='/mail/getMulti.do'/> " name="chfrm" method="post" >
 				<table>
 					<tr>
@@ -111,9 +119,9 @@
 				<input type="submit" value="삭제" name="delete">
 			</form>
 		</div>
-		
 		<div class="d2">
-		<h2>보낸쪽지 보관함</h2>
+		<h3>보낸쪽지 보관함</h3>
+		<div class="savee"><a href="<c:url value='/mail/saveSend.do'/>">더보기</a></div>
 		<form action="<c:url value='/mail/sendMulti.do'/> " name="chfrm1" method="post" >
 			<table>
 				<tr>

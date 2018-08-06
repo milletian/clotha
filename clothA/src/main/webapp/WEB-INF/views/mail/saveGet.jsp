@@ -2,13 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.3.1.min.js'/>" ></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		$('form[name=chfrm]').submit(function(){
 			var count=0;
 			$('input[name=chk]').each(function(idx, item){
@@ -23,10 +23,8 @@
 			}
 		});
 		
-		$('input[name=save]').click(function(){
-			$('form[name=chfrm]').attr("action","<c:url value='/mail/sendSave.do'/>").submit();
-			
-		});
+		
+		
 	});
 	
 	function pageFunc(curPage){
@@ -38,6 +36,7 @@
 	function allChecked(bool){
 		$('input[name=chk]').prop('checked', bool);
 	}
+
 </script>
 <style type="text/css">
 	table{
@@ -45,7 +44,7 @@
 		font-weight: bold;
 	}
 	tr th:nth-of-type(3){
-		width: 290px;
+		width: 215px;
 	}
 	tr th:last-child{
 		width: 115px;
@@ -62,43 +61,45 @@
 		text-align: center;
 	}
 </style>
-<title>보낸쪽지</title>
+<title>받은쪽지</title>
 </head>
 <body>
 	<div>
-		<h2>보낸쪽지</h2>
+		<h2>받은쪽지</h2>
 		<form name="frmPage" method="post"
-			action="<c:url value='/mail/sendMail.do'/>">
+			action="<c:url value='/mail/saveGet.do'/>">
 			<input type="hidden" name="currentPage" >
 			<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 			<input type="hidden" name="searchCondition" value="${param.searchCondition}">	
 		</form>
-		<form action="<c:url value='/mail/sendMulti.do'/> " name="chfrm" method="post" >
+		<form action="<c:url value='/mail/getMulti.do'/> " name="chfrm" method="post" >
 			<table>
 				<tr>
-					<th><input type="checkbox" name="allchk" onclick="allChecked(this.checked)" ></th>
+					<th><input type="checkbox" name="checkAll" onclick="allChecked(this.checked)" ></th>
 					<th>번호</th>
 					<th>제목</th>
+					<th>보낸이</th>
 					<th>날짜</th>
 				</tr>
 				<c:if test="${empty list }">
 					<tr>
-						<td colspan="4">보낸 쪽지가 없습니다.</td>
+						<td colspan="5">보관함이 비어있습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${!empty list }">
-					<c:forEach var="vo" items="${list }" >
+					<c:forEach items="${list }" var="vo" >
 						<tr>
+							<input type="hidden" value="${vo.getMailRead }">
 							<td><input type="checkbox" name="chk" value="${vo.mailNo }" ></td>
 							<td>${vo.mailNo }</td>
-							<td><a href="<c:url value='/mail/sendDetail.do?mailNo=${vo.mailNo }'/> " >${vo.mailName }</a></td>
+							<td><a href="<c:url value='/mail/mailDetail.do?mailNo=${vo.mailNo }'/>" >${vo.mailName }</a></td>
+							<td>${vo.empName }</td>
 							<td><fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd" /> </td>
 						</tr>
 					</c:forEach>
 				</c:if>
 			</table>
 			<input type="submit" value="삭제" name="delete">
-			<input type="button" value="보관" name="save">
 		</form>
 	</div>
 	<div class="divPage">
@@ -106,7 +107,7 @@
 		<!-- 이전 블럭으로 이동 -->
 		<c:if test="${pageVo.firstPage>1 }">
 			<a href="#" onclick="pageFunc(${pageVo.firstPage-1})">
-				<img alt="이전 블럭으로 이동" src="<c:url value='../images/first.JPG'/> ">
+				<img alt="이전 블럭으로 이동" src="<c:url value='/images/first.JPG'/> ">
 			</a>		
 		</c:if>
 		
@@ -132,7 +133,7 @@
 	</div>
 	<div class="divSearch">
 	   	<form name="frmSearch" method="post" 
-	   		action='<c:url value="/mail/sendMail.do"/>'>
+	   		action='<c:url value="/mail/saveGet.do"/>'>
 	        <select name="searchCondition">        	
 	            <option value="mail_name"
 	            	<c:if test="${param.searchCondition=='mail_name'}">
@@ -148,7 +149,7 @@
 	            	<c:if test="${param.searchCondition=='emp_name'}">
 	            		selected="selected"
 	            	</c:if>	 
-	            >받는이</option>
+	            >보낸이</option> 
 	        </select>   
 	        <input type="text" name="searchKeyword" title="검색어 입력"
 	        	value="${param.searchKeyword}">   

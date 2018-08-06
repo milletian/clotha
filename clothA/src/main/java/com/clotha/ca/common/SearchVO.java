@@ -47,7 +47,7 @@ public class SearchVO {
     	this.recordCountPerPage = bean.recordCountPerPage;
     }
 
-    public String getSearchCondition() {
+	public String getSearchCondition() {
     	return searchCondition;
     }
 
@@ -114,15 +114,11 @@ public class SearchVO {
 
 	@Override
 	public String toString() {
-		return "SearchVO [searchCondition=" + searchCondition
-				+ ", searchKeyword=" + searchKeyword + ", searchUseYn="
-				+ searchUseYn + ", currentPage=" + currentPage
-				+ ", blockSize=" + blockSize + ", firstRecordIndex="
-				+ firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
+		return "SearchVO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", searchUseYn="
+				+ searchUseYn + ", currentPage=" + currentPage + ", blockSize="
+				+ blockSize + ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex
 				+ ", recordCountPerPage=" + recordCountPerPage + "]";
 	}
-
-	
 
 	
 }

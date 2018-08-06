@@ -20,5 +20,11 @@ public interface MailService {
 	public int sendSaveUp(Map<String, Object> map);	//sendSaveUp
 	public int getTotalRecord(Map<String, Object> map);	//selectGetmail
 	public int sendTotalRecord(Map<String, Object> map);	//selectSender
+	public List<MailVO> searchName(Map<String, Object> map);	//searchName
+	public List<MailVO> saveGetL(Map<String, Object> map);	//saveGetList
+	public List<MailVO> saveSendL(Map<String, Object> map);	//saveSendList
+	public List<MailVO> searchName1(Map<String, Object> map);	//searchName
+	public int sendTotalRecord1(Map<String, Object> map);	//saveSendTR
+	public int getTotalRecord1(Map<String, Object> map);	//saveGetTR
 	
 }

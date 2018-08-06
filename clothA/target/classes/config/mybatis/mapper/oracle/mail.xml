@@ -111,26 +111,28 @@
 	</update>
 	
 	<select id="sendSave" parameterType="String" resultType="mailVo" >
-		select * from
-		(
+		select *
+		from (
 			select * from mail
 			where sender = #{sender} and mail_save is not null and mail_senderdel = 'N'
 			order by mail_no desc
+		)
 		<![CDATA[
-		) where rownum <=5
+		where rownum<=5
 		]]>
 	</select>
 	
 	<select id="getSave" parameterType="String" resultType="mailVo" >
-		select * from
-		(
+		select *
+		from (
 			select m.* , e.emp_name
 			from mailview m join employee e
 			on m.sender = e.emp_no
 			where m.emp_no = #{empNo} and m.get_mail_save is not null and m.get_mail_del = 'N'
 			order by m.mail_no desc
-		<![CDATA[	
-		) where rownum <=5
+		)
+		<![CDATA[
+		where rownum<=5
 		]]>
 	</select>
 	
@@ -161,6 +163,15 @@
 		order by m.mail_no desc		
 	</select>
 	
+	<select id="getTotalRecord1" parameterType="map" resultType="int">
+		select count(*)
+		from mailview m join employee e
+		on m.sender = e.emp_no
+		where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is not null 
+		<include refid="searchWhere"></include>
+		order by m.mail_no desc		
+	</select>
+	
 	<select id="sendTotalRecord" parameterType="map" resultType="int">
 		select count(*) 
 		from mailview m
@@ -173,6 +184,82 @@
 		order by mail_no desc
 	</select>
 	
+	<select id="sendTotalRecord1" parameterType="map" resultType="int">
+		select count(*) 
+		from mailview m
+			<if test="searchKeyword !=null and searchKeyword !=''">
+				join employee e 
+				on m.emp_no = e.emp_no
+			</if>
+		where m.sender = #{empNo} and m.mail_senderdel = 'N' and m.mail_save is not null
+		<include refid="searchWhere"></include>
+		order by mail_no desc
+	</select>
+	
+	<select id="searchName" parameterType="map" resultType="mailVO" >
+		select m.*, e.EMP_NAME from 
+		mailview m join employee e
+		on m.EMP_NO = e.EMP_NO
+		where sender = #{empNo} and mail_save is null and mail_senderdel = 'N'
+		<include refid="searchWhere"></include>
+		order by mail_no desc
+	</select>
+	
+	<select id="searchName1" parameterType="map" resultType="mailVO" >
+		select m.*, e.EMP_NAME from 
+		mailview m join employee e
+		on m.EMP_NO = e.EMP_NO
+		where sender = #{empNo} and mail_save is not null and mail_senderdel = 'N'
+		<include refid="searchWhere"></include>
+		order by mail_no desc
+	</select>
+	
+	<select id="saveSenderTR" resultType="int" parameterType="string" >
+		select count(*) from mailview
+		where sender = #{sender} and mail_save is not null and mail_senderdel = 'N'
+	</select>
+	
+	<select id="saveGetTR" resultType="int" parameterType="string" >
+		select count(*) from mailview
+		where emp_no = #{empNo} and get_mail_save is not null and get_mail_del = 'N'
+	</select>
+	
+	<select id="saveGetL" parameterType="searchVo" resultType="mailVo">
+		select *
+		from
+		(
+			select rownum as RNUM, list.*
+		    from (
+				select m.* , e.emp_name
+				from mailview m join employee e
+				on m.sender = e.emp_no
+				where m.emp_no = #{empNo} and m.get_mail_del = 'N' and m.get_mail_save is not null 
+				<include refid="searchWhere"></include>
+				order by m.mail_no desc
+			)list
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
+	</select>
+	
+	<select id="saveSendL" parameterType="map" resultType="mailVo" >
+		select *
+		from
+		(
+			select rownum as RNUM, list.*
+		    from (
+				select * from mail
+				where sender = #{empNo} and mail_save is not null and mail_senderdel = 'N'
+				<include refid="searchWhere"></include>
+			)list
+		)
+		<![CDATA[
+		where RNUM>#{firstRecordIndex} 
+		and RNUM<=#{firstRecordIndex}+#{recordCountPerPage}
+		]]>
+	</select>
 	
 </mapper>
 

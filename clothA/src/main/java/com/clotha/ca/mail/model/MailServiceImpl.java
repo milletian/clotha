@@ -110,6 +110,35 @@ public class MailServiceImpl implements MailService{
 	public int sendTotalRecord(Map<String, Object> map) {
 		return MailDao.sendTotalRecord(map);
 	}
-	
-	
+
+	@Override
+	public List<MailVO> searchName(Map<String, Object> map) {
+		return MailDao.searchName(map);
+	}
+
+	@Override
+	public List<MailVO> saveGetL(Map<String, Object> map) {
+		return MailDao.saveGetL(map);
+	}
+
+	@Override
+	public List<MailVO> saveSendL(Map<String, Object> map) {
+		return MailDao.saveSendL(map);
+	}
+
+	@Override
+	public List<MailVO> searchName1(Map<String, Object> map) {
+		return MailDao.searchName1(map);
+	}
+
+	@Override
+	public int sendTotalRecord1(Map<String, Object> map) {
+		return MailDao.sendTotalRecord1(map);
+	}
+
+	@Override
+	public int getTotalRecord1(Map<String, Object> map) {
+		return MailDao.getTotalRecord1(map);
+	}
+
 }

@@ -23,10 +23,6 @@
 			}
 		});
 		
-		$('input[name=save]').click(function(){
-			$('form[name=chfrm]').attr("action","<c:url value='/mail/sendSave.do'/>").submit();
-			
-		});
 	});
 	
 	function pageFunc(curPage){
@@ -62,13 +58,13 @@
 		text-align: center;
 	}
 </style>
-<title>보낸쪽지</title>
+<title>보낸쪽지 보관함</title>
 </head>
 <body>
 	<div>
-		<h2>보낸쪽지</h2>
+		<h2>보낸쪽지 보관함</h2>
 		<form name="frmPage" method="post"
-			action="<c:url value='/mail/sendMail.do'/>">
+			action="<c:url value='/mail/saveSend.do'/>">
 			<input type="hidden" name="currentPage" >
 			<input type="hidden" name="searchKeyword" value="${param.searchKeyword}">
 			<input type="hidden" name="searchCondition" value="${param.searchCondition}">	
@@ -83,7 +79,7 @@
 				</tr>
 				<c:if test="${empty list }">
 					<tr>
-						<td colspan="4">보낸 쪽지가 없습니다.</td>
+						<td colspan="4">보낸 쪽지보관함이 비어있습니다.</td>
 					</tr>
 				</c:if>
 				<c:if test="${!empty list }">
@@ -98,7 +94,6 @@
 				</c:if>
 			</table>
 			<input type="submit" value="삭제" name="delete">
-			<input type="button" value="보관" name="save">
 		</form>
 	</div>
 	<div class="divPage">
@@ -132,7 +127,7 @@
 	</div>
 	<div class="divSearch">
 	   	<form name="frmSearch" method="post" 
-	   		action='<c:url value="/mail/sendMail.do"/>'>
+	   		action='<c:url value="/mail/saveSend.do"/>'>
 	        <select name="searchCondition">        	
 	            <option value="mail_name"
 	            	<c:if test="${param.searchCondition=='mail_name'}">
@@ -151,7 +146,7 @@
 	            >받는이</option>
 	        </select>   
 	        <input type="text" name="searchKeyword" title="검색어 입력"
-	        	value="${param.searchKeyword}">   
+	        	value="${param.searchKeyword}">
 			<input type="submit" value="검색">
 	    </form>
 	</div>

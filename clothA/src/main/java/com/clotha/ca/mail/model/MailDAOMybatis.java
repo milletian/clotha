@@ -102,6 +102,36 @@ public class MailDAOMybatis implements MailDAO {
 		return sqlSession.selectOne(namespace+"sendTotalRecord",map);
 	}
 
+	@Override
+	public List<MailVO> searchName(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"searchName",map);
+	}
+
+	@Override
+	public List<MailVO> saveGetL(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"saveGetL",map);
+	}
+
+	@Override
+	public List<MailVO> saveSendL(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"saveSendL",map);
+	}
+
+	@Override
+	public List<MailVO> searchName1(Map<String, Object> map) {
+		return sqlSession.selectList(namespace+"searchName1",map);
+	}
+
+	@Override
+	public int sendTotalRecord1(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"sendTotalRecord1", map);
+	}
+
+	@Override
+	public int getTotalRecord1(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"getTotalRecord1",map);
+	}
+
 	
 	
 	

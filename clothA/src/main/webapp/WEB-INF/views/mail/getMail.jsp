@@ -118,7 +118,7 @@
 		<!-- 이전 블럭으로 이동 -->
 		<c:if test="${pageVo.firstPage>1 }">
 			<a href="#" onclick="pageFunc(${pageVo.firstPage-1})">
-				<img alt="이전 블럭으로 이동" src="<c:url value='../images/first.JPG'/> ">
+				<img alt="이전 블럭으로 이동" src="<c:url value='/images/first.JPG'/> ">
 			</a>		
 		</c:if>
 		
@@ -160,7 +160,7 @@
 	            	<c:if test="${param.searchCondition=='emp_name'}">
 	            		selected="selected"
 	            	</c:if>	 
-	            >보낸이</option>
+	            >보낸이</option> 
 	        </select>   
 	        <input type="text" name="searchKeyword" title="검색어 입력"
 	        	value="${param.searchKeyword}">   
