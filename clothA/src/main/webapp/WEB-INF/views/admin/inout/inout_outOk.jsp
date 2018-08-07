@@ -1,41 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="<c:url value='/css2/style.css' /> "
-	type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript"
-	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
+<link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript"	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
 	
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
-	rel="stylesheet" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/css/view.css'/>">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="<c:url value='/css/view.css'/>"><!-- 만든 뷰 -->
 <script type="text/javascript">
 $(function() { 
 	var liveTableData = $("#frmwarehousingtable").tableExport({
@@ -164,7 +150,14 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-});// document
+	  
+	  $(document ).on( "click" , "table tbody tr", function() {              
+			$('table tbody tr td').removeClass('successsss');
+			$(this).find('td').addClass('successsss');
+			accCode=$(this).find('td:first').text();        
+	  
+	});// document 제이쿼리
+});
 function returnValueRead(str) {
 	var reval = window.returnValue;
 	if(str=='pd'){
@@ -184,7 +177,10 @@ function returnValueRead(str) {
 }
 </script>
 <style type="text/css">
-
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
+/*리스트 행 클릭 된 행 색변화*/
 </style>
 <div class="viewBody">
 		<div id="wrap" class="box1">
@@ -237,11 +233,11 @@ function returnValueRead(str) {
 				
 			</form>
 		</div>
-		<div id="maincontent" class="box2">
-			<a href="#"><i class="fas fa-edit"></i></a> <a
+		<div class="box2">
+			<!-- <a href="#"><i class="fas fa-edit"></i></a> <a
 				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a>
-				<div id="content1">
+				class="fas fa-trash-alt"></i></a> -->
+				<div>
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
@@ -262,6 +258,5 @@ function returnValueRead(str) {
 						</tbody>
 					</table>
 				</div>
-			</form>
-		</div>
+			</div>
 </div>

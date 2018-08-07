@@ -1,38 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="<c:url value='/css2/style.css' /> "
-	type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript"
-	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"
-	rel="stylesheet" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<link rel="stylesheet" href="<c:url value='/css2/style.css' /> "	type="text/css" />
+<link rel="stylesheet" href="<c:url value='/css/view.css'/>"> <!-- 만든css  -->
+
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript"	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
+<link	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"	rel="stylesheet" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 	
 <script src="<c:url value='/js/jquery.form.min.js' /> "></script>
-<link rel="stylesheet" href="<c:url value='/css/view.css'/>">
+
 <script type="text/javascript">
 $(function() { 
 	$("table").tablesorter(); 
@@ -221,63 +209,91 @@ function check(){
 
 </style>
 <div class="viewBody">
-		<div id="wrap" class="box1">
-			<form name="frmProductsList" id="frmProductsList">
-				<label>기간</label><i class="fa fa-calendar"></i>
-				<input type="text" name="searchDateRange" id="searchDateRange">
-				<label for="selSearchSupplier">매입처</label>
-				<select style="max-height: 30px; width: 100px" name="accCode"
-				data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"
-					class="ajax">
-				</select>
-				<label for="selSearchProducts">상품코드/명</label>
-				<select style="max-height: 30px; width: 100px" name="pdCode"
-					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
-					class="ajax">
-				</select>
-				<label>사용여부</label>
-				<select name="pdDel">
-				<option value="전체">전체</option>
-				<option value="Y">사용</option>
-				<option value="N">미사용</option>
-				</select>
-				<label for="selSearchColors">색상</label>
-				<select name="colorCode">
-					<option value="">선택</option>
-					<option value="69">navy</option>
-					<option value="89">black</option>
-					<option value="00">white</option>
-					<option value="04">pink</option>
-					<option value="32">beige</option>
-					<option value="67">blue</option>
-					<option value="05">red</option>
-					<option value="88">gray</option>
-					<option value="25">yellow</option>
-					<option value="99">gold</option>
-				</select>
-				<label for="selSearchStyle">스타일</label>
-				<select name="styleCode">
-					<option value="">선택</option>
-					<option value="S">셔츠</option>
-					<option value="O">원피스</option>
-					<option value="T">티셔츠</option>
-					<option value="K">치마/스커트</option>
-					<option value="P">바지</option>
-					<option value="U">아우터</option>
-					<option value="E">기타</option>
-				</select>
-				<label for="selSearchSize">사이즈</label>
-				<select name="sizeCode">
-					<option value="">선택</option>
-					<option value="XS">85</option>
-					<option value="S">90</option>
-					<option value="M">95</option>
-					<option value="L">100</option>
-					<option value="XL">105</option>
-				</select>
-				<button type="button" id="btnSearch">
-					<i class="fa fa-lg fa-search"></i>&nbsp;상품조회(F2)
-				</button>
+	<div class="box1">
+		<form name="frmProductsList" id="frmProductsList">
+			<div class="row">
+				<div class="col-sm-11">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">기간<i class="fa fa-calendar"></i></label>
+						
+						<div class="col-sm-1">
+							<input type="text" name="searchDateRange" id="searchDateRange" class="form-control">
+						</div>
+						<label for="selSearchSupplier" class="col-sm-1 control-label">매입처</label>
+						<div class="col-sm-1">
+							<select style="max-height: 30px; width: 100px" name="accCode"
+									data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"
+									class="ajax">
+							</select>
+						</div>
+						<label for="selSearchProducts" class="col-sm-1 control-label">상품코드/명</label>
+						<div class="col-sm-1">
+							<select style="max-height: 30px; width: 100px" name="pdCode"
+								data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
+								class="ajax">
+							</select>
+						</div>
+						<label class="col-sm-1 control-label">사용여부</label>
+						<div class="col-sm-1">
+							<select name="pdDel" class="form-control">
+								<option value="전체">전체</option>
+								<option value="Y">사용</option>
+								<option value="N">미사용</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+				<div class="col-sm-11">
+					<div class="form-group">		
+						<label for="selSearchColors" class="col-sm-1 control-label">색상</label>
+						<div class="col-sm-1">
+							<select name="colorCode" class="form-control">
+								<option value="">선택</option>
+								<option value="69">navy</option>
+								<option value="89">black</option>
+								<option value="00">white</option>
+								<option value="04">pink</option>
+								<option value="32">beige</option>
+								<option value="67">blue</option>
+								<option value="05">red</option>
+								<option value="88">gray</option>
+								<option value="25">yellow</option>
+								<option value="99">gold</option>
+							</select>
+						</div>
+						<label for="selSearchStyle" class="col-sm-1 control-label">스타일</label>
+						<div class="col-sm-1">
+							<select name="styleCode" class="form-control">
+								<option value="">선택</option>
+								<option value="S">셔츠</option>
+								<option value="O">원피스</option>
+								<option value="T">티셔츠</option>
+								<option value="K">치마/스커트</option>
+								<option value="P">바지</option>
+								<option value="U">아우터</option>
+								<option value="E">기타</option>
+							</select>
+						</div>
+						<label for="selSearchSize" class="col-sm-1 control-label">사이즈</label>
+						<div class="col-sm-1">
+							<select name="sizeCode" class="form-control">
+								<option value="">선택</option>
+								<option value="XS">85</option>
+								<option value="S">90</option>
+								<option value="M">95</option>
+								<option value="L">100</option>
+								<option value="XL">105</option>
+							</select>
+						</div>
+						<div class="col-sm-1">
+							<button type="button" id="btnSearch" class="btn btn-primary"><i class="fa fa-lg fa-search"></i>상품조회(F2)
+							</button>
+						</div>	
+				</div>
+			</div>
+		</div>
 			</form>
 		</div>
 		<div id="maincontent" class="box2">

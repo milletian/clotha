@@ -17,7 +17,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" />
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 <script src="<c:url value='/js/FileSaver.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/tableexport.js' /> "></script><!-- 엑셀 플러그인 -->
@@ -188,15 +188,13 @@ function popupOpen(empNo){
 }
 </script>
 <style type="text/css">
-table.tablesorter tbody td.successsss{
+ table.tablesorter tbody td.successsss{
 		background-color: skyblue;
-	}
-
-
+}  
+/*리스트 행 클릭 된 행 색변화*/
  
 </style>
 <div class="viewBody">
-
 	<div class="box1" style="padding: 10px">
 		<form name=employeeList id="employeeList">
 			<div class="row">

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
-
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><!-- 부트스트랩 -->
 <script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> <!-- 테이블 플러그인 -->
@@ -65,7 +65,7 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
-        			$("table tbody").html('');
+        			$("#storeTable tbody").html('');
      				$.each(res, function(idx, item) {
      					var dsd ="<tr ondblclick=popupOpen('"+item.storeCode+"')><td>"+item.storeCode+"</td>"
      					+"<td>"+item.staCode+"</td>"
@@ -83,11 +83,11 @@ $(function() {
      						dsd+="정상영업";
      					}
      					+"</td>";
-     					 $("table tbody").append(dsd);
+     					 $("#storeTable tbody").append(dsd);
      					liveTableData.reset();
      					});
      				}else{
-     					$("table tbody").html('');
+     					$("#storeTable tbody").html('');
      				}
         		 $("table").trigger("update"); 
                  return false; 
@@ -107,7 +107,15 @@ $(function() {
 	$(document ).on( "hidden.bs.modal" , "#modal-storeWrite", function() {              
 		$(this).find('form')[0].reset();       
 	})
-})
+
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();        
+		
+		
+    });
+})//제이쿼리
 function popupOpen(storeCode) {
 	$.ajax({
 		url:"<c:url value='/admin/store/ajaxStoreOne.do' />",
@@ -188,89 +196,88 @@ function mapview(address1,name,tel){
 }
 </script>
 <style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
-#map { display:none; }
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
+/*리스트 행 클릭 된 행 색변화*/
 </style>
-<div id="wrap">
-	<form name="frmStoreList" id="frmStoreList">
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="form-group">
-				<label class="col-sm-3 control-label">사용 여부</label>
-					<div class="col-sm-8">
+<div class="viewBody">
+	<div class="box1">
+		<form name="frmStoreList" id="frmStoreList">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">사용 여부</label>
+						<div class="col-sm-3">
 						 	<input type="radio" id="isall" checked="checked" name="storeDel" value="전체"><label for="isall">전체 </label>
 							<input type="radio" id="noneuse" name="storeDel" value="N"><label for="noneuse">정상영업 </label>
 							<input type="radio" id="use" name="storeDel" value="Y"><label for="use">영업정지 </label>
+						</div>
+					
+						<label class="col-sm-1 control-label">검색조건</label>
+						<div class="col-sm-2">
+							<select name="searchCondition" class="form-control"> 
+								<option value="store_code">점포코드</option>
+								<option value="sta_code">재고위치코드</option>
+							</select>
+						</div>
+					
+						<label class="col-sm-1 control-label">검색</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" name="searchKeyword">
+						</div>
+						<div class="col-sm-2">
+							<input type="button" id="btn" class="btn btn-primary" value="점포 조회">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="form-group">
-				<label class="col-sm-5 control-label">검색조건</label>
-					<div class="col-sm-7">
-						<select name="searchCondition"> 
-							<option value="store_code">점포코드</option>
-							<option value="sta_code">재고위치코드</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label class="col-sm-3 control-label">검색</label>
-					<div class="col-sm-6">
-						<input type="text" class="form-control" name="searchKeyword">
-					</div>
-					<div class="col-sm-2">
-						<input type="button" id="btn" class="btn btn-primary" value="점포 조회">
-					</div>
-				</div>
-			</div>
+		</form>
+	</div>
+<!-- <div id="map" style="width: 500px;height: 400px;"></div> -->  <!--이거 왜만든건지 모르겠음 일단 주석  -->
+	<div class="box2">    
+		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-storeWrite" id="openmodal" role="button" data-backdrop="static"><i class="fas fa-edit"></i>매장 등록</a>
+		<a class="btn btn-xs btn-success" href="#" id="delbtn"><i class="fas fa-trash-alt"></i>매장 영업 정지</a>
+		<div id="content1">
+			<table cellspacing="1" class="tablesorter" id=storeTable>             
+			    <thead> 
+			        <tr> 
+			            <th>점포코드</th> 
+			            <th>재고위치코드</th> 
+			            <th>점주코드</th> 
+			            <th>점포이름</th> 
+			            <th>우편번호</th> 
+			            <th>주소</th> 
+			            <th>법인번호</th>
+			            <th>대표전화</th>
+			            <th>등록날짜</th>
+			            <th>폐쇄 여부</th> 
+			        </tr> 
+			    </thead> 
+			    <tbody> 
+			       
+			    </tbody> 
+			</table>
 		</div>
-		
-	</form>
-</div>
-<div id="map" style="width: 500px;height: 400px;"></div>
-<div id="maincontent">    
-	<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-storeWrite" id="openmodal" role="button" data-backdrop="static"><i class="fas fa-edit"></i>매장 등록</a>
-	<a class="btn btn-xs btn-success" href="#" id="delbtn"><i class="fas fa-trash-alt"></i>매장 영업 정지</a>
-	<div id="content1">
-		<table cellspacing="1" class="tablesorter">             
-		    <thead> 
-		        <tr> 
-		            <th>점포코드</th> 
-		            <th>재고위치코드</th> 
-		            <th>점주코드</th> 
-		            <th>점포이름</th> 
-		            <th>우편번호</th> 
-		            <th>주소</th> 
-		            <th>법인번호</th>
-		            <th>대표전화</th>
-		            <th>등록날짜</th>
-		            <th>폐쇄 여부</th> 
-		        </tr> 
-		    </thead> 
-		    <tbody> 
-		       
-		    </tbody> 
-		</table>
 	</div>
 </div>
 
  
  
+
+
 <div id="modal-storeWrite" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
     <div class="modal-dialog" style="width:1200px;height:700px">
         <div class="modal-content">
-        	<%@include file="storeWrite.jsp" %>
+        	<%@include file="storeWrite.jsp"%>
+        </div>
+    </div>
+</div>
+
+<div id="modal-empSearch" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../employee/employeeSearch.jsp" %>
         </div>
     </div>
 </div>

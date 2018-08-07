@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -19,7 +20,6 @@
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
-<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
 
 <script type="text/javascript">
 $(function() {
@@ -40,8 +40,8 @@ $(function() {
 	    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file
 	    ignoreCSS: ".tableexport-ignore"   // (selector, selector[]), selector(s) to exclude from the exported file
 	});
-	
-	$('#delbtn').click(function() { 
+
+	 $('#delbtn').click(function() { 
 		if(accDtCode!=undefined){
 			if(confirm('정말로 삭제하시겠습니까?')){
 		    	$.ajax({
@@ -63,6 +63,7 @@ $(function() {
 			alert('먼저 삭제할 행을 선택하십시오')
 		}
 	})
+
 	// select option 설정
 	$.ajax({
 		type:"POST",
@@ -87,6 +88,8 @@ $(function() {
 			alert("sdsds");
 		}
 	})
+	
+	
 	// select2 ui 이용
 	
 	$("#selSearchSupplier").select2();
@@ -125,6 +128,7 @@ $(function() {
         
    		}); 
 	})
+
 	
 	// daterangepicker 이용
 	$('#searchDateRange').daterangepicker({
@@ -149,12 +153,22 @@ $(function() {
 	      $(this).val('');
 	  });
 		
+
+		
 	$(document ).on( "click" , "#searchDetailtable tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
 		accDtCode=$(this).find('td:first').text();        
 	
 	})
-})
+	
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();        
+	
+	})
+});//제이쿼리
+		
 // 팝업창 띄우기
 function returnValueRead(str) {
 	var reval = window.returnValue;
@@ -178,17 +192,12 @@ function returnValueRead(str) {
 			window.ajaxStockByStaCode();
 		}
 	}
-}
+} 
 </script>
 <style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
 </style>
 <div class="viewBody">
 	<div class="box1">
@@ -222,10 +231,10 @@ function returnValueRead(str) {
 		</form>
 	</div>
 	<div class="box2">    
-		<a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
+		<!-- <a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
 		 	<span class="btn btn-xs btn-success">구매 등록</span>
 		</a>
-		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매 내역 삭제</a>
+		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매 내역 삭제</a> -->
 		<div id="content1">
 			<table id="searchDetailtable" cellspacing="1" class="tablesorter">             
 			    <thead> 

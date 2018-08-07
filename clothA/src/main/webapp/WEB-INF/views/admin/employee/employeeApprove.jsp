@@ -142,7 +142,7 @@ table.tablesorter tbody td.successsss{
 
 	<div class="box1" style="padding: 10px">
 		<form name=empApprove id="empApprove">
-			<button type="button" id="btnSearch" class="btn btn-primary">조회</button>
+			<button type="button" id="btnSearch" class="btn btn-primary">인사등록승인 요청 조회</button>
 		</form>
 	</div>
 	<div class="box2">

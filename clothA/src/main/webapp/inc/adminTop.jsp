@@ -257,7 +257,7 @@ footer{
 						class="far fa-building"></i><span>구매처관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처 정보 조회</a></li>
+						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처 등록 / 조회</a></li>
 						<li><a href="<c:url value='/admin/account/accountDetailList.do' />" target="if">구매 현황 조회</a></li>
 					</ul></li>
 				

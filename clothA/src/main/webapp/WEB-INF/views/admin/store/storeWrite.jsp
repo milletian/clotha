@@ -39,7 +39,7 @@
 				if($(this).val().length<1){
 					bool = false;
 					$(this).prev().focus();
-					alert($(this).prev().text()+"는 필수 입력 항목입니다.");
+					alert($(this).parent().prev().text()+"는(은) 필수 입력 항목입니다.");
 					return false;
 				}
 			})
@@ -170,7 +170,7 @@
 	}
 	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">매장정보 등록</h3>
 </div>
  
 <div class="modal-body">
@@ -181,12 +181,23 @@
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="form-group">
-					<label for="empNo" class="col-sm-3 control-label">점장 </label>
+					<label for="empNo" class="col-sm-3 control-label">사원번호 </label>
 					<div class="col-sm-4">
-						<input type="text" id="empNo" name="empNo" class="form-control">
+						<input type="text" id="empNo" name="empNo" class="form-control" readonly="readonly">
 					</div>
 					<div class="col-sm-5">
-						<input type="button" class="btn btn-primary" id="searchEmpNo" value="사원조회">
+						<a data-toggle="modal"  data-target="#modal-empSearch" role="button" data-backdrop="static">
+						<span class="btn btn-primary">점장조회</span>	</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-group">
+					<label for="empName" class="col-sm-3 control-label">점장 이름 </label>
+					<div class="col-sm-4">
+						<input type="text" id="empName" name="empName" class="form-control" readonly="readonly">
 					</div>
 				</div>
 			</div>

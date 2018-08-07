@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
-
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -159,91 +159,89 @@ function returnValueRead(str) {
 
 </script>
 <style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
-.row{
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
+/*리스트 행 클릭 된 행 색변화*/
+ .row{
 	margin-top: 10px;
 	margin-bottom: 10px;
-}
+} 
+/*modal 관련 */
 </style>
-<div id="wrap">
+<div class="viewBody">
 	<form name="frmStockList" id="frmStockList">
+	<div class = "box1">
 		<div class="row">
-			<div class="col-sm-2">
-				<div class="form-group">
-				<label for="selSearchSupplier" class="col-sm-4 control-label">매입처</label>
-					<div class="col-sm-5">
-						<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+			<div class="col-sm-12">	
+				<div class="col-sm-2">
+					<div class="form-group">
+					<label for="selSearchSupplier" class="col-sm-5 control-label">매입처</label>
+						<div class="col-sm-4">
+							<select style="max-height: 30px;width: 100px" name="accCode" data-placeholder="검색할 매입처를 선택하세요" id="selSearchSupplier"></select>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-sm-2">
-				<div class="form-group">
-					<label class="col-sm-3 control-label">구분</label>
-					<div class="col-sm-7">
-						<input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
-						<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+				
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">구분</label>
+						<div class="col-sm-8">
+							<input type="radio" name="whorst" value="store" checked="checked" id='store'><label for="store">매장</label>
+							<input type="radio" name="whorst" value="wh" id='wh'><label for="wh">창고</label>
+						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="col-sm-2">
-				<div class="form-group">
-					<label for="selectwhorst" class="col-sm-3 control-label">선택</label>
-					<div class="col-sm-7">
-						<select name="staCode" id="selectwhorst">
-						</select>
+				
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label for="selectwhorst" class="col-sm-5 control-label">선택</label>
+						<div class="col-sm-7">
+							<select name="staCode" id="selectwhorst">
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-3">
-				<div class="form-group">
-				<label for="pdCode" class="col-sm-3 control-label">상품 코드</label>
-					<div class="col-sm-6">
-						<input class="form-control" type="text" name="pdCode" id="pdCode">
-					</div>
-					<div class="col-sm-3">
-						<a data-toggle="modal" data-target="#modal-searchPd" id="searchPdopen" role="button" data-backdrop="static">
-						 <span class="btn btn-primary">상품 조회</span>
-						</a>
+			<div class="col-sm-12">
+				<div class="col-sm-4">
+					<div class="form-group">
+					<label for="pdCode" class="col-sm-3 control-label">상품코드</label>
+						<div class="col-sm-4">
+							<input class="form-control" type="text" name="pdCode" id="pdCode">
+						</div>
+						<div class="col-sm-3">
+							<a data-toggle="modal" data-target="#modal-searchPd" id="searchPdopen" role="button" data-backdrop="static">
+							 <span class="btn btn-primary">상품 조회</span>
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-sm-5">
-				<div class="form-group">
-				<label class="col-sm-3 control-label">상품 사용 여부</label>
-					<div class="col-sm-4">
-						<input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
-						<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
-						<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
-					</div>
-					<div class="col-sm-3">
-						<input type="button" class="btn btn-primary" id="btn" value="재고현황 조회">
+				
+				<div class="col-sm-5">
+					<div class="form-group">
+					<label class="col-sm-3 control-label">상품 사용 여부</label>
+						<div class="col-sm-5">
+							<input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
+							<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
+							<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
+						</div>
+						<div class="col-sm-4">
+							<input type="button" class="btn btn-primary" id="btn" value="재고현황 조회">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-	
-		
-		
+	</div>
 		
 		
 	</form>
-</div>
-<div id="maincontent">    
-	<div id="content1">
+<div class="box2">    
+	<div>
 		<table id="stockListTable" cellspacing="1" class="tablesorter">             
 		    <thead> 
 		        <tr> 
@@ -260,6 +258,7 @@ function returnValueRead(str) {
 		    </tbody> 
 		</table>
 	</div>
+</div>
 </div>
 
 

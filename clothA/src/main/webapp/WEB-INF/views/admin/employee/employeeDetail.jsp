@@ -223,7 +223,6 @@
 		margin: 15px;
 	}
 </style>
-
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
 	<h3 class="smaller lighter blue no-margin modal-title">인사 상세정보 수정 / 삭제</h3>
 </div>
@@ -447,12 +446,12 @@
 	<span class="btn btn-sm btn-success" id="employeeEdit">
  	수정<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
     </span>
-	<span class="btn btn-sm btn-danger pull-right" id="employeeDel">
- 	삭제<i class="ace-icon fa fa-arrow-right ace-icon fa fa-times"></i>
-    </span>
     <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeDetailClose">
         <i class="ace-icon fa fa-times"></i>닫기
     </button>
+	<span class="btn btn-sm btn-danger pull-right" id="employeeDel">
+ 	삭제<i class="ace-icon fa fa-arrow-right ace-icon fa fa-times"></i>
+    </span>
 </div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element

@@ -1,30 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet"	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
 	integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="<c:url value='/css2/style.css' /> "
-	type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript"
-	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
+<link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript"	src="<c:url value='/js/jquery.tablesorter.js' />"> </script>
 	
 <link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet">
 <script src="<c:url value='/js/FileSaver.js' />"></script>
@@ -164,7 +153,14 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-});// document
+	  
+	  $(document ).on( "click" , "table tbody tr", function() {              
+			$('table tbody tr td').removeClass('successsss');
+			$(this).find('td').addClass('successsss');
+			accCode=$(this).find('td:first').text();    
+			
+	});// document 제이쿼리
+});
 function returnValueRead(str) {
 	var reval = window.returnValue;
 	if(str=='pd'){
@@ -184,10 +180,12 @@ function returnValueRead(str) {
 }
 </script>
 <style type="text/css">
-
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
 </style>
 <div class="viewBody">
-		<div id="wrap" class="box1">
+		<div  class="box1">
 			<form name="frmwarehousingList" id="frmwarehousingList">
 				<div class="row">
 					<div class="col-sm-3">
@@ -238,10 +236,10 @@ function returnValueRead(str) {
 				
 			</form>
 		</div>
-		<div id="maincontent" class="box2">
-			<a href="#"><i class="fas fa-edit"></i></a> <a
+		<div class="box2">
+			<!-- <a href="#"><i class="fas fa-edit"></i></a> <a
 				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a>
+				class="fas fa-trash-alt"></i></a> -->
 				<div id="content1">
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
@@ -263,7 +261,6 @@ function returnValueRead(str) {
 						</tbody>
 					</table>
 				</div>
-			</form>
 		</div>
 </div>
 

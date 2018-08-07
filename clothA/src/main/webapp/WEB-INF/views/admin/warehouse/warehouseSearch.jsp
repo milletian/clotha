@@ -4,7 +4,7 @@
  
 
 
-<div class="modal-header">
+<div class="modal-header bg-primary">
 	<script type="text/javascript">
 	$(function() {
 		
@@ -86,7 +86,7 @@
 	}
 	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">창고검색</h3>
 </div>
  
 <div class="modal-body">

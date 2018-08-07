@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	
-<div class="modal-header">
+<div class="modal-header bg-primary">
 	<script type="text/javascript">
 	$(function() { 
 			
@@ -148,7 +148,7 @@
 	
 	</script>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">상품정보 검색</h3>
 </div>
  
 <div class="modal-body">
@@ -162,7 +162,7 @@
 								<div class="col-sm-5">
 									<select style="max-height: 30px; width: 100px" name="pdCode"
 										data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
-										class="ajax">
+										class="ajax form-control" >
 									</select>
 								</div>
 							</div>

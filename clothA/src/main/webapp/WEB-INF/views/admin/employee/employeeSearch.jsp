@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 
 
-<div class="modal-header">
+<div class="modal-header bg-primary">
 	<script type="text/javascript">
 	$(function() {
 	
@@ -89,13 +89,17 @@
 	
 	})//제이쿼리
 
+	/* 더블클릭 이벤트 선택 점장 empNo, empName storeWrite에 입력 */
 	function popupEmpText(empNo,empName){
-		var obj = new Object();
+		
+		$('#empNo').val(empNo);
+		$('#empName').val(empName);
+		
+		/* var obj = new Object();
 		obj.empNo=empNo;
 		obj.empName=empName;
-		
 		window.returnValue = obj;
-		window.returnValueRead('Emp');
+		window.returnValueRead('Emp'); */
 		$('#btnsearchEmpClose').trigger('click');
 	}
 
@@ -109,7 +113,7 @@
 
 	<div class="box1" style="padding: 10px">
 		<form name=employeeList id="employeeList">
-			<button type="button" id="btnSearchEmp">&nbsp;점장조회</button>
+			<button type="button" id="btnSearchEmp" class="btn btn-primary">점장조회</button>
 		</form>
 	</div>
 	<div class="box2">

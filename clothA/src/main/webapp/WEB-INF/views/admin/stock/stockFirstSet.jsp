@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -224,17 +225,10 @@ function returnValueRead(str) {
 } */
 </script>
 <style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
 </style>
-<form name="frmStockFirstSet" id="frmStockFirstSet">
-	<div id="wrap">
+<div class="viewBody">
+	<div class="box1">
+	<form name="frmStockFirstSet" id="frmStockFirstSet">
 		<div class="row">
 			<div class="col-sm-2">
 				<div class="form-group">
@@ -257,35 +251,31 @@ function returnValueRead(str) {
 			</div>
 		</div>
 		
-	</div>
-</form>
+	</form>
 <form id="excelUpForm" method="post" action="" role="form" enctype="multipart/form-data">
 	<input id="excel" name="excel" class="file" type="file" multiple data-show-upload="false" data-show-caption="true">
 	<button type="button" id="excelUp" onclick="check()">등록</button>
 </form>
-	<div id="maincontent">    
-
-		<a class="btn btn-xs btn-success" href="#" id="newRecord"><i class="fas fa-edit"></i>새 재고 등록</a>
-		<a class="btn btn-xs btn-success" href="#" id="submit"><i class="fas fa-edit"></i>최종 등록</a>
-		<div id="content1">
-			<form name="frmStockFirstSetting" id="frmStockFirstSetting">
-			
-				<table id="stockFirstSetTable" cellspacing="1" class="tablesorter">             
-				    <thead> 
-				        <tr> 
-				            <th>재고위치ID</th> 
-				            <th>상품코드</th> 
-				            <th>상품명</th> 
-				            <th>수량</th> 
-				        </tr> 
-				    </thead> 
-				    <tbody> 
-				       
-				    </tbody> 
-				</table>
-			</form>
-		</div>
+	<a class="btn btn-xs btn-success" href="#" id="newRecord"><i class="fas fa-edit"></i>새 재고 등록</a>
+	<a class="btn btn-xs btn-success" href="#" id="submit"><i class="fas fa-edit"></i>최종 등록</a>
+	</div><!--box1 -->
+	<div class="box2">
+		<form name="frmStockFirstSetting" id="frmStockFirstSetting">
+			<table id="stockFirstSetTable" cellspacing="1" class="tablesorter">             
+			    <thead> 
+			        <tr> 
+			            <th>재고위치ID</th> 
+			            <th>상품코드</th> 
+			            <th>상품명</th> 
+			            <th>수량</th> 
+			        </tr> 
+			    </thead> 
+			    <tbody> 
+			    </tbody> 
+			</table>
+		</form>
 	</div>
+</div><!--biewBody-->
  
 <div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width:1200px;height:700px">

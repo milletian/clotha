@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
-
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -14,7 +14,8 @@
 <script src="<c:url value='/js/FileSaver.js' />"></script>
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script>
 <script src="<c:url value='/js/tableexport.js' /> "></script>
-<link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
+
+
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATFwoVtGMig3PcR40NStCbeE4-BcHgNjc&sensor=true"></script>
   
@@ -130,7 +131,12 @@ $(function() {
 	  $(this).find('form')[0].reset();
 	});
 	
-})
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();  
+	
+})//제이 쿼리
 function popupOpen(accCode) {
 	$.ajax({
 		url:"<c:url value='/admin/account/ajaxAccountOne.do' />",
@@ -213,9 +219,9 @@ function mapview(address1,name,tel){
 
 </script>
 <style type="text/css">
-	table.tablesorter tbody td.successsss{
+table.tablesorter tbody td.successsss{
 		background-color: skyblue;
-	}
+} 
 </style>
 <div class="viewBody">
 	<div class="box1">
@@ -261,7 +267,7 @@ function mapview(address1,name,tel){
 	</div>
 	<div class="box2">    
 		<a  data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
-		 	<span class="btn btn-xs btn-success" id="openmodal">구매처 등록</span>
+		 	<span class="btn btn-xs btn-success" id="openmodal"><i class="fas fa-edit"></i>구매처 등록</span>
 		</a>
 		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매처 삭제</a>
 		<div id="content1">

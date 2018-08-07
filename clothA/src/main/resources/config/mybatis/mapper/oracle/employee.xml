@@ -131,7 +131,7 @@
 		ON e.GRADE_CODE = g.GRADE_CODE
 		left outer join STORE s
 		on e.STORE_CODE = s.STORE_CODE
-		where e.GRADE_CODE=3
+		where e.GRADE_CODE=3 and e.STORE_CODE is null
 	</select>	
 	
 	

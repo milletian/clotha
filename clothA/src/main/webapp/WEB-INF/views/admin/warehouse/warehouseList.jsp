@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
-
+<link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -101,7 +101,14 @@ $(function() {
 	$(document ).on( "hidden.bs.modal" , "#modal-warehouseWrite", function() {              
 		$(this).find('form')[0].reset();       
 	})
-})
+	
+	$(document ).on( "click" , "table tbody tr", function() {              
+		$('table tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();        
+		
+    });
+})//제이쿼리
 function popupOpen(whCode) {
 	$.ajax({
 		url:"<c:url value='/admin/warehouse/ajaxWarehouseOne.do' />",
@@ -178,79 +185,68 @@ function mapview(address1,name,tel){
 }
 </script>
 <style type="text/css">
-#wrap,#maincontent{
-	border: 1px solid gray;
-	margin: 10px;
-	width: 100%;
-	background: white;
-	text-align: left;
-	padding: 15px;
-}
+table.tablesorter tbody td.successsss{
+		background-color: skyblue;
+} 
+/*리스트 행 클릭 된 행 색변화*/
 </style>
-<div id="wrap">
-	<form name="frmWarehouseList" id="frmWarehouseList">
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="form-group">
-				<label class="col-sm-3 control-label">사용 여부</label>
-					<div class="col-sm-8">
-						 <input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
-						<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">정상영업 </label>
-						<input type="radio" id="use" name="whDel" value="Y"><label for="use">영업정지 </label>
+<div class="viewBody">
+	<div class="box1">
+		<form name="frmWarehouseList" id="frmWarehouseList">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">사용 여부</label>
+						<div class="col-sm-3">
+							<input type="radio" id="isall" checked="checked" name="whDel" value="전체"><label for="isall">전체 </label>
+							<input type="radio" id="noneuse" name="whDel" value="N"><label for="noneuse">정상영업 </label>
+							<input type="radio" id="use" name="whDel" value="Y"><label for="use">영업정지 </label>
+						</div>
+						<label class="col-sm-1 control-label">검색조건</label>
+						<div class="col-sm-2">
+							<select name="searchCondition" class="form-control"> 
+								<option value="wh_code">창고코드</option>
+								<option value="sta_code">재고위치코드</option>
+							</select>
+						</div>
+					
+						<label class="col-sm-1 control-label">검색</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" name="searchKeyword">
+						</div>
+						<div class="col-sm-2">
+							<input type="button" id="btn" class="btn btn-primary" value="창고 조회">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2">
-				<div class="form-group">
-				<label class="col-sm-5 control-label">검색조건</label>
-					<div class="col-sm-7">
-						<select name="searchCondition" class="form-control"> 
-							<option value="wh_code">창고코드</option>
-							<option value="sta_code">재고위치코드</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-3">
-				<div class="form-group">
-					<label class="col-sm-3 control-label">검색</label>
-					<div class="col-sm-6">
-						<input type="text" class="form-control" name="searchKeyword">
-					</div>
-					<div class="col-sm-2">
-						<input type="button" id="btn" class="btn btn-primary" value="창고 조회">
-					</div>
-				</div>
-			</div>
+		</form>
+	</div>
+	<div class="box2">    
+		<a data-toggle="modal" data-target="#modal-warehouseWrite" id="openWhWritemodal" role="button" data-backdrop="static">
+		 <span class="btn btn-xs btn-success"><i class="fas fa-edit"></i>창고 등록</span>
+		</a>
+		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>창고 사용 중지</a>
+		<div id="content1">
+			<table cellspacing="1" class="tablesorter">             
+			    <thead> 
+			        <tr> 
+			            <th>창고코드</th> 
+			            <th>재고위치코드</th> 
+			            <th>창고이름</th> 
+			            <th>우편번호</th> 
+			            <th>주소</th> 
+			            <th>등록날짜</th>
+			            <th>사용여부</th>
+			        </tr> 
+			    </thead> 
+			    <tbody> 
+			       
+			    </tbody> 
+			</table>
 		</div>
-	</form>
-</div>
-<div id="maincontent">    
-	<a data-toggle="modal" data-target="#modal-warehouseWrite" id="openWhWritemodal" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">창고 등록</span>
-	</a>
-	<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>창고 사용 중지</a>
-	<div id="content1">
-		<table cellspacing="1" class="tablesorter">             
-		    <thead> 
-		        <tr> 
-		            <th>창고코드</th> 
-		            <th>재고위치코드</th> 
-		            <th>창고이름</th> 
-		            <th>우편번호</th> 
-		            <th>주소</th> 
-		            <th>등록날짜</th>
-		            <th>사용여부</th>
-		        </tr> 
-		    </thead> 
-		    <tbody> 
-		       
-		    </tbody> 
-		</table>
 	</div>
 </div>
-
 
 
  

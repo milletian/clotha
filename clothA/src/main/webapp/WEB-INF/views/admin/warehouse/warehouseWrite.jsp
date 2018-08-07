@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<div class="modal-header">
+<div class="modal-header bg-primary">
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	<script type="text/javascript">
@@ -83,13 +83,10 @@
 	})
 	 
 	</script>
-	<style type="text/css">
-	.row{
-		margin: 15px;
-	}
-	</style>
+<style type="text/css">
+</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">창고정보 등록</h3>
 </div>
  
 <div class="modal-body">

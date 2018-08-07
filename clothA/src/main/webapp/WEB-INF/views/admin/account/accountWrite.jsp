@@ -155,12 +155,10 @@
 	</script>
 	
 	<style type="text/css">
-	.row {
-	        margin: 20px;
-	}
+	
 	</style>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
-    <h3 class="smaller lighter blue no-margin modal-title">검수정보 등록</h3>
+    <h3 class="smaller lighter blue no-margin modal-title">구매처 정보 등록</h3>
 </div>
  
 <div class="modal-body">
