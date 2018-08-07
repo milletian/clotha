@@ -42,7 +42,16 @@
 		<p>보낸이 : ${vo.empName }</p>
 		<p>보낸날짜 : <fmt:formatDate value="${vo.mailSdate }" pattern="yyyy-MM-dd hh:mm:ss"/></p>
 		<c:if test="${!empty vo.mailFile }">
-			<p>첨부파일 : ${vo.mailFile }</p>
+			<p>첨부파일 : 
+			<c:if test="${!empty mailFiles }">
+				<c:forEach var="files" items="${mailFiles }" >
+					<a href="<c:url value='/mail/download.do?mailNo=${vo.mailNo }&mailFile=${files }'/>" >${files }</a>
+				</c:forEach>
+			</c:if>
+			<c:if test="${empty mailFiles }">
+				${vo.mailFile }
+			</c:if>
+			</p>
 		</c:if>
 		<hr>
 		<div>

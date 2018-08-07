@@ -253,6 +253,7 @@
 				select * from mail
 				where sender = #{empNo} and mail_save is not null and mail_senderdel = 'N'
 				<include refid="searchWhere"></include>
+				order by mail_no desc
 			)list
 		)
 		<![CDATA[

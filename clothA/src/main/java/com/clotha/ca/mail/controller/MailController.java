@@ -1,5 +1,7 @@
 package com.clotha.ca.mail.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.common.PaginationInfo;
@@ -146,6 +149,17 @@ public class MailController {
 		vo.setEmpNo(empNo);
 		vo  = mailService.selectDetail(vo);
 		logger.info("상세보기 vo={}",vo);
+		if(vo.getMailFile() != null && !vo.getMailFile().isEmpty()) {
+			if(vo.getMailFile().contains(",")) {
+				String[] mailFile = vo.getMailFile().split(",");
+				List<String> mailfiles = new ArrayList<>();
+				for(String s : mailFile) {
+					mailfiles.add(s);
+				}
+				model.addAttribute("mailFiles",mailfiles);
+			}
+			
+		}
 		
 		model.addAttribute("vo",vo);
 		
@@ -410,7 +424,7 @@ public class MailController {
 		map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 		map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 		
-		List<MailVO> list = mailService.selectGetMail(map);
+		List<MailVO> list = mailService.saveGetL(map);
 		
 		logger.info("list.size={}",list.size());
 		for(MailVO vo : list) {
@@ -459,7 +473,7 @@ public class MailController {
 			map.put("firstRecordIndex", searchVo.getFirstRecordIndex());
 			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 			
-			list = mailService.selectSender(map);
+			list = mailService.saveSendL(map);
 		}
 		logger.info("selectSender 결과 list.size = {}" , list.size());
 		
@@ -475,6 +489,23 @@ public class MailController {
 		
 		return "mail/saveSend";
 	} 
+	
+	@RequestMapping("/download.do")
+	public ModelAndView download( @RequestParam String mailFile,HttpServletRequest request) {
+		
+		logger.info(" 파라미터  fileName={}",mailFile);
+		
+		//파일 다운로드 처리를 위한 뷰로 forward
+		File file = new File(fileUploadUtil.getUploadPath(request,fileUploadUtil.PATH_FLAG_MAILFILES),mailFile);
+		Map<String, Object> map = new HashMap<>();
+		map.put("file", file);
+		
+		ModelAndView mav = new ModelAndView("downloadMail", map);
+		//ModelAndView(String viewName, Map<String, ?> model)
+		
+		return mav;
+		
+	}
 	
 	
 

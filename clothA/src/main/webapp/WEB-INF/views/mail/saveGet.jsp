@@ -65,7 +65,7 @@
 </head>
 <body>
 	<div>
-		<h2>받은쪽지</h2>
+		<h2>받은쪽지 보관함</h2>
 		<form name="frmPage" method="post"
 			action="<c:url value='/mail/saveGet.do'/>">
 			<input type="hidden" name="currentPage" >
