@@ -26,7 +26,7 @@ public class DownloadMail extends AbstractView {
 		logger.info("다운로드!!!!!!!!!!!!!file명 = {} ",file.getName());
 
 		if(!file.exists() || !file.canRead()) {
-			response.setCharacterEncoding("text/html;charset=UTF-8");
+			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script type='text/javascript'>");
 			out.println("alert('파일이 존재하지 않거나 손상된 파일입니다.');");

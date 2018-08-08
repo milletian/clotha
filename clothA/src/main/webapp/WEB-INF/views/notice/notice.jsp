@@ -37,6 +37,12 @@
 		width: 97%;
 		text-align: center;
 	}
+	#noticeWrite{
+	    margin-left: 90%;
+	}
+	#noticeWrite{
+		margin-top: 20px;
+	}
 </style>
 
 <div class="viewBody">

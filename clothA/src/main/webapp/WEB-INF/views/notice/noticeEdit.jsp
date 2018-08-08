@@ -4,6 +4,23 @@
 
 <link rel="stylesheet"	href="<c:url value='/css/view.css'/>">
 <script src="${pageContext.request.contextPath }/ckeditor/ckeditor.js" ></script>
+<script type="text/javascript" src="<c:url value='/js/jquery-3.3.1.min.js'/> " ></script>
+<script>
+	$(document).ready(function(){
+		$('input[type=submit]').click(function(){
+			if($("input[name=noticeTitle]").val()=="" || $("input[type=text]").length>3){
+				alert("제목을 입력하세요.");
+				return false;
+			}else if(CKEDITOR.instances.editor1.getData()==null || CKEDITOR.instances.editor1.getData()=='' ){
+				alert("내용을 입력해 주세요.");
+				return false;
+			}
+			
+		});
+		
+		
+	});
+</script>
 <style type="text/css">
 	.box1{
 	padding: 5px;

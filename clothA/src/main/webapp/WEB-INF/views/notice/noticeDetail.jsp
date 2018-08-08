@@ -46,6 +46,9 @@
     border : 1px solid black;
     margin-bottom: 20px;
 	}
+	.backlist{
+	    margin-left: 85%;
+	}
 </style>
 
 <div class="viewBody">

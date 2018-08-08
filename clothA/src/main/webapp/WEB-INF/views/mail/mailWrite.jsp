@@ -6,51 +6,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="${pageContext.request.contextPath }/ckeditor/ckeditor.js" ></script>
 <script type="text/javascript">
-$(function() {
-	$('#getMail').select2();
-	
-	$.ajax({
-		type:"POST",
-    	url : "<c:url value='/mail/ajaxmailWrite.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){0
-    			$("#getMail").html('');
-    			var option = "<option value=''>전체</option>";
-    			$("#getMail").append(option);
-    			
-    			$.each(res,function(idx, item){
-    				var store = item.storeCode
-    				if(${sessionScope.empNo}!=item.empNo){
-	    				if(store!=null && store!=''){
-							var option2 = "<optgroup label='"+store+"'>";
-							option2 += "<option value='"+item.empNo+"'>";
-							option2 += item.empName;
-							option2 += "</option>";
-							option2 += "</optgroup>";
-							$("#getMail").append(option2); 
-	    				}else{
-		    				var option3 = "<option value='"+item.empNo+"'>";
-		    				option3 += item.empName;
-		    				option3 += "</option>";
-		        			$("#getMail").append(option3);
+	$(function() {
+		$('#getMail').select2();
+		
+		$.ajax({
+			type:"POST",
+	    	url : "<c:url value='/mail/ajaxmailWrite.do' />",
+	    	dataType:'json',
+	    	success:function(res){
+	    		if (res.length > 0){0
+	    			$("#getMail").html('');
+	    			var option = "<option value=''>전체</option>";
+	    			$("#getMail").append(option);
+	    			
+	    			$.each(res,function(idx, item){
+	    				var store = item.storeCode
+	    				if(${sessionScope.empNo}!=item.empNo){
+		    				if(store!=null && store!=''){
+								var option2 = "<optgroup label='"+store+"'>";
+								option2 += "<option value='"+item.empNo+"'>";
+								option2 += item.empName;
+								option2 += "</option>";
+								option2 += "</optgroup>";
+								$("#getMail").append(option2); 
+		    				}else{
+			    				var option3 = "<option value='"+item.empNo+"'>";
+			    				option3 += item.empName;
+			    				option3 += "</option>";
+			        			$("#getMail").append(option3);
+		    				}
 	    				}
-    				}
-    			})
-    		}else{
-    			$("#getMail").html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("aaaaa");
-		}
-	});//ajax
-	
-})
+	    			})
+	    		}else{
+	    			$("#getMail").html('');
+	    		}
+	    	},
+	    	error: function(xhr, status, error){
+				alert("aaaaa");
+			}
+		});//ajax
+		
+		$('input[type=submit]').click(function(){
+			if($('input[name=mailName]').val()==""){
+				alert("제목을 입력해야합니다.");
+				return false;
+			}else if($('#getMail').val()==null){
+				alert("받는사람을 정해주세요.");
+				return false;
+			}else if(CKEDITOR.instances.editor1.getData()==null || CKEDITOR.instances.editor1.getData()=='' ){
+				alert("내용을 입력해 주세요.");
+				return false;
+			}
+			
+		});
+		
+	})
 </script>
 	<div>
 		<form action="<c:url value='/mail/mailWrite.do'/>" method="post" name="mailfrm" enctype="multipart/form-data" >
-			제목 : <input type="text" name="mailName" style="margin-bottom: 20px; width: 89%;" ><br>
+			제목 : <input type="text" name="mailName" style="margin-bottom: 20px; width: 89%;" placeholder="제목을 입력하세요" ><br>
 			받는사람 : <select multiple="multiple" style="width: 400px;"data-placeholder="받을사람을 선택하세요" id="getMail"
 					name="empNo"  class="ajax" >
 					</select><br><br>
