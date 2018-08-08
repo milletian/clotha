@@ -29,15 +29,15 @@ public class StoreLoginController {
 	@Autowired private LogService logService;
 	
 	
-	@RequestMapping(value="storeLogin.do",method=RequestMethod.GET )
+	@RequestMapping(value="/Login.do",method=RequestMethod.GET )
 	public String Login() {
 		//사원 - 로그인 페이지
 		logger.info("사원 로그인 페이지보여주기");
 		
-		return "login/storeLogin";
+		return "login/Login";
 	}
 	
-	@RequestMapping(value="storeLogin.do",method=RequestMethod.POST)
+	@RequestMapping(value="/Login.do",method=RequestMethod.POST)
 	public String Login_post(@ModelAttribute EmployeeVO vo, Model model, HttpServletRequest request, HttpServletResponse response , HttpSession session ) {
 		//사원 - 로그인 완료 페이지
 		logger.info("로그인 완료 , 파라미터 ={}",vo);
@@ -45,7 +45,7 @@ public class StoreLoginController {
 		int result = employeeService.loginCheck(vo.getEmpNo(), vo.getEmpPwd());
 		logger.info("로그인 결과 ={}",result);
 		
-		String msg = "", url = "/storeLogin.do";
+		String msg = "", url = "/Login.do";
 		if(result==employeeService.LOGIN_OK) {
 			
 			EmployeeVO employeeVo = employeeService.selectEmployee(vo.getEmpNo());
@@ -78,7 +78,7 @@ public class StoreLoginController {
 					msg=employeeVo.getEmpName()+"님! 로그인 되었습니다.";
 					int grade = Integer.parseInt(employeeVo.getGradeCode());
 					if(grade <= 2) {
-						url="/test.do";	//본사 로그인
+						url="/manager.do";	//본사 로그인
 					}else {
 						url="/admin/account/accountWrite.do";	//매장 로그인
 					}

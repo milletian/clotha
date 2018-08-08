@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestController {
 	
-	@RequestMapping("test.do")
+	@RequestMapping("/manager.do")
 	public String test() {
 		
-		return "test";
+		return "manager";
 	}
 	
 	@RequestMapping	("/admin/testbody.do")

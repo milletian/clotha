@@ -40,7 +40,7 @@ public class LogoutController {
 		
 		
 		
-		return "redirect:/storeLogin.do";
+		return "redirect:/Login.do";
 	}
 	
 }
