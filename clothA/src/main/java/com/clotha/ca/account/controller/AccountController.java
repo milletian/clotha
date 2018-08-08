@@ -57,7 +57,7 @@ public class AccountController {
 		accVo.setAccAddress(address+"~"+addressDetail);
 		accountService.insertAccount(accVo);
 		
-		return "수정완료!";
+		return "등록완료!";
 	}
 	
 	@RequestMapping(value="/accountList.do", method=RequestMethod.GET)

@@ -260,8 +260,6 @@
 				</div>
 			</div>
 		</div>
-		
-		</div>
 			<input type="hidden" id="accCode" name="accCode">  
 	</form>
 		<script type="text/javascript">
