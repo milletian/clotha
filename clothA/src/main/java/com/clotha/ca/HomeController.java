@@ -22,31 +22,15 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/storeTop.do", method = RequestMethod.GET)
-	public String storeTop(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "storeTop";
+	@RequestMapping(value = "/manager.do")
+	public String manager() {
+		logger.info("본사 로그인 ");
+		return "manager";
 	}
-	@RequestMapping(value = "/adminTop.do", method = RequestMethod.GET)
-	public String adminTop(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "adminTop";
+	@RequestMapping(value = "/store.do")
+	public String store() {
+		logger.info("매장 로그인");
+		return "store";
 	}
 	
 }

@@ -68,6 +68,7 @@
 				select * from mail
 				where sender = #{empNo} and mail_save is null and mail_senderdel = 'N'
 				<include refid="searchWhere"></include>
+				order by mail_no desc
 			)list
 		)
 		<![CDATA[
@@ -172,16 +173,19 @@
 		order by m.mail_no desc		
 	</select>
 	
+	<select id="sendTotalRecord0" parameterType="map" resultType="int">
+		select count(*) 
+		from mail
+		where sender = #{empNo} and mail_senderdel = 'N' and mail_save is null
+	</select>
+	
 	<select id="sendTotalRecord" parameterType="map" resultType="int">
 		select count(*) 
 		from mailview m
-			<if test="searchKeyword !=null and searchKeyword !=''">
-				join employee e 
-				on m.emp_no = e.emp_no
-			</if>
+		join employee e 
+		on m.emp_no = e.emp_no
 		where m.sender = #{empNo} and m.mail_senderdel = 'N' and m.mail_save is null
 		<include refid="searchWhere"></include>
-		order by mail_no desc
 	</select>
 	
 	<select id="sendTotalRecord1" parameterType="map" resultType="int"> 
@@ -193,7 +197,6 @@
 			</if>
 		where m.sender = #{empNo} and m.mail_senderdel = 'N' and m.mail_save is not null
 		<include refid="searchWhere"></include>
-		order by mail_no desc
 	</select>
 	
 	<select id="searchName" parameterType="map" resultType="mailVO" >

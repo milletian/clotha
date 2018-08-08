@@ -80,7 +80,7 @@ public class StoreLoginController {
 					if(grade <= 2) {
 						url="/manager.do";	//본사 로그인
 					}else {
-						url="/admin/account/accountWrite.do";	//매장 로그인
+						url="/store.do";	//매장 로그인
 					}
 				}
 			}else {

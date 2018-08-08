@@ -110,6 +110,10 @@ public class MailServiceImpl implements MailService{
 	public int sendTotalRecord(Map<String, Object> map) {
 		return MailDao.sendTotalRecord(map);
 	}
+	@Override
+	public int sendTotalRecord0(Map<String, Object> map) {
+		return MailDao.sendTotalRecord0(map);
+	}
 
 	@Override
 	public List<MailVO> searchName(Map<String, Object> map) {

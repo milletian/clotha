@@ -213,6 +213,10 @@ public class MailController {
 			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 			
 			list = mailService.searchName(map);
+			//전체 레코드 개수 조회
+			int totalRecord=mailService.sendTotalRecord(map);
+			pagingInfo.setTotalRecord(totalRecord);
+			logger.info("전체 레코드 개수={}", totalRecord);
 		}else {
 			map.put("empNo", empNo);
 			map.put("searchCondition", searchVo.getSearchCondition());
@@ -221,13 +225,14 @@ public class MailController {
 			map.put("recordCountPerPage", searchVo.getRecordCountPerPage());
 			
 			list = mailService.selectSender(map);
+			//전체 레코드 개수 조회
+			int totalRecord=mailService.sendTotalRecord0(map);
+			pagingInfo.setTotalRecord(totalRecord);
+			logger.info("전체 레코드 개수={}", totalRecord);
 		}
 		logger.info("selectSender 결과 list.size = {}" , list.size());
 		
-		//전체 레코드 개수 조회
-		int totalRecord=mailService.sendTotalRecord(map);
-		pagingInfo.setTotalRecord(totalRecord);
-		logger.info("전체 레코드 개수={}", totalRecord);
+
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pageVo", pagingInfo);

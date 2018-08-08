@@ -24,9 +24,11 @@
 /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
 @import
 	url('http://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
+
 @import
 	url('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
 	;
+
 body {
 	color: #5D5F63;
 	background: #ecf0f5;
@@ -37,9 +39,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 	position: relative;
 }
+
 .sidebar-toggle {
 	margin-left: -240px;
 }
+
 .sidebar {
 	width: 240px;
 	min-height: 100%;
@@ -51,21 +55,27 @@ body {
 	-ms-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
 	z-index: 100;
+	padding-top: 0;
 }
+
 .sidebar #leftside-navigation ul, .sidebar #leftside-navigation ul ul {
 	margin: -2px 0 0;
 	padding: 0;
 }
+
 .sidebar #leftside-navigation ul li {
 	list-style-type: none;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
+
 .sidebar #leftside-navigation ul li.active>a {
 	color: #1abc9c;
 }
+
 .sidebar #leftside-navigation ul li.active ul {
 	display: block;
 }
+
 .sidebar #leftside-navigation ul li a {
 	color: #aeb2b7;
 	text-decoration: none;
@@ -79,22 +89,28 @@ body {
 	-ms-transition: all 200ms ease-in;
 	transition: all 200ms ease-in;
 }
+
 .sidebar #leftside-navigation ul li a:hover {
 	color: #1abc9c;
 }
+
 .sidebar #leftside-navigation ul li a span {
 	display: inline-block;
 }
+
 .sidebar #leftside-navigation ul li a i {
 	width: 20px;
 }
+
 .sidebar #leftside-navigation ul li a i .fa-angle-left, .sidebar #leftside-navigation ul li a i .fa-angle-right
 	{
 	padding-top: 3px;
 }
+
 .sidebar #leftside-navigation ul ul {
 	display: none;
 }
+
 .sidebar #leftside-navigation ul ul li {
 	background: #23313f;
 	margin-bottom: 0;
@@ -102,21 +118,58 @@ body {
 	margin-right: 0;
 	border-bottom: none;
 }
+
 .sidebar #leftside-navigation ul ul li a {
 	font-size: 12px;
 	padding-top: 13px;
 	padding-bottom: 13px;
 	color: #aeb2b7;
 }
-footer{
+
+footer {
 	padding-left: 240px;
 	text-align: center;
 	width: 100%;
-	background: gray;
+	height: 57px;
+	background: #596d82;
 	position: absolute;
-	bottom: 0 ;
+	bottom: 0;
+	color: white;
+}
+
+.logo {
+	width: 240px;
+	height: 57px;
+	background-color: #596d82;
+	text-decoration: none;
+	display: block;
+	padding: 0;
+	font-size: 12px;
+}
+
+.viewBody {
+	padding: 57px 0 57px 240px;
+	position: absolute;
+	min-height: 100%;
+	width: 100%;
+	height: 100%;
 }
 </style>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#logout").click(function(){
+			location.href="<c:url value='/logout.do'/>";
+		});
+		
+		$("#mail").click(function(){
+			window.open("<c:url value='/mail/mail.do'/>","쪽지","status=no,width=700,height=700,location=yes,resizable=yes,left=800,top=30");
+		});
+		
+	});
+</script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -124,45 +177,18 @@ footer{
 </head>
 
 <body>
-	<header style="text-align: right;">
+	<header style="text-align: right; position: absolute; width: 100%; background-color: #596d82; z-index: 9 " >
 		<div class="fim-dropdown">
-			<label><i class="fa fa-desktop fa-lg"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
-		</div>
-		<div class="fim-dropdown">
-			<label><i class="fa fa-envelope-o fa-lg"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
+			<label><i class="fa fa-envelope-o fa-lg" id="mail" ></i></label>
 		</div>
 		<div class="fim-dropdown">
 			<label><i class="fa fa-bell-o"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
 		</div>
 		<div class="fim-dropdown">
 			<label><i class="fas fa-user"></i></label>
-			<div class="inner">
-				<i class="fa fa-bell fa-5x fim-gray"></i><br /> <small
-					class="fim-gray">There are no unread notifications for you.</small>
-			</div>
 		</div>
-		<div class="fim-dropdown">
-			<label><i class="fa fa-share-square-o"></i></label>
-			<div class="inner">
-				<textarea placeholder="Share what's new..."></textarea>
-				<div class="share_type">
-					<span><i class="fa fa-camera fim-blue"></i> <small>Photos</small></span>
-					<span><i class="fa fa-link fim-yellow"></i> <small>Link</small></span>
-					<span><i class="fa fa-calendar fim-green"></i> <small>Event</small></span>
-				</div>
-			</div>
+		<div class="fim-dropdown" >
+			<label><i class="fa fa-share-square-o" id="logout"></i></label>
 		</div>
 	</header>
 	<script type="text/javascript">
@@ -183,6 +209,9 @@ footer{
 	</script>
 
 	<aside class="sidebar" >
+		<div class="logo" >
+			<a href="<c:url value='/store.do'/>" style="text-align: left;"><img alt="" src="<c:url value='/images/logo5.png'/>" style="width: 240px; height: 57px; "></a>
+		</div>
 		<div id="leftside-navigation" class="nano">
 			<ul class="nano-content">
 				<li class="sub-menu">

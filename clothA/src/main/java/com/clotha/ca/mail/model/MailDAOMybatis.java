@@ -101,6 +101,10 @@ public class MailDAOMybatis implements MailDAO {
 	public int sendTotalRecord(Map<String, Object> map) {
 		return sqlSession.selectOne(namespace+"sendTotalRecord",map);
 	}
+	@Override
+	public int sendTotalRecord0(Map<String, Object> map) {
+		return sqlSession.selectOne(namespace+"sendTotalRecord0",map);
+	}
 
 	@Override
 	public List<MailVO> searchName(Map<String, Object> map) {

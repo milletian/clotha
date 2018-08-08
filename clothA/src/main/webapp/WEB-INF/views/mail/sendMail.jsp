@@ -106,7 +106,7 @@
 		<!-- 이전 블럭으로 이동 -->
 		<c:if test="${pageVo.firstPage>1 }">
 			<a href="#" onclick="pageFunc(${pageVo.firstPage-1})">
-				<img alt="이전 블럭으로 이동" src="<c:url value='../images/first.JPG'/> ">
+				<img alt="이전 블럭으로 이동" src="<c:url value='/images/first.JPG'/> ">
 			</a>		
 		</c:if>
 		
