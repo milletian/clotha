@@ -216,7 +216,7 @@ function check(){
 					<div class="form-group">
 						<label class="col-sm-1 control-label">기간<i class="fa fa-calendar"></i></label>
 						
-						<div class="col-sm-1">
+						<div class="col-sm-2">
 							<input type="text" name="searchDateRange" id="searchDateRange" class="form-control">
 						</div>
 						<label for="selSearchSupplier" class="col-sm-1 control-label">매입처</label>

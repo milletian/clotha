@@ -193,11 +193,11 @@ table.tablesorter tbody td.successsss{
 					</div>
 				</div>
 				
-				<div class="col-sm-2">
+				<div class="col-sm-4">
 					<div class="form-group">
-						<label for="selectwhorst" class="col-sm-5 control-label">선택</label>
-						<div class="col-sm-7">
-							<select name="staCode" id="selectwhorst">
+						<label for="selectwhorst" class="col-sm-4 control-label">매장선택</label>
+						<div class="col-sm-4">
+							<select style="max-height: 30px;width: 100px" name="staCode" id="selectwhorst">
 							</select>
 						</div>
 					</div>
