@@ -52,7 +52,6 @@
 	<interceptors>   
 		<interceptor> 
 			<mapping path="/store.do" />
-			<!-- <exclude-mapping path="/info/**"/> -->
 			<beans:ref bean ="storeInterceptor" />
 		</interceptor> 
 	</interceptors>
@@ -62,7 +61,6 @@
 			<mapping path="/manager.do" />
 			<mapping path="/admin/**" />
 			<mapping path="/shop/*" />
-			<!-- <exclude-mapping path="/info/**"/> -->
 			<beans:ref bean ="managerInterceptor" />
 		</interceptor> 
 	</interceptors>

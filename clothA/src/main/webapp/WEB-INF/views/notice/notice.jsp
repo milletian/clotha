@@ -74,7 +74,9 @@
 				</c:forEach>
 			</c:if>
 		</table>
-		<button id="noticeWrite" >공지사항 등록</button>
+		<c:if test="${sessionScope.gradeCode < 3 }">
+			<button id="noticeWrite" >공지사항 등록</button>
+		</c:if>
 	</div>
 </div>
 

@@ -88,6 +88,7 @@ body {
 	-o-transition: all 200ms ease-in;
 	-ms-transition: all 200ms ease-in;
 	transition: all 200ms ease-in;
+	
 }
 
 .sidebar #leftside-navigation ul li a:hover {
@@ -126,34 +127,35 @@ body {
 	color: #aeb2b7;
 }
 
-footer {
+footer{
 	padding-left: 240px;
 	text-align: center;
 	width: 100%;
-	height: 57px;
+	height : 57px;
 	background: #596d82;
 	position: absolute;
-	bottom: 0;
+	bottom: 0 ;
 	color: white;
 }
 
-.logo {
-	width: 240px;
+ .logo{
+	width:240px; 
 	height: 57px;
 	background-color: #596d82;
 	text-decoration: none;
 	display: block;
 	padding: 0;
 	font-size: 12px;
-}
+ }
+ .viewBody{
+ 	padding: 57px 0 57px 240px;
+ 	position: absolute; 
+ 	min-height: 100%;
+ 	width: 100%;
+ 	height: 100%;
+ }
 
-.viewBody {
-	padding: 57px 0 57px 240px;
-	position: absolute;
-	min-height: 100%;
-	width: 100%;
-	height: 100%;
-}
+
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -222,13 +224,13 @@ footer {
 					</a>
 					<ul>
 						<li>
-							<a href="ui-alerts-notifications.html">재고 조회</a>
+							<a href="#">재고 조회</a>
 						</li>
 						<li>
-							<a href="ui-alerts-notifications.html">타매장 재고 조회</a>
+							<a href="#">타매장 재고 조회</a>
 						</li>
 						<li>
-							<a href="ui-alerts-notifications.html">점간이동현황</a>
+							<a href="#">점간이동현황</a>
 						</li>
 					</ul></li>
 				
@@ -236,42 +238,36 @@ footer {
 						class="far fa-id-badge"></i><span>인사관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<c:if test="${sessionScope.gradeCode >3 }">
-							<li><a href="forms-components.html">인사등록신청</a></li>
+						<c:if test="${sessionScope.gradeCode eq '3' }">
+							<li><a href="#">인사등록신청</a></li>
 						</c:if>
-						<li><a href="forms-validation.html">인사조회</a></li>
+						<li><a href="#">인사조회</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-wallet"></i><span>매출관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">매장 판매 현황</a></li>
-						<li><a href="pages-login.html">매장 판매베스트</a></li>
-						<li><a href="pages-sign-up.html">매장 판매 분석(차트)</a></li>
+						<li><a href="#">매장 판매 현황</a></li>
+						<li><a href="#">매장 판매베스트</a></li>
+						<li><a href="#">매장 판매 분석(차트)</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-truck"></i><span>입고/출고관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">매장입고 등록신청</a></li>
-						<li><a href="pages-login.html">매장반품 등록신청</a></li>
-						<li><a href="pages-sign-up.html">매장입고/반품 현황</a></li>
+						<li><a href="#">매장입고 등록신청</a></li>
+						<li><a href="#">매장반품 등록신청</a></li>
+						<li><a href="#">매장입고/반품 현황</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-comments"></i><span>공지사항</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="pages-blank.html">조회</a></li>
+						<li><a href="<c:url value='/notice/notice.do'/>" target="if" >조회</a></li>
 					</ul></li>
 			</ul>
 		</div>
-	<script
-		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script
-		src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-
-	<script src="${pageContext.request.contextPath}/js/index.js"></script>
 	</aside>
-	<article style="padding-left: 240px">
+	<article class="viewBody">
 

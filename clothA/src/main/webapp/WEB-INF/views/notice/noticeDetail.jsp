@@ -23,6 +23,12 @@
 				return false;
 			}
 		});
+		var gradeCode = ${sessionScope.gradeCode };
+		if(gradeCode < 3){
+			$(".backlist").css("margin-left","85%");
+		}else{
+			$(".backlist").css("margin-left","95%");
+		}
 	});
 </script>
                                
@@ -46,9 +52,6 @@
     border : 1px solid black;
     margin-bottom: 20px;
 	}
-	.backlist{
-	    margin-left: 85%;
-	}
 </style>
 
 <div class="viewBody">
@@ -62,8 +65,10 @@
 		<h3>내용</h3><br>
 		<div>${vo.noticeContent }</div><br>
 		<input type="button" class="backlist" value="목록" >
-		<input type="button" class="editNotice" value="수정" >
-		<input type="button" class="deleteNotice" value="삭제" >
+		<c:if test="${sessionScope.gradeCode < 3 }">
+			<input type="button" class="editNotice" value="수정" >
+			<input type="button" class="deleteNotice" value="삭제" >
+		</c:if>
 	</div>
 </div>
 
