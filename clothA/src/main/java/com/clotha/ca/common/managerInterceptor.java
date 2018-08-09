@@ -11,22 +11,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class managerInterceptor extends HandlerInterceptorAdapter{
 //public class LoginInterceptor implements HandlerInterceptor{
 	
-	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+	private static final Logger logger = LoggerFactory.getLogger(managerInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.info("인터셉터!!!!!!!!");
-		String empNo = (String)request.getSession().getAttribute("empNo");
-		if(empNo==null || empNo.isEmpty()) {
+		logger.info("본사 인터셉터!!!!");
+		String gradeCode = (String)request.getSession().getAttribute("gradeCode");
+		if(Integer.parseInt(gradeCode)>=3) {
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print("<script type='text/javascript'>");
-			out.println("alert('로그인이 되어야 합니다.');");
-			out.println("location.href='"+request.getContextPath()+"/Login.do';");
+			out.println("alert('본사페이지로 들어갈수 없습니다.');");
+			out.println("history.back();");
 			out.print("</script>");
 			return false;	
 		}
