@@ -24,7 +24,7 @@
 	
 	<insert id="insertStore" parameterType="StoreVO">
 		insert into store(store_code,emp_No,store_Name,store_zipcode,store_address,store_image, store_join, sta_code,store_tel,store_No)
-		values('ca'||store_seq.nextval,#{empNo},#{storeName},#{storeZipcode},#{storeAddress},#{storeImage},to_char(sysdate,'YYYY/MM/DD') 
+		values('ca'||store_seq.nextval,#{empNo},#{storeName},#{storeZipcode},#{storeAddress},#{storeImage},to_char(sysdate,'YYYY/MM/DD'),
 		( select sta_code from ( select * from stock_area order by sta_code desc ) where rownum=1 ) ,#{storeTel},#{storeNo})
 	</insert>
 	
