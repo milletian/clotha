@@ -136,7 +136,9 @@ $(function() {
 		$(this).find('td').addClass('successsss');
 		accCode=$(this).find('td:first').text();  
 	
+	})
 })//제이 쿼리
+
 function popupOpen(accCode) {
 	$.ajax({
 		url:"<c:url value='/admin/account/ajaxAccountOne.do' />",

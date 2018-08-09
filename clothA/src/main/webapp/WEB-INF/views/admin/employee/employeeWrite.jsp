@@ -110,7 +110,7 @@
 			    	success:function(res){
 			    		alert(res);
 			    		$('#employeeWriteClose').trigger('click');
-			    		
+			    		location.reload();
 			    	},
 			    	error:function(x,e){ 
 		                  if(x.status==0){

@@ -52,6 +52,7 @@
 			    	success:function(res){
 			    	 	alert(res);
 			    	 	$('#employeeDetailClose').trigger('click');
+			    	 	location.reload();
 			    	},
 					error: function(xhr, status, error){
 						alert("삭제 실패");
@@ -120,6 +121,7 @@
 			    	success:function(res){
 			    		alert(res);
 			    		$('#employeeDetailClose').trigger('click');
+			    		location.reload();
 			    		
 			    	},
 			    	error:function(x,e){ 
