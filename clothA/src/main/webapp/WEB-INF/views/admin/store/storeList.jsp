@@ -1,18 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="<c:url value='/css2/style.css' /> " type="text/css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> 
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="<c:url value='/css/view.css' /> " type="text/css" /> <!-- 만든 view css  -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><!-- 부트스트랩 -->
-<script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> <!-- 테이블 플러그인 -->
-<link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet"><!-- 테이블 플러그인 -->
 <script src="<c:url value='/js/FileSaver.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/xlsx.core.min.js' />"></script><!-- 엑셀 플러그인 -->
 <script src="<c:url value='/js/tableexport.js' /> "></script><!-- 엑셀 플러그인 -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><!-- 부트스트랩 -->
+<script type = "text/javascript"  src = "<c:url value='/js/jquery.tablesorter.js' />"> </script> <!-- 테이블 플러그인 -->
+<link href="<c:url value='/css/tableexport.css' /> " rel="stylesheet"><!-- 테이블 플러그인 -->
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATFwoVtGMig3PcR40NStCbeE4-BcHgNjc&sensor=true"></script>
 
@@ -72,7 +83,7 @@ $(function() {
      					+"<td>"+item.empNo+"</td>"
      					+"<td>"+item.storeName+"</td>"
      					+"<td>"+item.storeZipcode+"</td>"
-     					+"<td><a onclick=mapview('"+item.storeAddress.replace(/ /gi,"")+"','"+item.storeName+"','"+item.storeTel+"')>"+item.storeAddress+"</a></td>"
+     					+"<td><a onclick=mapview('"+item.storeAddress.replace(/ /gi,"")+"','"+item.storeName+"','"+item.storeTel+"')>"+item.storeAddress+"</a></td>" 
      					+"<td>"+item.storeNo+"</td>"
      					+"<td>"+item.storeTel+"</td>"
      					+"<td>"+item.storeJoin+"</td>"
@@ -122,13 +133,18 @@ function popupOpen(storeCode) {
 		data:{"storeCode":storeCode},
 		dataType:"json",
 		success:function(res){
+			var storeAdd = res.storeAddress.split('~');
+			
 			$('#modal-storeWrite #storeCode').val(res.storeCode);
 			$('#modal-storeWrite #empNo').val(res.empNo);
 			$('#modal-storeWrite #storeName').val(res.storeName);
 			$('#modal-storeWrite #oldfile').val(res.storeImage);
 			$('#modal-storeWrite #storeZipcode').val(res.storeZipcode);
+			$('#modal-storeWrite #address').val(storeAdd[0]);
+			$('#modal-storeWrite #addressDetail').val(storeAdd[1]);
 			$('#modal-storeWrite #storeTel').val(res.storeTel);
 			$('#modal-storeWrite #storeNo').val(res.storeNo);
+			
 			$('#openmodal').trigger('click');
 		},
 		error:function(x,e){ 

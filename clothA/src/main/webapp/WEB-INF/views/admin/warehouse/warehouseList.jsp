@@ -115,10 +115,16 @@ function popupOpen(whCode) {
 		data:{"whCode":whCode},
 		dataType:"json",
 		success:function(res){
+			var address = res.whAddress.split('~');
+			
 			$('#modal-warehouseWrite #oldfile').val(res.whImage);
 			$('#modal-warehouseWrite #whZipcode').val(res.whZipcode);
 			$('#modal-warehouseWrite #whName').val(res.whName);
+			$('#modal-warehouseWrite #address').val(address[0]);
+			$('#modal-warehouseWrite #addressDetail').val(address[1]);
+			
 			$('#openWhWritemodal').trigger('click');
+			
 		},
 		error:function(x,e){ 
 			if(x.status==0){

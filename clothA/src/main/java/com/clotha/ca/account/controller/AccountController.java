@@ -41,6 +41,7 @@ public class AccountController {
 	@RequestMapping(value="/ajaxAccountOne.do")
 	@ResponseBody
 	public AccountVO ajaxAccountOne(@RequestParam(required=false) String accCode) {
+		logger.info("accCode={}", accCode);
 		AccountVO accountVO = accountService.SearchAccountByCode(accCode);
 		return accountVO;
 	}

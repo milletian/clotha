@@ -145,6 +145,11 @@ function popupOpen(accCode) {
 		data:{"accCode":accCode},
 		dataType:"json",
 		success:function(res){
+			if($('#frmAccWrite #accCode').val()!=null || $('#frmAccWrite #accCode').val()!=""){
+				$('h3').html("구매처 정보 수정");
+				$("#accountWrite").html("");
+				$("#accountWrite").append("수정 <i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i>")
+			}
 			$('#modal-testNew #accCode').val(res.accCode);
 			$('#modal-testNew #accName').val(res.accName);
 			$('#modal-testNew #accCeo').val(res.accCeo);
@@ -152,6 +157,7 @@ function popupOpen(accCode) {
 			$('#modal-testNew #accNo').val(res.accNo);
 			$('#modal-testNew #accZipcode').val(res.accZipcode);
 			$('#modal-testNew #accUnique').val(res.accUnique);
+			
 			$('#openmodal').trigger('click');
 		},
 		error:function(x,e){ 

@@ -4,12 +4,12 @@
 <div class="modal-header bg-primary" >
 	<script type="text/javascript">
 	$(function() {
-		
-		if($('#frmAccWrite #accCode').val()!=null || $('#frmAccWrite #accCode').val()!=""){
+	
+		/* if($('#frmAccWrite #accCode').val()!=null || $('#frmAccWrite #accCode').val()!=""){
 			$('h3').html("구매처 정보 수정");
 			$("#accountWrite").html("");
 			$("#accountWrite").append("수정 <i class='ace-icon fa fa-arrow-right icon-on-right bigger-110'></i>")
-		}
+		} */
 		
 		$("form[name=frmAccWrite] #accTel").keyup(function() {
 			var x = $(this).val();

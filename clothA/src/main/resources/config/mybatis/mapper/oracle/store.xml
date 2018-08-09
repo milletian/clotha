@@ -23,8 +23,11 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreVO">
+		<selectKey order="BEFORE" keyProperty="storeCode" resultType="string"  >
+			select 'ca'||store_seq.nextval from dual
+		</selectKey>
 		insert into store(store_code,emp_No,store_Name,store_zipcode,store_address,store_image, store_join, sta_code,store_tel,store_No)
-		values('ca'||store_seq.nextval,#{empNo},#{storeName},#{storeZipcode},#{storeAddress},#{storeImage},to_char(sysdate,'YYYY/MM/DD'),
+		values(#{storeCode},#{empNo},#{storeName},#{storeZipcode},#{storeAddress},#{storeImage},to_char(sysdate,'YYYY/MM/DD'),
 		( select sta_code from ( select * from stock_area order by sta_code desc ) where rownum=1 ) ,#{storeTel},#{storeNo})
 	</insert>
 	
@@ -39,6 +42,14 @@
 	<update id="storeDel" parameterType="string">
 		update store set store_del=to_char(sysdate,'YYYY/MM/DD') where store_code = #{storeCode}
 	</update>
+	
+	<!-- 매장점주 employee 에 store_code 업데이트 -->
+	<update id="updateEmpStore" parameterType="employeeVo">
+		update employee
+		set STORE_CODE=#{storeCode}
+		where EMP_NO=#{empNo}
+	</update>
+	
 </mapper>
 
 

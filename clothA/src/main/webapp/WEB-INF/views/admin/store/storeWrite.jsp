@@ -62,6 +62,7 @@
 			    	success:function(res){
 			    		alert(res);
 			    		$('#storeWriteClose').click();
+			    		location.reload();
 			    		
 			    	},
 			    	error:function(x,e){ 
@@ -249,10 +250,10 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-7">
 				<div class="form-group">
-					<label for="address" class="col-sm-3 control-label">주소</label>
-					<div class="col-sm-5">
+					<label for="address" class="col-sm-2 control-label">주소</label>
+					<div class="col-sm-9">
 						<input type="text" id="address" name="address" class="form-control">
 					</div>
 				</div>
@@ -260,10 +261,10 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-7">
 				<div class="form-group">
-					<label for="addressDetail" class="col-sm-3 control-label">상세주소</label>
-					<div class="col-sm-5">
+					<label for="addressDetail" class="col-sm-2 control-label">상세주소</label>
+					<div class="col-sm-9">
 						<input type="text" id="addressDetail" name="addressDetail" class="form-control">
 					</div>
 				</div>

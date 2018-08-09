@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clotha.ca.employee.model.EmployeeVO;
+
 @Repository
 public class StoreDAOMybatis implements StoreDAO {
 	
@@ -37,5 +39,10 @@ public class StoreDAOMybatis implements StoreDAO {
 	@Override
 	public int storeDel(String storeCode) {
 		return sqlSession.update(namesapce+"storeDel", storeCode);
+	}
+
+	@Override
+	public int updateEmpStore(EmployeeVO employeeVo) {
+		return sqlSession.update(namesapce+"updateEmpStore",employeeVo);
 	}
 }

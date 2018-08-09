@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.clotha.ca.employee.model.EmployeeVO;
+
 @Service
 public class StoreServiceImpl implements StoreService{
 
@@ -23,7 +25,16 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	public int insertStore(StoreVO storeVO) {
-		return storeDao.insertStore(storeVO);
+		int result = storeDao.insertStore(storeVO);
+		int cnt = 0;
+		if(result>0) {
+			EmployeeVO vo = new EmployeeVO();
+			vo.setEmpNo(storeVO.getEmpNo());
+			vo.setStoreCode(storeVO.getStoreCode());
+			cnt = storeDao.updateEmpStore(vo);
+		}
+		
+		return cnt;
 	}
 
 	@Override

@@ -327,7 +327,7 @@
 			<div class="col-sm-10">
 				<div class="form-group">
 					<label for="empAddress" class="col-sm-2 control-label">주소</label>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<input type="text" id="empAddress2" name="empAddress" class="form-control"><br>
 					</div>
 				</div>
@@ -337,7 +337,7 @@
 			<div class="col-sm-10">
 				<div class="form-group">	
 					<label for="addressDetail" class="col-sm-2 control-label">상세주소</label>
-					<div class="col-sm-3">
+					<div class="col-sm-5">
 						<input type="text" id="addressDetail2" name="addressDetail" class="form-control"><br> 
 					</div>
 				</div>
