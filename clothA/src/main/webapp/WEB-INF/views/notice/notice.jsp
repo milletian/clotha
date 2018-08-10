@@ -110,7 +110,7 @@
 			<!-- 이전 블럭으로 이동 -->
 			<c:if test="${pageVo.firstPage>1 }">
 				<a href="#" onclick="pageFunc(${pageVo.firstPage-1})">
-					<img alt="이전 블럭으로 이동" src="../images/first.JPG">
+					<img alt="이전 블럭으로 이동" src="<c:url value='/images/first.JPG'/> ">
 				</a>		
 			</c:if>
 			
@@ -129,7 +129,7 @@
 			<!-- 다음 블럭으로 이동 -->
 			<c:if test="${pageVo.lastPage<pageVo.totalPage }">
 				<a href="#" onclick="pageFunc(${pageVo.lastPage+1})">
-					<img alt="다음 블럭으로 이동" src="../images/last.JPG">
+					<img alt="다음 블럭으로 이동" src="<c:url value='/images/last.JPG'/>">
 				</a>	
 			</c:if>
 			<!--  페이지 번호 끝 -->
