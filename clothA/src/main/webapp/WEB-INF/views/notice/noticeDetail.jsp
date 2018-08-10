@@ -55,14 +55,10 @@
 </style>
 
 <div class="viewBody">
-	<!-- Main content  -->
 	<div class="box1">
-		<h1>공지사항</h1>
-	</div>
-	<div class="box1">
-		<h2>제목 : ${vo.noticeTitle } </h2><br>
-		<h3>작성자 : ${vo.empName }</h3><br><hr>
-		<h3>내용</h3><br>
+		<h2>제목 : ${vo.noticeTitle } </h2>
+		<h3>작성자 : ${vo.empName }</h3><br>
+		<h3>내용</h3>
 		<div>${vo.noticeContent }</div><br>
 		<input type="button" class="backlist" value="목록" >
 		<c:if test="${sessionScope.gradeCode < 3 }">

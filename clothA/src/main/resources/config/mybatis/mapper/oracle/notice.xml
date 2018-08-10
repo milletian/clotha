@@ -2,10 +2,18 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="config.mybatis.mapper.oracle.notice">
+	<sql id="searchWhere">
+		<if test="searchKeyword !=null and searchKeyword !=''">
+			<where>
+			 	${searchCondition} like '%' || #{searchKeyword} || '%'			
+			</where>
+		</if>
+	</sql>
 
-	<select id="selectNoticeAll" resultType="noticeVo">
+	<select id="selectNoticeAll" resultType="noticeVo" parameterType="searchVo">
 		select n.* ,e.EMP_NAME from
 		employee e join notice n on e.EMP_NO = n.EMP_NO
+		<include refid="searchWhere"></include>
 		order by n.notice_no
 	</select>
 	
@@ -29,6 +37,13 @@
 	<update id="noticeEdit" parameterType="noticeVo" >
 		update notice set notice_title = #{noticeTitle} , notice_content = #{noticeContent} where notice_no = #{noticeNo}
 	</update>
+	
+	<select id="selectCount" parameterType="searchVo" resultType="int" >
+		select count(*) from
+		employee e join notice n on e.EMP_NO = n.EMP_NO
+		<include refid="searchWhere"></include>
+		order by n.notice_no
+	</select>
 	
 </mapper>
 

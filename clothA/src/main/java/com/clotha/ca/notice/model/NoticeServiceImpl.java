@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.clotha.ca.common.SearchVO;
+
 @Service
 public class NoticeServiceImpl implements NoticeService{
 	
@@ -21,8 +23,8 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<NoticeVO> selectNoticeAll(NoticeVO noticeVO) {	//NoticeController
-		return noticeDao.selectNoticeAll(noticeVO);
+	public List<NoticeVO> selectNoticeAll(SearchVO searchVo) {	//NoticeController
+		return noticeDao.selectNoticeAll(searchVo);
 	}
 
 	@Override
@@ -42,6 +44,11 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int noticeEdit(NoticeVO noticeVo) {	//NoticeController
 		return noticeDao.noticeEdit(noticeVo);
+	}
+
+	@Override
+	public int selectCount(SearchVO searchVo) {
+		return noticeDao.selectCount(searchVo);
 	} 
 	
 }

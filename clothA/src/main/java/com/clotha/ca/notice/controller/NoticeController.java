@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.clotha.ca.common.PaginationInfo;
+import com.clotha.ca.common.SearchVO;
+import com.clotha.ca.common.Utility;
 import com.clotha.ca.employee.model.EmployeeService;
 import com.clotha.ca.employee.model.EmployeeVO;
 import com.clotha.ca.notice.model.NoticeService;
@@ -30,12 +33,25 @@ public class NoticeController {
 	private EmployeeService employeeService;
 	
 	@RequestMapping(value="/notice.do")
-	public String notice(Model model) {
+	public String notice(@ModelAttribute SearchVO searchVo, Model model) {
 		logger.info("공지사항 보여주기");
+		PaginationInfo pagingInfo = new PaginationInfo();
+		pagingInfo.setBlockSize(Utility.BLOCK_SIZE);
+		pagingInfo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		pagingInfo.setCurrentPage(searchVo.getCurrentPage());
 		
-		NoticeVO noticeVO = new NoticeVO();
-		List<NoticeVO> list = noticeService.selectNoticeAll(noticeVO);
+		//[2] SearchVO 에 값 셋팅
+		searchVo.setRecordCountPerPage(Utility.RECORD_COUNT_PER_PAGE10);
+		searchVo.setFirstRecordIndex(pagingInfo.getFirstRecordIndex());
+		logger.info("setting 후 searchVo={}", searchVo);
 		
+		List<NoticeVO> list = noticeService.selectNoticeAll(searchVo);
+		
+		int totalRecord = noticeService.selectCount(searchVo);
+		pagingInfo.setTotalRecord(totalRecord);
+		logger.info("전체 레코드 개수={}", totalRecord);
+		
+		model.addAttribute("pageVo", pagingInfo);
 		model.addAttribute("list",list);
 		
 		return "notice/notice";
