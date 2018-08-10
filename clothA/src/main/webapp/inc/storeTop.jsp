@@ -224,13 +224,16 @@ footer{
 					</a>
 					<ul>
 						<li>
-							<a href="#">재고 조회</a>
+							<a href="<c:url value='/shop/stock/stockList.do' />" target="if">재고 조회</a>
+						</li>
+						<li>
+							<a href="<c:url value='/shop/stock/stockChart.do' />" target="if">재고 조회(차트)</a>
 						</li>
 						<li>
 							<a href="#">타매장 재고 조회</a>
 						</li>
 						<li>
-							<a href="#">점간이동현황</a>
+							<a href="<c:url value='/shop/transport/transportList.do' />" target="if">점간이동현황</a>
 						</li>
 					</ul></li>
 				
@@ -256,9 +259,8 @@ footer{
 						class="fas fa-truck"></i><span>입고/출고관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="#">매장입고 등록신청</a></li>
-						<li><a href="#">매장반품 등록신청</a></li>
-						<li><a href="#">매장입고/반품 현황</a></li>
+						<li><a href="<c:url value='/shop/inout/inout_standby.do' />" target="if">매장입고 현황</a></li>
+						<li><a href="<c:url value='/shop/inout/inout_outList.do' />" target="if">매장반품 현황</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-comments"></i><span>공지사항</span><i

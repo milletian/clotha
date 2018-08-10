@@ -104,14 +104,14 @@ $(function() {
         		if (res.length > 0) {
         			$("#searchDetailtable tbody").html('');
      				$.each(res, function(idx, item) {
-     					var dsd ="<tr ondblclick=popupOpen('"+item.accDtCode+"')><td>"+item.ACC_DT_CODE+"</td>"
-     					+"<td>"+item.ACC_CODE+"</td>"
+     					var dsd ="<tr><td>"+item.ACC_DT_CODE+"</td>"
+     					+"<td>"+item.ACC_NAME+"</td>"
      					+"<td>"+item.ACC_DT_REGDATE+"</td>"
      					+"<td>"+item.PD_CODE+"</td>"
      					+"<td>"+item.PD_NAME+"</td>"
      					+"<td>"+item.ACC_DT_QTY+"</td>"
      					+"<td>"+item.ACC_DT_INDATE+"</td>"
-     					+"<td>"+item.WH_CODE+"</td>"
+     					+"<td>"+item.WH_NAME+"</td>"
      					+"<td>"+item.ACC_NAME+"</td></tr>";
      					 $("#searchDetailtable tbody").append(dsd);
      					liveTableData.reset();
@@ -231,10 +231,10 @@ table.tablesorter tbody td.successsss{
 		</form>
 	</div>
 	<div class="box2">    
-		<!-- <a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
+		<a data-toggle="modal"  data-target="#modal-accountDetailWrite" role="button" data-backdrop="static">
 		 	<span class="btn btn-xs btn-success">구매 등록</span>
 		</a>
-		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매 내역 삭제</a> -->
+		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>구매 내역 삭제</a>
 		<div id="content1">
 			<table id="searchDetailtable" cellspacing="1" class="tablesorter">             
 			    <thead> 

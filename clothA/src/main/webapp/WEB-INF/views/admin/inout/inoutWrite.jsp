@@ -159,7 +159,7 @@ function whView() {
 		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode" readonly="readonly">
 		<input type="button" id="pdCbtn" value="상품 검색"><Br>
 		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName" readonly="readonly">
-		<label for="inoutDetailQty">주문수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
+		<label for="inoutDetailQty">수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
 		<div id="areaStartDiv" style="display: none;">
 			<label for="areaStart">출발 창고</label>
 			<select id="areaStart" name="areaStart">

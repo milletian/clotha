@@ -3,11 +3,13 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.accountdetail">
 	<select id="selectAccountDetail" parameterType="AccountDetailVO" resultType="map">
-		select ACC_DT_CODE,accd.ACC_CODE,ACC_DT_REGDATE,pd.PD_CODE,PD_NAME,SIZE_CODE,ACC_DT_QTY,ACC_DT_INDATE,WH_CODE,ACC_NAME
+		select ACC_DT_CODE,accd.ACC_CODE,ACC_DT_REGDATE,pd.PD_CODE,PD_NAME,SIZE_CODE,ACC_DT_QTY,ACC_DT_INDATE,accd.WH_CODE,ACC_NAME,wh.WH_NAME
 		from ACCOUNT_DETAIL accd join ACCOUNT acc
 		on accd.ACC_CODE = acc.ACC_CODE 
 		join PRODUCTS pd 
 		on accd.PD_CODE = pd.PD_CODE
+		join warehouse wh
+		on accd.WH_CODE= wh.WH_CODE
 		<where>
 			<if test="startDay!=null and startDay!=''">
 			<![CDATA[

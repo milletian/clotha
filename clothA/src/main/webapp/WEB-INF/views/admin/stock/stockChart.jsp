@@ -115,13 +115,20 @@ $(function() {
 		
 	</form>
 </div>
+<div style="height: 700px;">
+	<canvas id="myChart" width="400px" height="400px"></canvas>
 
-<canvas id="myChart" width="400px" height="400px"></canvas>
+</div>
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
+var myChart =null;
 $(function() {
 	$('#selectwhorst').change(function() {
 		var stacode=$(this).val();
+		if(myChart!=null){
+			myChart.destroy();
+			
+		}
 		chart(stacode);
 	})
 })
@@ -146,7 +153,7 @@ function chart(stacode) {
 				bgCArr.push('rgba('+r+','+g+','+b+', 0.2)');
 				bdCArr.push('rgba('+b+','+r+','+g+', 0.2)');
 			}
-			var myChart = new Chart(ctx, {
+			myChart = new Chart(ctx, {
 			    type: 'bar',
 			    data: {
 			        labels:labelArr,
@@ -163,11 +170,16 @@ function chart(stacode) {
 			        }]
 			    },
 			    options: {
+			    	maintainAspectRatio: false,
 			        scales: {
 			            yAxes: [{
 			                ticks: {
 			                    beginAtZero:true
+			                    
 			                }
+			            }],
+			            xAxes: [{
+			            	barPercentage:0.2
 			            }]
 			        }
 			    }

@@ -145,6 +145,7 @@ function popupOpen(accCode) {
 		data:{"accCode":accCode},
 		dataType:"json",
 		success:function(res){
+			var address = res.accAddress.split('~');
 			if($('#frmAccWrite #accCode').val()!=null || $('#frmAccWrite #accCode').val()!=""){
 				$('h3').html("구매처 정보 수정");
 				$("#accountWrite").html("");
@@ -155,6 +156,8 @@ function popupOpen(accCode) {
 			$('#modal-testNew #accCeo').val(res.accCeo);
 			$('#modal-testNew #accTel').val(res.accTel);
 			$('#modal-testNew #accNo').val(res.accNo);
+			$('#modal-testNew #address').val(address[0]);
+			$('#modal-testNew #addressDetail').val(address[1]);
 			$('#modal-testNew #accZipcode').val(res.accZipcode);
 			$('#modal-testNew #accUnique').val(res.accUnique);
 			

@@ -226,8 +226,8 @@ table.tablesorter tbody td.successsss{
 					<label class="col-sm-3 control-label">상품 사용 여부</label>
 						<div class="col-sm-5">
 							<input type="radio" id="pdDel" checked="checked" name="pdDel" value="전체"><label for="pdDel">전체 </label>
-							<input type="radio" id="use" name="pdDel" value="Y"><label for="use">사용 </label>
-							<input type="radio" id="noneuse" name="pdDel" value="N"><label for="noneuse">미사용 </label>
+							<input type="radio" id="use" name="pdDel" value="N"><label for="use">사용 </label>
+							<input type="radio" id="noneuse" name="pdDel" value="Y"><label for="noneuse">미사용 </label>
 						</div>
 						<div class="col-sm-4">
 							<input type="button" class="btn btn-primary" id="btn" value="재고현황 조회">

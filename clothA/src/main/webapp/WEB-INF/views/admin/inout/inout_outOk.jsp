@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>"><!-- 만든 뷰 -->
 <script type="text/javascript">
 $(function() { 
+	var inoutCode;
 	var liveTableData = $("#frmwarehousingtable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -87,6 +88,27 @@ $(function() {
 			alert("sdsds");
 		} 
 	});//ajex 매장
+	$('#agreebtn').click(function() {
+		var bool = true;
+		if(inoutCode==undefined){
+			bool=false;
+			alert('먼저 반품 승인할 건수를 선택하세요');
+		}
+		if(bool){
+			$.ajax({
+				type:"POST",
+		    	url : "<c:url value='/admin/inout/ajaxOutAgree.do' />",
+		    	dataType:'text',
+		    	data:{"inoutCode":inoutCode},
+		    	success:function(res){
+		    		alert(res)
+		    	},
+		    	error: function(xhr, status, error){
+					alert("sdsds");
+				} 
+			});//ajex	
+		}
+	})
 	
 	$('#btnSearch').click(function() { 
 	$.ajax({
@@ -95,11 +117,12 @@ $(function() {
     	data:$("#frmwarehousingList").serialize(),
     	dataType:'json',
     	success:function(res){
-    		alert(res.length);
     		if (res.length > 0) {
     			$("#frmwarehousingtable tbody").html('');
  				$.each(res, function(idx, item) {
- 					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
+ 					var inoutList ="<tr class='center'><td>"+item.INOUT_CODE+"</td>"
+ 					+"<td>"+item.IS_IN+"</td>"
+ 					+"<td>"+item.INOUT_STATUS+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
  					+"<td>"+item.INOUT_ENDDATE+"</td>"
  					+"<td>"+item.WH_NAME+"</td>"
@@ -154,7 +177,7 @@ $(function() {
 	  $(document ).on( "click" , "table tbody tr", function() {              
 			$('table tbody tr td').removeClass('successsss');
 			$(this).find('td').addClass('successsss');
-			accCode=$(this).find('td:first').text();        
+			inoutCode=$(this).find('td:first').text();        
 	  
 	});// document 제이쿼리
 });
@@ -234,14 +257,14 @@ table.tablesorter tbody td.successsss{
 			</form>
 		</div>
 		<div class="box2">
-			<!-- <a href="#"><i class="fas fa-edit"></i></a> <a
-				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a> -->
+			<a href="#" id="agreebtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>반품 승인</a>
 				<div>
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
+								<th>번호</th>
 								<th>작업구분</th>
+								<th>승인 상태</th>
 								<th>출고일자</th>
 								<th>도착예정일</th>
 								<th>출발지</th>

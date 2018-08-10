@@ -189,7 +189,9 @@ function mapview(address1,name,tel){
 	var address = addressarr[0]; // DB에서 주소 가져와서 검색하거나 왼쪽과 같이 주소를 바로 코딩.
 	var marker = null;
 	var geocoder = new google.maps.Geocoder();
+	
 	geocoder.geocode( { 'address': address}, function(results, status) {
+		
 	if (status == google.maps.GeocoderStatus.OK) {
 	map.setCenter(results[0].geometry.location);
 	marker = new google.maps.Marker({

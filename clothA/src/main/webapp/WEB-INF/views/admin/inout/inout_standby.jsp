@@ -49,17 +49,17 @@ $(function() {
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
-    			$("#selSearchProducts").html('');
+    			$("#selSearchProduct").html('');
     			var option1 = "<option value=''>전체</option>";
-    			$("#selSearchProducts").append(option1);
+    			$("#selSearchProduct").append(option1);
     			$.each(res,function(idx, item){
     				var option2 ="<option value='"+item.pdCode+"'>";
     				option2 += item.pdName;
     				option2 += "</option>";
-        			$("#selSearchProducts").append(option2);
+        			$("#selSearchProduct").append(option2);
     			})
     		}else{
-    			$("#selSearchProducts").html('');
+    			$("#selSearchProduct").html('');
     		}
     	},
     	error: function(xhr, status, error){
@@ -98,7 +98,6 @@ $(function() {
     	data:$("#frmwarehousingList").serialize(),
     	dataType:'json',
     	success:function(res){
-    		alert(res.length);
     		if (res.length > 0) {
     			$("#frmwarehousingtable tbody").html('');
  				$.each(res, function(idx, item) {
@@ -210,10 +209,10 @@ table.tablesorter tbody td.successsss{
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-						<label for="selSearchProducts" class="col-sm-5 control-label">상품코드/명</label>
+						<label for="selSearchProduct" class="col-sm-5 control-label">상품코드/명</label>
 							<div class="col-sm-7">
 								<select style="max-height: 30px; width: 100px" name="pdCode"
-									data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
+									data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProduct"
 									class="form-control">
 								</select>		
 							</div>
@@ -237,9 +236,6 @@ table.tablesorter tbody td.successsss{
 			</form>
 		</div>
 		<div class="box2">
-			<!-- <a href="#"><i class="fas fa-edit"></i></a> <a
-				href="#"><i class="fas fa-file-excel">엑셀 파일 다운로드</i></a> <a href="#"><i
-				class="fas fa-trash-alt"></i></a> -->
 				<div id="content1">
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>

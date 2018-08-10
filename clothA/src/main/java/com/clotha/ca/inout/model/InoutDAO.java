@@ -9,5 +9,6 @@ public interface InoutDAO {
 	
 	public int insertInout(InoutVO inoutVO);
 	public int insertInoutDetail(InoutVO inoutVO);
+	public int agreeInOut(String inoutCode);
 
 }

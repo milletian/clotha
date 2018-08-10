@@ -232,6 +232,10 @@ footer{
 							<a href="<c:url value='/admin/stock/stockList.do' />" target="if">재고 조회
 							</a>
 						</li>
+						<li>
+							<a href="<c:url value='/admin/stock/stockChart.do' />" target="if">재고 조회(차트)
+							</a>
+						</li>
 						<li><a href="<c:url value='/admin/stock/stockFirstSet.do' />" target="if">재고등록/변경</a></li>
 					</ul></li>
 				<li class="sub-menu">
@@ -269,8 +273,8 @@ footer{
 						class="fas fa-wallet"></i><span>매출관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="<c:url value='/shop/inout/inout_outList.do' />" target="if">매장별 판매 현황</a></li>
-						<li><a href="<c:url value='/shop/inout/inout_standby.do' />" target="if">판매베스트</a></li>
+						<li><a href="<c:url value=''/>" target="if">매장별 판매 현황</a></li>
+						<li><a href="<c:url value='' />" target="if">판매베스트</a></li>
 						<li><a href="#">판매 분석(차트)</a></li>
 					</ul></li>
 				<li class="sub-menu"><a href="javascript:void(0);"><i

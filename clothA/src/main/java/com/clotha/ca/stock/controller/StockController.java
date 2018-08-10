@@ -66,13 +66,12 @@ public class StockController {
 		return stockService.stockSearchList(map);
 	}
 	
-	@RequestMapping("/ajaxStockWrite.do")
-	@ResponseBody
-	public String stockWrite(@ModelAttribute MultiStock stockList) {
+	@RequestMapping(value="/ajaxStockWrite.do",produces = "application/text; charset=utf8")
+	public @ResponseBody String stockWrite(@ModelAttribute MultiStock stockList) {
 		logger.info("/ajaxStockWrite.do - {}",stockList.getStockList());
 		int result =stockService.addStock(stockList.getStockList());
 		logger.info("{}",result);
-		return "test";
+		return "완료";
 	}
 	
 	@RequestMapping("/ajaxStockExcelUpload.do")

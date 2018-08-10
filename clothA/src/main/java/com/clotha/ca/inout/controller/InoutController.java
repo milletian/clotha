@@ -77,7 +77,7 @@ public class InoutController {
 		
 		@RequestMapping("/ajaxinout_standby.do")
 		@ResponseBody
-		public List<Map<String,Object>> productsList_post(@ModelAttribute InoutVO inoutVo,@RequestParam(required=false) String searchDateRange) {
+		public List<Map<String,Object>> ajaxinout_standby(@ModelAttribute InoutVO inoutVo,@RequestParam(required=false) String searchDateRange) {
 			logger.info("검색 조건 inoutVo={}",inoutVo);
 			if(searchDateRange!=null&&!searchDateRange.isEmpty()) {
 				String[] dateRange =searchDateRange.split("~");
@@ -103,4 +103,17 @@ public class InoutController {
 			
 		}
 		
+		@RequestMapping(value="/ajaxOutAgree.do",produces = "application/text; charset=utf8")
+		public @ResponseBody String ajaxOutAgree(@ModelAttribute InoutVO inoutVO) {
+			inoutVO.setIsIn("반품");
+			List<Map<String,Object>> list = inoutService.inoutSelectAll(inoutVO);
+			Map<String,Object> map =list.get(0);
+			if(map.get("INOUT_STATUS").equals("승인")) {
+				return "이미 승인처리 된 건수 입니다.";
+			}else {
+				inoutService.agreeInOut(map);				
+			}
+			
+			return "반품승인 되었습니다.";
+		}
 }

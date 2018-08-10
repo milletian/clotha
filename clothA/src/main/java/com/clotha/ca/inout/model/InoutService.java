@@ -8,4 +8,5 @@ public interface InoutService {
 	
 	public int insertInout(InoutVO inoutVO);
 	public int insertInoutDetail(InoutVO inoutVO);
+	public int agreeInOut(Map<String,Object> map);
 }

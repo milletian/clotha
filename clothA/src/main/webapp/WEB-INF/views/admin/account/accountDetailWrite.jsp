@@ -89,10 +89,9 @@
 									} else {
 										dsd += "미사용";
 									}
-									+"</td>";
+									dsd+="</td>";
 									$("#WriteDetailtable tbody")
 											.append(dsd);
-									liveTableData.reset();
 								});
 							} else {
 								$("#WriteDetailtable tbody").html('');

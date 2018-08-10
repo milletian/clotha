@@ -3,7 +3,7 @@
 
 <mapper namespace="config.mybatis.mapper.oracle.inout">
 	<select id="inoutSelectAll" parameterType="InoutVO" resultType="map">
-	select INOUT_CODE,IS_IN,INOUT_CODE,INOUT_STARTDATE,INOUT_ENDDATE,WH_NAME,WH_CODE,STORE_NAME,OUT_DETAIL,STORE_CODE,ACC_CODE,ACC_NAME,PD_CODE,PD_NAME,COLOR_CODE,COLOR_NAME,INOUT_DETAIL_QTY
+	select AREA_END,AREA_START,INOUT_CODE,IS_IN,INOUT_STATUS,INOUT_CODE,INOUT_STARTDATE,INOUT_ENDDATE,WH_NAME,WH_CODE,STORE_NAME,OUT_DETAIL,STORE_CODE,ACC_CODE,ACC_NAME,PD_CODE,PD_NAME,COLOR_CODE,COLOR_NAME,INOUT_DETAIL_QTY
 	<if test='isIn=="입고"'>
 		from warehousingview
 	</if>
@@ -25,12 +25,16 @@
 		<if test="pdCode!=null and pdCode!=''">
 			and pd_code=#{pdCode}
 		</if>
+		<if test="inoutCode!=null and inoutCode!=''">
+			and inout_code=#{inoutCode}
+		</if>
 		<if test="isIn!=null and isIn!=''">
 			and IS_IN = #{isIn}
 		</if>
 	</where>
 	order by INOUT_STARTDATE desc
 	</select>
+	
 	
 	<insert id="insertInout" parameterType="InoutVO">
 		insert into inout(inout_code,inout_startdate,inout_status,inout_enddate,area_start,area_end,IS_IN,OUT_DETAIL)
@@ -43,6 +47,10 @@
 			values(inout_detail_seq.nextval,(select inout_code from ( select * from inout order by inout_code desc ) where rownum=1 ),#{pdCode},#{inoutDetailQTY})		
 		]]>
 	</insert>
+	
+	<update id="agreeInOut" parameterType="string">
+		update inout set inout_status='승인' where inout_code = #{inoutCode}
+	</update>
 </mapper>
 
 

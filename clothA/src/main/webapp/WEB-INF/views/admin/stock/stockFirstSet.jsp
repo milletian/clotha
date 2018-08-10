@@ -76,7 +76,6 @@ $(function() {
         	dataType:'json',
         	success:function(res){
         		if (res.length > 0) {
-        			alert(res.length);
         			$("#stockFirstSetTable tbody").html('');
         			var dsd ="";
      				$.each(res, function(idx, item) {
@@ -89,7 +88,6 @@ $(function() {
      					
      				})	 
      				$("#stockFirstSetTable tbody").append(dsd);
- 					liveTableData.reset();
  					renameForModelAttribute();
      			}else{
      				$("#stockFirstSetTable tbody").html('');
@@ -113,17 +111,29 @@ $(function() {
 	
 	$('#addbtn').click(function() {
 		renameForModelAttribute();
+		
 		$.ajax({
         	type:"POST",
         	url : "<c:url value='/admin/stock/ajaxStockWrite.do' />",
         	data:$("#frmStockFirstSetting").serialize(),
+        	dataType:"text",
         	success:function(res){
         		 alert(res);
         	 },
-			error: function(xhr, status, error){
-				alert(status+","+error);
-				
-			}
+        	 error:function(x,e){ 
+     			if(x.status==0){
+     				alert('You are offline!!n Please Check Your Network.'); 
+     			}else if(x.status==404){ 
+     				alert('Requested URL not found.'); 
+     			}else if(x.status==500){ 
+     				alert('Internel Server Error.'); 
+     			}else if(e=='parsererror'){ 
+     				alert('Error.nParsing JSON Request failed.'); 
+     			}else if(e=='timeout'){
+     				alert('Request Time out.'); 
+     			}else { 
+     				alert('Unknow Error.n'+x.responseText); } 
+     			}
         
    		}); 
 	})
@@ -131,9 +141,7 @@ $(function() {
 	/* $('#pdCodeSearch')on('click',function(){
 		
 	}) */
-	$('#submit').click(function() {
-		
-	})
+	
 	storeOrwh = $('#selSearchSupplier').val();
 })
 
@@ -150,9 +158,9 @@ function newRecord() {
 	$('#pdCodeSearch').remove();
 	var dsd = "<tr><td><input type='text' name='staCode' readonly='readonly' value='"+storeOrwh+"'></td>";
 	dsd+= "<td><input type='text' readonly='readonly' name='pdCode' ><input type='button' id='pdCodeSearch' data-toggle='modal' data-target='#modal-searchPd' role='button' data-backdrop='static' value='..' /></td>";
-	dsd+= "<td><input type='text' readonly='readonly' ></td>";
-	dsd+= "<td><input type='number' name='stockQty' ></td>";
-	dsd+= "<input type='hidden' name='stockPk' ></tr>";
+	dsd+= "<td><input type='text' readonly='readonly' value=' ' ></td>";
+	dsd+= "<td><input type='text' name='stockQty' value='0' ></td>";
+	dsd+= "<input type='hidden' name='stockPk' value='0' ></tr>";
 	$("#stockFirstSetTable tbody").append(dsd);
 	renameForModelAttribute();
 }
@@ -197,8 +205,8 @@ function returnValueRead(str) {
 	if(str=='pd'){
 		if(reval!=null&& reval!=''){
 			var bool=true;
-			$('#stockFirstSetTable td:eq(1) input[type=text]').each(function() {
-				if($(this).val()==reval.pdCode){
+			$('#stockFirstSetTable tr').each(function() {
+				if($(this).find('td:eq(1) input[type=text]').val()==reval.pdCode){
 					alert('동일한 상품을 중복등록할수 없습니다.');
 					bool=false;
 					return false;
@@ -257,7 +265,7 @@ function returnValueRead(str) {
 	<button type="button" id="excelUp" onclick="check()">등록</button>
 </form>
 	<a class="btn btn-xs btn-success" href="#" id="newRecord"><i class="fas fa-edit"></i>새 재고 등록</a>
-	<a class="btn btn-xs btn-success" href="#" id="submit"><i class="fas fa-edit"></i>최종 등록</a>
+	<a class="btn btn-xs btn-success" href="#" id="addbtn"><i class="fas fa-edit"></i>최종 등록</a>
 	</div><!--box1 -->
 	<div class="box2">
 		<form name="frmStockFirstSetting" id="frmStockFirstSetting">

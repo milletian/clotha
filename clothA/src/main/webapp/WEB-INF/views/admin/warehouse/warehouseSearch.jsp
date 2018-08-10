@@ -32,9 +32,8 @@
 	     					}else{
 	     						dsd+="사용중";
 	     					}
-	     					+"</td>";
+	     					dsd +="</td>";
 	     					 $("#searchwhtable tbody").append(dsd);
-	     					liveTableData.reset();
 	     					});
 	     				}else{
 	     					$("#searchwhtable tbody").html('');
