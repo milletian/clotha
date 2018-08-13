@@ -28,8 +28,7 @@
 <script type="text/javascript">
 $(function() {
 	
-	var storeCode;
-	var liveTableData = $("table").tableExport({
+	var liveTableData = $("#empTable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
 	    formats: ["xlsx"],    // (String[]), filetypes for the export
@@ -42,7 +41,7 @@ $(function() {
 	});
 	
 	/* 테이블 정렬 */
-	$("table").tablesorter(); 
+	$("#empTable").tablesorter(); 
 
 	/* 매장코드로 검색 */
 	$.ajax({
@@ -69,7 +68,9 @@ $(function() {
 			alert("등록된 매장을 선택해주세요");
 		}
 	});//ajax  
-	   //검색버튼
+	/* 매장코드로 검색 */
+	
+	
 	
 	$(".ajax").select2();
 	$(".ajax2").select2();
@@ -84,7 +85,7 @@ $(function() {
 	    	dataType:'json',
 	    	success:function(res){
 	    		if (res.length > 0) {
-	    			$("table tbody").html('');
+	    			$("#empTable tbody").html('');
 	 				$.each(res, function(idx, item) {
 	 					var empList =
 	 					"<tr ondblclick=popupOpen('"+item.EMP_NO+"')><td>"+item.EMP_NO+"</td>"
@@ -99,21 +100,21 @@ $(function() {
 	 					+"<td>"+item.EMP_JOB+"</td>"
 	 					+"<td>"+item.EMP_JOINDATE+"</td>"
 	 			 		+"<td>"+item.GRADE_NAME+"</td></tr>";
-	 					 $("table tbody").append(empList);
+	 					 $("#empTable tbody").append(empList);
 	 					 //undefined 항목 빈칸으로 출력
-	 					$('tbody td').each(function (idx,item) {
+	 					$('#empTable td').each(function (idx,item) {
 	 					 var a = $(this).text();
-		 				if(a=='undefined'){
-		 					$(this).text('');
-		 					liveTableData.reset();
+		 					if(a=='undefined'){
+		 						$(this).text('');
 							}
 		 				})
+		 					liveTableData.reset();
 	 					});
 	 				
 	 				}else{
-	 					$("table tbody").html('해당 내역이 없습니다.');
+	 					$("#empTable tbody").html('해당 내역이 없습니다.');
 	 				}
-	    		 $("table").trigger("update"); 
+	    		 $("#empTable").trigger("update"); 
 	             return false; 
 	    	 },
 			error: function(xhr, status, error){
@@ -123,12 +124,10 @@ $(function() {
 			}); 
 		}); 
 	
-	$(document ).on( "click" , "table tbody tr", function() {              
+	$(document).on( "click" , "table tbody tr", function() {              
 		$('table tbody tr td').removeClass('successsss');
 		$(this).find('td').addClass('successsss');
 		accCode=$(this).find('td:first').text();        
-		
-		
     });
 	
 })//제이쿼리
@@ -234,12 +233,13 @@ function popupOpen(empNo){
 		</form>
 	</div>
 	<div class="box2">
-		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeWrite"  role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i>인사등록</a>
+		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeWrite"  
+		role="button" data-backdrop="static"><i id="openmodal" class="fas fa-edit"></i>인사등록</a>
 	<div style="display: none;">
 		<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-employeeDetail"  role="button" data-backdrop="static"><i id="openmodal2" class="fas fa-edit"></i>인사수정</a>
 	</div>
 		<div id="content1">
-			<table cellspacing="1" class="tablesorter">
+			<table cellspacing="1" class="tablesorter" id="empTable">
 				<colgroup>
 					<col style="width:5%;" />
 					<col style="width:5%;" />
@@ -278,7 +278,8 @@ function popupOpen(empNo){
 	</div>
 </div>
 
-<div id="modal-employeeWrite" class="modal fade" tabindex="-1" role="dialog" style="display: none; z-index: 1050;">
+<div id="modal-employeeWrite" class="modal fade" tabindex="-1" role="dialog" 
+	 style="display: none; z-index: 1050;">
     <div class="modal-dialog" style="width:1200px;height:700px">
         <div class="modal-content">
         	<%@include file="employeeWrite.jsp" %>

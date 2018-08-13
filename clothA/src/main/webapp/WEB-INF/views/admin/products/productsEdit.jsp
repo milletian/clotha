@@ -1,91 +1,209 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="<c:url value='/css/view.css'/>">
-<style type="text/css">
-</style>
-</head>
-<body>
-<form name="frmPdEdit" method="post" action="<c:url value='/admin/products/productsEdit.do'/>" enctype="multipart/form-data" >
-<div class="pdImage">
-	<img alt="${vo.pdName}" src="<c:url value='/pd_images/${vo.pdImage}'/>" class="pdImage">
-</div>
-
-<div>
-	<input type="hidden" name="pdCode" value="${param.pdCode}">
-	<input type="hidden" name="oldFileName" value="${vo.pdImage}">
-	<div class="pdDetail">
-		<label>상품코드</label>
-		<span>${param.pdCode}</span>
-	</div>
-	<div class="pdDetail">
-		<label>상품이름</label>
-		<span>${vo.pdName}</span>
-	</div>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 	
-	<div class="pdDetail">
-		<input type="file" name="changeFile" >
-		<br>
-		 <span>상품이미지</span>
-            <c:if test="${!empty vo.pdImage}">
-            	<span>${vo.pdImage}</span>
-            	<br>
-            	<span style="color:green;font-weight: bold">
-            		첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
-            </c:if>
-	</div>
-	
-	<div class="pdDetail">
-		<label>생산년도</label>
-		<span>${pdYear}년도</span>
-	</div>
-	
-	<div class="pdDetail">
-		<label>스타일</label>
-		<span>${vo.styleName}</span>
-	</div>
-	
-	<div class="pdDetail">
-		<label>입고가</label>
-		<span>${vo.pdOriginalPrice }</span>
-	</div>
+<div class="modal-header bg-primary">
+<script type="text/javascript">
+$(function () {
+	$('#frmPdEdit').click(function(){
+		var bool = true;
 		
-	<div class="pdDetail"> 
-		<label>판매가</label>
-		<span><input type="text" name="pdSellPrice" value="${vo.pdSellPrice}"></span>
-	</div>	
-	
-	<div class="pdDetail">
-	<label>사용여부</label>
-	<select name="pdDel">
-		<option value="Y"
-		<c:if test="${vo.pdDel=='Y'}">
-			selected="selected"
-		</c:if>
-		>사용</option>
-		<option value="N"
-		<c:if test="${vo.pdDel=='N'}">
-			selected="selected"
-		</c:if>
-		>미사용</option>
-	</select>
-	</div>
-</div>
-<div id="pdEdit2">
-	<label>상품주의 사항</label>
-	<textarea name="pdWarning">${vo.pdWarning}</textarea>
-</div>
-<div id="pdEdit3">
-	<label>상품설명</label>
-	<textarea name="pdExplanation">${vo.pdExplanation}</textarea>
-</div>
-	<input type="submit" value="수정완료" id="editSubmit">
-</form>
+		$('.valid2').each(function(idx,item){
+			if($(this).val().length<1){
+				alert($(this).parent().prev().text()+"을 입력하세요.");
+				$(this).focus();
+				bool = false;
+				return false;
+			}
+		});
+		var originalPrice=$('#pdOriginalPrice').val();
+		var sellPrice = $('#pdSellPrice').val();
+		
+		if(parseInt()>$('#pdSellPrice').val()){
+			alert("적절한 판매가격이 아닙니다.");
+			bool=false;
+			return false;
+		}
+		
+		if(bool){
+			var formData = new FormData($('#productsEdit')[0]);
+			$.ajax({
+				type:"post",
+		    	url : "<c:url value='/admin/products/productsEdit.do' />",
+		    	dataType:'text',
+		    	contentType: false,
+		    	processData: false,
+		    	data : formData,
+		    	success:function(res){
+		    		alert(res);
+		    		$('#productsEditClose').trigger('click');
+		    		location.reload();
+		    	},
+		    	error:function(x,e){ 
+	                  if(x.status==0){
+	                     alert('You are offline!!n Please Check Your Network.'); 
+	                  }else if(x.status==404){ 
+	                     alert('Requested URL not found.'); 
+	                  }else if(x.status==500){ 
+	                     alert('Internel Server Error.'); 
+	                  }else if(e=='parsererror'){ 
+	                     alert('Error.nParsing JSON Request failed.'); 
+	                  }else if(e=='timeout'){
+	                     alert('Request Time out.'); 
+	                  }else { 
+	                     alert('Unknow Error.n'+x.responseText); } 
+	                  }
+			})
+		}
+	});
 
-</body>
-</html>
+	
+	
+}); //제이쿼리
+</script>
+<style type="text/css">
+.row{
+		margin: 15px;
+	}
+</style>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>
+	<h3 class="smaller lighter blue no-margin modal-title">상품정보 상세 / 수정 </h3>
+</div>
+<div class="modal-body">
+	<form name="productsEdit"  id="productsEdit" method="post"  enctype="multipart/form-data" >
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<div id="pdImage">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+		<input type="hidden" name="pdCode"  id="pdCode2">
+		<input type="hidden" name="oldFileName" id="oldFileName">
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="pdCode" class="col-sm-2 control-label">상품코드</label>
+					<div class="col-sm-3">
+						<input type="text" name="pdCode" id="pdCode2" readonly="readonly" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="pdName" class="col-sm-2 control-label">상품이름</label>
+					<div class="col-sm-3">
+						<input type="text" name="pdName" id="pdName2" class="valid2 form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="changFile" class="col-sm-2 control-label">상품이미지</label>
+					<div class="col-sm-3">
+						<input type="file" name="changeFile" id="changeFile2" >
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label  class="col-sm-2 control-label"></label>
+					<div class="col-sm-6">
+					 <span style="color:green;font-weight: bold">
+					첨부파일을 새로 지정할 경우 기존 파일은 삭제됩니다.</span>
+					</div>
+		 		</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="pdRegdate" class="col-sm-2 control-label">생산년도</label>
+					<div class="col-sm-3">
+						<input type="text" name="pdRegdate" id="pdRegdate2" readonly="readonly" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for="styleCode" class="col-sm-2 control-label">스타일</label>
+					<div class="col-sm-3">
+						<input type="text" name="styleCode" id="styleName" readonly="readonly" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for=pdOriginalPrice class="col-sm-2 control-label">입고가</label>
+					<div class="col-sm-3">
+						<input type="text" name="pdOriginalPrice" id="pdOriginalPrice2" class="valid2 form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for=pdSellPrice class="col-sm-2 control-label">판매가</label>
+					<div class="col-sm-3">
+						<input type="text" name="pdSellPrice" id="pdSellPrice2" class="valid2 form-control">
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for=pdDel class="col-sm-2 control-label">사용여부</label>
+					<div class="col-sm-3">
+						<select name="pdDel" id="pdDel2" class="valid2 form-control">
+							<option value="">선택하세요</option>
+							<option value="Y">사용</option>
+							<option value="N">미사용</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">
+					<label for=pdEdit2 class="col-sm-2 control-label">상품주의 사항</label>
+					<div class="col-sm-3">
+						<textarea name="pdWarning"  id="pdWarning2" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="form-group">	
+					<label for=pdExplanation class="col-sm-2 control-label">상품설명</label>
+					<div class="col-sm-3">
+						<textarea name="pdExplanation" id="pdExplanation2" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+</form>
+</div>
+<div class="modal-footer">
+	<span class="btn btn-sm btn-success" id="frmPdEdit">
+ 	수정<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+    </span>
+    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="productsEditClose">
+        <i class="ace-icon fa fa-times"></i>닫기
+    </button>
+</div>

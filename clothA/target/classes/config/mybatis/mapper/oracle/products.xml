@@ -45,8 +45,7 @@
 		order by
 		pd_regdate desc
 	</select>
-	<select id="selectByPdCode" parameterType="String"
-		resultType="ProductsVO">
+	<select id="selectByPdCode" parameterType="String"	resultType="ProductsVO">
 		select * from STPRODUCTSVIEW
 		where pd_code=#{pdCode}
 	</select>

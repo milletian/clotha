@@ -28,6 +28,7 @@ import com.clotha.ca.account.model.AccountVO;
 import com.clotha.ca.accountdetail.model.AccountDetailVO;
 import com.clotha.ca.common.FileUploadUtil;
 import com.clotha.ca.common.Utility;
+import com.clotha.ca.employee.model.EmployeeVO;
 import com.clotha.ca.product.model.ProductsService;
 import com.clotha.ca.product.model.ProductsVO;
 import com.clotha.ca.stock.model.StockVO;
@@ -49,9 +50,25 @@ public class ProductsController {
 		
 	}
 	
-	@RequestMapping(value="/products/productWrite.do", method=RequestMethod.POST)
-	public String productsWrite(@ModelAttribute ProductsVO productsVo,
-			HttpServletRequest request,Model model) {
+	@RequestMapping(value="/products/ajaxproductWrite.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String productsWrite(HttpServletRequest request) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+		ProductsVO productsVo = new ProductsVO();
+		
+		productsVo.setPdName(multi.getParameter("pdName"));
+		productsVo.setPdOriginalPrice(Integer.parseInt(multi.getParameter("pdOriginalPrice")));
+		productsVo.setPdSellPrice(Integer.parseInt(multi.getParameter("pdSellPrice")));
+		productsVo.setStyleCode(multi.getParameter("styleCode"));
+		productsVo.setColorCode(multi.getParameter("colorCode"));
+		productsVo.setSeasonCode(multi.getParameter("seasonCode"));
+		productsVo.setSizeCode(multi.getParameter("sizeCode"));
+		productsVo.setAccCode(multi.getParameter("accCode"));
+		productsVo.setGenderCode(multi.getParameter("genderCode"));
+		productsVo.setPdDel(multi.getParameter("pdDel"));
+		productsVo.setPdWarning(multi.getParameter("pdWarning"));
+		productsVo.setPdExplanation(multi.getParameter("pdExplanation"));
+		
+		
 		logger.info("상품등록 처리하기 ProductsVo={}",productsVo);
 		
 		//파일업로드하기
@@ -71,22 +88,19 @@ public class ProductsController {
 		
 		//db처리하기
 		int cnt = productsService.insertProducts(productsVo);
-		String msg = "",url="/admin/products/productWrite.do";
+		String msg = "";
 		if(cnt>0) {
 			msg="등록이 완료되었습니다.";
 		}else {
 			msg="등록 실패!";
 		}
 		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
+		return msg;
 	}
 	
 	@RequestMapping("/products/productsList.do")
 	public void productsList() {
-		logger.info("상품목록 화면 이동");
+		logger.info("상품목록 화면");
 		
 	}
 	
@@ -100,7 +114,8 @@ public class ProductsController {
 		
 		return list;
 	}
-
+	
+	//검색
 	@RequestMapping(value="/products/ajaxProductsList.do")
 	@ResponseBody
 	public List<Map<String,Object>> productsList_post(@ModelAttribute ProductsVO productsVo,@RequestParam(required=false) String searchDateRange) {
@@ -126,40 +141,39 @@ public class ProductsController {
 		
 	}
 	
-	@RequestMapping(value="/products/productsDetail.do", method=RequestMethod.GET)
-	public String productsDetail(@RequestParam String pdCode, Model model) {
-		logger.info("상품 세부사항 조회 화면 파라미터 pdCode={}",pdCode);
-		
-		ProductsVO vo =	productsService.selectByPdCode(pdCode);
-		logger.info("해당 pdCode에 상세정보 vo = {}", vo);
-		String regdate = vo.getPdRegdate();
-		String pdYear = regdate.substring(0, 4);
-		logger.info("생산년도",pdYear);
-		
-		model.addAttribute("vo",vo);
-		model.addAttribute("pdYear",pdYear);
-		
-		return "/admin/products/productsDetail";
-		
-	}
 	
-	@RequestMapping(value="/products/productsEdit.do", method=RequestMethod.GET)
-	public String productsEdit_get(@RequestParam String pdCode, Model model) {
+	//수정화면
+	@RequestMapping(value="/products/productsDetil.do")
+	@ResponseBody
+	public ProductsVO productsDetil(@RequestParam(required=false) String pdCode) {
 		logger.info("수정화면 보여주기 String pdCode={}",pdCode);
 		
-		ProductsVO vo = productsService.selectByPdCode(pdCode);
-		logger.info("수정화면 vo={}",vo);
+		ProductsVO productsVo = productsService.selectByPdCode(pdCode);
+		logger.info("수정화면 productsVo={}",productsVo);
 		
-		model.addAttribute("vo",vo);
-		return "/admin/products/productsEdit";
+		return productsVo;
 	}
 	
-	@RequestMapping(value="/products/productsEdit.do",method=RequestMethod.POST)
-	public String productsEdit_post(@ModelAttribute ProductsVO productsVo,HttpServletRequest request,
-			@RequestParam String oldFileName ,Model model) {
-		logger.info("수정처리하기");
+	//수정처리
+	@RequestMapping(value="/products/productsEdit.do", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String productsEdit(HttpServletRequest request) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+		ProductsVO productsVo = new ProductsVO();
+		
+		productsVo.setPdCode(multi.getParameter("pdCode"));
+		productsVo.setPdName(multi.getParameter("pdName"));
+		productsVo.setPdImage(multi.getParameter("changeFile"));
+		productsVo.setPdOriginalPrice(Integer.parseInt(multi.getParameter("pdOriginalPrice")));
+		productsVo.setPdSellPrice(Integer.parseInt(multi.getParameter("pdSellPrice")));
+		productsVo.setPdDel(multi.getParameter("pdDel"));
+		productsVo.setPdWarning(multi.getParameter("pdWarning"));
+		productsVo.setPdExplanation(multi.getParameter("pdExplanation"));
+		
+		logger.info("productsVo={}",productsVo);
 		
 		//파일 업로드처리
+		String oldFileName=multi.getParameter("oldFileName");
 		String fileName="";
 		try {
 			List<Map<String, Object>> list = fileUploadUtil.fileUpload(request,FileUploadUtil.PATH_FLAG_IMAGE);
@@ -175,14 +189,6 @@ public class ProductsController {
 			e.printStackTrace();
 		}
 		
-		int cnt = productsService.updatePdDetail(productsVo);
-		String msg="", url="/admin/products/productsEdit";
-		if(cnt>0) {
-			msg="수정에 성공하셨습니다.";
-			url="/admin/products/productsDetail.do?pdCode="+productsVo.getPdCode();
-		}else {
-			msg="수정에 실패하셨습니다!!";
-		}
 		
 		//기존에 있던 파일 삭제
 		if(fileName!=null && !fileName.isEmpty()) {
@@ -194,10 +200,15 @@ public class ProductsController {
 			}
 		}//기존 파일 삭제 if
 		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
+		int cnt = productsService.updatePdDetail(productsVo);
+		String msg="";
+		if(cnt>0) {
+			msg="수정에 성공하셨습니다.";
+		}else {
+			msg="수정에 실패하셨습니다!!";
+		}
 		
-		return "common/message";
+		return msg;
 	}
 	
 	

@@ -12,8 +12,8 @@
 			/* $('#photo').css('display','none'); */
 			$('#photo').hide();
 		}
-		 
-		 /* 매장코드로 매장이름 불러오기 */ 
+		 /*
+		  /* 매장코드로 매장이름 불러오기  
 		$.ajax({
 			type:"POST",
 	    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
@@ -39,7 +39,7 @@
 			}
 		});//ajax
 		
-		$(".ajax2").select2();
+		$(".ajax2").select2(); */
 		
 		/* 맨처음 입력 포커싱 */
 		$('#storeCode').focus();
@@ -222,13 +222,13 @@
 	<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 		<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 	</div>
-	<form name="employeeWrite" id="employeeWrite" method="post" enctype="multipart/form-data"	action="<c:url value='/admin/employee/employeeWrite.do'/>">
+	<form name="employeeWrite" id="employeeWrite" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-sm-10">
 				<div class="form-group">
 						<label for="storeCode" class="col-sm-2 control-label">매장이름</label>
 					<div class="col-sm-3">
-						<select style="max-height: 30px;width: 100px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore2" class="ajax2"></select>
+						<select style="max-height: 30px;width: 200px" name="storeCode" data-placeholder="입력할 매장을 선택하세요" id="searchStore2" class="ajax2"></select>
 					</div>
 				</div>
 			</div>
@@ -236,7 +236,7 @@
 		<div class="row">
 			<div class="form-group">
 				<div class="col-sm-10">
-						<label for="deptNo" class="col-sm-2 control-label">부서코드</label>
+					<label for="deptNo" class="col-sm-2 control-label">부서코드</label>
 					<div class="col-sm-3">
 						<select	name="deptNo" id="deptNo" title="부서코드" class="valid form-control">
 							<option value="">선택하세요</option>
@@ -407,7 +407,8 @@
     </span>
     <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="employeeWriteClose">
         <i class="ace-icon fa fa-times"></i>닫기
-    </button></div>
+    </button>
+</div>
 	<script type="text/javascript">
 	// 우편번호 찾기 화면을 넣을 element
     var element_layer = document.getElementById('layer');

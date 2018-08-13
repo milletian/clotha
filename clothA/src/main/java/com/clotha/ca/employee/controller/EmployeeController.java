@@ -122,7 +122,7 @@ public class EmployeeController {
 	
 	@RequestMapping("/employeeDetail.do")
 	@ResponseBody
-	public Map<String, Object> employeeDetail(@RequestParam(required=false) String empNo, Model model) {
+	public Map<String, Object> employeeDetail(@RequestParam(required=false) String empNo) {
 		 logger.info("인사정보 상세페이지 empNo={}", empNo);
 		 
 		 Map<String, Object> map = employeeService.selectByEmpNo(empNo);
