@@ -28,7 +28,7 @@ public class managerInterceptor extends HandlerInterceptorAdapter{
 			out.println("alert('본사페이지로 들어갈수 없습니다.');");
 			out.println("history.back();");
 			out.print("</script>");
-			return false;	
+			return false;
 		}
 		
 		return true;

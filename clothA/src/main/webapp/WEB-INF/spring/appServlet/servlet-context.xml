@@ -46,7 +46,7 @@
 			<mapping path="/shop/**"/>
 			<mapping path="/admin/**"/>
 			<mapping path="${pageContext.request.contextPath }/inc/*"/>
-			<!-- <exclude-mapping path="/info/**"/> -->       
+			<!-- <exclude-mapping path="/info/**"/> -->
 			<beans:ref bean ="loginInterceptor" />
 		</interceptor> 
 	</interceptors>

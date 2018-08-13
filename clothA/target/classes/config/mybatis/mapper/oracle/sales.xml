@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.sales">
+	
+	<select id="selectAll" resultType="salesVo">
+		select s.* , t.store_name from sales s join store t on s.store_code = t.store_code
+		where store_code =#{storeCode}
+		order by sales_code
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
