@@ -6,7 +6,7 @@ on p.ACC_CODE=a.ACC_CODE;
 
 -- 상품 상세보기 view
 
-ALTER TABLE products ADD(PD_DEL varchar2(10));
+
 
 create view StProductsView
 as

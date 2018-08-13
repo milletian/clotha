@@ -34,7 +34,8 @@ CREATE TABLE "PRODUCTS" (
 	"SEASON_CODE"      VARCHAR2(20) NULL,     -- 시즌코드
 	"SIZE_CODE"        VARCHAR2(20) NULL,     -- 사이즈코드
 	"ACC_CODE"         VARCHAR2(50) NULL,     -- 구매처
-	"GENDER_CODE"      VARCHAR2(10)   NULL      -- 성별
+	"GENDER_CODE"      VARCHAR2(10)   NULL,      -- 성별
+	"PD_DEL"           VARCHAR2(10) DEFAULT 'Y'
 );
 
 -- 의류상품 기본키
@@ -286,8 +287,11 @@ ALTER TABLE "EMPLOYEE"
 -- 매출
 CREATE TABLE "SALES" (
 	"SALES_CODE"    VARCHAR2(50) NOT NULL, -- 매출코드
-	"SALES_REGDATE" DATE     NOT NULL, -- 날짜
-	"STORE_CODE"    VARCHAR2(50) NOT NULL  -- 점포코드
+	"STORE_CODE"    VARCHAR2(50) NOT NULL,  -- 점포코드
+	"PD_CODE"            VARCHAR2(50) NOT NULL, -- 상품코드
+	"SALES_QTY"   NUMBER        NOT NULL, -- 수량
+	"SALES_TOTAL" NUMBER        NOT NULL, -- 총가격
+	"SALES_DATE"  DATE         DEFAULT sysdate -- 구매일
 );
 
 -- 매출 기본키2
@@ -302,34 +306,6 @@ ALTER TABLE "SALES"
 		CONSTRAINT "PK_SALES" -- 매출 기본키2
 		PRIMARY KEY (
 			"SALES_CODE" -- 매출코드
-		);
-
--- 매출상세
-CREATE TABLE "SALES_DETAIL" (
-	"SALES_DETAIL_PK"    NUMBER        NOT NULL, -- 매출상세PK
-	"SALES_CODE"         VARCHAR2(50) NOT NULL, -- 매출코드
-	"PD_CODE"            VARCHAR2(50) NOT NULL, -- 상품코드
-	"SALES_DETAIL_QTY"   NUMBER        NOT NULL, -- 수량
-	"SALES_DETAIL_TOTAL" NUMBER        NOT NULL, -- 총가격
-	"SALES_DETAIL_DATE"  DATE         DEFAULT sysdate, -- 구매일
-	"MEMBER_CODE"        VARCHAR2(50) NULL,     -- 구매자
-	"SALES_DETAIL_PLUSP" NUMBER        NULL,     -- 적립포인트
-	"SALES_DETAIL_USEP"  NUMBER        NULL,     -- 사용포인트
-	"CP_CODE"            VARCHAR2(50) NULL      -- 사용쿠폰번호
-);
-
--- 매출상세 기본키
-CREATE UNIQUE INDEX "PK_SALES_DETAIL"
-	ON "SALES_DETAIL" ( -- 매출상세
-		"SALES_DETAIL_PK" ASC -- 매출상세PK
-	);
-
--- 매출상세
-ALTER TABLE "SALES_DETAIL"
-	ADD
-		CONSTRAINT "PK_SALES_DETAIL" -- 매출상세 기본키
-		PRIMARY KEY (
-			"SALES_DETAIL_PK" -- 매출상세PK
 		);
 
 
@@ -469,76 +445,6 @@ ALTER TABLE "TRANSPORT_DETAIL"
 			"TP_DETAIL_PK" -- 점간이동상세PK
 		);
 
--- 회원
-CREATE TABLE "MEMBER" (
-	"MEMBER_CODE"    VARCHAR2(50) NOT NULL, -- 회원코드
-	"MEMBER_NAME"    VARCHAR2(40) NOT NULL, -- 이름
-	"MEMBER_TEL"     VARCHAR2(30) NOT NULL, -- 전화번호
-	"STORE_CODE"     VARCHAR2(50) NOT NULL, -- 가입지점
-	"MEMBER_POINT"   NUMBER            DEFAULT 0, -- 포인트
-	"MEMBER_REGDATE" DATE        DEFAULT sysdate -- 가입일
-);
-
--- 회원 기본키
-CREATE UNIQUE INDEX "PK_MEMBER"
-	ON "MEMBER" ( -- 회원
-		"MEMBER_CODE" ASC -- 회원코드
-	);
-
--- 회원
-ALTER TABLE "MEMBER"
-	ADD
-		CONSTRAINT "PK_MEMBER" -- 회원 기본키
-		PRIMARY KEY (
-			"MEMBER_CODE" -- 회원코드
-		);
-
--- 포인트이력
-CREATE TABLE "POINT" (
-	"POINT_PK"      NUMBER        NOT NULL, -- 포인트이력PK
-	"MEMBER_CODE"   VARCHAR2(50) NOT NULL, -- 회원코드
-	"POINT_REGDATE" DATE       DEFAULT sysdate, -- 발생일
-	"POINT_CHANGE"  NUMBER        NOT NULL  -- 변동포인트
-);
-
--- 포인트이력 기본키
-CREATE UNIQUE INDEX "PK_POINT"
-	ON "POINT" ( -- 포인트이력
-		"POINT_PK" ASC -- 포인트이력PK
-	);
-
--- 포인트이력
-ALTER TABLE "POINT"
-	ADD
-		CONSTRAINT "PK_POINT" -- 포인트이력 기본키
-		PRIMARY KEY (
-			"POINT_PK" -- 포인트이력PK
-		);
-
--- 할인쿠폰
-CREATE TABLE "COUPON" (
-	"CP_CODE"        VARCHAR2(50) NOT NULL, -- 쿠폰번호
-	"CP_DISCOUNT"    NUMBER        NOT NULL, -- 할인율
-	"CP_LIMITPRICE"  NUMBER        NULL,     -- 한도
-	"CP_USEOK"       VARCHAR2(10)    DEFAULT 'Y', -- 사용가능여부
-	"CP_TERM"        DATE     NOT NULL, -- 사용가능기간
-	"CP_USEDATE"     DATE     NULL,     -- 사용일
-	"CP_PUBLISHDATE" DATE        DEFAULT SYSDATE -- 발행일
-);
-
--- 할인쿠폰 기본키
-CREATE UNIQUE INDEX "PK_COUPON"
-	ON "COUPON" ( -- 할인쿠폰
-		"CP_CODE" ASC -- 쿠폰번호
-	);
-
--- 할인쿠폰
-ALTER TABLE "COUPON"
-	ADD
-		CONSTRAINT "PK_COUPON" -- 할인쿠폰 기본키
-		PRIMARY KEY (
-			"CP_CODE" -- 쿠폰번호
-		);
 
 -- 구매처
 CREATE TABLE "ACCOUNT" (
@@ -832,7 +738,7 @@ ALTER TABLE "SALES"
 		);
 
 -- 매출상세
-ALTER TABLE "SALES_DETAIL"
+ALTER TABLE "SALES"
 	ADD
 		CONSTRAINT "FK_PD_TO_SALES_DE" -- 의류상품 -> 매출상세
 		FOREIGN KEY (
@@ -842,38 +748,9 @@ ALTER TABLE "SALES_DETAIL"
 			"PD_CODE" -- 상품코드
 		);
 
--- 매출상세
-ALTER TABLE "SALES_DETAIL"
-	ADD
-		CONSTRAINT "FK_SALES_TO_SALES_DE" -- 매출 -> 매출상세
-		FOREIGN KEY (
-			"SALES_CODE" -- 매출코드
-		)
-		REFERENCES "SALES" ( -- 매출
-			"SALES_CODE" -- 매출코드
-		);
 
--- 매출상세
-ALTER TABLE "SALES_DETAIL"
-	ADD
-		CONSTRAINT "FK_MEMBER_TO_SALES_DE" -- 회원 -> 매출상세
-		FOREIGN KEY (
-			"MEMBER_CODE" -- 구매자
-		)
-		REFERENCES "MEMBER" ( -- 회원
-			"MEMBER_CODE" -- 회원코드
-		);
 
--- 매출상세
-ALTER TABLE "SALES_DETAIL"
-	ADD
-		CONSTRAINT "FK_COUPON_TO_SALES_DE" -- 할인쿠폰 -> 매출상세
-		FOREIGN KEY (
-			"CP_CODE" -- 사용쿠폰번호
-		)
-		REFERENCES "COUPON" ( -- 할인쿠폰
-			"CP_CODE" -- 쿠폰번호
-		);
+
 
 -- 접속정보
 ALTER TABLE "LOG"
@@ -974,28 +851,6 @@ ALTER TABLE "TRANSPORT_DETAIL"
 		)
 		REFERENCES "PRODUCTS" ( -- 의류상품
 			"PD_CODE" -- 상품코드
-		);
-
--- 회원
-ALTER TABLE "MEMBER"
-	ADD
-		CONSTRAINT "FK_STORE_TO_MEMBER" -- 점포 -> 회원
-		FOREIGN KEY (
-			"STORE_CODE" -- 가입지점
-		)
-		REFERENCES "STORE" ( -- 점포
-			"STORE_CODE" -- 점포코드
-		);
-
--- 포인트이력
-ALTER TABLE "POINT"
-	ADD
-		CONSTRAINT "FK_MEMBER_TO_POINT" -- 회원 -> 포인트이력
-		FOREIGN KEY (
-			"MEMBER_CODE" -- 회원코드
-		)
-		REFERENCES "MEMBER" ( -- 회원
-			"MEMBER_CODE" -- 회원코드
 		);
 
 
