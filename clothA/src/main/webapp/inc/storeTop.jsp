@@ -230,7 +230,7 @@ footer{
 							<a href="<c:url value='/shop/stock/stockChart.do' />" target="if">재고 조회(차트)</a>
 						</li>
 						<li>
-							<a href="#">타매장 재고 조회</a>
+							<a href="<c:url value='/shop/stock/anotherStockList.do' />" target="if">타매장 재고 조회</a>
 						</li>
 						<li>
 							<a href="<c:url value='/shop/transport/transportList.do' />" target="if">점간이동현황</a>

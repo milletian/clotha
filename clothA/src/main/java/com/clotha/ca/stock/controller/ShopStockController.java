@@ -22,6 +22,10 @@ public class ShopStockController {
 	public void stockList() {
 		
 	}
+	@RequestMapping("/anotherStockList.do")
+	public void anotherStockList() {
+		
+	}
 	
 	@RequestMapping("/stockChart.do")
 	public void stockChart() {

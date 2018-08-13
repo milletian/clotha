@@ -35,4 +35,14 @@ public class InoutDAOMyBatis implements InoutDAO{
 		return sqlsession.update(namespace+"agreeInOut", inoutCode);
 	}
 
+	@Override
+	public int InOutDel(String inoutCode) {
+		return sqlsession.delete(namespace+"InOutDel", inoutCode);
+	}
+
+	@Override
+	public int InOutDelDetail(String inoutCode) {
+		return sqlsession.delete(namespace+"InOutDetailDel", inoutCode);
+	}
+
 }

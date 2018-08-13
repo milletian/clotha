@@ -103,17 +103,41 @@ public class InoutController {
 			
 		}
 		
-		@RequestMapping(value="/ajaxOutAgree.do",produces = "application/text; charset=utf8")
-		public @ResponseBody String ajaxOutAgree(@ModelAttribute InoutVO inoutVO) {
-			inoutVO.setIsIn("반품");
+		@RequestMapping(value="/ajaxInOutAgree.do",produces = "application/text; charset=utf8")
+		public @ResponseBody String ajaxInOutAgree(@ModelAttribute InoutVO inoutVO) {
+			String msg ="";
+				List<Map<String,Object>> list = inoutService.inoutSelectAll(inoutVO);
+				Map<String,Object> map =list.get(0);
+				if(map.get("INOUT_STATUS").equals("승인")) {
+					msg = "이미 승인처리 된 건수 입니다.";
+				}else {
+					inoutService.agreeInOut(map);
+					if(inoutVO.getIsIn().equals("반품")) {
+						msg = "반품 승인 되었습니다.";
+					}else {
+						msg = "입고 승인 되었습니다.";
+					}
+				}
+			
+			return msg;
+		}
+		
+		@RequestMapping(value="/ajaxInOutDel.do",produces = "application/text; charset=utf8")
+		public @ResponseBody String ajaxInOutDel(@ModelAttribute InoutVO inoutVO) {
+			String msg ="";
 			List<Map<String,Object>> list = inoutService.inoutSelectAll(inoutVO);
 			Map<String,Object> map =list.get(0);
 			if(map.get("INOUT_STATUS").equals("승인")) {
-				return "이미 승인처리 된 건수 입니다.";
+				msg = "이미 승인처리 된 건수는 삭제할수 없습니다.";
 			}else {
-				inoutService.agreeInOut(map);				
+				inoutService.InOutDel(inoutVO.getInoutCode());
+				if(inoutVO.getIsIn().equals("반품")) {
+					msg = "반품 삭제 되었습니다.";
+				}else {
+					msg = "입고 삭제 되었습니다.";
+				}
 			}
 			
-			return "반품승인 되었습니다.";
+			return msg;
 		}
 }

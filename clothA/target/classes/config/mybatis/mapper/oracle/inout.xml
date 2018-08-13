@@ -51,6 +51,14 @@
 	<update id="agreeInOut" parameterType="string">
 		update inout set inout_status='승인' where inout_code = #{inoutCode}
 	</update>
+	
+	<delete id="InOutDel" parameterType="string">
+		delete inout where inout_code = #{inoutCode}
+	</delete>
+	
+	<delete id="InOutDetailDel" parameterType="string">
+		delete inout_DETAIL where inout_code = #{inoutCode}
+	</delete>
 </mapper>
 
 

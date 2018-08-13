@@ -23,10 +23,12 @@
 
 <script type="text/javascript">
 $(function() {
+	var storeCode = '${storeCode}';
 	var Now = new Date();
 	var today = Now.getFullYear()+"/"+(Now.getMonth()+1)+"/"+Now.getDate();
 	$('#searchDateRange').val(today+"~"+today);
 	var tpCode;
+	var rowStoreCode;
 	$("#transportListTable").tablesorter(); 
 	// exel다운로드를 위한 변수
 	var liveTableData = $("#transportListTable").tableExport({
@@ -42,7 +44,18 @@ $(function() {
 	});
 	
 	$('#delbtn').click(function() { 
-		if(tpCode!=undefined){
+		var bool = true;
+		if(tpCode==undefined){
+			alert('먼저 삭제할 행을 선택하십시오');
+			bool = false;
+		}
+		if(bool){
+			if(storeCode!=rowStoreCode){
+				alert('현재 매장의 신청건수만 삭제할수 있습니다.');
+				bool = false;
+			}
+		}
+		if(bool){
 			if(confirm('정말로 삭제하시겠습니까?')){
 		    	$.ajax({
 		        	type:"POST",
@@ -56,11 +69,8 @@ $(function() {
 						alert("sdsds");
 					}
 		        
-		   		}); 
-				
+		   		});
 			}
-		}else{
-			alert('먼저 삭제할 행을 선택하십시오')
 		}
 	})
 
@@ -127,6 +137,7 @@ $(function() {
 	$(document ).on( "click" , "#transportListTable tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
 		tpCode=$(this).find('td:first').text();        
+		rowStoreCode=$(this).find('td:eq(2)').text();        
 	
 	})
 })

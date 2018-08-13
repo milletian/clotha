@@ -157,9 +157,10 @@ function whView() {
 		
 		<input type="hidden" id="areaEnd" name="areaEnd">
 		
-		<input type="button" id="storecbtn" value="매장 검색">
 		<label for="pdCode">상품코드</label><input type="text" id="pdCode" name="pdCode" readonly="readonly">
-		<input type="button" id="pdCbtn" value="상품 검색"><Br>
+		<a data-toggle="modal"  data-target="#modal-searchPd" role="button" data-backdrop="static">
+			 <span class="btn btn-xs btn-success">상품검색</span>
+		</a>
 		<label for="pdName">상품명</label><input type="text" id="pdName" name="pdName" readonly="readonly">
 		<label for="inoutDetailQty">수량</label><input type="text" id="inoutDetailQty" name="inoutDetailQTY"><br>
 		<div id="areaStartDiv" style="display: none;">
@@ -169,21 +170,16 @@ function whView() {
 			</select>
 			<input type="hidden" id="limitQty">
 		</div>
-		<input type="hidden" id="inoutStatus" name="inoutStatus" value="승인">
+		<input type="hidden" id="inoutStatus" name="inoutStatus" value="승인대기">
 		<input type="hidden" id="isIn" name="isIn" value="입고">
 		
 	</form>
 	</div>
 	
 	
-	<a data-toggle="modal"  data-target="#modal-searchPd" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">상품검색</span>
-	</a>
+	
 	       
-	             
-	<a data-toggle="modal"  data-target="#modal-searchStore" role="button" data-backdrop="static">
-	 <span class="btn btn-xs btn-success">매장검색</span>
-	</a>                     
+	                       
 </div>
  
 <div class="modal-footer">

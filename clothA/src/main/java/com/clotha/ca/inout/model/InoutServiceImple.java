@@ -59,4 +59,11 @@ public class InoutServiceImple implements InoutService{
 		return result;
 	}
 
+	@Override
+	public int InOutDel(String inoutCode) {
+		int result  =inoutDao.InOutDelDetail(inoutCode);
+		result = inoutDao.InOutDel(inoutCode);
+		return result;
+	}
+
 }

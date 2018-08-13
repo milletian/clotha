@@ -97,9 +97,10 @@ $(function() {
 		if(bool){
 			$.ajax({
 				type:"POST",
-		    	url : "<c:url value='/admin/inout/ajaxOutAgree.do' />",
+		    	url : "<c:url value='/admin/inout/ajaxInOutAgree.do' />",
 		    	dataType:'text',
-		    	data:{"inoutCode":inoutCode},
+		    	data:{"inoutCode":inoutCode,
+		    		"isIn":"반품"},
 		    	success:function(res){
 		    		alert(res)
 		    	},
@@ -137,7 +138,7 @@ $(function() {
  					 $("#frmwarehousingtable tbody").append(inoutList);
  					});
  				}else{
- 					$("#frmwarehousingtable tbody").html('해당 입고내역이 없습니다.');
+ 					$("#frmwarehousingtable tbody").html('해당 반품내역이 없습니다.');
  				}
     		 $("#frmwarehousingtable").trigger("update"); 
              return false; 

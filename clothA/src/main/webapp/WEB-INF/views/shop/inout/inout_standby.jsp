@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
+	var inoutCode;
 	var storeCode = '${storeCode}';
 	$.ajax({
 		type:"POST",
@@ -45,7 +46,9 @@ $(function() {
     	data:{"storeCode" : storeCode},
     	dataType:'json',
     	success:function(res){
-    		$('#areaEnd').val(res.staCode);
+    		$('#frmwarehousingList #areaEnd').val(res.staCode);
+    		$('#inoutWritefrm #storeName').val(res.storeName);
+			$('#inoutWritefrm #areaEnd').val(res.staCode);
     	},
     	error:function(x,e){ 
             if(x.status==0){
@@ -68,7 +71,7 @@ $(function() {
     	data:{"storeCode" : storeCode},
     	dataType:'json',
     	success:function(res){
-    		$('#areaEnd').val(res.staCode);
+    		$('#frmwarehousingList #areaEnd').val(res.staCode);
     	},
     	error: function(xhr, status, error){
 			alert("sdsds");
@@ -97,17 +100,17 @@ $(function() {
     	dataType:'json',
     	success:function(res){
     		if (res.length > 0){
-    			$("#selSearchProducts").html('');
+    			$("#frmwarehousingList #selSearchProduct").html('');
     			var option1 = "<option value=''>전체</option>";
-    			$("#selSearchProducts").append(option1);
+    			$("#frmwarehousingList #selSearchProduct").append(option1);
     			$.each(res,function(idx, item){
     				var option2 ="<option value='"+item.pdCode+"'>";
     				option2 += item.pdName;
     				option2 += "</option>";
-        			$("#selSearchProducts").append(option2);
+        			$("#frmwarehousingList #selSearchProduct").append(option2);
     			})
     		}else{
-    			$("#selSearchProducts").html('');
+    			$("#frmwarehousingList #selSearchProduct").html('');
     		}
     	},
     	error: function(xhr, status, error){
@@ -117,6 +120,28 @@ $(function() {
 	
 	
 	
+	$('#outDelbtn').click(function() {
+		var bool = true; 
+		if(inoutCode==undefined){
+			bool=false;
+			alert('먼저 삭제할 건수를 선택하세요');
+		}
+		if(bool){
+			$.ajax({
+				type:"POST",
+		    	url : "<c:url value='/admin/inout/ajaxInOutDel.do' />",
+		    	dataType:'text',
+		    	data:{"inoutCode":inoutCode,
+		    		"isIn":"입고"},
+		    	success:function(res){
+		    		alert(res)
+		    	},
+		    	error: function(xhr, status, error){
+					alert("sdsds");
+				} 
+			});//ajex	
+		}
+	})
 	$('#btnSearch').click(function() { 
 	$.ajax({
     	type:"POST",
@@ -128,7 +153,8 @@ $(function() {
     		if (res.length > 0) {
     			$("#frmwarehousingtable tbody").html('');
  				$.each(res, function(idx, item) {
- 					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
+ 					var inoutList ="<tr class='center'><td>"+item.INOUT_CODE+"</td>"
+ 					+"<td>"+item.IS_IN+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
  					+"<td>"+item.INOUT_ENDDATE+"</td>"
  					+"<td>"+item.WH_NAME+"</td>"
@@ -136,9 +162,8 @@ $(function() {
  					+"<td>"+item.ACC_NAME+"</td>"
  					+"<td>"+item.PD_CODE+"</td>" 
  					+"<td>"+item.PD_NAME+"</td>"
- 					+"<td>"+item.COLOR_CODE+"</td>"
- 					+"<td>"+item.COLOR_NAME+"</td>"
  					+"<td>"+item.INOUT_DETAIL_QTY+"</td>"
+ 					+"<td>"+item.OUT_DETAIL+"</td>"
  					+"</tr>";
  					 $("#frmwarehousingtable tbody").append(inoutList);
  					});
@@ -172,15 +197,32 @@ $(function() {
 	        }
 	  });
 
-	  $('#searchDateRange').on('apply.daterangepicker', function(ev, picker) {
+	  $('#frmwarehousingList #searchDateRange').on('apply.daterangepicker', function(ev, picker) {
 	      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' ~ ' + picker.endDate.format('YYYY/MM/DD'));
 	  });
 
-	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
+	  $('#frmwarehousingList #searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
+	  $(document ).on( "click" , "#frmwarehousingtable tbody tr", function() {              
+			$('#frmwarehousingtable tbody tr td').removeClass('bg-primary');
+			$(this).find('td').addClass('bg-primary');
+			inoutCode=$(this).find('td:first').text();        
+			
+			
+	    });
 });// document
-
+function returnValueRead(str) {
+	var reval = window.returnValue;
+	if(str=='pd'){
+		if(reval!=null&& reval!=''){
+			$('#inoutWritefrm #pdCode').val(reval.pdCode);
+			$('#inoutWritefrm #pdName').val(reval.pdName);
+			window.whView();
+			window.returnValue=null;
+		}
+	}
+}
 </script>
 <style type="text/css">
 
@@ -193,9 +235,9 @@ $(function() {
 				<input type="hidden" name="isIn" id="isIn" value="입고">
 				<input type="hidden" readonly="readonly" id="areaEnd" name="areaEnd">
 
- 				<label for="selSearchProducts">상품코드/명</label>
+ 				<label for="selSearchProduct">상품코드/명</label>
 				<select style="max-height: 30px; width: 100px" name="pdCode"
-					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProducts"
+					data-placeholder="검색할 상품명/코드를 선택하세요" id="selSearchProduct"
 					class="ajax">
 				</select>
 				
@@ -205,21 +247,26 @@ $(function() {
 			</form>
 		</div>
 		<div id="maincontent" class="box2">
+			<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
+			 <span class="btn btn-xs btn-success">매장 입고 신청</span>
+			</a>
+					<a href="#" class="btn btn-xs btn-success" id="outDelbtn" ><i class="fas fa-trash-alt"></i>삭제</a>
+			
 				<div id="content1">
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
+								<th>번호</th>
 								<th>작업구분</th>
-								<th>출고일자</th>
+								<th>반품일자</th>
 								<th>도착예정일</th>
 								<th>출발지</th>
 								<th>매장명</th>
 								<th>매입처</th>
 								<th>상품코드</th>
 								<th>상품명</th>
-								<th>칼라코드</th>
-								<th>칼라명</th>
 								<th>수량</th>
+								<th>반품사유</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -228,6 +275,22 @@ $(function() {
 				</div>
 			</form>
 		</div>
+</div>
+
+<div id="modal-inWrite" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none; z-index: 1050;">
+    <div class="modal-dialog" style="width:1200px;height:1000px">
+        <div class="modal-content">
+        	<%@include file="inWrite.jsp" %>
+        </div>
+    </div>
+</div>
+
+<div id="modal-searchPd" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none; z-index: 1060;">
+    <div class="modal-dialog" style="width:1200px;height:700px">
+        <div class="modal-content">
+        	<%@include file="../../admin/products/productsSearch.jsp" %>
+        </div>
+    </div>
 </div>
 
  

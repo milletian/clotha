@@ -10,5 +10,7 @@ public interface InoutDAO {
 	public int insertInout(InoutVO inoutVO);
 	public int insertInoutDetail(InoutVO inoutVO);
 	public int agreeInOut(String inoutCode);
+	public int InOutDel(String inoutCode);
+	public int InOutDelDetail(String inoutCode);
 
 }

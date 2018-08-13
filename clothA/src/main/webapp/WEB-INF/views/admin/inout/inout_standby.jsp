@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="<c:url value='/css/view.css'/>">
 <script type="text/javascript">
 $(function() { 
+	var inoutCode;
 	var liveTableData = $("#frmwarehousingtable").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -101,7 +102,9 @@ $(function() {
     		if (res.length > 0) {
     			$("#frmwarehousingtable tbody").html('');
  				$.each(res, function(idx, item) {
- 					var inoutList ="<tr class='center'><td>"+item.IS_IN+"</td>"
+ 					var inoutList ="<tr class='center'><td>"+item.INOUT_CODE+"</td>"
+ 					+"<td>"+item.IS_IN+"</td>"
+ 					+"<td>"+item.INOUT_STATUS+"</td>"
  					+"<td>"+item.INOUT_STARTDATE+"</td>"
  					+"<td>"+item.INOUT_ENDDATE+"</td>"
  					+"<td>"+item.WH_NAME+"</td>"
@@ -128,6 +131,28 @@ $(function() {
 		}); 
 	}); 
 	
+	$('#agreebtn').click(function() {
+		var bool = true;
+		if(inoutCode==undefined){
+			bool=false;
+			alert('먼저 입고 승인할 건수를 선택하세요');
+		}
+		if(bool){
+			$.ajax({
+				type:"POST",
+		    	url : "<c:url value='/admin/inout/ajaxInOutAgree.do' />",
+		    	dataType:'text',
+		    	data:{"inoutCode":inoutCode,
+		    		"isIn":"입고"},
+		    	success:function(res){
+		    		alert(res)
+		    	},
+		    	error: function(xhr, status, error){
+					alert("sdsds");
+				} 
+			});//ajex	
+		}
+	})
 	$(".ajax").select2();
 
 	
@@ -156,7 +181,7 @@ $(function() {
 	  $(document ).on( "click" , "table tbody tr", function() {              
 			$('table tbody tr td').removeClass('successsss');
 			$(this).find('td').addClass('successsss');
-			accCode=$(this).find('td:first').text();    
+			inoutCode=$(this).find('td:first').text(); 
 			
 	});// document 제이쿼리
 });
@@ -234,13 +259,20 @@ table.tablesorter tbody td.successsss{
 				
 				
 			</form>
+			
 		</div>
 		<div class="box2">
+		<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
+		 <span class="btn btn-xs btn-success">매장 입고 등록</span>
+		</a>
+			<a href="#" id="agreebtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>입고 승인</a>
 				<div id="content1">
 					<table id="frmwarehousingtable" cellspacing="1" class="tablesorter">
 						<thead>
 							<tr  id="center">
+								<th>번호</th>
 								<th>작업구분</th>
+								<th>승인 상태</th>
 								<th>출고일자</th>
 								<th>도착예정일</th>
 								<th>출발지</th>
@@ -261,9 +293,7 @@ table.tablesorter tbody td.successsss{
 </div>
 
 
-<a data-toggle="modal" data-target="#modal-inWrite" role="button" data-backdrop="static">
- <span class="btn btn-xs btn-success"> 등록</span>
-</a>
+
  
  
 <div id="modal-inWrite" class="modal fade" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none; z-index: 1050;">

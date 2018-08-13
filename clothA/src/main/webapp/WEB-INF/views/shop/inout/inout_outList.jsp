@@ -39,6 +39,31 @@
 <script type="text/javascript">
 $(function() { 
 	var inoutCode;
+	var storeCode = '${storeCode}';
+	$.ajax({
+		type:"POST",
+    	url : "<c:url value='/admin/store/ajaxStoreOne.do' />",
+    	data:{"storeCode" : storeCode},
+    	dataType:'json',
+    	success:function(res){
+    		$('#frmwarehousingList #areaStart').val(res.staCode);
+    	},
+    	error:function(x,e){ 
+            if(x.status==0){
+               alert('You are offline!!n Please Check Your Network.'); 
+            }else if(x.status==404){ 
+               alert('Requested URL not found.'); 
+            }else if(x.status==500){ 
+               alert('Internel Server Error.'); 
+            }else if(e=='parsererror'){ 
+               alert('Error.nParsing JSON Request failed.'); 
+            }else if(e=='timeout'){
+               alert('Request Time out.'); 
+            }else { 
+               alert('Unknow Error.n'+x.responseText); } 
+            }
+	});
+	
 	var liveTableData = $("#frmwarehousingtableOut").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -91,7 +116,28 @@ $(function() {
 	});//ajex
 	
 	
-	
+	$('#outDelbtn').click(function() {
+		var bool = true; 
+		if(inoutCode==undefined){
+			bool=false;
+			alert('먼저 삭제할 건수를 선택하세요');
+		}
+		if(bool){
+			$.ajax({
+				type:"POST",
+		    	url : "<c:url value='/admin/inout/ajaxInOutDel.do' />",
+		    	dataType:'text',
+		    	data:{"inoutCode":inoutCode,
+		    		"isIn":"반품"},
+		    	success:function(res){
+		    		alert(res)
+		    	},
+		    	error: function(xhr, status, error){
+					alert("sdsds");
+				} 
+			});//ajex	
+		}
+	})
 	$('#btnSearch').click(function() { 
 	$.ajax({
     	type:"POST",
@@ -141,7 +187,7 @@ $(function() {
 		}); 
 	}); 
 	
-	$(".ajax").select2();
+
 
 	
 	$('#searchDateRange').daterangepicker({
@@ -165,7 +211,7 @@ $(function() {
 	  $('#searchDateRange').on('cancel.daterangepicker', function(ev, picker) {
 	      $(this).val('');
 	  });
-	  
+		$("#inoutWritefrm .ajax").select2();
 	  $(document ).on( "click" , "#frmwarehousingtableOut tbody tr", function() {              
 			$('#frmwarehousingtableOut tbody tr td').removeClass('bg-primary');
 			$(this).find('td').addClass('bg-primary');
@@ -196,6 +242,7 @@ table.tablesorter tbody td.bg-primary{
 				<label>기간</label><i class="fa fa-calendar"></i>
 				<input type="text" name="searchDateRange" id="searchDateRange">
 				<input type="hidden" name="isIn" id="isIn" value="반품">
+				<input type="hidden" name="areaStart" id="areaStart">
 				
  				
  				<label for="selSearchProducts">상품코드/명</label>
@@ -213,7 +260,7 @@ table.tablesorter tbody td.bg-primary{
 		<a data-toggle="modal" data-target="#modal-outWrite" role="button" data-backdrop="static">
 		 <span class="btn btn-xs btn-success">반품 신청 등록</span>
 		</a>
-		<a href="#" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>삭제</a>
+		<a href="#" class="btn btn-xs btn-success" id="outDelbtn" ><i class="fas fa-trash-alt"></i>삭제</a>
 				<div id="content1">
 					<table id="frmwarehousingtableOut" cellspacing="1" class="tablesorter">
 						<thead>
