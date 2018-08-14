@@ -93,6 +93,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeDao.empSearch(employeeVo);
 	}
 
+	@Override
+	public int insertEmployeeShop(EmployeeVO employeeVo) {
+		return employeeDao.insertEmployeeShop(employeeVo);
+	}
+
+	@Override
+	public int updateEmpShop(EmployeeVO employeeVo) {
+		return employeeDao.updateEmpShop(employeeVo);
+	}
+
 	
 
 	

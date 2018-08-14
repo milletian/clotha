@@ -134,6 +134,20 @@
 		where e.GRADE_CODE=3 and e.STORE_CODE is null
 	</select>	
 	
+	<!-- shop -->
+	<insert id="insertEmployeeShop" parameterType="EmployeeVO" >
+		insert into employee(EMP_NO, DEPT_NO, EMP_NAME, EMP_PWD, EMP_ZIPCODE, EMP_ADDRESS,
+		          EMP_JUMIN, EMP_TEL, EMP_FACE, EMP_JOB, GRADE_CODE, STORE_CODE, EMP_EMAIL)
+        values(employee_seq.nextval, #{deptNo}, #{empName}, #{empPwd}, #{empZipcode}, #{empAddress}, #{empJumin},
+                  #{empTel},#{empFace},#{empJob},4,#{storeCode},#{empEmail})
+	</insert>
+	<update id="updateEmpShop" parameterType="EmployeeVO">
+	update employee
+	set DEPT_NO=#{deptNo},EMP_NAME=#{empName},EMP_PWD=#{empPwd},EMP_ZIPCODE=#{empZipcode},EMP_ADDRESS=#{empAddress},
+		EMP_JUMIN=#{empJumin},EMP_TEL=#{empTel},EMP_FACE=#{empFace},EMP_JOB=#{empJob},EMP_EMAIL=#{empEmail}
+	where EMP_NO=#{empNo}
+	</update>
+	
 	
 </mapper>
 

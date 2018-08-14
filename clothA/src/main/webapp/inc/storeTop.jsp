@@ -242,9 +242,10 @@ footer{
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
 						<c:if test="${sessionScope.gradeCode eq '3' }">
-							<li><a href="#">인사등록신청</a></li>
+							<li>
+							<a href="<c:url value='/shop/employee/employeeList.do' />" target="if">인사등록 신청 / 조회</a>
+							</li>
 						</c:if>
-						<li><a href="#">인사조회</a></li>
 					</ul></li>
 				
 				<li class="sub-menu"><a href="javascript:void(0);"><i
