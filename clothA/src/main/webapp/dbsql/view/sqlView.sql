@@ -50,10 +50,10 @@ on i.INOUT_CODE = id.INOUT_CODE ;
 
 create or replace view transportlistview
 as
-select t.*,s2.STORE_NAME as "END_STORE_NAME", s.STORE_NAME as "START_STORE_NAME",td.PD_CODE,p.PD_NAME,td.QUANTITY from transport t join store s 
-on t.STORE_CODE2= s.STORE_CODE
-join store s2 
-on t.STORE_CODE = s.STORE_CODE
+select t.*,s2.STORE_NAME as "END_STORE_NAME",s2.STA_CODE as "END_STA", s.STORE_NAME as "START_STORE_NAME",s.STA_CODE as "START_STA",td.PD_CODE,p.PD_NAME,td.QUANTITY from transport t left join store s 
+on t.STORE_CODE= s.STORE_CODE
+left join store s2 
+on t.STORE_CODE2 = s2.STORE_CODE
 join transport_detail td
 on t.TP_CODE = td.TP_CODE
 join products p 

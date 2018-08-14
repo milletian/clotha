@@ -19,6 +19,30 @@
 			</where>
 			order by TP_CODE DESC
 	</select>
+	<select id="transportSearchOne" parameterType="string" resultType="map">
+		select * from transportlistview where tp_code = #{tpCode}
+	</select>
+	
+	<insert id="insertTP" parameterType="TransportVO">
+		insert into transport(tp_code,store_Code,store_code2)
+		values(transport_seq.nextval,#{storeCode},#{storeCode2})
+	</insert>
+	
+	<insert id="insertTPDetail" parameterType="TransportDetailVO">
+		insert into transport_detail(tp_detail_pk,tp_code,pd_code,quantity)
+		values(transport_Detail_seq.nextval,( select tp_code from ( select * from transport order by tp_code desc ) where rownum=1 ),#{pdCode},#{quantity})
+	</insert>
+	
+	<delete id="deleteTP" parameterType="string">
+		delete transport where tp_Code= #{tpCode}
+	</delete>
+	<delete id="deleteTPDetail" parameterType="string">
+		delete transport_detail where tp_Code= #{tpCode}
+	</delete>
+	
+	<update id="agreeTP" parameterType="string">
+		update transport set tp_isagree='Y' where tp_code = #{tpCode}
+	</update>
 </mapper>
 
 

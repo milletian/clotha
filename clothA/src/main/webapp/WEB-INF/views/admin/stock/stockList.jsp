@@ -145,6 +145,13 @@ $(function() {
    		}); 
 	})
 	$.changeOption(whorst);
+	
+	$(document ).on( "click" , "#stockListTable tbody tr", function() {              
+		$('#stockListTable tbody tr td').removeClass('successsss');
+		$(this).find('td').addClass('successsss');
+		accCode=$(this).find('td:first').text();  
+	
+	})
 })
 function returnValueRead(str) {
 	var reval = window.returnValue;
@@ -159,7 +166,7 @@ function returnValueRead(str) {
 
 </script>
 <style type="text/css">
-table.tablesorter tbody td.successsss{
+#stockListTable.tablesorter tbody td.successsss{
 		background-color: skyblue;
 } 
 /*리스트 행 클릭 된 행 색변화*/

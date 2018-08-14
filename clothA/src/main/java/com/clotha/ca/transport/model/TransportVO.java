@@ -39,19 +39,20 @@ public class TransportVO extends DateSearchVO {
 	public void setStoreCode2(String storeCode2) {
 		this.storeCode2 = storeCode2;
 	}
-	@Override
-	public String toString() {
-		return "TransportVO [tpCode=" + tpCode + ", storeCode=" + storeCode + ", tpRegdate=" + tpRegdate
-				+ ", tpIsagree=" + tpIsagree + ", storeCode2=" + storeCode2 + ", getTpCode()=" + getTpCode()
-				+ ", getStoreCode()=" + getStoreCode() + ", getTpRegdate()=" + getTpRegdate() + ", getTpIsagree()="
-				+ getTpIsagree() + ", getStoreCode2()=" + getStoreCode2() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
-	}
+	
 	public String getUserStoreCode() {
 		return userStoreCode;
 	}
 	public void setUserStoreCode(String userStoreCode) {
 		this.userStoreCode = userStoreCode;
+	}
+	@Override
+	public String toString() {
+		return "TransportVO [user = "+userStoreCode+"tpCode=" + tpCode + ", storeCode=" + storeCode + ", tpRegdate=" + tpRegdate
+				+ ", tpIsagree=" + tpIsagree + ", storeCode2=" + storeCode2 + ", getTpCode()=" + getTpCode()
+				+ ", getStoreCode()=" + getStoreCode() + ", getTpRegdate()=" + getTpRegdate() + ", getTpIsagree()="
+				+ getTpIsagree() + ", getStoreCode2()=" + getStoreCode2() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 	
 	

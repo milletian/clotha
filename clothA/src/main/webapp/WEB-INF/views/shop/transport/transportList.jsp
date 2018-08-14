@@ -24,11 +24,13 @@
 <script type="text/javascript">
 $(function() {
 	var storeCode = '${storeCode}';
+	var isagree;
+	var rowStoreCode;
 	var Now = new Date();
 	var today = Now.getFullYear()+"/"+(Now.getMonth()+1)+"/"+Now.getDate();
 	$('#searchDateRange').val(today+"~"+today);
 	var tpCode;
-	var rowStoreCode;
+	var rowStoreCode2;
 	$("#transportListTable").tablesorter(); 
 	// exel다운로드를 위한 변수
 	var liveTableData = $("#transportListTable").tableExport({
@@ -50,18 +52,59 @@ $(function() {
 			bool = false;
 		}
 		if(bool){
-			if(storeCode!=rowStoreCode){
+			if(storeCode!=rowStoreCode2){
 				alert('현재 매장의 신청건수만 삭제할수 있습니다.');
 				bool = false;
 			}
+			if(isagree=="Y"){
+				alert('이미 승인된 건수는 삭제할수 없습니다.');
+				bool = false;
+			}
 		}
+		
 		if(bool){
 			if(confirm('정말로 삭제하시겠습니까?')){
 		    	$.ajax({
 		        	type:"POST",
-		        	url : "<c:url value='/admin/account/accountDetailDel.do' />",
+		        	url : "<c:url value='/shop/transport/ajaxTransportDel.do' />",
 		        	data:{"tpCode":tpCode},
-		        	dataType:'json',
+		        	dataType:'text',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+					error: function(xhr, status, error){
+						alert("sdsds");
+					}
+		        
+		   		});
+			}
+		}
+	})
+	
+	$('#agreebtn').click(function() { 
+		var bool = true;
+		if(tpCode==undefined){
+			alert('먼저 승락할 행을 선택하십시오');
+			bool = false;
+		}
+		if(bool){
+			if(storeCode!=rowStoreCode){
+				alert('요청된 매장만 승낙 가능 합니다.');
+				bool = false;
+			}
+			if(isagree=="Y"){
+				alert('이미 승인된 건수는 승인할수 없습니다.');
+				bool = false;
+			}
+		}
+		
+		if(bool){
+			if(confirm('정말로 승인하시겠습니까?')){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/shop/transport/ajaxTransportAgree.do' />",
+		        	data:{"tpCode":tpCode},
+		        	dataType:'text',
 		        	success:function(res){
 		        		alert(res);
 		        	},
@@ -102,7 +145,6 @@ $(function() {
      					$("#transportListTable tbody").html('');
      				}
         		 $("#transportListTable").trigger("update"); 
-                 return false; 
         	 },
 			error: function(xhr, status, error){
 				alert(status);
@@ -137,33 +179,13 @@ $(function() {
 	$(document ).on( "click" , "#transportListTable tbody tr", function() {              
 		$(this).css('backgroundColor','skyblue');
 		tpCode=$(this).find('td:first').text();        
-		rowStoreCode=$(this).find('td:eq(2)').text();        
+		rowStoreCode2=$(this).find('td:eq(2)').text();        
+		rowStoreCode=$(this).find('td:eq(4)').text();        
+		isagree=$(this).find('td:last').text();        
 	
 	})
 })
-function selectStore(id) {
-	$.ajax({
-    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
-    	dataType:'json',
-    	success:function(res){
-    		if (res.length > 0){
-    			$(id).html('');
-    			$.each(res,function(idx, item){
-    				var option = "<option value='"+item.storeCode+"'>";
-    				option += item.storeName;
-    				option += "</option>";
-        			$(id).append(option);
-        			$(id).select2();
-    			})
-    		}else{
-    			$(id).html('');
-    		}
-    	},
-    	error: function(xhr, status, error){
-			alert("sdsds");
-		}
-	})
-}
+
 // 팝업창 띄우기
 function returnValueRead(str) {
 	var reval = window.returnValue;
@@ -216,6 +238,7 @@ function returnValueRead(str) {
 		 	<span class="btn btn-xs btn-success">점간 이동 신청</span>
 		</a>
 		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>삭제</a>
+		<a href="#" id="agreebtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>승인</a>
 		<div id="content1">
 			<table id="transportListTable" cellspacing="1" class="tablesorter">             
 			    <thead> 

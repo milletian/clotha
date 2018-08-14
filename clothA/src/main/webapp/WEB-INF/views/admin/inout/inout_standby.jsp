@@ -178,8 +178,8 @@ $(function() {
 	      $(this).val('');
 	  });
 	  
-	  $(document ).on( "click" , "table tbody tr", function() {              
-			$('table tbody tr td').removeClass('successsss');
+	  $(document ).on( "click" , "#frmwarehousingtable tbody tr", function() {              
+			$('#frmwarehousingtable tbody tr td').removeClass('successsss');
 			$(this).find('td').addClass('successsss');
 			inoutCode=$(this).find('td:first').text(); 
 			
@@ -204,7 +204,7 @@ function returnValueRead(str) {
 }
 </script>
 <style type="text/css">
-table.tablesorter tbody td.successsss{
+#frmwarehousingtable.tablesorter tbody td.successsss{
 		background-color: skyblue;
 } 
 </style>

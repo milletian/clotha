@@ -58,7 +58,7 @@ $(function() {
 		if(bool){
 			$.ajax({
 				type:"POST",
-				url:"<c:url value='/admin/inout/ajaxInOutWrite.do' />",
+				url:"<c:url value='/shop/transport/ajaxTransportWrite.do' />",
 				/* data:{"inoutStartdate":$('#inoutStartdate').val(),
 					"inoutEnddate":$('#inoutEnddate').val(),
 					"areaStart":$('#areaStart').val(),
@@ -142,7 +142,10 @@ function pdStockView(storecode) {
         			$("#pdCode").append(option2);
     			})
     		}else{
-    			$("#pdCode").html('');
+    			$("#pdCode").val('');
+    			$("#storeName").val('');
+        		alert("요청한 매장의 재고가 없습니다.");
+        		
     		}
     		changeLimit();
     	},
@@ -192,7 +195,7 @@ function pdStockView(storecode) {
 		</select>
 		<label for="quantity">수량</label><input type="text" id="quantity" name="quantity"><br>
 		
-		<label for="storeName2">요청 매장</label><input type="text" name="storeName2" id="storeName2">
+		<label for="storeName2">요청 매장</label><input type="text" readonly="readonly" name="storeName2" id="storeName2">
 		<input type="hidden" name="storeCode2" id="storeCode2">
 		<input type="hidden" id="limitQty">
 		
