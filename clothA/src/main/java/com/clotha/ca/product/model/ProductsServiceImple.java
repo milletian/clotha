@@ -56,8 +56,8 @@ public class ProductsServiceImple implements ProductsService  {
 	
 	@Transactional
 	@Override
-	public int deleteProducts(Map<String, String[]> map) {
-		return productDao.deleteProducts(map);
+	public int deleteProducts(String pdCode) {
+		return productDao.deleteProducts(pdCode);
 	}
 	
 	@SuppressWarnings("deprecation")

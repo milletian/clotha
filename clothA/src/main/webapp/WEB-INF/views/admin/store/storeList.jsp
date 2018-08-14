@@ -58,9 +58,7 @@ $(function() {
 					error: function(xhr, status, error){
 						alert(JSON.stringify(error));
 					}
-		        
 		   		}); 
-				
 			}
 		}else{
 			alert('먼저 삭제할 행을 선택하십시오');

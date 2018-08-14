@@ -229,7 +229,7 @@
 				<div class="form-group">
 					<label for="storeImage" class="col-sm-4 control-label">이미지</label>
 					<div class="col-sm-8">
-						<input type="file" name="file" class="form-control">
+						<input type="file" name="file">
 					</div>
 				</div>
 			</div>

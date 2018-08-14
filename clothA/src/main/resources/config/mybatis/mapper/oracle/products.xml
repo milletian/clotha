@@ -54,12 +54,15 @@
 		set pd_Image=#{pdImage}, pd_sellprice=#{pdSellPrice}, pd_warning=#{pdWarning},pd_explanation=#{pdExplanation},pd_del=#{pdDel}
 		where pd_code=#{pdCode}
 	</update>
-	<delete id="deleteProducts" parameterType="map">
+	<delete id="deleteProducts" parameterType="String">
 	delete products
+	where pd_code=#{pdCode}
+	
+	<!-- delete products
 	where pd_code in
 	<foreach  item="pdCode" collection="pdCodes" open="(" close=")" separator="," index="index">
 	#{pdCode}
-	</foreach> 
+	</foreach>  -->
 	</delete>
 	
 	<insert id="insertExcelProducts" parameterType="StockVO">

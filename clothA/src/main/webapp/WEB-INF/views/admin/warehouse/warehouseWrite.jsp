@@ -120,7 +120,7 @@
 				<div class="form-group">
 					<label for="whImage" class="col-sm-4 control-label">이미지</label>
 					<div class="col-sm-8">
-						<input type="file" name="file" id="whImage" class="form-control">
+						<input type="file" name="file" id="whImage">
 					</div>
 				</div>
 			</div>

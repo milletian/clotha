@@ -28,6 +28,7 @@
 <script type="text/javascript">
 $(function() { 
 	
+	var pdCode;
 	var liveTableData = $("table").tableExport({
 	    headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
 	    footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
@@ -109,9 +110,8 @@ $(function() {
     		if (res.length > 0) {
     			$("table tbody").html('');
  				$.each(res, function(idx, item) {
- 					var pdList ="<tr ondblclick=popupOpen('"+item.PD_CODE+"')><td>"+"<input type='checkbox' name='chk'  value='"+item.PD_CODE+"'></td>"
+ 					var pdList ="<tr ondblclick=popupOpen('"+item.PD_CODE+"')><td>"+item.PD_CODE+"</td>"
  					+"<td>"+item.ACC_NAME+"</td>"
- 					+"<td>"+item.PD_CODE+"</td>" 
  					+"<td>"+item.PD_NAME+"</td>"
  					+"<td>"
  					if(item.PD_DEL=='Y'){
@@ -168,8 +168,8 @@ $(function() {
 	      $(this).val('');
 	  });
 	
-	  //삭제 버튼
-	  $('#delbtn').click(function(){
+	 
+	 /*  $('#delbtn').click(function(){
 		 var count=0;
 		 var deletemsg = confirm("삭제 하시겠습니까?");
 		 if(deletemsg){
@@ -184,13 +184,35 @@ $(function() {
 			  return false;
 		 	}
 		 } 
-	  });
+	  }); */
  
-	  $(document).on( "click" , "table tbody tr", function() {              
-		$('table tbody tr td').removeClass('successsss');
-		$(this).find('td').addClass('successsss');
-		accCode=$(this).find('td:first').text();        
-    });
+		$(document).on( "click" , "table tbody tr", function() {              
+			$('table tbody tr td').removeClass('successsss');
+			$(this).find('td').addClass('successsss');
+			pdCode=$(this).find('td:first').text();  
+		}) 
+		
+	  //삭제 버튼
+  $('#delbtn').click(function() { 
+		if(pdCode!=undefined){
+			if(confirm(pdCode+'상품을 삭제하시겠습니까?')){
+		    	$.ajax({
+		        	type:"POST",
+		        	url : "<c:url value='/admin/products/productsDelete.do' />",
+		        	data:{"pdCode":pdCode},
+		        	dataType:'text',
+		        	success:function(res){
+		        		alert(res);
+		        	},
+					error: function(xhr, status, error){
+						alert(JSON.stringify(error));
+					}
+		   		}); 
+			}
+		}else{
+			alert('먼저 삭제할 행을 선택하십시오');
+		}
+	})
 	  
 });// document
 
@@ -375,38 +397,38 @@ table.tablesorter tbody td.successsss{
 				<input id="excel" name="excel" class="file" type="file" multiple data-show-upload="false" data-show-caption="true">
 				<button type="button" id="excelUp" onclick="check()">등록</button>
 			</form>
-		<a data-toggle="modal" data-target="#modal-testNew" role="button" data-backdrop="static">
+		<a data-toggle="modal" data-target="#modal-pdWrite" role="button" data-backdrop="static">
 			<span class="btn btn-xs btn-success" id="openmodal"><i class="fas fa-edit"></i>상품 등록</span>
 		</a>
-		<a href="#" id="delbtn" class="btn btn-xs btn-success"><i class="fas fa-trash-alt"></i>상품 삭제</a>
+		<a class="btn btn-xs btn-success" href="#" id="delbtn"><i class="fas fa-trash-alt"></i>상품 삭제</a>
 		<div style="display: none;">
 			<a class="btn btn-xs btn-success" data-toggle="modal" data-target="#modal-pdEdit"  role="button"
 			 data-backdrop="static"><i id="openmodal2" class="fas fa-edit"></i>상품 수정</a>
 		</div>
 			
-		<form name="frmDel"	action="<c:url value='/admin/products/productsDelete.do'/>"	method="post">
-			<div id="content1">
-				<table cellspacing="1" class="tablesorter">
-					<thead>
-						<tr>
-							<th id="center"></th>
-							<th>거래처명</th>
-							<th>상품코드</th>
-							<th>상품명</th>
-							<th>사용여부</th>
-							<th>분류</th>
-							<th>입고가</th>
-							<th>판매가</th>
-							<th>상품등록일</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-				<!-- <input type="submit" value="상품 삭제"> -->
-			</form>
+		<%-- <form name="frmDel"	action="<c:url value='/admin/products/productsDelete.do'/>"	method="post"> --%>
+		<div>
+			<table cellspacing="1" class="tablesorter">
+				<thead>
+					<tr>
+						<!-- <th id="center"></th> -->
+						<th>상품코드</th>
+						<th>거래처명</th>
+						<th>상품명</th>
+						<th>사용여부</th>
+						<th>분류</th>
+						<th>입고가</th>
+						<th>판매가</th>
+						<th>상품등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
+				<!-- <input type="submit" value="상품 삭제"> -->
+			<!-- </form> -->
+	</div>
 </div>
 
 <div id="modal-pdWrite" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="상품정보 등록" aria-describedby="상품등록 모달">

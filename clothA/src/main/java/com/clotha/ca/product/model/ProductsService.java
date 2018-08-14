@@ -12,7 +12,7 @@ public interface ProductsService {
 	public List<ProductsVO> selectAll();
 	public ProductsVO selectByPdCode(String pdCode);
 	public int updatePdDetail(ProductsVO productsVo);
-	public int deleteProducts(Map<String, String[]> map);
+	public int deleteProducts(String pdCode);
 	public List<ProductsVO> xlsExcelReader(MultipartHttpServletRequest req);
 	public List<ProductsVO> xlsxExcelReader(MultipartHttpServletRequest req);
 } 

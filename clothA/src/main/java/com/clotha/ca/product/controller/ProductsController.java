@@ -212,34 +212,28 @@ public class ProductsController {
 	}
 	
 	
-	@RequestMapping(value="/products/productsDelete.do", method=RequestMethod.POST)
-	public String productsDelete_post(@RequestParam String[] chk, Model model) {
-		logger.info("여러 상품코드 삭제");
+	@RequestMapping(value="/products/productsDelete.do", produces = "application/text; charset=utf8")
+	public @ResponseBody String productsDelete(@RequestParam String pdCode, HttpServletRequest request) {
+		logger.info("삭제 pdCode={}", pdCode);
+		/*MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
 		
-		if(chk!=null) {
-			int i=0;
-			for(String no:chk) {
-				logger.info("{} : 파라미터 => {}",i++, no);
+		String oldFileName=multi.getParameter("oldFileName");
+		String fileName="";
+		if(fileName!=null && !fileName.isEmpty()) {
+			File oldFile
+			= new File(fileUploadUtil.getUploadPath(request, fileUploadUtil.PATH_FLAG_IMAGE),oldFileName);
+			if(oldFile.exists()) {
+				boolean bool = oldFile.delete();
+				logger.info("기존 파일 삭제여부:{}",bool);
 			}
-		}//if
-		
-		logger.info("멀티 응답!");
-		Map<String, String[]> map = new HashMap<>();
-		map.put("pdCodes", chk);
-		int cnt = productsService.deleteProducts(map);
-		logger.info("여러 상품코드 삭제 결과, cnt={}",cnt);
-		
-		String msg="", url="/admin/products/productsList.do";
-		if(cnt>0) {
-			msg="삭제에 성공하셨습니다.";
+		}//기존 파일 삭제 if
+		*/
+		int result = productsService.deleteProducts(pdCode);
+		if(result>0) {
+			return "상품삭제 성공";
 		}else {
-			msg="삭제에 실패하셨습니다!!";
+			return "상품삭제 실패";			
 		}
-		
-		model.addAttribute("msg",msg);
-		model.addAttribute("url",url);
-		
-		return "common/message";
 	}
 	
 	//상품검색창 화면 
