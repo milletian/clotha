@@ -69,9 +69,11 @@
 				dataType:'json',
 				success:function(res){
 					if(res.length > 0){
+						$("table tbody").html('');
 						$.each(res, function(idx, item) {
-		 					var salesList ="<tr><td>"+item.salesDate+"</td>"
-		 					+"<td>"+item.salesDate+"</td>"
+							var sDate = item.salesDate.split(' ');
+		 					var salesList ="<tr><td>"+sDate[0]+"</td>"
+		 					+"<td>"+sDate[1]+"</td>"
 		 					+"<td>"+item.storeName+"</td>"
 		 					+"<td>"+item.salesTotal+"</td>"
 		 					+"</tr>";
@@ -80,7 +82,7 @@
 	 					});
 						
 					}else{
-	 					$("table tbody").append("<tr><td colspan='4'>해당 내역이 없습니다.</td></tr>")
+	 					$("table tbody").html("해당 내역이 없습니다.");
 	 				}
 					$("#frmwarehousingtable").trigger("update"); 
 	             	return false;

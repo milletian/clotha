@@ -1,14 +1,12 @@
 package com.clotha.ca.sales.model;
 
-import java.sql.Timestamp;
-
 public class SalesVO {
 	private String salesCode;
 	private String storeCode;
 	private String pdCode;
 	private int salesQty;
 	private int salesTotal;
-	private Timestamp salesDate;
+	private String salesDate;
 	private String storeName;
 	
 	
@@ -48,10 +46,11 @@ public class SalesVO {
 	public void setSalesTotal(int salesTotal) {
 		this.salesTotal = salesTotal;
 	}
-	public Timestamp getSalesDate() {
+
+	public String getSalesDate() {
 		return salesDate;
 	}
-	public void setSalesDate(Timestamp salesDate) {
+	public void setSalesDate(String salesDate) {
 		this.salesDate = salesDate;
 	}
 	@Override

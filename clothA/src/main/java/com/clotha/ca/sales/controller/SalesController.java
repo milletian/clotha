@@ -1,20 +1,28 @@
 package com.clotha.ca.sales.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clotha.ca.sales.model.SalesService;
 import com.clotha.ca.sales.model.SalesVO;
 
 @Controller
 @RequestMapping("/sales")
 public class SalesController {
 	private static Logger logger = LoggerFactory.getLogger(SalesController.class);
+	
+	@Autowired
+	private SalesService salesService;
 	
 	@RequestMapping("/salesList.do")
 	public void sales() {
@@ -25,10 +33,13 @@ public class SalesController {
 	
 	@RequestMapping(value="/ajaxSalesList.do")
 	@ResponseBody
-	public List<SalesVO> ajaxSalesList(){
-		logger.info("판매현황 ajax 리스트조회");
-		List<SalesVO> list = new ArrayList<>();
-		
+	public List<SalesVO> ajaxSalesList(@ModelAttribute SalesVO salesVo, HttpServletRequest request,@RequestParam String searchDateRange){
+		logger.info("판매현황 ajax 리스트조회, 파라미터 salesVo = {} ", salesVo);
+		List<SalesVO> list = salesService.selectAll(salesVo);
+		logger.info("판매현황 list.size = {} ",list.size());
+		for(SalesVO vo : list) {
+			System.out.println(vo.getSalesDate());
+		}
 		return list;
 	}
 	
