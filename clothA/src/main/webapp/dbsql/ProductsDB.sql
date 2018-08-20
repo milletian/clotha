@@ -94,17 +94,14 @@ values('E','기타');
 
 
 
--- account 테이블
+--GENDER 테이블
 
+insert into gender(gender_code,gender_name)
+values('M','남자');
 
-insert into account(acc_code,acc_name,acc_zipcode,acc_address,acc_tel,acc_ceo,acc_no)
-values('acc'||account_seq.nextval,'홍길동_주','1111','서울 시','02-777-7777','홍길동','11-222-333333');
+insert into gender(gender_code,gender_name)
+values('F','여자');
 
---products 테이블
-
-
-insert into products(pd_code,pd_name,pd_originalprice,pd_sellprice,style_code,color_code,season_code,size_code,acc_code,gender_code)
-values('SXS0269'||products_seq.nextval||'-SS','린넨셔츠','5000','59800','S','69','SS','XS','acc1','F');
 
 commit;
 

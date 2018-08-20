@@ -1,30 +1,4 @@
-drop sequence ACCOUNT_seq;
-drop sequence ACCOUNT_DETAIL_seq;
-drop sequence AREA_seq;
-drop sequence COLOR_seq;
-drop sequence dept_seq;
-drop sequence employee_seq;
-drop sequence get_mail_seq;
-drop sequence grade_seq;
-drop sequence inout_seq;
-drop sequence inout_detail_seq;
-drop sequence log_seq;
-drop sequence mail_seq;
-drop sequence notice_seq;
-drop sequence products_seq;
-drop sequence sales_seq;
-drop sequence season_seq;
-drop sequence size_seq;
-drop sequence stock_seq;
-drop sequence stock_area_seq;
-drop sequence store_seq;
-drop sequence style_seq;
-drop sequence transport_seq;
-drop sequence transport_detail_seq;
-drop sequence warehouse_seq;
-
-
--- 시퀀스증가
+--시퀀스 증가
 create sequence stock_area_seq
 increment by 100
 start with 1000
@@ -34,6 +8,30 @@ nocache;
 create sequence area_seq
 increment by 10
 start with 100
+nocache;
+
+create sequence employee_seq
+increment by 1
+start with 1000
+nocache;
+
+-- 시퀀스증가
+create sequence stock_seq
+increment by 1
+start with 30
+nocache;
+
+
+-- 시퀀스증가
+create sequence store_seq
+increment by 1
+start with 300
+nocache;
+
+-- 시퀀스증가
+create sequence member_seq
+increment by 1
+start with 1
 nocache;
 
 -- 시퀀스증가
@@ -49,7 +47,7 @@ start with 1
 nocache;
 
 -- 시퀀스증가
-create sequence stock_area_seq
+create sequence area_seq
 increment by 1
 start with 1
 nocache;
@@ -61,17 +59,19 @@ start with 1
 nocache;
 
 
+
+-- 시퀀스증가
+create sequence coupon_seq
+increment by 1
+start with 1
+nocache;
+
 -- 시퀀스증가
 create sequence dept_seq
 increment by 1
 start with 1
 nocache;
 
--- 시퀀스증가
-create sequence employee_seq
-increment by 1
-start with 1000
-nocache;
 
 -- 시퀀스증가
 create sequence get_mail_seq
@@ -115,6 +115,11 @@ increment by 1
 start with 1
 nocache;
 
+-- 시퀀스증가
+create sequence point_seq
+increment by 1
+start with 1
+nocache;
 
 -- 시퀀스증가
 create sequence products_seq
@@ -124,6 +129,12 @@ nocache;
 
 -- 시퀀스증가
 create sequence sales_seq
+increment by 1
+start with 1
+nocache;
+
+-- 시퀀스증가
+create sequence sales_detail_seq
 increment by 1
 start with 1
 nocache;
@@ -143,14 +154,10 @@ nocache;
 -- 시퀀스증가
 create sequence stock_seq
 increment by 1
-start with 30
+start with 1
 nocache;
 
--- 시퀀스증가
-create sequence store_seq
-increment by 1
-start with 300
-nocache;
+
 
 -- 시퀀스증가
 create sequence style_seq
