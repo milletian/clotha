@@ -12,8 +12,8 @@
 			/* $('#photo').css('display','none'); */
 			$('#photo').hide();
 		}
-		 /*
-		  /* 매장코드로 매장이름 불러오기  
+		 
+		  /*  매장코드로 매장이름 불러오기   */
 		$.ajax({
 			type:"POST",
 	    	url : "<c:url value='/admin/store/ajaxStoreList.do' />",
@@ -39,7 +39,7 @@
 			}
 		});//ajax
 		
-		$(".ajax2").select2(); */
+		$(".ajax2").select2(); 
 		
 		/* 맨처음 입력 포커싱 */
 		$('#storeCode').focus();
