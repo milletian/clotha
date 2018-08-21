@@ -22,6 +22,15 @@ public class EmployeeVO extends SearchVO {
 	private String storeCode;
 	private String empEmail;
 	private int empCount;
+	private String storeName;
+	
+	
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 	public String getEmpNo() {
 		return empNo;
 	}
@@ -124,23 +133,15 @@ public class EmployeeVO extends SearchVO {
 	public void setEmpCount(int empCount) {
 		this.empCount = empCount;
 	}
-	
-
 	@Override
 	public String toString() {
 		return "EmployeeVO [empNo=" + empNo + ", deptNo=" + deptNo + ", empName=" + empName + ", empPwd=" + empPwd
 				+ ", empZipcode=" + empZipcode + ", empAddress=" + empAddress + ", empJumin=" + empJumin + ", empTel="
 				+ empTel + ", empFace=" + empFace + ", empJob=" + empJob + ", empJoindate=" + empJoindate
 				+ ", empOutdate=" + empOutdate + ", gradeCode=" + gradeCode + ", empDel=" + empDel + ", storeCode="
-				+ storeCode + ", empEmail=" + empEmail + ", empCount=" + empCount + ", toString()=" + super.toString()
-				+ "]";
+				+ storeCode + ", empEmail=" + empEmail + ", empCount=" + empCount + ", storeName=" + storeName + "]";
 	}
 	
-	
-	
 
-	
-
-	
 	
 }

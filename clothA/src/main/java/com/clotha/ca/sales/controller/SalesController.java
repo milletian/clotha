@@ -33,13 +33,10 @@ public class SalesController {
 	
 	@RequestMapping(value="/ajaxSalesList.do")
 	@ResponseBody
-	public List<SalesVO> ajaxSalesList(@ModelAttribute SalesVO salesVo, HttpServletRequest request,@RequestParam String searchDateRange){
-		logger.info("판매현황 ajax 리스트조회, 파라미터 salesVo = {} ", salesVo);
+	public List<SalesVO> ajaxSalesList(@ModelAttribute SalesVO salesVo, HttpServletRequest request,@RequestParam(required=false) String searchDateRange){
+		logger.info("판매현황 ajax 리스트조회, 파라미터 salesVo = {}, searchDateRange = {} ", salesVo,searchDateRange);
 		List<SalesVO> list = salesService.selectAll(salesVo);
 		logger.info("판매현황 list.size = {} ",list.size());
-		for(SalesVO vo : list) {
-			System.out.println(vo.getSalesDate());
-		}
 		return list;
 	}
 	

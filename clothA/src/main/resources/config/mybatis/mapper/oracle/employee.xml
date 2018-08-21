@@ -35,7 +35,7 @@
 	</update>
 	
 	<select id="selectAll" resultType="EmployeeVO" parameterType="EmployeeVO">
-		select * from employee
+		select e.* , s.store_name from employee e join store s on e.store_code = s.store_code
 		<if test="empNo!='전체' and empNo!=null and empNo!=''">
 			emp_No =#{empNo}		
 		</if>
@@ -43,7 +43,7 @@
 			and ${searchCondition} like '%' || #{searchKeyword} || '%'		
 		</if>
 		order by
-		store_code desc
+		e.store_code desc
 	</select>
 	
 	<select id="selectEmp" parameterType="EmployeeVO"	resultType="map">

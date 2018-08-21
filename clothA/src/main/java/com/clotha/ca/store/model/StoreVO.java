@@ -85,10 +85,10 @@ public class StoreVO extends SearchVO {
 	}
 	@Override
 	public String toString() {
-		return "StoreVO [storeCode=" + storeCode + ", empNo=" + empNo+ storeName + ", storeZipcode=" + storeZipcode
-				+ ", storeAddress=" + storeAddress + ", storeJoin=" + storeJoin + ", storeImage=" + storeImage
-				+ ", staCode=" + staCode + ", storeDel=" + storeDel + ", storeTel=" + storeTel + ", storeNo=" + storeNo
-				+super.toString()+ "]";
+		return "StoreVO [storeCode=" + storeCode + ", empNo=" + empNo + ", storeName=" + storeName + ", storeZipcode="
+				+ storeZipcode + ", storeAddress=" + storeAddress + ", storeJoin=" + storeJoin + ", storeImage="
+				+ storeImage + ", staCode=" + staCode + ", storeDel=" + storeDel + ", storeTel=" + storeTel
+				+ ", storeNo=" + storeNo + "]";
 	}
 
 	

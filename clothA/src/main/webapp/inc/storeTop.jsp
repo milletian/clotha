@@ -252,7 +252,7 @@ footer{
 						class="fas fa-wallet"></i><span>매출관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>
 					<ul>
-						<li><a href="#">매장 판매 현황</a></li>
+						<li><a href="<c:url value='/sales/salesList.do'/>" target="if" >매장 판매 현황</a></li>
 						<li><a href="#">매장 판매베스트</a></li>
 						<li><a href="#">매장 판매 분석(차트)</a></li>
 					</ul></li>

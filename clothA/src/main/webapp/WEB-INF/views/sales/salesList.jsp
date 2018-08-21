@@ -72,10 +72,12 @@
 						$("table tbody").html('');
 						$.each(res, function(idx, item) {
 							var sDate = item.salesDate.split(' ');
-		 					var salesList ="<tr><td>"+sDate[0]+"</td>"
-		 					+"<td>"+sDate[1]+"</td>"
-		 					+"<td>"+item.storeName+"</td>"
+		 					var salesList ="<tr><td>"+item.storeName+"</td>"
 		 					+"<td>"+item.salesTotal+"</td>"
+		 					+"<td>"+item.pdCode+"</td>"
+		 					+"<td>"+item.salesQty+"</td>"
+		 					+"<td>"+sDate[0]+"</td>"
+		 					+"<td>"+sDate[1]+"</td>"
 		 					+"</tr>";
 		 					$("table tbody").append(salesList);
 		 					liveTableData.reset();
@@ -170,7 +172,7 @@
 				<div class="form-group">
 				<label for="selSearchStoreName" class="col-sm-5 control-label">매장</label>
 					<div class="col-sm-7">
-						<select style="max-height: 30px; width: 100px" name="areaEnd"
+						<select style="max-height: 30px; width: 100px" name="storeCode"
 								data-placeholder="검색할 매장을 선택하세요" id="selSearchStoreName"
 								class="ajax">
 						</select>		
@@ -182,7 +184,7 @@
 					<div class="col-sm-5">
 						<button type="button" id="btnSearch" class="btn btn-primary">
 							<i class="fa fa-lg fa-search"></i>&nbsp;조회(F2)
-						</button>							
+						</button>
 					</div>
 				</div>
 			</div>
@@ -192,10 +194,12 @@
 		<table class="tablesorter">
 			<thead>
 				<tr>
-					<th>날짜</th>
-					<th>시간</th>
 					<th>매장</th>
 					<th>판매금액</th>
+					<th>상품</th>
+					<th>수량</th>
+					<th>날짜</th>
+					<th>시간</th>
 				</tr>
 			</thead>
 			<tbody>
