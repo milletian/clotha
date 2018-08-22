@@ -268,15 +268,6 @@ footer{
 						<li><a href="<c:url value='/admin/account/accountList.do' />" target="if">구매처 등록 / 조회</a></li>
 						<li><a href="<c:url value='/admin/account/accountDetailList.do' />" target="if">구매 현황 조회</a></li>
 					</ul></li>
-				
-				<li class="sub-menu"><a href="javascript:void(0);"><i
-						class="fas fa-wallet"></i><span>매출관리</span><i
-						class="arrow fa fa-angle-right pull-right"></i></a>
-					<ul>
-						<li><a href="<c:url value='/sales/salesList.do'/>" target="if">매장별 판매 현황</a></li>
-						<li><a href="#">판매베스트</a></li>
-						<li><a href="#">판매 분석(차트)</a></li>
-					</ul></li> 
 				<li class="sub-menu"><a href="javascript:void(0);"><i
 						class="fas fa-truck"></i><span>입고/출고관리</span><i
 						class="arrow fa fa-angle-right pull-right"></i></a>

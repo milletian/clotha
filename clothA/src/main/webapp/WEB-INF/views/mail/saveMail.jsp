@@ -88,7 +88,9 @@
 	<div>
 		<div class="d1">
 			<h3>받은쪽지 보관함</h3>
-			<div class="savee"><a href="<c:url value='/mail/saveGet.do'/>">더보기</a></div>
+			<c:if test="${!empty getList }">
+				<div class="savee"><a href="<c:url value='/mail/saveGet.do'/>">더보기</a></div>
+			</c:if>
 			<form action="<c:url value='/mail/getMulti.do'/> " name="chfrm" method="post" >
 				<table>
 					<tr>
@@ -116,12 +118,16 @@
 						</c:forEach>
 					</c:if>
 				</table>
-				<input type="submit" value="삭제" name="delete">
+				<c:if test="${!empty gertList }">
+					<input type="submit" value="삭제" name="delete">
+				</c:if>
 			</form>
 		</div>
 		<div class="d2">
 		<h3>보낸쪽지 보관함</h3>
-		<div class="savee"><a href="<c:url value='/mail/saveSend.do'/>">더보기</a></div>
+		<c:if test="${!empty sendList }">
+			<div class="savee"><a href="<c:url value='/mail/saveSend.do'/>">더보기</a></div>
+		</c:if>
 		<form action="<c:url value='/mail/sendMulti.do'/> " name="chfrm1" method="post" >
 			<table>
 				<tr>
@@ -146,7 +152,9 @@
 					</c:forEach>
 				</c:if>
 				</table>
-				<input type="submit" value="삭제" name="delete">
+				<c:if test="${!empty sendList }">
+					<input type="submit" value="삭제" name="delete">
+				</c:if>
 			</form>
 		</div>
 	</div>
